@@ -52,6 +52,35 @@ Uses native `Intl.NumberFormat` - no external library needed.
 
 ---
 
+### Issue #2: State Management for Goals
+**Status:** Completed
+**Files:**
+- `context/GoalsContext.tsx` - React Context, Provider, and useGoals hook
+- `context/index.ts` - Central export
+- `app/providers.tsx` - Client-side providers wrapper
+- `app/layout.tsx` - Updated to wrap app with Providers
+
+**State Management Approach:** React Context + useReducer
+
+**Available Operations:**
+
+| Method | Description | Signature |
+|--------|-------------|-----------|
+| `addGoal` | Add a new goal (auto-generates id, createdAt, priority) | `(input: CreateGoalInput) => Goal` |
+| `getGoals` | Get all goals | `() => Goal[]` |
+| `getGoalsByBucket` | Get goals filtered by bucket, sorted by priority | `(bucket: Bucket) => Goal[]` |
+| `getAllGoalsByBucket` | Get all goals organized by bucket | `() => GoalsByBucket` |
+| `updateGoalPriority` | Update a goal's priority | `(goalId: string, newPriority: number) => void` |
+| `reorderGoalsInBucket` | Reorder goals by providing ordered IDs | `(bucket: Bucket, orderedIds: string[]) => void` |
+| `getGoalById` | Get a single goal by ID | `(goalId: string) => Goal \| undefined` |
+
+**Computed Values:**
+- `goals` - All goals array
+- `totalGoals` - Count of all goals
+- `totalAmount` - Sum of all goal amounts
+
+---
+
 ## Project Structure
 
 ```
@@ -60,8 +89,12 @@ goals/
 │   ├── prd.md              # Product Requirements Document
 │   └── implementation.md   # This file - implementation tracking
 ├── app/
-│   ├── layout.tsx          # Root layout
-│   └── page.tsx            # Home page
+│   ├── layout.tsx          # Root layout (wraps with Providers)
+│   ├── page.tsx            # Home page
+│   └── providers.tsx       # Client-side providers wrapper
+├── context/
+│   ├── GoalsContext.tsx    # Goals state management
+│   └── index.ts            # Central context exports
 ├── types/
 │   ├── goal.ts             # Goal-related types and constants
 │   └── index.ts            # Central type exports
@@ -121,6 +154,55 @@ getCurrencyName('UYU', 'es');           // 'peso uruguayo'
 
 // Get options for dropdown
 getCurrencyOptions();  // [{ code: 'USD', name: 'US Dollar' }, ...]
+```
+
+### Using Goals State (useGoals hook)
+```typescript
+'use client';
+
+import { useGoals } from '@/context';
+import type { CreateGoalInput } from '@/types';
+
+function MyComponent() {
+  const {
+    goals,
+    addGoal,
+    getGoalsByBucket,
+    reorderGoalsInBucket,
+    totalGoals,
+    totalAmount,
+  } = useGoals();
+
+  // Add a new goal
+  const handleAddGoal = () => {
+    const input: CreateGoalInput = {
+      title: 'Emergency Fund',
+      description: 'Build a safety net covering 6 months of expenses',
+      amount: 15000,
+      currency: 'USD',
+      targetDate: new Date('2026-06-01'),
+      bucket: 'safety',
+      whyItMatters: 'Peace of mind for unexpected expenses',
+    };
+    const newGoal = addGoal(input);
+    console.log('Created goal:', newGoal.id);
+  };
+
+  // Get goals by bucket
+  const safetyGoals = getGoalsByBucket('safety');
+
+  // Reorder goals after drag-and-drop
+  const handleReorder = (newOrder: string[]) => {
+    reorderGoalsInBucket('safety', newOrder);
+  };
+
+  return (
+    <div>
+      <p>Total: {totalGoals} goals, ${totalAmount}</p>
+      {/* ... */}
+    </div>
+  );
+}
 ```
 
 ---

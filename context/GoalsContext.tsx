@@ -1,0 +1,231 @@
+'use client';
+
+import {
+  createContext,
+  useContext,
+  useReducer,
+  useCallback,
+  useMemo,
+  type ReactNode,
+} from 'react';
+import type {
+  Goal,
+  Bucket,
+  CreateGoalInput,
+  GoalsByBucket,
+} from '@/types';
+
+// =============================================================================
+// Types
+// =============================================================================
+
+interface GoalsState {
+  goals: Goal[];
+}
+
+type GoalsAction =
+  | { type: 'ADD_GOAL'; payload: Goal }
+  | { type: 'SET_GOALS'; payload: Goal[] }
+  | { type: 'UPDATE_GOAL_PRIORITY'; payload: { goalId: string; newPriority: number } }
+  | { type: 'REORDER_GOALS_IN_BUCKET'; payload: { bucket: Bucket; orderedIds: string[] } };
+
+interface GoalsContextValue {
+  /** All goals */
+  goals: Goal[];
+
+  /** Add a new goal (auto-generates id, createdAt, and priority) */
+  addGoal: (input: CreateGoalInput) => Goal;
+
+  /** Get all goals */
+  getGoals: () => Goal[];
+
+  /** Get goals filtered by bucket, sorted by priority */
+  getGoalsByBucket: (bucket: Bucket) => Goal[];
+
+  /** Get all goals organized by bucket */
+  getAllGoalsByBucket: () => GoalsByBucket;
+
+  /** Update a goal's priority within its bucket */
+  updateGoalPriority: (goalId: string, newPriority: number) => void;
+
+  /** Reorder goals within a bucket by providing ordered IDs */
+  reorderGoalsInBucket: (bucket: Bucket, orderedIds: string[]) => void;
+
+  /** Get a single goal by ID */
+  getGoalById: (goalId: string) => Goal | undefined;
+
+  /** Get total count of goals */
+  totalGoals: number;
+
+  /** Get total amount across all goals */
+  totalAmount: number;
+}
+
+// =============================================================================
+// Helpers
+// =============================================================================
+
+function generateId(): string {
+  return `goal_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+}
+
+function getNextPriorityForBucket(goals: Goal[], bucket: Bucket): number {
+  const bucketGoals = goals.filter((g) => g.bucket === bucket);
+  if (bucketGoals.length === 0) return 1;
+  return Math.max(...bucketGoals.map((g) => g.priority)) + 1;
+}
+
+// =============================================================================
+// Reducer
+// =============================================================================
+
+function goalsReducer(state: GoalsState, action: GoalsAction): GoalsState {
+  switch (action.type) {
+    case 'ADD_GOAL':
+      return {
+        ...state,
+        goals: [...state.goals, action.payload],
+      };
+
+    case 'SET_GOALS':
+      return {
+        ...state,
+        goals: action.payload,
+      };
+
+    case 'UPDATE_GOAL_PRIORITY': {
+      const { goalId, newPriority } = action.payload;
+      return {
+        ...state,
+        goals: state.goals.map((goal) =>
+          goal.id === goalId ? { ...goal, priority: newPriority } : goal
+        ),
+      };
+    }
+
+    case 'REORDER_GOALS_IN_BUCKET': {
+      const { bucket, orderedIds } = action.payload;
+      const updatedGoals = state.goals.map((goal) => {
+        if (goal.bucket !== bucket) return goal;
+        const newPriority = orderedIds.indexOf(goal.id);
+        if (newPriority === -1) return goal;
+        return { ...goal, priority: newPriority + 1 }; // 1-indexed priority
+      });
+      return {
+        ...state,
+        goals: updatedGoals,
+      };
+    }
+
+    default:
+      return state;
+  }
+}
+
+// =============================================================================
+// Context
+// =============================================================================
+
+const GoalsContext = createContext<GoalsContextValue | null>(null);
+
+// =============================================================================
+// Provider
+// =============================================================================
+
+interface GoalsProviderProps {
+  children: ReactNode;
+  initialGoals?: Goal[];
+}
+
+export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProps) {
+  const [state, dispatch] = useReducer(goalsReducer, { goals: initialGoals });
+
+  const addGoal = useCallback((input: CreateGoalInput): Goal => {
+    const newGoal: Goal = {
+      ...input,
+      id: generateId(),
+      createdAt: new Date(),
+      priority: getNextPriorityForBucket(state.goals, input.bucket),
+    };
+    dispatch({ type: 'ADD_GOAL', payload: newGoal });
+    return newGoal;
+  }, [state.goals]);
+
+  const getGoals = useCallback((): Goal[] => {
+    return state.goals;
+  }, [state.goals]);
+
+  const getGoalsByBucket = useCallback((bucket: Bucket): Goal[] => {
+    return state.goals
+      .filter((goal) => goal.bucket === bucket)
+      .sort((a, b) => a.priority - b.priority);
+  }, [state.goals]);
+
+  const getAllGoalsByBucket = useCallback((): GoalsByBucket => {
+    return {
+      safety: getGoalsByBucket('safety'),
+      growth: getGoalsByBucket('growth'),
+      dream: getGoalsByBucket('dream'),
+    };
+  }, [getGoalsByBucket]);
+
+  const updateGoalPriority = useCallback((goalId: string, newPriority: number): void => {
+    dispatch({ type: 'UPDATE_GOAL_PRIORITY', payload: { goalId, newPriority } });
+  }, []);
+
+  const reorderGoalsInBucket = useCallback((bucket: Bucket, orderedIds: string[]): void => {
+    dispatch({ type: 'REORDER_GOALS_IN_BUCKET', payload: { bucket, orderedIds } });
+  }, []);
+
+  const getGoalById = useCallback((goalId: string): Goal | undefined => {
+    return state.goals.find((goal) => goal.id === goalId);
+  }, [state.goals]);
+
+  const totalGoals = state.goals.length;
+
+  const totalAmount = useMemo(() => {
+    return state.goals.reduce((sum, goal) => sum + goal.amount, 0);
+  }, [state.goals]);
+
+  const value: GoalsContextValue = useMemo(() => ({
+    goals: state.goals,
+    addGoal,
+    getGoals,
+    getGoalsByBucket,
+    getAllGoalsByBucket,
+    updateGoalPriority,
+    reorderGoalsInBucket,
+    getGoalById,
+    totalGoals,
+    totalAmount,
+  }), [
+    state.goals,
+    addGoal,
+    getGoals,
+    getGoalsByBucket,
+    getAllGoalsByBucket,
+    updateGoalPriority,
+    reorderGoalsInBucket,
+    getGoalById,
+    totalGoals,
+    totalAmount,
+  ]);
+
+  return (
+    <GoalsContext.Provider value={value}>
+      {children}
+    </GoalsContext.Provider>
+  );
+}
+
+// =============================================================================
+// Hook
+// =============================================================================
+
+export function useGoals(): GoalsContextValue {
+  const context = useContext(GoalsContext);
+  if (!context) {
+    throw new Error('useGoals must be used within a GoalsProvider');
+  }
+  return context;
+}
