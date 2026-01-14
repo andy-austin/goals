@@ -177,32 +177,33 @@ export interface GoalsByBucket {
 
 /**
  * Bucket display configuration
+ * Colors use CSS variable references for theme consistency
  */
 export const BUCKET_CONFIG: Record<Bucket, {
   label: string;
-  color: string;
-  bgColor: string;
+  colorVar: string;
+  bgColorVar: string;
   icon: string;
   description: string;
 }> = {
   safety: {
     label: 'Safety',
-    color: '#22C55E',
-    bgColor: '#DCFCE7',
+    colorVar: 'var(--bucket-safety)',
+    bgColorVar: 'var(--bucket-safety-light)',
     icon: 'shield',
     description: 'Non-negotiable, urgent goals like emergency funds',
   },
   growth: {
     label: 'Growth',
-    color: '#3B82F6',
-    bgColor: '#DBEAFE',
+    colorVar: 'var(--bucket-growth)',
+    bgColorVar: 'var(--bucket-growth-light)',
     icon: 'trending-up',
     description: 'Goals that improve your standard of living',
   },
   dream: {
     label: 'Dream',
-    color: '#A855F7',
-    bgColor: '#F3E8FF',
+    colorVar: 'var(--bucket-dream)',
+    bgColorVar: 'var(--bucket-dream-light)',
     icon: 'star',
     description: 'Aspirational goals you can afford to risk',
   },
