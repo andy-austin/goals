@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
+import { useTranslations } from 'next-intl';
 import { Input, Textarea, Label } from '@/components/ui';
 import { useFormWizard } from '@/components/FormWizard';
 import type { GoalFormInput } from '@/types';
@@ -17,6 +18,8 @@ const MIN_DESCRIPTION_LENGTH = 20;
 // =============================================================================
 
 export function StepTitleDescription() {
+  const t = useTranslations('goalForm.step1');
+  const tExamples = useTranslations('examples');
   const { data, updateData, setStepValid } = useFormWizard<Partial<GoalFormInput>>();
 
   const title = data.title || '';
@@ -40,21 +43,21 @@ export function StepTitleDescription() {
       {/* Header */}
       <div>
         <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-          What&apos;s your goal?
+          {t('title')}
         </h2>
         <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-          Be specific about what you want to achieve. A clear goal is the first step to success.
+          {t('subtitle')}
         </p>
       </div>
 
       {/* Title Field */}
       <div className="space-y-2">
         <Label htmlFor="title" required>
-          Goal Title
+          {t('titleLabel')}
         </Label>
         <Input
           id="title"
-          placeholder="e.g., House Down Payment, Emergency Fund, Dream Vacation"
+          placeholder={t('titlePlaceholder')}
           value={title}
           onChange={(e) => updateData({ title: e.target.value })}
           error={titleError}
@@ -62,7 +65,7 @@ export function StepTitleDescription() {
         />
         {titleError && (
           <p className="text-sm text-error">
-            Please enter a goal title (at least {MIN_TITLE_LENGTH} characters)
+            {t('titleError')}
           </p>
         )}
       </div>
@@ -70,11 +73,11 @@ export function StepTitleDescription() {
       {/* Description Field */}
       <div className="space-y-2">
         <Label htmlFor="description" required>
-          Description
+          {t('descriptionLabel')}
         </Label>
         <Textarea
           id="description"
-          placeholder="Describe your goal in detail. What exactly do you want to achieve? The more specific, the better."
+          placeholder={t('descriptionPlaceholder')}
           value={description}
           onChange={(e) => updateData({ description: e.target.value })}
           error={descriptionError}
@@ -85,7 +88,7 @@ export function StepTitleDescription() {
           <div>
             {descriptionError && (
               <p className="text-sm text-error">
-                Please be specific about your goal (at least {MIN_DESCRIPTION_LENGTH} characters)
+                {t('descriptionError')}
               </p>
             )}
           </div>
@@ -121,11 +124,10 @@ export function StepTitleDescription() {
           </div>
           <div>
             <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200">
-              SMART Tip: Be Specific
+              {t('smartTip')}
             </h3>
             <p className="mt-1 text-sm text-blue-700 dark:text-blue-300">
-              Instead of &quot;save money&quot;, try &quot;Save $50,000 for a down payment on a 3-bedroom house in Austin&quot;.
-              Specific goals are easier to plan and track.
+              {t('smartTipText')}
             </p>
           </div>
         </div>
@@ -134,16 +136,16 @@ export function StepTitleDescription() {
       {/* Examples */}
       <div className="space-y-2">
         <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">
-          Examples
+          {t('examples')}
         </p>
         <div className="grid gap-2 sm:grid-cols-2">
           <ExampleCard
-            title="Emergency Fund"
-            description="Build a safety net covering 6 months of living expenses for unexpected situations"
+            title={tExamples('emergencyFund.title')}
+            description={tExamples('emergencyFund.description')}
           />
           <ExampleCard
-            title="House Down Payment"
-            description="Save 20% down payment for a 3-bedroom home in the suburbs within 3 years"
+            title={tExamples('houseDownPayment.title')}
+            description={tExamples('houseDownPayment.description')}
           />
         </div>
       </div>

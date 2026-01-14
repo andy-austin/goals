@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
+import { useTranslations } from 'next-intl';
 import { Label, Textarea } from '@/components/ui';
 import { useFormWizard } from '@/components/FormWizard';
 import { SMARTValidationSummary } from './SMARTValidationSummary';
@@ -17,6 +18,7 @@ const MIN_LENGTH = 10;
 // =============================================================================
 
 export function StepWhyItMatters() {
+  const t = useTranslations('goalForm.step5');
   const { data, updateData, setStepValid } = useFormWizard<Partial<GoalFormInput>>();
 
   const whyItMatters = data.whyItMatters || '';
@@ -40,21 +42,21 @@ export function StepWhyItMatters() {
       {/* Header */}
       <div>
         <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-          Why does this matter?
+          {t('title')}
         </h2>
         <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-          Connect your goal to an emotional anchor. This is what will keep you going when saving gets tough.
+          {t('subtitle')}
         </p>
       </div>
 
       {/* Why It Matters Field */}
       <div className="space-y-2">
         <Label htmlFor="whyItMatters" required>
-          Your Motivation
+          {t('whyLabel')}
         </Label>
         <Textarea
           id="whyItMatters"
-          placeholder="e.g., I want to provide financial security for my family, or I want to have the freedom to travel the world."
+          placeholder={t('whyPlaceholder')}
           value={whyItMatters}
           onChange={handleChange}
           rows={3}
@@ -65,7 +67,7 @@ export function StepWhyItMatters() {
           <div>
             {whyItMatters.length > 0 && whyItMatters.length < MIN_LENGTH && (
               <p className="text-sm text-error">
-                Please enter at least {MIN_LENGTH} characters
+                {t('whyError')}
               </p>
             )}
           </div>
@@ -103,11 +105,10 @@ export function StepWhyItMatters() {
               </div>
               <div>
                 <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200">
-                  SMART Tip: Make it Relevant
+                  {t('smartTip')}
                 </h3>
                 <p className="mt-1 text-sm text-blue-700 dark:text-blue-300">
-                  A relevant goal matters to you and aligns with your other relevant goals. 
-                  If the goal isn&apos;t important, you won&apos;t stick to it.
+                  {t('smartTipText')}
                 </p>
               </div>
             </div>
@@ -116,14 +117,14 @@ export function StepWhyItMatters() {
           {/* Quick Select Examples */}
           <div className="space-y-2">
             <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">
-              Examples
+              {t('examples')}
             </p>
             <div className="flex flex-col gap-2">
               {[
-                "To have peace of mind knowing I can handle unexpected expenses.",
-                "To build a legacy for my children and their education.",
-                "To enjoy my retirement years without financial stress.",
-                "To have the freedom to pursue my passion projects."
+                t('example1'),
+                t('example2'),
+                t('example3'),
+                t('example4')
               ].map((example) => (
                 <button
                   key={example}

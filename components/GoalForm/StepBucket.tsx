@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { useFormWizard } from '@/components/FormWizard';
 import { BUCKET_CONFIG, BUCKETS } from '@/types';
 import type { GoalFormInput, Bucket } from '@/types';
@@ -62,6 +63,8 @@ const Icons = {
 // =============================================================================
 
 export function StepBucket() {
+  const t = useTranslations('goalForm.step4');
+  const tBuckets = useTranslations('buckets');
   const { data, updateData, setStepValid } = useFormWizard<Partial<GoalFormInput>>();
 
   const selectedBucket = data.bucket;
@@ -80,10 +83,10 @@ export function StepBucket() {
       {/* Header */}
       <div>
         <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-          Categorize your goal
+          {t('title')}
         </h2>
         <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-          Which bucket does this goal fit into? This helps determine the right investment strategy.
+          {t('subtitle')}
         </p>
       </div>
 
@@ -130,7 +133,7 @@ export function StepBucket() {
                       : 'text-zinc-900 dark:text-zinc-100'
                   }`}
                 >
-                  {config.label}
+                  {tBuckets(`${bucket}.name`)}
                 </h3>
                 <p
                   className={`mt-1 text-sm ${
@@ -139,10 +142,10 @@ export function StepBucket() {
                       : 'text-zinc-600 dark:text-zinc-400'
                   }`}
                 >
-                  {config.description}
+                  {tBuckets(`${bucket}.description`)}
                 </p>
               </div>
-              
+
               {/* Checkmark for selected state */}
               {isSelected && (
                 <div className="absolute right-4 top-4 text-[var(--bucket-color)]">
@@ -176,13 +179,10 @@ export function StepBucket() {
           </div>
           <div>
             <h3 className="text-sm font-medium text-purple-800 dark:text-purple-200">
-              Why Categorize?
+              {t('smartTip')}
             </h3>
             <p className="mt-1 text-sm text-purple-700 dark:text-purple-300">
-              Different goals require different investment strategies. 
-              <strong> Safety</strong> goals need low risk. 
-              <strong> Growth</strong> goals balance risk and reward. 
-              <strong> Dream</strong> goals can afford higher risk.
+              {t('smartTipText')}
             </p>
           </div>
         </div>

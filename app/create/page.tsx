@@ -2,31 +2,29 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { FormWizard, FormStep, StepTitleDescription, StepAmountCurrency, StepTargetDate, StepBucket, StepWhyItMatters } from '@/components';
 import { useGoals } from '@/context';
 import { validateSMART } from '@/lib';
 import type { GoalFormInput } from '@/types';
 
 // =============================================================================
-// Step Configuration
-// =============================================================================
-
-const STEPS = [
-  { label: 'Details' },
-  { label: 'Amount' },
-  { label: 'Date' },
-  { label: 'Category' },
-  { label: 'Why' },
-];
-
-// =============================================================================
 // Main Page Component
 // =============================================================================
 
 export default function CreateGoalPage() {
+  const t = useTranslations('goalForm');
   const router = useRouter();
   const { addGoal } = useGoals();
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const steps = [
+    { label: t('steps.details') },
+    { label: t('steps.amount') },
+    { label: t('steps.date') },
+    { label: t('steps.category') },
+    { label: t('steps.why') },
+  ];
 
   const handleComplete = (data: Partial<GoalFormInput>) => {
     // Final data validation before saving
@@ -59,15 +57,15 @@ export default function CreateGoalPage() {
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-          Create a New Goal
+          {t('createTitle')}
         </h1>
         <p className="mt-2 text-zinc-600 dark:text-zinc-400">
-          Define your investment goal using the SMART framework.
+          {t('createSubtitle')}
         </p>
       </div>
 
       <FormWizard<Partial<GoalFormInput>>
-        steps={STEPS}
+        steps={steps}
         onComplete={handleComplete}
         isSubmitting={isSubmitting}
       >

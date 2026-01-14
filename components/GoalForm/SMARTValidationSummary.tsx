@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
+import { useTranslations } from 'next-intl';
 import { useFormWizard } from '@/components/FormWizard';
 import { BUCKET_CONFIG, formatCurrency } from '@/types';
 import { validateSMART } from '@/lib';
@@ -28,6 +29,8 @@ function formatDate(dateString: string | undefined) {
 // =============================================================================
 
 export function SMARTValidationSummary() {
+  const t = useTranslations('goalForm.validation');
+  const tBuckets = useTranslations('buckets');
   const { data } = useFormWizard<Partial<GoalFormInput>>();
 
   const validation = useMemo(() => validateSMART(data), [data]);
@@ -35,39 +38,43 @@ export function SMARTValidationSummary() {
   const validationItems = useMemo(() => {
     return [
       {
-        label: 'Specific',
+        label: t('specific'),
         isValid: validation.specific.isValid,
-        description: 'Clear title and detailed description.',
+        description: t('specificDesc'),
       },
       {
-        label: 'Measurable',
+        label: t('measurable'),
         isValid: validation.measurable.isValid,
-        description: `Target of ${data.amount && data.currency ? formatCurrency(data.amount, data.currency) : 'a specific amount'}.`,
+        description: data.amount && data.currency
+          ? t('measurableDescWithAmount', { amount: formatCurrency(data.amount, data.currency) })
+          : t('measurableDesc'),
       },
       {
-        label: 'Achievable',
+        label: t('achievable'),
         isValid: validation.achievable.isValid,
-        description: 'Timeline and amount seem realistic.',
+        description: t('achievableDesc'),
       },
       {
-        label: 'Relevant',
+        label: t('relevant'),
         isValid: validation.relevant.isValid,
-        description: 'Strong personal motivation identified.',
+        description: t('relevantDesc'),
       },
       {
-        label: 'Time-bound',
+        label: t('timeBound'),
         isValid: validation.timeBound.isValid,
-        description: data.targetDate ? `Deadline set for ${formatDate(data.targetDate)}.` : 'No deadline set.',
+        description: data.targetDate
+          ? t('timeBoundDescWithDate', { date: formatDate(data.targetDate) })
+          : t('timeBoundDesc'),
       },
     ];
-  }, [validation, data.amount, data.currency, data.targetDate]);
+  }, [validation, data.amount, data.currency, data.targetDate, t]);
 
   return (
     <div className="space-y-4">
       <h3 className="text-sm font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-        SMART Validation Summary
+        {t('summaryTitle')}
       </h3>
-      
+
       <div className="grid gap-3 sm:grid-cols-2">
         {validationItems.map((item) => (
           <div
@@ -105,28 +112,28 @@ export function SMARTValidationSummary() {
       {data.bucket && (
         <div className="mt-6 rounded-xl border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-900/50">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-medium text-zinc-500 uppercase">Goal Preview</span>
-            <span 
+            <span className="text-xs font-medium text-zinc-500 uppercase">{t('goalPreview')}</span>
+            <span
               className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full"
-              style={{ 
+              style={{
                 backgroundColor: BUCKET_CONFIG[data.bucket].bgColorVar,
-                color: BUCKET_CONFIG[data.bucket].colorVar 
+                color: BUCKET_CONFIG[data.bucket].colorVar
               }}
             >
-              {BUCKET_CONFIG[data.bucket].label}
+              {tBuckets(`${data.bucket}.name`)}
             </span>
           </div>
-          <h4 className="text-base font-bold text-zinc-900 dark:text-zinc-100">{data.title || 'Untitled Goal'}</h4>
+          <h4 className="text-base font-bold text-zinc-900 dark:text-zinc-100">{data.title || t('untitledGoal')}</h4>
           <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2">{data.description}</p>
           <div className="mt-4 flex items-center justify-between border-t border-zinc-200 dark:border-zinc-800 pt-3">
              <div className="text-sm">
-                <span className="text-zinc-500">Target:</span>{' '}
+                <span className="text-zinc-500">{t('target')}:</span>{' '}
                 <span className="font-semibold text-zinc-900 dark:text-zinc-100">
                   {data.amount && data.currency ? formatCurrency(data.amount, data.currency) : '—'}
                 </span>
              </div>
              <div className="text-sm">
-                <span className="text-zinc-500">By:</span>{' '}
+                <span className="text-zinc-500">{t('by')}:</span>{' '}
                 <span className="font-semibold text-zinc-900 dark:text-zinc-100">
                   {formatDate(data.targetDate)}
                 </span>

@@ -73,55 +73,71 @@
       "examples": "Examples"
     },
     "step2": {
-      "title": "How much do you need?",
-      "subtitle": "Set a measurable target amount for your goal.",
+      "title": "Set your target",
+      "subtitle": "How much do you need to achieve this goal?",
       "amountLabel": "Target Amount",
-      "amountPlaceholder": "Enter amount",
+      "amountPlaceholder": "0.00",
       "amountError": "Please enter a valid amount greater than 0",
       "currencyLabel": "Currency",
-      "smartTip": "SMART Tip: Be Measurable",
-      "smartTipText": "A specific number helps you track progress and know exactly when you've achieved your goal."
+      "smartTip": "SMART Tip: Make it Measurable",
+      "smartTipText": "Giving your goal a specific dollar amount makes it real. You can't track progress towards \"saving some money\", but you can track progress towards $10,000.",
+      "quickSelect": "Quick Select"
     },
     "step3": {
-      "title": "When do you want to achieve this?",
-      "subtitle": "Set a realistic deadline for your goal.",
+      "title": "When do you need it?",
+      "subtitle": "Set a realistic deadline. A goal without a date is just a dream.",
       "dateLabel": "Target Date",
-      "dateError": "Please select a future date",
-      "timeRemaining": "{months} months away",
-      "smartTip": "SMART Tip: Be Time-bound",
-      "smartTipText": "A deadline creates urgency and helps you plan your savings strategy.",
+      "dateError": "Please select a date in the future",
+      "timeHorizon": "Time horizon: {time}",
+      "smartTip": "SMART Tip: Make it Time-bound",
+      "smartTipText": "A deadline creates a sense of urgency and helps you calculate exactly how much you need to save each month to reach your goal.",
       "quickSelect": {
+        "label": "Quick Select",
         "1year": "1 Year",
         "3years": "3 Years",
         "5years": "5 Years",
-        "10years": "10 Years"
+        "10years": "10 Years",
+        "20years": "20 Years"
       }
     },
     "step4": {
-      "title": "Which bucket does this belong to?",
-      "subtitle": "Categorize your goal based on its priority and risk level.",
-      "smartTip": "Risk Allocation",
-      "smartTipText": "The 3 Buckets methodology helps you balance safety, growth, and dreams in your financial planning."
+      "title": "Categorize your goal",
+      "subtitle": "Which bucket does this goal fit into? This helps determine the right investment strategy.",
+      "smartTip": "Why Categorize?",
+      "smartTipText": "Different goals require different investment strategies. Safety goals need low risk. Growth goals balance risk and reward. Dream goals can afford higher risk."
     },
     "step5": {
-      "title": "Why does this matter to you?",
-      "subtitle": "Connect emotionally with your goal to stay motivated.",
-      "whyLabel": "Why It Matters",
-      "whyPlaceholder": "Describe why achieving this goal is important to you personally...",
-      "whyError": "Please explain why this goal matters (at least 10 characters)",
-      "smartTip": "SMART Tip: Be Relevant",
-      "smartTipText": "Goals connected to your values and emotions are more likely to be achieved. This statement will remind you why you started.",
-      "summary": "Goal Summary",
-      "createGoal": "Create Goal"
+      "title": "Why does this matter?",
+      "subtitle": "Connect your goal to an emotional anchor. This is what will keep you going when saving gets tough.",
+      "whyLabel": "Your Motivation",
+      "whyPlaceholder": "e.g., I want to provide financial security for my family, or I want to have the freedom to travel the world.",
+      "whyError": "Please enter at least 10 characters",
+      "smartTip": "SMART Tip: Make it Relevant",
+      "smartTipText": "A relevant goal matters to you and aligns with your other relevant goals. If the goal isn't important, you won't stick to it.",
+      "examples": "Examples",
+      "example1": "To have peace of mind knowing I can handle unexpected expenses.",
+      "example2": "To build a legacy for my children and their education.",
+      "example3": "To enjoy my retirement years without financial stress.",
+      "example4": "To have the freedom to pursue my passion projects."
     },
     "validation": {
       "specific": "Specific",
+      "specificDesc": "Clear title and detailed description.",
       "measurable": "Measurable",
+      "measurableDesc": "Target of a specific amount.",
+      "measurableDescWithAmount": "Target of {amount}.",
       "achievable": "Achievable",
+      "achievableDesc": "Timeline and amount seem realistic.",
       "relevant": "Relevant",
+      "relevantDesc": "Strong personal motivation identified.",
       "timeBound": "Time-bound",
-      "complete": "Complete",
-      "incomplete": "Incomplete"
+      "timeBoundDesc": "No deadline set.",
+      "timeBoundDescWithDate": "Deadline set for {date}.",
+      "summaryTitle": "SMART Validation Summary",
+      "goalPreview": "Goal Preview",
+      "untitledGoal": "Untitled Goal",
+      "target": "Target",
+      "by": "By"
     }
   },
   "examples": {

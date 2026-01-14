@@ -73,55 +73,71 @@
       "examples": "Ejemplos"
     },
     "step2": {
-      "title": "¿Cuánto necesitas?",
-      "subtitle": "Establece un monto objetivo medible para tu meta.",
+      "title": "Define tu objetivo",
+      "subtitle": "¿Cuánto necesitas para lograr esta meta?",
       "amountLabel": "Monto Objetivo",
-      "amountPlaceholder": "Ingresa el monto",
+      "amountPlaceholder": "0.00",
       "amountError": "Por favor ingresa un monto válido mayor a 0",
       "currencyLabel": "Moneda",
-      "smartTip": "Consejo SMART: Sé Medible",
-      "smartTipText": "Un número específico te ayuda a rastrear el progreso y saber exactamente cuándo has logrado tu meta."
+      "smartTip": "Consejo SMART: Hazlo Medible",
+      "smartTipText": "Darle a tu meta un monto específico la hace real. No puedes rastrear el progreso hacia \"ahorrar algo de dinero\", pero sí puedes hacerlo hacia $10,000.",
+      "quickSelect": "Selección Rápida"
     },
     "step3": {
-      "title": "¿Cuándo quieres lograr esto?",
-      "subtitle": "Establece una fecha límite realista para tu meta.",
+      "title": "¿Cuándo lo necesitas?",
+      "subtitle": "Establece una fecha límite realista. Una meta sin fecha es solo un sueño.",
       "dateLabel": "Fecha Objetivo",
-      "dateError": "Por favor selecciona una fecha futura",
-      "timeRemaining": "{months} meses restantes",
-      "smartTip": "Consejo SMART: Con Tiempo Límite",
-      "smartTipText": "Una fecha límite crea urgencia y te ayuda a planear tu estrategia de ahorro.",
+      "dateError": "Por favor selecciona una fecha en el futuro",
+      "timeHorizon": "Horizonte de tiempo: {time}",
+      "smartTip": "Consejo SMART: Ponle Tiempo Límite",
+      "smartTipText": "Una fecha límite crea sentido de urgencia y te ayuda a calcular exactamente cuánto necesitas ahorrar cada mes para alcanzar tu meta.",
       "quickSelect": {
+        "label": "Selección Rápida",
         "1year": "1 Año",
         "3years": "3 Años",
         "5years": "5 Años",
-        "10years": "10 Años"
+        "10years": "10 Años",
+        "20years": "20 Años"
       }
     },
     "step4": {
-      "title": "¿A qué categoría pertenece?",
-      "subtitle": "Categoriza tu meta según su prioridad y nivel de riesgo.",
-      "smartTip": "Asignación de Riesgo",
-      "smartTipText": "La metodología de 3 Categorías te ayuda a balancear seguridad, crecimiento y sueños en tu planificación financiera."
+      "title": "Categoriza tu meta",
+      "subtitle": "¿En qué categoría encaja esta meta? Esto ayuda a determinar la estrategia de inversión correcta.",
+      "smartTip": "¿Por qué Categorizar?",
+      "smartTipText": "Diferentes metas requieren diferentes estrategias de inversión. Las metas de Seguridad necesitan bajo riesgo. Las metas de Crecimiento balancean riesgo y recompensa. Las metas de Sueño pueden permitirse mayor riesgo."
     },
     "step5": {
-      "title": "¿Por qué es importante para ti?",
-      "subtitle": "Conecta emocionalmente con tu meta para mantenerte motivado.",
-      "whyLabel": "Por Qué Importa",
-      "whyPlaceholder": "Describe por qué lograr esta meta es importante para ti personalmente...",
-      "whyError": "Por favor explica por qué esta meta importa (al menos 10 caracteres)",
-      "smartTip": "Consejo SMART: Sé Relevante",
-      "smartTipText": "Las metas conectadas con tus valores y emociones tienen más probabilidad de lograrse. Esta declaración te recordará por qué empezaste.",
-      "summary": "Resumen de la Meta",
-      "createGoal": "Crear Meta"
+      "title": "¿Por qué es importante?",
+      "subtitle": "Conecta tu meta con un ancla emocional. Esto es lo que te mantendrá cuando ahorrar se ponga difícil.",
+      "whyLabel": "Tu Motivación",
+      "whyPlaceholder": "ej., Quiero proveer seguridad financiera para mi familia, o quiero tener la libertad de viajar por el mundo.",
+      "whyError": "Por favor ingresa al menos 10 caracteres",
+      "smartTip": "Consejo SMART: Hazlo Relevante",
+      "smartTipText": "Una meta relevante te importa y se alinea con tus otras metas. Si la meta no es importante, no la cumplirás.",
+      "examples": "Ejemplos",
+      "example1": "Tener paz mental sabiendo que puedo manejar gastos inesperados.",
+      "example2": "Construir un legado para mis hijos y su educación.",
+      "example3": "Disfrutar mis años de retiro sin estrés financiero.",
+      "example4": "Tener la libertad de perseguir mis proyectos personales."
     },
     "validation": {
       "specific": "Específico",
+      "specificDesc": "Título claro y descripción detallada.",
       "measurable": "Medible",
+      "measurableDesc": "Objetivo de un monto específico.",
+      "measurableDescWithAmount": "Objetivo de {amount}.",
       "achievable": "Alcanzable",
+      "achievableDesc": "El tiempo y monto parecen realistas.",
       "relevant": "Relevante",
+      "relevantDesc": "Motivación personal fuerte identificada.",
       "timeBound": "Con Tiempo",
-      "complete": "Completo",
-      "incomplete": "Incompleto"
+      "timeBoundDesc": "Sin fecha límite establecida.",
+      "timeBoundDescWithDate": "Fecha límite: {date}.",
+      "summaryTitle": "Resumen de Validación SMART",
+      "goalPreview": "Vista Previa de la Meta",
+      "untitledGoal": "Meta Sin Título",
+      "target": "Objetivo",
+      "by": "Para"
     }
   },
   "examples": {

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
+import { useTranslations } from 'next-intl';
 import { Input, Label, Select } from '@/components/ui';
 import { useFormWizard } from '@/components/FormWizard';
 import { getCurrencyOptions } from '@/types';
@@ -17,8 +18,9 @@ const MIN_AMOUNT = 1;
 // =============================================================================
 
 export function StepAmountCurrency() {
+  const t = useTranslations('goalForm.step2');
   const { data, updateData, setStepValid } = useFormWizard<Partial<GoalFormInput>>();
-  
+
   // Default to 0 and USD if not set
   const amount = data.amount ?? '';
   const currency = data.currency || 'USD';
@@ -62,10 +64,10 @@ export function StepAmountCurrency() {
       {/* Header */}
       <div>
         <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-          Set your target
+          {t('title')}
         </h2>
         <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-          How much do you need to achieve this goal?
+          {t('subtitle')}
         </p>
       </div>
 
@@ -73,7 +75,7 @@ export function StepAmountCurrency() {
         {/* Currency Field */}
         <div className="space-y-2">
           <Label htmlFor="currency" required>
-            Currency
+            {t('currencyLabel')}
           </Label>
           <Select
             id="currency"
@@ -91,7 +93,7 @@ export function StepAmountCurrency() {
         {/* Amount Field */}
         <div className="space-y-2">
           <Label htmlFor="amount" required>
-            Target Amount
+            {t('amountLabel')}
           </Label>
           <div className="relative">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -102,7 +104,7 @@ export function StepAmountCurrency() {
             <Input
               id="amount"
               type="number"
-              placeholder="0.00"
+              placeholder={t('amountPlaceholder')}
               className="pl-12"
               value={amount === undefined ? '' : amount}
               onChange={handleAmountChange}
@@ -113,7 +115,7 @@ export function StepAmountCurrency() {
           </div>
           {amountError && (
             <p className="text-sm text-error">
-              Please enter a valid amount greater than 0
+              {t('amountError')}
             </p>
           )}
         </div>
@@ -139,10 +141,10 @@ export function StepAmountCurrency() {
           </div>
           <div>
             <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200">
-              SMART Tip: Make it Measurable
+              {t('smartTip')}
             </h3>
             <p className="mt-1 text-sm text-blue-700 dark:text-blue-300">
-              Giving your goal a specific dollar amount makes it real. You can&apos;t track progress towards &quot;saving some money&quot;, but you can track progress towards $10,000.
+              {t('smartTipText')}
             </p>
           </div>
         </div>
@@ -151,7 +153,7 @@ export function StepAmountCurrency() {
       {/* Quick Select Buttons */}
       <div className="space-y-2">
         <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">
-          Quick Select
+          {t('quickSelect')}
         </p>
         <div className="flex flex-wrap gap-2">
           {[1000, 5000, 10000, 25000, 50000, 100000].map((val) => (

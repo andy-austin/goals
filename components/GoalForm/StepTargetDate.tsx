@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
+import { useTranslations } from 'next-intl';
 import { Input, Label } from '@/components/ui';
 import { useFormWizard } from '@/components/FormWizard';
 import type { GoalFormInput } from '@/types';
@@ -16,6 +17,7 @@ const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 // =============================================================================
 
 export function StepTargetDate() {
+  const t = useTranslations('goalForm.step3');
   const { data, updateData, setStepValid } = useFormWizard<Partial<GoalFormInput>>();
 
   const targetDate = data.targetDate || '';
@@ -81,17 +83,17 @@ export function StepTargetDate() {
       {/* Header */}
       <div>
         <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-          When do you need it?
+          {t('title')}
         </h2>
         <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-          Set a realistic deadline. A goal without a date is just a dream.
+          {t('subtitle')}
         </p>
       </div>
 
       {/* Date Input */}
       <div className="space-y-2">
         <Label htmlFor="targetDate" required>
-          Target Date
+          {t('dateLabel')}
         </Label>
         <Input
           id="targetDate"
@@ -103,12 +105,12 @@ export function StepTargetDate() {
         />
         {targetDate && targetDate < today && (
           <p className="text-sm text-error">
-            Please select a date in the future
+            {t('dateError')}
           </p>
         )}
         {isValid && timeRemaining && (
           <p className="text-sm text-success">
-            Time horizon: {timeRemaining}
+            {t('timeHorizon', { time: timeRemaining })}
           </p>
         )}
       </div>
@@ -116,7 +118,7 @@ export function StepTargetDate() {
       {/* Quick Select Buttons */}
       <div className="space-y-2">
         <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">
-          Quick Select
+          {t('quickSelect.label')}
         </p>
         <div className="flex flex-wrap gap-2">
           {[1, 3, 5, 10, 20].map((years) => (
@@ -126,7 +128,7 @@ export function StepTargetDate() {
               onClick={() => setQuickDate(years)}
               className="rounded-full border border-zinc-200 px-3 py-1 text-sm text-zinc-600 transition-colors hover:border-primary hover:text-primary dark:border-zinc-800 dark:text-zinc-400 dark:hover:border-primary dark:hover:text-primary"
             >
-              {years} Year{years > 1 ? 's' : ''}
+              {t(`quickSelect.${years}year${years > 1 ? 's' : ''}`)}
             </button>
           ))}
         </div>
@@ -152,10 +154,10 @@ export function StepTargetDate() {
           </div>
           <div>
             <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200">
-              SMART Tip: Make it Time-bound
+              {t('smartTip')}
             </h3>
             <p className="mt-1 text-sm text-blue-700 dark:text-blue-300">
-              A deadline creates a sense of urgency and helps you calculate exactly how much you need to save each month to reach your goal.
+              {t('smartTipText')}
             </p>
           </div>
         </div>
