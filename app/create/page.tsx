@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { FormWizard, FormStep, useFormWizard, StepTitleDescription, StepAmountCurrency, StepTargetDate } from '@/components';
+import { FormWizard, FormStep, useFormWizard, StepTitleDescription, StepAmountCurrency, StepTargetDate, StepBucket } from '@/components';
 import { useGoals } from '@/context';
 import type { GoalFormInput } from '@/types';
 
@@ -104,11 +104,8 @@ export default function CreateGoalPage() {
           <StepTargetDate />
         </FormStep>
 
-        <FormStep step={3} isValid={true}>
-          <StepPlaceholder
-            title="Step 4: Category"
-            description="Categorize your goal into Safety, Growth, or Dream bucket."
-          />
+        <FormStep step={3}>
+          <StepBucket />
         </FormStep>
 
         <FormStep step={4} isValid={true}>

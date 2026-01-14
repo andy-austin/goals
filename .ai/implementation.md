@@ -20,7 +20,6 @@ This document tracks the implementation progress of the Investment Goals applica
 - Issue #7: Implement Step 1: Goal title and description
 
 ### Remaining for Milestone 2
-- Issue #10: Implement Step 4: Bucket selection
 - Issue #11: Implement Step 5: Why it matters and final validation
 - Issue #12: Add SMART validation logic
 - Issue #13: Add form progress indicator
@@ -28,6 +27,20 @@ This document tracks the implementation progress of the Investment Goals applica
 ---
 
 ## Completed Features
+
+### Issue #10: Implement Step 4: Bucket Selection
+**Status:** Completed
+**Files:**
+- `components/GoalForm/StepBucket.tsx` - Step 4 form component
+- `components/GoalForm/index.ts` - Updated exports
+- `app/create/page.tsx` - Updated to use new step component
+
+**Features Implemented:**
+- Interactive bucket selection cards (Safety, Growth, Dream)
+- Dynamic styling based on bucket colors
+- Integrated description and icons for each bucket
+- Real-time validation (requires selection)
+- Educational tip explaining the "Risk Allocation" concept
 
 ### Issue #9: Implement Step 3: Target Date Selection
 **Status:** Completed
