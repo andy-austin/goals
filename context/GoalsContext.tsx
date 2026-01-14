@@ -6,6 +6,8 @@ import {
   useReducer,
   useCallback,
   useMemo,
+  useEffect,
+  useRef,
   type ReactNode,
 } from 'react';
 import type {
@@ -14,6 +16,7 @@ import type {
   CreateGoalInput,
   GoalsByBucket,
 } from '@/types';
+import { loadGoals, saveGoals } from '@/lib';
 
 // =============================================================================
 // Types
@@ -139,6 +142,23 @@ interface GoalsProviderProps {
 
 export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProps) {
   const [state, dispatch] = useReducer(goalsReducer, { goals: initialGoals });
+  const isHydrated = useRef(false);
+
+  // Load goals from localStorage on mount (client-side only)
+  useEffect(() => {
+    const storedGoals = loadGoals();
+    if (storedGoals.length > 0) {
+      dispatch({ type: 'SET_GOALS', payload: storedGoals });
+    }
+    isHydrated.current = true;
+  }, []);
+
+  // Persist goals to localStorage whenever state changes (after hydration)
+  useEffect(() => {
+    if (isHydrated.current) {
+      saveGoals(state.goals);
+    }
+  }, [state.goals]);
 
   const addGoal = useCallback((input: CreateGoalInput): Goal => {
     const newGoal: Goal = {

@@ -9,14 +9,15 @@ This document tracks the implementation progress of the Investment Goals applica
 
 ## Current Development Status
 
-**Milestone 1: Project Setup & Foundation** - IN PROGRESS (3/5 issues completed)
+**Milestone 1: Project Setup & Foundation** - IN PROGRESS (4/5 issues completed)
 
 ### Completed in This Session
 - Issue #3: Create base layout and navigation
 - Issue #4: Set up design tokens and theme
+- Issue #5: Configure local storage persistence
 
 ### Remaining for Milestone 1
-- Issue #5: (check GitHub for details)
+- Check GitHub for any remaining issues
 
 ---
 
@@ -172,6 +173,39 @@ Uses native `Intl.NumberFormat` - no external library needed.
 
 ---
 
+### Issue #5: Configure Local Storage Persistence
+**Status:** Completed
+**Files:**
+- `lib/storage.ts` - Storage utilities for localStorage operations
+- `lib/index.ts` - Central export for lib utilities
+- `context/GoalsContext.tsx` - Updated to load/save from localStorage
+
+**Features Implemented:**
+- Goals persist to localStorage on every state change
+- Goals load from localStorage on app initialization
+- Proper date serialization/deserialization (ISO strings)
+- Graceful error handling for storage failures
+- Schema versioning for future migrations
+- Storage size monitoring (warns at 4MB)
+
+**Storage Implementation:**
+
+| Function | Description | Location |
+|----------|-------------|----------|
+| `loadGoals()` | Load goals from localStorage, returns empty array on error | `lib/storage.ts:54` |
+| `saveGoals()` | Save goals to localStorage, returns success boolean | `lib/storage.ts:98` |
+| `clearGoals()` | Remove all goals from localStorage | `lib/storage.ts:128` |
+| `isStorageAvailable()` | Check if localStorage is available | `lib/storage.ts:140` |
+
+**Storage Details:**
+- Storage key: `investment-goals-v1`
+- Schema version: 1 (for migration support)
+- Handles SSR gracefully (no-op on server)
+- Validates data structure on load
+- Skips corrupted goals while preserving valid ones
+
+---
+
 ## Project Structure
 
 ```
@@ -198,8 +232,11 @@ goals/
 │   ├── Header.tsx            # App header with navigation
 │   └── index.ts              # Central component exports
 ├── context/
-│   ├── GoalsContext.tsx      # Goals state management
+│   ├── GoalsContext.tsx      # Goals state management with persistence
 │   └── index.ts              # Central context exports
+├── lib/
+│   ├── storage.ts            # localStorage persistence utilities
+│   └── index.ts              # Central lib exports
 ├── types/
 │   ├── goal.ts               # Goal-related types and constants
 │   └── index.ts              # Central type exports
@@ -210,9 +247,10 @@ goals/
 
 ## Usage Examples
 
-### Importing Types
+### Importing Types and Utilities
 ```typescript
 import { Goal, Bucket, Currency, BUCKET_CONFIG, formatCurrency } from '@/types';
+import { loadGoals, saveGoals, isStorageAvailable } from '@/lib';
 
 // Or import specific items
 import { Goal, CreateGoalInput, GoalWithMeta } from '@/types/goal';
@@ -300,6 +338,27 @@ getCurrencyName('UYU', 'es');           // 'peso uruguayo'
 getCurrencyOptions();  // [{ code: 'USD', name: 'US Dollar' }, ...]
 ```
 
+### Using Storage Utilities (optional, auto-managed by context)
+```typescript
+import { loadGoals, saveGoals, clearGoals, isStorageAvailable } from '@/lib';
+
+// Check if localStorage is available
+if (isStorageAvailable()) {
+  // Load goals from storage
+  const goals = loadGoals();
+
+  // Save goals to storage
+  const success = saveGoals(goals);
+
+  // Clear all goals
+  clearGoals();
+}
+```
+
+Note: You typically don't need to call these directly - the GoalsContext handles persistence automatically.
+
+---
+
 ### Using Goals State (useGoals hook)
 ```typescript
 'use client';
@@ -375,6 +434,7 @@ See GitHub Issues for full backlog:
 ## Git History (Recent)
 
 ```
+b62a530 Configure local storage persistence (Issue #5)
 c82754a Set up design tokens and theme system (Issue #4)
 43c6978 Create base layout and navigation (Issue #3)
 db610ed Set up state management for goals (Issue #2)
