@@ -16,3 +16,13 @@ export {
   Badge,
   BucketBadge,
 } from './ui';
+
+// Form Wizard Components
+export {
+  FormWizard,
+  FormStep,
+  StepIndicator,
+  FormWizardNav,
+  FormWizardProvider,
+  useFormWizard,
+} from './FormWizard';

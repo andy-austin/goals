@@ -9,15 +9,23 @@ This document tracks the implementation progress of the Investment Goals applica
 
 ## Current Development Status
 
-**Milestone 1: Project Setup & Foundation** - IN PROGRESS (4/5 issues completed)
+**Milestone 1: Project Setup & Foundation** - COMPLETE (5/5 issues completed)
+**Milestone 2: Goal Creation Flow** - IN PROGRESS (1/8 issues completed)
 
 ### Completed in This Session
 - Issue #3: Create base layout and navigation
 - Issue #4: Set up design tokens and theme
 - Issue #5: Configure local storage persistence
+- Issue #6: Create multi-step form wizard component
 
-### Remaining for Milestone 1
-- Check GitHub for any remaining issues
+### Remaining for Milestone 2
+- Issue #7: Implement Step 1: Goal title and description
+- Issue #8: Implement Step 2: Amount and currency
+- Issue #9: Implement Step 3: Target date selection
+- Issue #10: Implement Step 4: Bucket selection
+- Issue #11: Implement Step 5: Why it matters and final validation
+- Issue #12: Add SMART validation logic
+- Issue #13: Add form progress indicator
 
 ---
 
@@ -206,6 +214,55 @@ Uses native `Intl.NumberFormat` - no external library needed.
 
 ---
 
+### Issue #6: Create Multi-Step Form Wizard Component
+**Status:** Completed
+**Files:**
+- `components/FormWizard/FormWizardContext.tsx` - Context and state management
+- `components/FormWizard/FormWizard.tsx` - Main wrapper component
+- `components/FormWizard/FormStep.tsx` - Step wrapper component
+- `components/FormWizard/StepIndicator.tsx` - Progress indicator
+- `components/FormWizard/FormWizardNav.tsx` - Navigation buttons
+- `components/FormWizard/index.ts` - Central exports
+- `app/create/page.tsx` - Updated with wizard implementation
+
+**Features Implemented:**
+- Step indicator showing current step and total steps
+- Navigation (Next, Back buttons)
+- Form state preserved across steps via React Context
+- Validation support before proceeding to next step
+- Responsive design (mobile progress bar, desktop step dots)
+- Animated transitions between steps
+
+**Components:**
+
+| Component | Description |
+|-----------|-------------|
+| `FormWizard` | Main wrapper that provides context and layout |
+| `FormStep` | Wrapper for individual step content, handles visibility |
+| `StepIndicator` | Visual progress indicator (dots on desktop, bar on mobile) |
+| `FormWizardNav` | Navigation buttons with validation support |
+| `FormWizardProvider` | Context provider for wizard state |
+| `useFormWizard` | Hook to access wizard state and actions |
+
+**Hook API (useFormWizard):**
+
+| Property/Method | Type | Description |
+|-----------------|------|-------------|
+| `currentStep` | `number` | Current step index (0-based) |
+| `totalSteps` | `number` | Total number of steps |
+| `data` | `Partial<T>` | Accumulated form data |
+| `isFirstStep` | `boolean` | Whether on first step |
+| `isLastStep` | `boolean` | Whether on last step |
+| `isCurrentStepValid` | `boolean` | Current step validation state |
+| `nextStep()` | `() => void` | Go to next step |
+| `prevStep()` | `() => void` | Go to previous step |
+| `goToStep(n)` | `(n: number) => void` | Go to specific step |
+| `updateData(d)` | `(d: Partial<T>) => void` | Update form data |
+| `setStepValid(v)` | `(v: boolean) => void` | Set step validation |
+| `reset()` | `() => void` | Reset wizard to initial state |
+
+---
+
 ## Project Structure
 
 ```
@@ -223,6 +280,13 @@ goals/
 │   ├── page.tsx              # Dashboard home page
 │   └── providers.tsx         # Client-side providers wrapper
 ├── components/
+│   ├── FormWizard/
+│   │   ├── FormWizard.tsx        # Main wizard wrapper component
+│   │   ├── FormWizardContext.tsx # Context and state management
+│   │   ├── FormWizardNav.tsx     # Navigation buttons
+│   │   ├── FormStep.tsx          # Step wrapper component
+│   │   ├── StepIndicator.tsx     # Progress indicator
+│   │   └── index.ts              # FormWizard exports
 │   ├── ui/
 │   │   ├── Badge.tsx         # Badge and BucketBadge components
 │   │   ├── Button.tsx        # Button component
@@ -277,6 +341,60 @@ import { Button, Card, CardContent, Badge, BucketBadge } from '@/components';
 <BucketBadge bucket="safety" />  // Shows "Safety" with shield icon
 <BucketBadge bucket="growth" />  // Shows "Growth" with trending-up icon
 <BucketBadge bucket="dream" />   // Shows "Dream" with star icon
+```
+
+### Using the Form Wizard
+```typescript
+'use client';
+
+import { FormWizard, FormStep, useFormWizard } from '@/components';
+
+interface MyFormData {
+  name: string;
+  email: string;
+}
+
+const STEPS = [
+  { label: 'Name' },
+  { label: 'Email' },
+];
+
+// Step component with validation
+function NameStep() {
+  const { data, updateData, setStepValid } = useFormWizard<MyFormData>();
+
+  useEffect(() => {
+    setStepValid(data.name?.length >= 2);
+  }, [data.name, setStepValid]);
+
+  return (
+    <Input
+      value={data.name || ''}
+      onChange={(e) => updateData({ name: e.target.value })}
+    />
+  );
+}
+
+// Main form
+function MyForm() {
+  const handleComplete = (data: MyFormData) => {
+    console.log('Form completed:', data);
+  };
+
+  return (
+    <FormWizard<MyFormData>
+      steps={STEPS}
+      onComplete={handleComplete}
+    >
+      <FormStep step={0}>
+        <NameStep />
+      </FormStep>
+      <FormStep step={1}>
+        <EmailStep />
+      </FormStep>
+    </FormWizard>
+  );
+}
 ```
 
 ### Using Design Tokens
@@ -424,17 +542,18 @@ See GitHub Issues for full backlog:
 
 ## Next Steps (Suggested)
 
-1. **Complete Milestone 1** - Check remaining issues in the milestone
-2. **Goal Creation Flow** (Milestone 2) - Multi-step form wizard
-3. **AI Integration** (Milestone 3) - Claude API for suggestions
-4. **Templates** (Milestone 4) - Pre-defined goal templates
+1. **Complete Milestone 2** - Implement form steps (Issues #7-13)
+2. **AI Integration** (Milestone 3) - Claude API for suggestions
+3. **Templates** (Milestone 4) - Pre-defined goal templates
+4. **Prioritization UI** (Milestone 5) - Drag-and-drop reordering
 
 ---
 
 ## Git History (Recent)
 
 ```
-b62a530 Configure local storage persistence (Issue #5)
+fe0dfd8 Create multi-step form wizard component (Issue #6)
+30cbc77 Configure local storage persistence (Issue #5)
 c82754a Set up design tokens and theme system (Issue #4)
 43c6978 Create base layout and navigation (Issue #3)
 db610ed Set up state management for goals (Issue #2)
