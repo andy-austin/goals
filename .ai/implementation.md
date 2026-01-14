@@ -3,7 +3,7 @@
 This document tracks the implementation progress of the Investment Goals application.
 
 ## Last Updated
-2026-01-13
+2026-01-14
 
 ---
 
@@ -20,7 +20,6 @@ This document tracks the implementation progress of the Investment Goals applica
 - Issue #7: Implement Step 1: Goal title and description
 
 ### Remaining for Milestone 2
-- Issue #8: Implement Step 2: Amount and currency
 - Issue #9: Implement Step 3: Target date selection
 - Issue #10: Implement Step 4: Bucket selection
 - Issue #11: Implement Step 5: Why it matters and final validation
@@ -30,6 +29,21 @@ This document tracks the implementation progress of the Investment Goals applica
 ---
 
 ## Completed Features
+
+### Issue #8: Implement Step 2: Amount and Currency
+**Status:** Completed
+**Files:**
+- `components/GoalForm/StepAmountCurrency.tsx` - Step 2 form component
+- `components/GoalForm/index.ts` - Updated exports
+- `app/create/page.tsx` - Updated to use new step component
+
+**Features Implemented:**
+- Amount input with currency validation
+- Currency selection dropdown (defaults to USD)
+- Quick select buttons for common amounts
+- Real-time validation (amount > 0)
+- Visual currency prefix in input
+- SMART tip explaining the "Measurable" criterion
 
 ### Issue #1: Goal Data Model and TypeScript Types
 **Status:** Completed

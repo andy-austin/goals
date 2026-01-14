@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { FormWizard, FormStep, useFormWizard, StepTitleDescription } from '@/components';
+import { FormWizard, FormStep, useFormWizard, StepTitleDescription, StepAmountCurrency } from '@/components';
 import { useGoals } from '@/context';
 import type { GoalFormInput } from '@/types';
 
@@ -26,9 +26,9 @@ function StepPlaceholder({ title, description }: { title: string; description: s
   const { setStepValid } = useFormWizard();
 
   // For now, mark all steps as valid for testing navigation
-  useState(() => {
+  useEffect(() => {
     setStepValid(true);
-  });
+  }, [setStepValid]);
 
   return (
     <div className="py-8 text-center">
@@ -96,11 +96,8 @@ export default function CreateGoalPage() {
           <StepTitleDescription />
         </FormStep>
 
-        <FormStep step={1} isValid={true}>
-          <StepPlaceholder
-            title="Step 2: Target Amount"
-            description="Set your target amount and currency."
-          />
+        <FormStep step={1}>
+          <StepAmountCurrency />
         </FormStep>
 
         <FormStep step={2} isValid={true}>
