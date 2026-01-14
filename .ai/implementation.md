@@ -19,12 +19,56 @@ This document tracks the implementation progress of the Investment Goals applica
 - Issue #6: Create multi-step form wizard component
 - Issue #7: Implement Step 1: Goal title and description
 - Issue #13: Add form progress indicator (accessibility enhancements)
+- Issue #35: Set up internationalization (i18n) with Spanish and English support
 
 ### Milestone 2 Complete
 
 ---
 
 ## Completed Features
+
+### Issue #35: Set Up Internationalization (i18n)
+**Status:** Completed
+**Files:**
+- `messages/en.json` - English translations
+- `messages/es.json` - Spanish translations
+- `i18n/config.ts` - Locale configuration
+- `i18n/request.ts` - Server-side locale detection
+- `i18n/index.ts` - i18n exports
+- `app/actions/locale.ts` - Server action for changing locale
+- `app/layout.tsx` - Updated with NextIntlClientProvider
+- `next.config.ts` - Updated with next-intl plugin
+- `components/LanguageSwitcher.tsx` - Language selector dropdown
+- `components/Header.tsx` - Updated with translations and language switcher
+- `app/page.tsx` - Dashboard page with translations
+
+**Features Implemented:**
+- Full Spanish and English translation support
+- Cookie-based locale persistence (1 year expiry)
+- Language switcher in header (desktop and mobile)
+- Dashboard page fully translated
+- Navigation labels translated
+- Bucket names and descriptions translated
+- Goal form step translations ready
+
+**Translation Structure:**
+| Namespace | Description |
+|-----------|-------------|
+| `common` | Shared strings (save, cancel, etc.) |
+| `nav` | Navigation labels |
+| `dashboard` | Dashboard page strings |
+| `buckets` | Bucket names and descriptions |
+| `goalForm` | Form wizard and step translations |
+| `examples` | Goal example templates |
+| `language` | Language selector labels |
+
+**Technical Details:**
+- Uses `next-intl` for App Router
+- Non-URL-based routing (cookie-based locale)
+- Server-side locale detection via cookies
+- Client-side locale switching without page refresh
+
+---
 
 ### Issue #13: Add Form Progress Indicator
 **Status:** Completed
@@ -385,7 +429,16 @@ goals/
 ├── .ai/
 │   ├── prd.md                # Product Requirements Document
 │   └── implementation.md     # This file - implementation tracking
+├── messages/
+│   ├── en.json               # English translations
+│   └── es.json               # Spanish translations
+├── i18n/
+│   ├── config.ts             # Locale configuration (locales, defaultLocale)
+│   ├── request.ts            # Server-side request config for next-intl
+│   └── index.ts              # i18n exports
 ├── app/
+│   ├── actions/
+│   │   └── locale.ts         # Server action for locale switching
 │   ├── create/
 │   │   └── page.tsx          # Goal creation page (placeholder)
 │   ├── timeline/
@@ -412,6 +465,7 @@ goals/
 │   │   ├── Input.tsx         # Form input components
 │   │   └── index.ts          # UI component exports
 │   ├── Header.tsx            # App header with navigation
+│   ├── LanguageSwitcher.tsx  # Language selector dropdown
 │   └── index.ts              # Central component exports
 ├── context/
 │   ├── GoalsContext.tsx      # Goals state management with persistence

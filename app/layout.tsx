@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale, getMessages } from 'next-intl/server';
 import { Providers } from "./providers";
 import { Header } from "@/components";
 import "./globals.css";
@@ -19,24 +21,29 @@ export const metadata: Metadata = {
   description: "Define and prioritize your financial goals using the SMART framework",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Providers>
-          <div className="flex min-h-screen flex-col bg-zinc-50 dark:bg-zinc-950">
-            <Header />
-            <main className="flex-1">
-              {children}
-            </main>
-          </div>
-        </Providers>
+        <NextIntlClientProvider messages={messages}>
+          <Providers>
+            <div className="flex min-h-screen flex-col bg-zinc-50 dark:bg-zinc-950">
+              <Header />
+              <main className="flex-1">
+                {children}
+              </main>
+            </div>
+          </Providers>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

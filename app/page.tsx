@@ -1,11 +1,14 @@
 'use client';
 
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useGoals } from '@/context';
 import { Button, Card, CardContent, BucketBadge } from '@/components';
 import { BUCKET_CONFIG, formatCurrency, type Bucket } from '@/types';
 
 export default function DashboardPage() {
+  const t = useTranslations('dashboard');
+  const tBuckets = useTranslations('buckets');
   const { goals, totalGoals, totalAmount, getAllGoalsByBucket } = useGoals();
   const goalsByBucket = getAllGoalsByBucket();
 
@@ -16,10 +19,10 @@ export default function DashboardPage() {
       {/* Page Header */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-foreground">
-          Dashboard
+          {t('title')}
         </h1>
         <p className="mt-2 text-muted-foreground">
-          Track and manage your investment goals.
+          {t('subtitle')}
         </p>
       </div>
 
@@ -27,13 +30,13 @@ export default function DashboardPage() {
       <div className="mb-8 grid gap-4 sm:grid-cols-3">
         <Card>
           <CardContent>
-            <p className="text-sm font-medium text-muted-foreground">Total Goals</p>
+            <p className="text-sm font-medium text-muted-foreground">{t('stats.totalGoals')}</p>
             <p className="mt-1 text-2xl font-semibold text-foreground">{totalGoals}</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent>
-            <p className="text-sm font-medium text-muted-foreground">Total Target</p>
+            <p className="text-sm font-medium text-muted-foreground">{t('stats.totalTarget')}</p>
             <p className="mt-1 text-2xl font-semibold text-foreground">
               {formatCurrency(totalAmount, currency)}
             </p>
@@ -41,7 +44,7 @@ export default function DashboardPage() {
         </Card>
         <Card>
           <CardContent>
-            <p className="text-sm font-medium text-muted-foreground">Buckets</p>
+            <p className="text-sm font-medium text-muted-foreground">{t('stats.buckets')}</p>
             <p className="mt-1 text-2xl font-semibold text-foreground">3</p>
           </CardContent>
         </Card>
@@ -63,12 +66,12 @@ export default function DashboardPage() {
               d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
             />
           </svg>
-          <h3 className="mt-4 text-lg font-medium text-foreground">No goals yet</h3>
+          <h3 className="mt-4 text-lg font-medium text-foreground">{t('empty.title')}</h3>
           <p className="mt-2 text-muted-foreground">
-            Get started by creating your first investment goal.
+            {t('empty.description')}
           </p>
           <Link href="/create" className="mt-4 inline-block">
-            <Button>Create Goal</Button>
+            <Button>{t('empty.cta')}</Button>
           </Link>
         </Card>
       ) : (
@@ -88,16 +91,16 @@ export default function DashboardPage() {
                     style={{ backgroundColor: config.colorVar }}
                   />
                   <h2 className="font-medium text-foreground">
-                    {config.label}
+                    {tBuckets(`${bucket}.name`)}
                   </h2>
                   <span className="ml-auto text-sm text-muted-foreground">
-                    {bucketGoals.length} goals
+                    {bucketGoals.length} {t('goalsCount')}
                   </span>
                 </div>
                 <div className="divide-y divide-border">
                   {bucketGoals.length === 0 ? (
                     <p className="px-4 py-6 text-center text-sm text-muted-foreground">
-                      No {bucket} goals yet
+                      {t('noBucketGoals', { bucket: tBuckets(`${bucket}.name`).toLowerCase() })}
                     </p>
                   ) : (
                     bucketGoals.map((goal) => (
@@ -125,10 +128,10 @@ export default function DashboardPage() {
       {totalGoals > 0 && (
         <div className="mt-8 flex justify-center gap-4">
           <Link href="/create">
-            <Button>Add Goal</Button>
+            <Button>{t('actions.addGoal')}</Button>
           </Link>
           <Link href="/timeline">
-            <Button variant="secondary">View Timeline</Button>
+            <Button variant="secondary">{t('actions.viewTimeline')}</Button>
           </Link>
         </div>
       )}

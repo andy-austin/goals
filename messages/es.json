@@ -1,0 +1,146 @@
+{
+  "common": {
+    "appName": "Metas de Inversión",
+    "loading": "Cargando...",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "create": "Crear",
+    "delete": "Eliminar",
+    "edit": "Editar"
+  },
+  "nav": {
+    "dashboard": "Panel",
+    "createGoal": "Crear Meta",
+    "timeline": "Línea de Tiempo"
+  },
+  "dashboard": {
+    "title": "Panel",
+    "subtitle": "Rastrea y gestiona tus metas de inversión.",
+    "stats": {
+      "totalGoals": "Total de Metas",
+      "totalTarget": "Objetivo Total",
+      "buckets": "Categorías"
+    },
+    "empty": {
+      "title": "Sin metas todavía",
+      "description": "Comienza creando tu primera meta de inversión.",
+      "cta": "Crear Meta"
+    },
+    "goalsCount": "metas",
+    "noBucketGoals": "Sin metas de {bucket} todavía",
+    "actions": {
+      "addGoal": "Agregar Meta",
+      "viewTimeline": "Ver Línea de Tiempo"
+    }
+  },
+  "buckets": {
+    "safety": {
+      "name": "Seguridad",
+      "description": "Metas urgentes y no negociables como fondos de emergencia"
+    },
+    "growth": {
+      "name": "Crecimiento",
+      "description": "Metas que mejoran tu nivel de vida"
+    },
+    "dream": {
+      "name": "Sueño",
+      "description": "Metas aspiracionales que puedes arriesgar"
+    }
+  },
+  "goalForm": {
+    "createTitle": "Crear una Nueva Meta",
+    "createSubtitle": "Define tu meta de inversión usando el marco SMART.",
+    "steps": {
+      "details": "Detalles",
+      "amount": "Monto",
+      "date": "Fecha",
+      "category": "Categoría",
+      "why": "Por qué"
+    },
+    "step1": {
+      "title": "¿Cuál es tu meta?",
+      "subtitle": "Sé específico sobre lo que quieres lograr. Una meta clara es el primer paso hacia el éxito.",
+      "titleLabel": "Título de la Meta",
+      "titlePlaceholder": "ej., Enganche de Casa, Fondo de Emergencia, Vacaciones Soñadas",
+      "titleError": "Por favor ingresa un título (al menos 3 caracteres)",
+      "descriptionLabel": "Descripción",
+      "descriptionPlaceholder": "Describe tu meta en detalle. ¿Qué exactamente quieres lograr? Entre más específico, mejor.",
+      "descriptionError": "Por favor sé específico sobre tu meta (al menos 20 caracteres)",
+      "smartTip": "Consejo SMART: Sé Específico",
+      "smartTipText": "En lugar de \"ahorrar dinero\", intenta \"Ahorrar $50,000 para el enganche de una casa de 3 recámaras en Austin\". Las metas específicas son más fáciles de planear y rastrear.",
+      "examples": "Ejemplos"
+    },
+    "step2": {
+      "title": "¿Cuánto necesitas?",
+      "subtitle": "Establece un monto objetivo medible para tu meta.",
+      "amountLabel": "Monto Objetivo",
+      "amountPlaceholder": "Ingresa el monto",
+      "amountError": "Por favor ingresa un monto válido mayor a 0",
+      "currencyLabel": "Moneda",
+      "smartTip": "Consejo SMART: Sé Medible",
+      "smartTipText": "Un número específico te ayuda a rastrear el progreso y saber exactamente cuándo has logrado tu meta."
+    },
+    "step3": {
+      "title": "¿Cuándo quieres lograr esto?",
+      "subtitle": "Establece una fecha límite realista para tu meta.",
+      "dateLabel": "Fecha Objetivo",
+      "dateError": "Por favor selecciona una fecha futura",
+      "timeRemaining": "{months} meses restantes",
+      "smartTip": "Consejo SMART: Con Tiempo Límite",
+      "smartTipText": "Una fecha límite crea urgencia y te ayuda a planear tu estrategia de ahorro.",
+      "quickSelect": {
+        "1year": "1 Año",
+        "3years": "3 Años",
+        "5years": "5 Años",
+        "10years": "10 Años"
+      }
+    },
+    "step4": {
+      "title": "¿A qué categoría pertenece?",
+      "subtitle": "Categoriza tu meta según su prioridad y nivel de riesgo.",
+      "smartTip": "Asignación de Riesgo",
+      "smartTipText": "La metodología de 3 Categorías te ayuda a balancear seguridad, crecimiento y sueños en tu planificación financiera."
+    },
+    "step5": {
+      "title": "¿Por qué es importante para ti?",
+      "subtitle": "Conecta emocionalmente con tu meta para mantenerte motivado.",
+      "whyLabel": "Por Qué Importa",
+      "whyPlaceholder": "Describe por qué lograr esta meta es importante para ti personalmente...",
+      "whyError": "Por favor explica por qué esta meta importa (al menos 10 caracteres)",
+      "smartTip": "Consejo SMART: Sé Relevante",
+      "smartTipText": "Las metas conectadas con tus valores y emociones tienen más probabilidad de lograrse. Esta declaración te recordará por qué empezaste.",
+      "summary": "Resumen de la Meta",
+      "createGoal": "Crear Meta"
+    },
+    "validation": {
+      "specific": "Específico",
+      "measurable": "Medible",
+      "achievable": "Alcanzable",
+      "relevant": "Relevante",
+      "timeBound": "Con Tiempo",
+      "complete": "Completo",
+      "incomplete": "Incompleto"
+    }
+  },
+  "examples": {
+    "emergencyFund": {
+      "title": "Fondo de Emergencia",
+      "description": "Construir un colchón financiero que cubra 6 meses de gastos para situaciones inesperadas"
+    },
+    "houseDownPayment": {
+      "title": "Enganche de Casa",
+      "description": "Ahorrar 20% de enganche para una casa de 3 recámaras en los suburbios en 3 años"
+    },
+    "dreamVacation": {
+      "title": "Vacaciones Soñadas",
+      "description": "Planear y ahorrar para un viaje de 2 semanas a Japón incluyendo vuelos, hoteles y experiencias"
+    }
+  },
+  "language": {
+    "select": "Idioma",
+    "en": "Inglés",
+    "es": "Español"
+  }
+}

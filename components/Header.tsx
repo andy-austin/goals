@@ -3,16 +3,19 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-
-const navItems = [
-  { href: '/', label: 'Dashboard' },
-  { href: '/create', label: 'Create Goal' },
-  { href: '/timeline', label: 'Timeline' },
-];
+import { useTranslations } from 'next-intl';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 export function Header() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const t = useTranslations('nav');
+
+  const navItems = [
+    { href: '/', label: t('dashboard') },
+    { href: '/create', label: t('createGoal') },
+    { href: '/timeline', label: t('timeline') },
+  ];
 
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
@@ -55,6 +58,9 @@ export function Header() {
               </Link>
             );
           })}
+          <div className="ml-2 border-l border-zinc-200 pl-2 dark:border-zinc-700">
+            <LanguageSwitcher />
+          </div>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -97,6 +103,9 @@ export function Header() {
               </Link>
             );
           })}
+          <div className="mt-2 border-t border-zinc-200 pt-2 dark:border-zinc-700">
+            <LanguageSwitcher />
+          </div>
         </nav>
       )}
     </header>

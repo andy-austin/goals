@@ -1,4 +1,5 @@
 export { Header } from './Header';
+export { LanguageSwitcher } from './LanguageSwitcher';
 
 // UI Components
 export {

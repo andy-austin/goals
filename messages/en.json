@@ -1,0 +1,146 @@
+{
+  "common": {
+    "appName": "Investment Goals",
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "back": "Back",
+    "next": "Next",
+    "create": "Create",
+    "delete": "Delete",
+    "edit": "Edit"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "createGoal": "Create Goal",
+    "timeline": "Timeline"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Track and manage your investment goals.",
+    "stats": {
+      "totalGoals": "Total Goals",
+      "totalTarget": "Total Target",
+      "buckets": "Buckets"
+    },
+    "empty": {
+      "title": "No goals yet",
+      "description": "Get started by creating your first investment goal.",
+      "cta": "Create Goal"
+    },
+    "goalsCount": "goals",
+    "noBucketGoals": "No {bucket} goals yet",
+    "actions": {
+      "addGoal": "Add Goal",
+      "viewTimeline": "View Timeline"
+    }
+  },
+  "buckets": {
+    "safety": {
+      "name": "Safety",
+      "description": "Non-negotiable, urgent goals like emergency funds"
+    },
+    "growth": {
+      "name": "Growth",
+      "description": "Goals that improve your standard of living"
+    },
+    "dream": {
+      "name": "Dream",
+      "description": "Aspirational goals you can afford to risk"
+    }
+  },
+  "goalForm": {
+    "createTitle": "Create a New Goal",
+    "createSubtitle": "Define your investment goal using the SMART framework.",
+    "steps": {
+      "details": "Details",
+      "amount": "Amount",
+      "date": "Date",
+      "category": "Category",
+      "why": "Why"
+    },
+    "step1": {
+      "title": "What's your goal?",
+      "subtitle": "Be specific about what you want to achieve. A clear goal is the first step to success.",
+      "titleLabel": "Goal Title",
+      "titlePlaceholder": "e.g., House Down Payment, Emergency Fund, Dream Vacation",
+      "titleError": "Please enter a goal title (at least 3 characters)",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Describe your goal in detail. What exactly do you want to achieve? The more specific, the better.",
+      "descriptionError": "Please be specific about your goal (at least 20 characters)",
+      "smartTip": "SMART Tip: Be Specific",
+      "smartTipText": "Instead of \"save money\", try \"Save $50,000 for a down payment on a 3-bedroom house in Austin\". Specific goals are easier to plan and track.",
+      "examples": "Examples"
+    },
+    "step2": {
+      "title": "How much do you need?",
+      "subtitle": "Set a measurable target amount for your goal.",
+      "amountLabel": "Target Amount",
+      "amountPlaceholder": "Enter amount",
+      "amountError": "Please enter a valid amount greater than 0",
+      "currencyLabel": "Currency",
+      "smartTip": "SMART Tip: Be Measurable",
+      "smartTipText": "A specific number helps you track progress and know exactly when you've achieved your goal."
+    },
+    "step3": {
+      "title": "When do you want to achieve this?",
+      "subtitle": "Set a realistic deadline for your goal.",
+      "dateLabel": "Target Date",
+      "dateError": "Please select a future date",
+      "timeRemaining": "{months} months away",
+      "smartTip": "SMART Tip: Be Time-bound",
+      "smartTipText": "A deadline creates urgency and helps you plan your savings strategy.",
+      "quickSelect": {
+        "1year": "1 Year",
+        "3years": "3 Years",
+        "5years": "5 Years",
+        "10years": "10 Years"
+      }
+    },
+    "step4": {
+      "title": "Which bucket does this belong to?",
+      "subtitle": "Categorize your goal based on its priority and risk level.",
+      "smartTip": "Risk Allocation",
+      "smartTipText": "The 3 Buckets methodology helps you balance safety, growth, and dreams in your financial planning."
+    },
+    "step5": {
+      "title": "Why does this matter to you?",
+      "subtitle": "Connect emotionally with your goal to stay motivated.",
+      "whyLabel": "Why It Matters",
+      "whyPlaceholder": "Describe why achieving this goal is important to you personally...",
+      "whyError": "Please explain why this goal matters (at least 10 characters)",
+      "smartTip": "SMART Tip: Be Relevant",
+      "smartTipText": "Goals connected to your values and emotions are more likely to be achieved. This statement will remind you why you started.",
+      "summary": "Goal Summary",
+      "createGoal": "Create Goal"
+    },
+    "validation": {
+      "specific": "Specific",
+      "measurable": "Measurable",
+      "achievable": "Achievable",
+      "relevant": "Relevant",
+      "timeBound": "Time-bound",
+      "complete": "Complete",
+      "incomplete": "Incomplete"
+    }
+  },
+  "examples": {
+    "emergencyFund": {
+      "title": "Emergency Fund",
+      "description": "Build a safety net covering 6 months of living expenses for unexpected situations"
+    },
+    "houseDownPayment": {
+      "title": "House Down Payment",
+      "description": "Save 20% down payment for a 3-bedroom home in the suburbs within 3 years"
+    },
+    "dreamVacation": {
+      "title": "Dream Vacation",
+      "description": "Plan and save for a 2-week trip to Japan including flights, hotels, and experiences"
+    }
+  },
+  "language": {
+    "select": "Language",
+    "en": "English",
+    "es": "Spanish"
+  }
+}
