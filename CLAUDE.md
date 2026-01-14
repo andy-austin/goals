@@ -10,15 +10,37 @@ This is a Next.js 16.1.1 application using the App Router architecture with Reac
 
 ## Important: Documentation Updates
 
-**After completing work on any GitHub issue**, always update `.ai/implementation.md` with:
-1. Mark the issue as completed with files changed
-2. Document any new components, types, or utilities added
-3. Add usage examples if applicable
-4. Update the project structure section if new folders/files were created
-5. Update "Next Steps" section
-6. Commit the documentation update
+**After completing work on any GitHub issue**, update documentation in the `.ai/` folder:
 
-This ensures the implementation status stays accurate for future sessions.
+### 1. Always Update `implementation.md`
+- Mark the issue as completed with files changed
+- Update project structure if new folders/files were created
+- Update "Next Steps" section
+
+### 2. Create/Update Module-Specific Documentation
+When working on key architecture pieces, create or update dedicated docs in `.ai/`:
+
+| Module | Doc File | When to Create/Update |
+|--------|----------|----------------------|
+| UI Components | `.ai/components.md` | Adding/modifying components in `components/` |
+| State Management | `.ai/state.md` | Changes to context, hooks, or data flow |
+| Design System | `.ai/design-system.md` | Theme tokens, colors, typography changes |
+| API/Data | `.ai/api.md` | API routes, data fetching, external integrations |
+| Forms | `.ai/forms.md` | Form components, validation, multi-step wizards |
+| Types | `.ai/types.md` | Significant type definitions or data models |
+
+### 3. Documentation Standards
+Each module doc should include:
+- **Purpose**: What this module does
+- **Key Files**: List of relevant files with brief descriptions
+- **Usage Examples**: Code snippets showing how to use
+- **API Reference**: Props, methods, types (if applicable)
+- **Dependencies**: What it depends on / what depends on it
+
+### 4. Commit Documentation
+Always commit documentation updates as part of the issue completion.
+
+This ensures future sessions have accurate, detailed context for each part of the codebase.
 
 ## Development Commands
 
@@ -65,8 +87,12 @@ npm run lint     # Run ESLint
 ### Key Files to Read First
 - `.ai/implementation.md` - Current implementation status, what's done, what's pending
 - `.ai/prd.md` - Full product requirements document
-- `types/goal.ts` - Core data model and type definitions
-- `context/GoalsContext.tsx` - State management
+
+### Module Documentation (in `.ai/`)
+- `components.md` - UI component API and usage
+- `state.md` - State management (GoalsContext, useGoals hook)
+- `design-system.md` - Design tokens, colors, theming
+- `types.md` - TypeScript types and utilities
 
 ### Design System
 - Design tokens defined in `app/globals.css` using CSS variables
