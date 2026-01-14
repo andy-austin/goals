@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { FormWizard, FormStep, useFormWizard, StepTitleDescription, StepAmountCurrency, StepTargetDate, StepBucket } from '@/components';
+import { FormWizard, FormStep, StepTitleDescription, StepAmountCurrency, StepTargetDate, StepBucket, StepWhyItMatters } from '@/components';
 import { useGoals } from '@/context';
 import type { GoalFormInput } from '@/types';
 
@@ -17,33 +17,6 @@ const STEPS = [
   { label: 'Category' },
   { label: 'Why' },
 ];
-
-// =============================================================================
-// Placeholder Step Components (to be replaced in future issues)
-// =============================================================================
-
-function StepPlaceholder({ title, description }: { title: string; description: string }) {
-  const { setStepValid } = useFormWizard();
-
-  // For now, mark all steps as valid for testing navigation
-  useEffect(() => {
-    setStepValid(true);
-  }, [setStepValid]);
-
-  return (
-    <div className="py-8 text-center">
-      <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-        {title}
-      </h2>
-      <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-        {description}
-      </p>
-      <p className="mt-4 text-xs text-zinc-500 dark:text-zinc-500">
-        Form fields will be implemented in subsequent issues.
-      </p>
-    </div>
-  );
-}
 
 // =============================================================================
 // Main Page Component
@@ -108,11 +81,8 @@ export default function CreateGoalPage() {
           <StepBucket />
         </FormStep>
 
-        <FormStep step={4} isValid={true}>
-          <StepPlaceholder
-            title="Step 5: Why It Matters"
-            description="Explain why this goal is important to you."
-          />
+        <FormStep step={4}>
+          <StepWhyItMatters />
         </FormStep>
       </FormWizard>
     </div>

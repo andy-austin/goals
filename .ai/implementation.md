@@ -20,13 +20,26 @@ This document tracks the implementation progress of the Investment Goals applica
 - Issue #7: Implement Step 1: Goal title and description
 
 ### Remaining for Milestone 2
-- Issue #11: Implement Step 5: Why it matters and final validation
 - Issue #12: Add SMART validation logic
 - Issue #13: Add form progress indicator
 
 ---
 
 ## Completed Features
+
+### Issue #11: Implement Step 5: Why It Matters
+**Status:** Completed
+**Files:**
+- `components/GoalForm/StepWhyItMatters.tsx` - Step 5 form component
+- `components/GoalForm/index.ts` - Updated exports
+- `app/create/page.tsx` - Updated to use new step component
+
+**Features Implemented:**
+- Text area for emotional anchor statement
+- Character count and validation (min 10 chars)
+- SMART tip for "Relevant"
+- Example buttons to quick-fill motivation text
+- Final step integration in wizard
 
 ### Issue #10: Implement Step 4: Bucket Selection
 **Status:** Completed
