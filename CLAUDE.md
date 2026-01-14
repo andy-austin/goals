@@ -90,6 +90,7 @@ npm run lint     # Run ESLint
 
 ### Module Documentation (in `.ai/`)
 - `components.md` - UI component API and usage
+- `forms.md` - Form components, validation, multi-step wizards
 - `state.md` - State management (GoalsContext, useGoals hook)
 - `design-system.md` - Design tokens, colors, theming
 - `types.md` - TypeScript types and utilities
