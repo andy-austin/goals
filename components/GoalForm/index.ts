@@ -3,3 +3,4 @@ export { StepAmountCurrency } from './StepAmountCurrency';
 export { StepTargetDate } from './StepTargetDate';
 export { StepBucket } from './StepBucket';
 export { StepWhyItMatters } from './StepWhyItMatters';
+export { SMARTValidationSummary } from './SMARTValidationSummary';

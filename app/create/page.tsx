@@ -28,25 +28,29 @@ export default function CreateGoalPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleComplete = (data: Partial<GoalFormInput>) => {
+    // Final data validation before saving
+    if (!data.title || !data.description || !data.amount || !data.currency || !data.targetDate || !data.bucket || !data.whyItMatters) {
+      console.error('Incomplete goal data', data);
+      return;
+    }
+
     setIsSubmitting(true);
 
     // Simulate a delay for UX feedback
     setTimeout(() => {
-      // TODO: Use actual form data when steps are implemented
-      // For now, create a sample goal for testing
       addGoal({
-        title: data.title || 'Sample Goal',
-        description: data.description || 'This is a sample goal created from the wizard.',
-        amount: data.amount || 10000,
-        currency: data.currency || 'USD',
-        targetDate: data.targetDate ? new Date(data.targetDate) : new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
-        bucket: data.bucket || 'growth',
-        whyItMatters: data.whyItMatters || 'To achieve my financial goals.',
+        title: data.title,
+        description: data.description,
+        amount: data.amount,
+        currency: data.currency,
+        targetDate: new Date(data.targetDate),
+        bucket: data.bucket,
+        whyItMatters: data.whyItMatters,
       });
 
       setIsSubmitting(false);
       router.push('/');
-    }, 500);
+    }, 800);
   };
 
   return (
