@@ -3,6 +3,7 @@
 import { useMemo } from 'react';
 import { useFormWizard } from '@/components/FormWizard';
 import { BUCKET_CONFIG, formatCurrency } from '@/types';
+import { validateSMART } from '@/lib';
 import type { GoalFormInput } from '@/types';
 
 // =============================================================================
@@ -29,37 +30,37 @@ function formatDate(dateString: string | undefined) {
 export function SMARTValidationSummary() {
   const { data } = useFormWizard<Partial<GoalFormInput>>();
 
-  const validationItems = useMemo(() => {
-    const { title, description, amount, currency, targetDate, whyItMatters } = data;
+  const validation = useMemo(() => validateSMART(data), [data]);
 
+  const validationItems = useMemo(() => {
     return [
       {
         label: 'Specific',
-        isValid: (title?.length || 0) >= 3 && (description?.length || 0) >= 20,
+        isValid: validation.specific.isValid,
         description: 'Clear title and detailed description.',
       },
       {
         label: 'Measurable',
-        isValid: (amount || 0) > 0,
-        description: `Target of ${amount && currency ? formatCurrency(amount, currency) : 'a specific amount'}.`,
+        isValid: validation.measurable.isValid,
+        description: `Target of ${data.amount && data.currency ? formatCurrency(data.amount, data.currency) : 'a specific amount'}.`,
       },
       {
         label: 'Achievable',
-        isValid: true, // Placeholder for AI/feasibility check
+        isValid: validation.achievable.isValid,
         description: 'Timeline and amount seem realistic.',
       },
       {
         label: 'Relevant',
-        isValid: (whyItMatters?.length || 0) >= 10,
+        isValid: validation.relevant.isValid,
         description: 'Strong personal motivation identified.',
       },
       {
         label: 'Time-bound',
-        isValid: !!targetDate && new Date(targetDate) > new Date(),
-        description: targetDate ? `Deadline set for ${formatDate(targetDate)}.` : 'No deadline set.',
+        isValid: validation.timeBound.isValid,
+        description: data.targetDate ? `Deadline set for ${formatDate(data.targetDate)}.` : 'No deadline set.',
       },
     ];
-  }, [data]);
+  }, [validation, data.amount, data.currency, data.targetDate]);
 
   return (
     <div className="space-y-4">

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FormWizard, FormStep, StepTitleDescription, StepAmountCurrency, StepTargetDate, StepBucket, StepWhyItMatters } from '@/components';
 import { useGoals } from '@/context';
+import { validateSMART } from '@/lib';
 import type { GoalFormInput } from '@/types';
 
 // =============================================================================
@@ -29,8 +30,9 @@ export default function CreateGoalPage() {
 
   const handleComplete = (data: Partial<GoalFormInput>) => {
     // Final data validation before saving
-    if (!data.title || !data.description || !data.amount || !data.currency || !data.targetDate || !data.bucket || !data.whyItMatters) {
-      console.error('Incomplete goal data', data);
+    const validation = validateSMART(data);
+    if (!validation.isComplete) {
+      console.error('Incomplete goal data', validation);
       return;
     }
 
@@ -39,13 +41,13 @@ export default function CreateGoalPage() {
     // Simulate a delay for UX feedback
     setTimeout(() => {
       addGoal({
-        title: data.title,
-        description: data.description,
-        amount: data.amount,
-        currency: data.currency,
-        targetDate: new Date(data.targetDate),
-        bucket: data.bucket,
-        whyItMatters: data.whyItMatters,
+        title: data.title!,
+        description: data.description!,
+        amount: data.amount!,
+        currency: data.currency!,
+        targetDate: new Date(data.targetDate!),
+        bucket: data.bucket!,
+        whyItMatters: data.whyItMatters!,
       });
 
       setIsSubmitting(false);

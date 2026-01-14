@@ -20,12 +20,25 @@ This document tracks the implementation progress of the Investment Goals applica
 - Issue #7: Implement Step 1: Goal title and description
 
 ### Remaining for Milestone 2
-- Issue #12: Add SMART validation logic
 - Issue #13: Add form progress indicator
 
 ---
 
 ## Completed Features
+
+### Issue #12: Add SMART Validation Logic
+**Status:** Completed
+**Files:**
+- `lib/validation.ts` - Centralized SMART validation logic
+- `lib/index.ts` - Updated exports
+- `components/GoalForm/SMARTValidationSummary.tsx` - Updated to use central validation
+- `app/create/page.tsx` - Updated final validation in handleComplete
+
+**Features Implemented:**
+- Centralized validation function `validateSMART`
+- Consistent validation rules across UI and submission
+- Type-safe validation result interface
+- Helper for timezone-safe date formatting (in summary component)
 
 ### Issue #11: Implement Step 5: Why It Matters
 **Status:** Completed
