@@ -35,6 +35,13 @@ export function StepAmountCurrency() {
     setStepValid(isValid);
   }, [isValid, setStepValid]);
 
+  // Set default currency if not set
+  useEffect(() => {
+    if (!data.currency) {
+      updateData({ currency: 'USD' });
+    }
+  }, [data.currency, updateData]);
+
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     // Allow empty string for better UX while typing, but update with 0 or value
