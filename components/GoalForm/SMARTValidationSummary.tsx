@@ -6,6 +6,23 @@ import { BUCKET_CONFIG, formatCurrency } from '@/types';
 import type { GoalFormInput } from '@/types';
 
 // =============================================================================
+// Helpers
+// =============================================================================
+
+function formatDate(dateString: string | undefined) {
+  if (!dateString) return '—';
+  // Parse YYYY-MM-DD manually to avoid UTC timezone issues
+  const [year, month, day] = dateString.split('-').map(Number);
+  // Create date at local midnight
+  const date = new Date(year, month - 1, day);
+  
+  // Verify date is valid
+  if (isNaN(date.getTime())) return 'Invalid Date';
+
+  return date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+// =============================================================================
 // Component
 // =============================================================================
 
@@ -39,7 +56,7 @@ export function SMARTValidationSummary() {
       {
         label: 'Time-bound',
         isValid: !!targetDate && new Date(targetDate) > new Date(),
-        description: targetDate ? `Deadline set for ${new Date(targetDate).toLocaleDateString()}.` : 'No deadline set.',
+        description: targetDate ? `Deadline set for ${formatDate(targetDate)}.` : 'No deadline set.',
       },
     ];
   }, [data]);
@@ -110,7 +127,7 @@ export function SMARTValidationSummary() {
              <div className="text-sm">
                 <span className="text-zinc-500">By:</span>{' '}
                 <span className="font-semibold text-zinc-900 dark:text-zinc-100">
-                  {data.targetDate ? new Date(data.targetDate).toLocaleDateString(undefined, { year: 'numeric', month: 'short' }) : '—'}
+                  {formatDate(data.targetDate)}
                 </span>
              </div>
           </div>
