@@ -6,6 +6,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a Next.js 16.1.1 application using the App Router architecture with React 19, TypeScript, and Tailwind CSS 4. The project is bootstrapped from `create-next-app` and follows Next.js conventions.
 
+**Goal**: A guided tool to help beginner investors create SMART financial goals using the 3 Buckets methodology (Safety, Growth, Dream).
+
+## Important: Documentation Updates
+
+**After completing work on any GitHub issue**, always update `.ai/implementation.md` with:
+1. Mark the issue as completed with files changed
+2. Document any new components, types, or utilities added
+3. Add usage examples if applicable
+4. Update the project structure section if new folders/files were created
+5. Update "Next Steps" section
+6. Commit the documentation update
+
+This ensures the implementation status stays accurate for future sessions.
+
 ## Development Commands
 
 ### Running the Application
@@ -45,3 +59,24 @@ npm run lint     # Run ESLint
 - Server Components by default (App Router)
 - Font optimization via `next/font/google`
 - Image optimization via `next/image`
+
+## Project-Specific Context
+
+### Key Files to Read First
+- `.ai/implementation.md` - Current implementation status, what's done, what's pending
+- `.ai/prd.md` - Full product requirements document
+- `types/goal.ts` - Core data model and type definitions
+- `context/GoalsContext.tsx` - State management
+
+### Design System
+- Design tokens defined in `app/globals.css` using CSS variables
+- Bucket colors: Safety (green), Growth (blue), Dream (purple)
+- UI components in `components/ui/` (Button, Card, Input, Badge)
+- Dark mode supported via `prefers-color-scheme`
+
+### Import Aliases
+```typescript
+import { Goal, Bucket, formatCurrency } from '@/types';
+import { useGoals } from '@/context';
+import { Button, Card, BucketBadge } from '@/components';
+```
