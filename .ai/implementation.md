@@ -10,7 +10,7 @@ This document tracks the implementation progress of the Investment Goals applica
 ## Current Development Status
 
 **Milestone 1: Project Setup & Foundation** - COMPLETE (5/5 issues completed)
-**Milestone 2: Goal Creation Flow** - IN PROGRESS (2/8 issues completed)
+**Milestone 2: Goal Creation Flow** - COMPLETE (8/8 issues completed)
 
 ### Completed in This Session
 - Issue #3: Create base layout and navigation
@@ -18,13 +18,37 @@ This document tracks the implementation progress of the Investment Goals applica
 - Issue #5: Configure local storage persistence
 - Issue #6: Create multi-step form wizard component
 - Issue #7: Implement Step 1: Goal title and description
+- Issue #13: Add form progress indicator (accessibility enhancements)
 
-### Remaining for Milestone 2
-- Issue #13: Add form progress indicator
+### Milestone 2 Complete
 
 ---
 
 ## Completed Features
+
+### Issue #13: Add Form Progress Indicator
+**Status:** Completed
+**Files:**
+- `components/FormWizard/StepIndicator.tsx` - Enhanced with full accessibility support
+
+**Features Implemented:**
+- Visual progress indicator with step dots (desktop) and progress bar (mobile)
+- Current step number and total display ("Step 2 of 5")
+- Completed steps marked with checkmark icon
+- Current step highlighted with primary color
+- Screen reader live region for step change announcements
+- Full ARIA support for accessibility
+
+**Accessibility Features:**
+| Feature | Implementation |
+|---------|----------------|
+| Progress bar | `role="progressbar"` with `aria-valuenow`, `aria-valuemin`, `aria-valuemax` |
+| Step list | `aria-label` on each step with status (completed/current/upcoming) |
+| Live region | `aria-live="polite"` announces step changes to screen readers |
+| Current step | `aria-current="step"` marks active step |
+| Hidden text | `sr-only` class for screen reader only content |
+
+---
 
 ### Issue #12: Add SMART Validation Logic
 **Status:** Completed
@@ -646,7 +670,8 @@ See GitHub Issues for full backlog:
 ## Git History (Recent)
 
 ```
-839dbf8 Implement Step 1: Goal title and description (Issue #7)
+0541492 Add form progress indicator accessibility (Issue #13)
+8a4d8df Implement Step 1: Goal title and description (Issue #7)
 f8906bb Create multi-step form wizard component (Issue #6)
 30cbc77 Configure local storage persistence (Issue #5)
 c82754a Set up design tokens and theme system (Issue #4)
