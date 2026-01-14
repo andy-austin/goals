@@ -10,16 +10,16 @@ This document tracks the implementation progress of the Investment Goals applica
 ## Current Development Status
 
 **Milestone 1: Project Setup & Foundation** - COMPLETE (5/5 issues completed)
-**Milestone 2: Goal Creation Flow** - IN PROGRESS (1/8 issues completed)
+**Milestone 2: Goal Creation Flow** - IN PROGRESS (2/8 issues completed)
 
 ### Completed in This Session
 - Issue #3: Create base layout and navigation
 - Issue #4: Set up design tokens and theme
 - Issue #5: Configure local storage persistence
 - Issue #6: Create multi-step form wizard component
+- Issue #7: Implement Step 1: Goal title and description
 
 ### Remaining for Milestone 2
-- Issue #7: Implement Step 1: Goal title and description
 - Issue #8: Implement Step 2: Amount and currency
 - Issue #9: Implement Step 3: Target date selection
 - Issue #10: Implement Step 4: Bucket selection
@@ -263,6 +263,31 @@ Uses native `Intl.NumberFormat` - no external library needed.
 
 ---
 
+### Issue #7: Implement Step 1: Goal Title and Description
+**Status:** Completed
+**Files:**
+- `components/GoalForm/StepTitleDescription.tsx` - Step 1 form component
+- `components/GoalForm/index.ts` - GoalForm exports
+- `app/create/page.tsx` - Updated to use new step component
+
+**Features Implemented:**
+- Title input with 3+ character validation
+- Description textarea with 20+ character validation (SMART: Specific)
+- Character count display for description
+- Real-time validation with error messages
+- SMART tip explaining the "Specific" criterion
+- Clickable example cards that auto-fill form fields
+- Validation state integrates with FormWizard navigation
+
+**Validation Rules:**
+
+| Field | Min Length | Max Length | Error Message |
+|-------|-----------|-----------|---------------|
+| Title | 3 | 100 | "Please enter a goal title (at least 3 characters)" |
+| Description | 20 | 500 | "Please be specific about your goal (at least 20 characters)" |
+
+---
+
 ## Project Structure
 
 ```
@@ -287,6 +312,9 @@ goals/
 │   │   ├── FormStep.tsx          # Step wrapper component
 │   │   ├── StepIndicator.tsx     # Progress indicator
 │   │   └── index.ts              # FormWizard exports
+│   ├── GoalForm/
+│   │   ├── StepTitleDescription.tsx  # Step 1: Title and description
+│   │   └── index.ts              # GoalForm exports
 │   ├── ui/
 │   │   ├── Badge.tsx         # Badge and BucketBadge components
 │   │   ├── Button.tsx        # Button component
@@ -552,7 +580,8 @@ See GitHub Issues for full backlog:
 ## Git History (Recent)
 
 ```
-fe0dfd8 Create multi-step form wizard component (Issue #6)
+839dbf8 Implement Step 1: Goal title and description (Issue #7)
+f8906bb Create multi-step form wizard component (Issue #6)
 30cbc77 Configure local storage persistence (Issue #5)
 c82754a Set up design tokens and theme system (Issue #4)
 43c6978 Create base layout and navigation (Issue #3)

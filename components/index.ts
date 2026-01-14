@@ -26,3 +26,6 @@ export {
   FormWizardProvider,
   useFormWizard,
 } from './FormWizard';
+
+// Goal Form Step Components
+export { StepTitleDescription } from './GoalForm';

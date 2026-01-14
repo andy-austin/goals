@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { FormWizard, FormStep, useFormWizard } from '@/components';
+import { FormWizard, FormStep, useFormWizard, StepTitleDescription } from '@/components';
 import { useGoals } from '@/context';
 import type { GoalFormInput } from '@/types';
 
@@ -92,11 +92,8 @@ export default function CreateGoalPage() {
         onComplete={handleComplete}
         isSubmitting={isSubmitting}
       >
-        <FormStep step={0} isValid={true}>
-          <StepPlaceholder
-            title="Step 1: Goal Details"
-            description="Enter your goal title and a specific description."
-          />
+        <FormStep step={0}>
+          <StepTitleDescription />
         </FormStep>
 
         <FormStep step={1} isValid={true}>
