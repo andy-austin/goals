@@ -7,6 +7,19 @@ This document tracks the implementation progress of the Investment Goals applica
 
 ---
 
+## Current Development Status
+
+**Milestone 1: Project Setup & Foundation** - IN PROGRESS (3/5 issues completed)
+
+### Completed in This Session
+- Issue #3: Create base layout and navigation
+- Issue #4: Set up design tokens and theme
+
+### Remaining for Milestone 1
+- Issue #5: (check GitHub for details)
+
+---
+
 ## Completed Features
 
 ### Issue #1: Goal Data Model and TypeScript Types
@@ -19,24 +32,24 @@ This document tracks the implementation progress of the Investment Goals applica
 
 | Type | Description | Location |
 |------|-------------|----------|
-| `Bucket` | Union type for goal categories (safety, growth, dream) | `types/goal.ts:14` |
+| `Bucket` | Union type for goal categories (safety, growth, dream) | `types/goal.ts:16` |
 | `Currency` | Supported currencies for goal amounts | `types/goal.ts:22` |
 | `Goal` | Main goal interface with all SMART-compliant fields | `types/goal.ts:42` |
-| `GoalTemplate` | Pre-defined goal template structure | `types/goal.ts:72` |
-| `CreateGoalInput` | Input type for creating goals (excludes auto-generated fields) | `types/goal.ts:98` |
-| `GoalFormInput` | Form input type with string dates for form handling | `types/goal.ts:103` |
-| `GoalWithMeta` | Goal with computed display metadata | `types/goal.ts:115` |
-| `FieldValidation` | Single field validation result | `types/goal.ts:129` |
-| `SMARTValidation` | Complete SMART validation state | `types/goal.ts:137` |
-| `GoalsByBucket` | Goals organized by bucket for display | `types/goal.ts:149` |
+| `GoalTemplate` | Pre-defined goal template structure | `types/goal.ts:77` |
+| `CreateGoalInput` | Input type for creating goals (excludes auto-generated fields) | `types/goal.ts:113` |
+| `GoalFormInput` | Form input type with string dates for form handling | `types/goal.ts:118` |
+| `GoalWithMeta` | Goal with computed display metadata | `types/goal.ts:131` |
+| `FieldValidation` | Single field validation result | `types/goal.ts:148` |
+| `SMARTValidation` | Complete SMART validation state | `types/goal.ts:156` |
+| `GoalsByBucket` | Goals organized by bucket for display | `types/goal.ts:168` |
 
 **Constants Implemented:**
 
 | Constant | Description | Location |
 |----------|-------------|----------|
-| `BUCKET_CONFIG` | Display config for each bucket (label, color, icon) | `types/goal.ts:180` |
+| `BUCKET_CONFIG` | Display config for each bucket (label, colorVar, icon) | `types/goal.ts:182` |
 | `CURRENCIES` | Array of all supported ISO 4217 currency codes | `types/goal.ts:214` |
-| `BUCKETS` | Array of all bucket types | `types/goal.ts:251` |
+| `BUCKETS` | Array of all bucket types | `types/goal.ts:253` |
 
 **Utility Functions (Currency Formatting):**
 
@@ -81,23 +94,115 @@ Uses native `Intl.NumberFormat` - no external library needed.
 
 ---
 
+### Issue #3: Create Base Layout and Navigation
+**Status:** Completed
+**Files:**
+- `components/Header.tsx` - Responsive header with navigation
+- `components/index.ts` - Component exports
+- `app/layout.tsx` - Updated root layout with Header
+- `app/page.tsx` - Dashboard home page
+- `app/create/page.tsx` - Goal creation page (placeholder)
+- `app/timeline/page.tsx` - Timeline view page (placeholder)
+
+**Features Implemented:**
+- App header with logo/title
+- Navigation between Dashboard, Create Goal, Timeline
+- Responsive layout (mobile-first) with hamburger menu
+- Active page indicator in navigation
+- Consistent header across all pages
+
+**Pages Created:**
+| Route | Purpose | Status |
+|-------|---------|--------|
+| `/` | Dashboard/Home | Functional with empty state |
+| `/create` | Goal creation wizard | Placeholder |
+| `/timeline` | Timeline visualization | Placeholder |
+
+---
+
+### Issue #4: Set Up Design Tokens and Theme
+**Status:** Completed
+**Files:**
+- `app/globals.css` - Comprehensive CSS variables and Tailwind theme
+- `components/ui/Button.tsx` - Button component with variants
+- `components/ui/Card.tsx` - Card component with subcomponents
+- `components/ui/Input.tsx` - Form input components
+- `components/ui/Badge.tsx` - Badge and BucketBadge components
+- `components/ui/index.ts` - UI component exports
+- `types/goal.ts` - Updated BUCKET_CONFIG to use CSS variables
+
+**Design Tokens (CSS Variables):**
+
+| Category | Variables |
+|----------|-----------|
+| Colors | `--background`, `--foreground`, `--muted`, `--muted-foreground`, `--border` |
+| Primary | `--primary`, `--primary-foreground`, `--primary-hover` |
+| Secondary | `--secondary`, `--secondary-foreground`, `--secondary-hover` |
+| Destructive | `--destructive`, `--destructive-foreground` |
+| Bucket Safety | `--bucket-safety`, `--bucket-safety-light`, `--bucket-safety-dark` |
+| Bucket Growth | `--bucket-growth`, `--bucket-growth-light`, `--bucket-growth-dark` |
+| Bucket Dream | `--bucket-dream`, `--bucket-dream-light`, `--bucket-dream-dark` |
+| Semantic | `--success`, `--warning`, `--error`, `--info` |
+| Shadows | `--shadow-sm`, `--shadow`, `--shadow-md`, `--shadow-lg` |
+| Radius | `--radius-sm`, `--radius`, `--radius-md`, `--radius-lg`, `--radius-xl`, `--radius-full` |
+| Ring | `--ring`, `--ring-offset` |
+
+**UI Components Created:**
+
+| Component | Variants | Description |
+|-----------|----------|-------------|
+| `Button` | primary, secondary, ghost, destructive | Sizes: sm, md, lg |
+| `Card` | default, ghost | With CardHeader, CardContent, CardFooter, CardTitle, CardDescription |
+| `Input` | - | With error state support |
+| `Textarea` | - | With error state support |
+| `Label` | - | With required indicator |
+| `Select` | - | With error state support |
+| `Badge` | default, secondary, success, warning, error, bucket | Sizes: sm, md |
+| `BucketBadge` | - | Pre-styled badge with bucket icon |
+
+**Bucket Color Scheme:**
+
+| Bucket | Primary Color | CSS Variable |
+|--------|--------------|--------------|
+| Safety | Green | `--bucket-safety: #22c55e` |
+| Growth | Blue | `--bucket-growth: #3b82f6` |
+| Dream | Purple | `--bucket-dream: #a855f7` |
+
+**Dark Mode:** Fully supported with automatic color adjustments via `prefers-color-scheme: dark`
+
+---
+
 ## Project Structure
 
 ```
 goals/
 ├── .ai/
-│   ├── prd.md              # Product Requirements Document
-│   └── implementation.md   # This file - implementation tracking
+│   ├── prd.md                # Product Requirements Document
+│   └── implementation.md     # This file - implementation tracking
 ├── app/
-│   ├── layout.tsx          # Root layout (wraps with Providers)
-│   ├── page.tsx            # Home page
-│   └── providers.tsx       # Client-side providers wrapper
+│   ├── create/
+│   │   └── page.tsx          # Goal creation page (placeholder)
+│   ├── timeline/
+│   │   └── page.tsx          # Timeline view page (placeholder)
+│   ├── globals.css           # Design tokens and Tailwind theme
+│   ├── layout.tsx            # Root layout with Header
+│   ├── page.tsx              # Dashboard home page
+│   └── providers.tsx         # Client-side providers wrapper
+├── components/
+│   ├── ui/
+│   │   ├── Badge.tsx         # Badge and BucketBadge components
+│   │   ├── Button.tsx        # Button component
+│   │   ├── Card.tsx          # Card and subcomponents
+│   │   ├── Input.tsx         # Form input components
+│   │   └── index.ts          # UI component exports
+│   ├── Header.tsx            # App header with navigation
+│   └── index.ts              # Central component exports
 ├── context/
-│   ├── GoalsContext.tsx    # Goals state management
-│   └── index.ts            # Central context exports
+│   ├── GoalsContext.tsx      # Goals state management
+│   └── index.ts              # Central context exports
 ├── types/
-│   ├── goal.ts             # Goal-related types and constants
-│   └── index.ts            # Central type exports
+│   ├── goal.ts               # Goal-related types and constants
+│   └── index.ts              # Central type exports
 └── ...
 ```
 
@@ -111,6 +216,44 @@ import { Goal, Bucket, Currency, BUCKET_CONFIG, formatCurrency } from '@/types';
 
 // Or import specific items
 import { Goal, CreateGoalInput, GoalWithMeta } from '@/types/goal';
+```
+
+### Using UI Components
+```typescript
+import { Button, Card, CardContent, Badge, BucketBadge } from '@/components';
+
+// Button variants
+<Button>Primary</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="destructive">Destructive</Button>
+
+// Card with content
+<Card>
+  <CardContent>
+    <p>Card content here</p>
+  </CardContent>
+</Card>
+
+// Bucket badges
+<BucketBadge bucket="safety" />  // Shows "Safety" with shield icon
+<BucketBadge bucket="growth" />  // Shows "Growth" with trending-up icon
+<BucketBadge bucket="dream" />   // Shows "Dream" with star icon
+```
+
+### Using Design Tokens
+```css
+/* In CSS/Tailwind */
+.my-component {
+  background: var(--background);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+}
+
+/* With Tailwind classes */
+<div className="bg-background text-foreground border border-border" />
+<div className="bg-primary text-primary-foreground" />
+<div className="bg-bucket-safety text-bucket-safety-dark" />
 ```
 
 ### Creating a Goal
@@ -135,8 +278,9 @@ import { BUCKET_CONFIG, Bucket } from '@/types';
 const bucket: Bucket = 'safety';
 const config = BUCKET_CONFIG[bucket];
 
-console.log(config.label);  // 'Safety'
-console.log(config.color);  // '#22C55E'
+console.log(config.label);      // 'Safety'
+console.log(config.colorVar);   // 'var(--bucket-safety)'
+console.log(config.bgColorVar); // 'var(--bucket-safety-light)'
 ```
 
 ### Formatting Currency (uses native Intl API)
@@ -210,9 +354,29 @@ function MyComponent() {
 ## Pending Implementation
 
 See GitHub Issues for full backlog:
-- [Milestone 1: Project Setup & Foundation](https://github.com/andy-austin/goals/milestone/1)
+- [Milestone 1: Project Setup & Foundation](https://github.com/andy-austin/goals/milestone/1) - 3/5 complete
 - [Milestone 2: Goal Creation Flow](https://github.com/andy-austin/goals/milestone/2)
 - [Milestone 3: AI-Powered Suggestions](https://github.com/andy-austin/goals/milestone/3)
 - [Milestone 4: Goal Templates & Examples](https://github.com/andy-austin/goals/milestone/4)
 - [Milestone 5: Prioritization UI](https://github.com/andy-austin/goals/milestone/5)
 - [Milestone 6: Goal Summary & Export](https://github.com/andy-austin/goals/milestone/6)
+
+---
+
+## Next Steps (Suggested)
+
+1. **Complete Milestone 1** - Check remaining issues in the milestone
+2. **Goal Creation Flow** (Milestone 2) - Multi-step form wizard
+3. **AI Integration** (Milestone 3) - Claude API for suggestions
+4. **Templates** (Milestone 4) - Pre-defined goal templates
+
+---
+
+## Git History (Recent)
+
+```
+c82754a Set up design tokens and theme system (Issue #4)
+43c6978 Create base layout and navigation (Issue #3)
+db610ed Set up state management for goals (Issue #2)
+2d71d2b Define Goal data model and TypeScript types (Issue #1)
+```
