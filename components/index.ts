@@ -28,4 +28,4 @@ export {
 } from './FormWizard';
 
 // Goal Form Step Components
-export { StepTitleDescription, StepAmountCurrency } from './GoalForm';
+export { StepTitleDescription, StepAmountCurrency, StepTargetDate } from './GoalForm';

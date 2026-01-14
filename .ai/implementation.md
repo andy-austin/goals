@@ -20,7 +20,6 @@ This document tracks the implementation progress of the Investment Goals applica
 - Issue #7: Implement Step 1: Goal title and description
 
 ### Remaining for Milestone 2
-- Issue #9: Implement Step 3: Target date selection
 - Issue #10: Implement Step 4: Bucket selection
 - Issue #11: Implement Step 5: Why it matters and final validation
 - Issue #12: Add SMART validation logic
@@ -29,6 +28,20 @@ This document tracks the implementation progress of the Investment Goals applica
 ---
 
 ## Completed Features
+
+### Issue #9: Implement Step 3: Target Date Selection
+**Status:** Completed
+**Files:**
+- `components/GoalForm/StepTargetDate.tsx` - Step 3 form component
+- `components/GoalForm/index.ts` - Updated exports
+- `app/create/page.tsx` - Updated to use new step component
+
+**Features Implemented:**
+- Date input with future date validation
+- Quick select buttons (1, 3, 5, 10, 20 years)
+- Dynamic "Time Horizon" display (e.g., "1 year and 6 months")
+- SMART tip explaining the "Time-bound" criterion
+- Validation state integrates with FormWizard navigation
 
 ### Issue #8: Implement Step 2: Amount and Currency
 **Status:** Completed
