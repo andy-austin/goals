@@ -30,7 +30,7 @@ export type Currency =
   | 'MXN'  // Mexican Peso
   | 'BRL'  // Brazilian Real
   | 'UYU'  // Uruguayan Peso
-  | 'UYI'; // Uruguay Peso en Unidades Indexadas (Index Unit)
+  | 'UYI'; // Unidad Indexada (UI) - Uruguay's inflation-indexed unit
 
 // =============================================================================
 // Core Interfaces
@@ -226,6 +226,16 @@ export const CURRENCIES: Currency[] = [
  * Handles symbol placement, decimal places, and thousand separators automatically
  */
 export function formatCurrency(amount: number, currency: Currency, locale = 'en-US'): string {
+  // Special handling for UYI (Unidad Indexada) - display as "UI" instead of "UYI"
+  if (currency === 'UYI') {
+    const formatted = new Intl.NumberFormat(locale, {
+      style: 'decimal',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(amount);
+    return `UI ${formatted}`;
+  }
+
   return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency,
@@ -236,6 +246,10 @@ export function formatCurrency(amount: number, currency: Currency, locale = 'en-
  * Get the display name of a currency
  */
 export function getCurrencyName(currency: Currency, locale = 'en-US'): string {
+  // Special handling for UYI (Unidad Indexada)
+  if (currency === 'UYI') {
+    return locale.startsWith('es') ? 'Unidad Indexada' : 'Indexed Unit (Uruguay)';
+  }
   return new Intl.DisplayNames([locale], { type: 'currency' }).of(currency) ?? currency;
 }
 
