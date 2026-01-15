@@ -1,6 +1,7 @@
-export { StepTitleDescription } from './StepTitleDescription';
-export { StepAmountCurrency } from './StepAmountCurrency';
-export { StepTargetDate } from './StepTargetDate';
-export { StepBucket } from './StepBucket';
-export { StepWhyItMatters } from './StepWhyItMatters';
-export { SMARTValidationSummary } from './SMARTValidationSummary';
+export * from './StepTitleDescription';
+export * from './StepAmountCurrency';
+export * from './StepTargetDate';
+export * from './StepBucket';
+export * from './StepWhyItMatters';
+export * from './SMARTValidationSummary';
+export * from './TemplateSelector';

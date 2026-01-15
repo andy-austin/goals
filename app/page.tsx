@@ -3,12 +3,11 @@
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useGoals } from '@/context';
-import { Button, Card, CardContent, BucketBadge } from '@/components';
-import { BUCKET_CONFIG, formatCurrency, type Bucket } from '@/types';
+import { Button, Card, CardContent, BucketSection } from '@/components';
+import { formatCurrency, BUCKETS } from '@/types';
 
 export default function DashboardPage() {
   const t = useTranslations('dashboard');
-  const tBuckets = useTranslations('buckets');
   const { goals, totalGoals, totalAmount, getAllGoalsByBucket } = useGoals();
   const goalsByBucket = getAllGoalsByBucket();
 
@@ -29,13 +28,13 @@ export default function DashboardPage() {
       {/* Stats Overview */}
       <div className="mb-8 grid gap-4 sm:grid-cols-3">
         <Card>
-          <CardContent>
+          <CardContent className="pt-6">
             <p className="text-sm font-medium text-muted-foreground">{t('stats.totalGoals')}</p>
             <p className="mt-1 text-2xl font-semibold text-foreground">{totalGoals}</p>
           </CardContent>
         </Card>
         <Card>
-          <CardContent>
+          <CardContent className="pt-6">
             <p className="text-sm font-medium text-muted-foreground">{t('stats.totalTarget')}</p>
             <p className="mt-1 text-2xl font-semibold text-foreground">
               {formatCurrency(totalAmount, currency)}
@@ -43,7 +42,7 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
         <Card>
-          <CardContent>
+          <CardContent className="pt-6">
             <p className="text-sm font-medium text-muted-foreground">{t('stats.buckets')}</p>
             <p className="mt-1 text-2xl font-semibold text-foreground">3</p>
           </CardContent>
@@ -75,52 +74,15 @@ export default function DashboardPage() {
           </Link>
         </Card>
       ) : (
-        <div className="grid gap-6 lg:grid-cols-3">
-          {(['safety', 'growth', 'dream'] as Bucket[]).map((bucket) => {
-            const config = BUCKET_CONFIG[bucket];
-            const bucketGoals = goalsByBucket[bucket];
-
-            return (
-              <Card key={bucket}>
-                <div
-                  className="flex items-center gap-2 border-b border-border px-4 py-3"
-                  style={{ backgroundColor: config.bgColorVar }}
-                >
-                  <span
-                    className="h-3 w-3 rounded-full"
-                    style={{ backgroundColor: config.colorVar }}
-                  />
-                  <h2 className="font-medium text-foreground">
-                    {tBuckets(`${bucket}.name`)}
-                  </h2>
-                  <span className="ml-auto text-sm text-muted-foreground">
-                    {bucketGoals.length} {t('goalsCount')}
-                  </span>
-                </div>
-                <div className="divide-y divide-border">
-                  {bucketGoals.length === 0 ? (
-                    <p className="px-4 py-6 text-center text-sm text-muted-foreground">
-                      {t('noBucketGoals', { bucket: tBuckets(`${bucket}.name`).toLowerCase() })}
-                    </p>
-                  ) : (
-                    bucketGoals.map((goal) => (
-                      <div key={goal.id} className="px-4 py-3">
-                        <div className="flex items-center justify-between">
-                          <p className="font-medium text-foreground">
-                            {goal.title}
-                          </p>
-                          <BucketBadge bucket={goal.bucket} size="sm" showIcon={false} />
-                        </div>
-                        <p className="mt-1 text-sm text-muted-foreground">
-                          {formatCurrency(goal.amount, goal.currency)}
-                        </p>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </Card>
-            );
-          })}
+        <div className="space-y-6">
+          {BUCKETS.map((bucket) => (
+            <BucketSection 
+              key={bucket} 
+              bucket={bucket} 
+              goals={goalsByBucket[bucket]} 
+              totalGoals={totalGoals} 
+            />
+          ))}
         </div>
       )}
 

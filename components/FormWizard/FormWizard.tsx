@@ -64,9 +64,6 @@ export function FormWizard<T extends Record<string, unknown>>({
         <FormWizardNav
           submitLabel={submitLabel}
           isSubmitting={isSubmitting}
-          onSubmit={() => {
-            // The onComplete is called via the context when nextStep is called on last step
-          }}
         />
       </div>
     </FormWizardProvider>
