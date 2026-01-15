@@ -11,21 +11,151 @@ This document tracks the implementation progress of the Investment Goals applica
 
 **Milestone 1: Project Setup & Foundation** - COMPLETE (5/5 issues completed)
 **Milestone 2: Goal Creation Flow** - COMPLETE (8/8 issues completed)
+**Milestone 3: AI-Powered Suggestions** - COMPLETE (5/5 issues completed)
 
 ### Completed in This Session
-- Issue #3: Create base layout and navigation
-- Issue #4: Set up design tokens and theme
-- Issue #5: Configure local storage persistence
-- Issue #6: Create multi-step form wizard component
-- Issue #7: Implement Step 1: Goal title and description
-- Issue #13: Add form progress indicator (accessibility enhancements)
-- Issue #35: Set up internationalization (i18n) with Spanish and English support
+- Issue #19: Create AI suggestion chip component
+- Issue #15: Implement AI suggestion for goal description refinement
+- Issue #16: Implement AI suggestion for target amounts
+- Issue #17: Implement AI suggestion for bucket classification
+- Issue #18: Implement AI suggestion for "why it matters" statement
 
-### Milestone 2 Complete
+### Milestone 3 Complete
 
 ---
 
 ## Completed Features
+
+### Issue #19: Create AI Suggestion Chip Component
+**Status:** Completed
+**Files:**
+- `components/ui/AISuggestionChip.tsx` - Main component with all states
+- `components/ui/index.ts` - Updated exports
+- `app/globals.css` - Added semantic color foreground tokens
+- `messages/en.json` - English translations for AI namespace
+- `messages/es.json` - Spanish translations for AI namespace
+
+**Features Implemented:**
+- Loading state with pulse animation and skeleton lines
+- Ready state with suggestion text and accept/dismiss buttons
+- Error state with retry option
+- Smooth entrance/exit animations
+- Full keyboard accessibility
+- Screen reader support with ARIA attributes
+
+**Component Props:**
+| Prop | Type | Description |
+|------|------|-------------|
+| `suggestion` | `string \| null` | The AI-generated suggestion text |
+| `isLoading` | `boolean` | Whether AI is generating a suggestion |
+| `error` | `string` | Error message if generation failed |
+| `onAccept` | `(suggestion: string) => void` | Callback when user accepts |
+| `onDismiss` | `() => void` | Callback when user dismisses |
+| `onRetry` | `() => void` | Callback to retry after error |
+| `acceptLabel` | `string` | Custom label for accept button |
+| `dismissLabel` | `string` | Custom label for dismiss button |
+| `retryLabel` | `string` | Custom label for retry button |
+
+**Design Tokens Added:**
+- `--success-foreground` - Text color on success backgrounds
+- `--warning-foreground` - Text color on warning backgrounds
+- `--error-foreground` - Text color on error backgrounds
+- `--info-foreground` - Text color on info backgrounds
+
+**Accessibility Features:**
+| Feature | Implementation |
+|---------|----------------|
+| Loading state | `role="status"` with `aria-label` |
+| Error state | `role="alert"` for screen reader announcement |
+| Ready state | `role="region"` with `aria-label` |
+| Buttons | Keyboard accessible with focus rings |
+| Screen reader | `sr-only` text for loading state |
+
+---
+
+### Issue #15: Implement AI Suggestion for Goal Description Refinement
+**Status:** Completed
+**Files:**
+- `app/api/ai/suggest/route.ts` - API route for AI suggestions (supports multiple types)
+- `hooks/useAISuggestion.ts` - Custom hook for fetching AI suggestions
+- `hooks/index.ts` - Hooks exports
+- `components/GoalForm/StepTitleDescription.tsx` - Updated with AI suggestion integration
+- `.env.local.example` - Environment variable template
+
+**Features Implemented:**
+- Multi-provider AI support (Anthropic Claude and Google Gemini)
+- Automatic provider selection based on available API keys
+- AI suggestion API route with prompt engineering
+- Custom useAISuggestion hook with loading/error states
+- Integration with StepTitleDescription form step
+- "AI Suggestion" button appears after user enters title or description
+- Graceful degradation when API key not configured
+
+**API Route Features:**
+| Type | Description |
+|------|-------------|
+| `description` | Refines vague descriptions into SMART-compliant goals |
+| `amount` | Suggests realistic amounts based on goal type |
+| `bucket` | Classifies goals into Safety/Growth/Dream |
+| `whyItMatters` | Generates emotionally resonant motivation statements |
+
+**useAISuggestion Hook API:**
+| Property/Method | Type | Description |
+|-----------------|------|-------------|
+| `suggestion` | `string \| null` | The current suggestion |
+| `reasoning` | `string \| null` | Additional reasoning (if available) |
+| `isLoading` | `boolean` | Whether generating |
+| `error` | `string \| null` | Error message |
+| `getSuggestion` | `(input, context?) => Promise<void>` | Trigger suggestion |
+| `clearSuggestion` | `() => void` | Clear current suggestion |
+| `retry` | `() => Promise<void>` | Retry last request |
+
+**Environment Variables:**
+```
+ANTHROPIC_API_KEY=your-claude-key
+# OR
+GEMINI_API_KEY=your-gemini-key
+# Optional
+AI_PROVIDER=anthropic|gemini
+```
+
+---
+
+### Issue #16: Implement AI Suggestion for Target Amounts
+**Status:** Completed
+**Files:**
+- `components/GoalForm/StepAmountCurrency.tsx` - Updated with AI suggestion integration
+
+**Features Implemented:**
+- AI suggests realistic amounts based on goal type
+- Shows formatted currency amount with reasoning
+- Integrated with existing quick-select buttons
+
+---
+
+### Issue #17: Implement AI Suggestion for Bucket Classification
+**Status:** Completed
+**Files:**
+- `components/GoalForm/StepBucket.tsx` - Updated with AI suggestion integration
+
+**Features Implemented:**
+- AI classifies goals into Safety/Growth/Dream buckets
+- Shows bucket name with reasoning explanation
+- Suggestion clears when user manually selects a bucket
+
+---
+
+### Issue #18: Implement AI Suggestion for "Why It Matters" Statement
+**Status:** Completed
+**Files:**
+- `components/GoalForm/StepWhyItMatters.tsx` - Updated with AI suggestion integration
+
+**Features Implemented:**
+- AI generates emotionally resonant motivation statements
+- Personalized based on goal title, description, amount, and bucket
+- Works alongside existing example quick-fill buttons
+
+---
 
 ### Issue #35: Set Up Internationalization (i18n)
 **Status:** Completed
@@ -439,6 +569,10 @@ goals/
 ├── app/
 │   ├── actions/
 │   │   └── locale.ts         # Server action for locale switching
+│   ├── api/
+│   │   └── ai/
+│   │       └── suggest/
+│   │           └── route.ts  # AI suggestion API endpoint
 │   ├── create/
 │   │   └── page.tsx          # Goal creation page (placeholder)
 │   ├── timeline/
@@ -447,6 +581,9 @@ goals/
 │   ├── layout.tsx            # Root layout with Header
 │   ├── page.tsx              # Dashboard home page
 │   └── providers.tsx         # Client-side providers wrapper
+├── hooks/
+│   ├── useAISuggestion.ts    # Hook for AI-powered suggestions
+│   └── index.ts              # Hooks exports
 ├── components/
 │   ├── FormWizard/
 │   │   ├── FormWizard.tsx        # Main wizard wrapper component
@@ -459,6 +596,7 @@ goals/
 │   │   ├── StepTitleDescription.tsx  # Step 1: Title and description
 │   │   └── index.ts              # GoalForm exports
 │   ├── ui/
+│   │   ├── AISuggestionChip.tsx # AI suggestion component for forms
 │   │   ├── Badge.tsx         # Badge and BucketBadge components
 │   │   ├── Button.tsx        # Button component
 │   │   ├── Card.tsx          # Card and subcomponents
@@ -513,6 +651,49 @@ import { Button, Card, CardContent, Badge, BucketBadge } from '@/components';
 <BucketBadge bucket="safety" />  // Shows "Safety" with shield icon
 <BucketBadge bucket="growth" />  // Shows "Growth" with trending-up icon
 <BucketBadge bucket="dream" />   // Shows "Dream" with star icon
+```
+
+### Using the AI Suggestion Chip
+```typescript
+'use client';
+
+import { useState } from 'react';
+import { AISuggestionChip } from '@/components';
+
+function MyForm() {
+  const [suggestion, setSuggestion] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | undefined>();
+
+  const handleAccept = (text: string) => {
+    // Apply the suggestion to your form
+    console.log('User accepted:', text);
+  };
+
+  const handleDismiss = () => {
+    setSuggestion(null);
+    setError(undefined);
+  };
+
+  const handleRetry = () => {
+    // Retry fetching suggestion
+    fetchSuggestion();
+  };
+
+  return (
+    <AISuggestionChip
+      suggestion={suggestion}
+      isLoading={isLoading}
+      error={error}
+      onAccept={handleAccept}
+      onDismiss={handleDismiss}
+      onRetry={handleRetry}
+      acceptLabel="Use this"
+      dismissLabel="Dismiss"
+      retryLabel="Retry"
+    />
+  );
+}
 ```
 
 ### Using the Form Wizard

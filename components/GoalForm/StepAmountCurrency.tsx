@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
-import { Input, Label, Select } from '@/components/ui';
+import { Input, Label, Select, AISuggestionChip } from '@/components/ui';
 import { useFormWizard } from '@/components/FormWizard';
+import { useAISuggestion } from '@/hooks';
 import { getCurrencyOptions } from '@/types';
 import type { GoalFormInput, Currency } from '@/types';
 
@@ -19,15 +20,29 @@ const MIN_AMOUNT = 1;
 
 export function StepAmountCurrency() {
   const t = useTranslations('goalForm.step2');
+  const tAI = useTranslations('ai');
   const { data, updateData, setStepValid } = useFormWizard<Partial<GoalFormInput>>();
 
   // Default to 0 and USD if not set
   const amount = data.amount ?? '';
   const currency = data.currency || 'USD';
+  const title = data.title || '';
+  const description = data.description || '';
+
+  // AI suggestion hook
+  const {
+    suggestion,
+    reasoning,
+    isLoading: isAILoading,
+    error: aiError,
+    getSuggestion,
+    clearSuggestion,
+    retry,
+  } = useAISuggestion('amount');
 
   // Validation
   const amountError = typeof amount === 'number' && amount <= 0;
-  
+
   const isValid = useMemo(() => {
     return typeof amount === 'number' && amount >= MIN_AMOUNT && !!currency;
   }, [amount, currency]);
@@ -43,6 +58,27 @@ export function StepAmountCurrency() {
       updateData({ currency: 'USD' });
     }
   }, [data.currency, updateData]);
+
+  // Handle AI suggestion request
+  const handleGetSuggestion = useCallback(() => {
+    if (title.length >= 3 || description.length >= 3) {
+      getSuggestion(description || title, { title, description, currency });
+    }
+  }, [title, description, currency, getSuggestion]);
+
+  // Handle accepting AI suggestion
+  const handleAcceptSuggestion = useCallback(
+    (suggestedAmount: string) => {
+      const numValue = parseFloat(suggestedAmount);
+      if (!isNaN(numValue) && numValue > 0) {
+        updateData({ amount: numValue });
+      }
+    },
+    [updateData]
+  );
+
+  // Check if we can request a suggestion
+  const canRequestSuggestion = (title.length >= 3 || description.length >= 3) && !isAILoading;
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -92,9 +128,21 @@ export function StepAmountCurrency() {
 
         {/* Amount Field */}
         <div className="space-y-2">
-          <Label htmlFor="amount" required>
-            {t('amountLabel')}
-          </Label>
+          <div className="flex items-center justify-between">
+            <Label htmlFor="amount" required>
+              {t('amountLabel')}
+            </Label>
+            {canRequestSuggestion && !suggestion && !isAILoading && (
+              <button
+                type="button"
+                onClick={handleGetSuggestion}
+                className="inline-flex items-center gap-1.5 text-xs font-medium text-info hover:text-info/80 transition-colors"
+              >
+                <SparklesIcon className="w-3.5 h-3.5" />
+                {tAI('suggestion')}
+              </button>
+            )}
+          </div>
           <div className="relative">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <span className="text-zinc-500 sm:text-sm">
@@ -120,6 +168,25 @@ export function StepAmountCurrency() {
           )}
         </div>
       </div>
+
+      {/* AI Suggestion Chip */}
+      {(suggestion || isAILoading || aiError) && (
+        <AISuggestionChip
+          suggestion={
+            suggestion
+              ? `${new Intl.NumberFormat('en-US', { style: 'currency', currency, maximumFractionDigits: 0 }).format(parseFloat(suggestion))}${reasoning ? ` - ${reasoning}` : ''}`
+              : null
+          }
+          isLoading={isAILoading}
+          error={aiError || undefined}
+          onAccept={() => suggestion && handleAcceptSuggestion(suggestion)}
+          onDismiss={clearSuggestion}
+          onRetry={retry}
+          acceptLabel={tAI('useThis')}
+          dismissLabel={tAI('dismiss')}
+          retryLabel={tAI('retry')}
+        />
+      )}
 
       {/* SMART Tip */}
       <div className="rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-900 dark:bg-blue-950">
@@ -169,5 +236,30 @@ export function StepAmountCurrency() {
         </div>
       </div>
     </div>
+  );
+}
+
+// =============================================================================
+// Helper Components
+// =============================================================================
+
+/**
+ * Sparkles icon for AI suggestion button
+ */
+function SparklesIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"
+      />
+    </svg>
   );
 }

@@ -1,8 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import { useFormWizard } from '@/components/FormWizard';
+import { useAISuggestion } from '@/hooks';
+import { AISuggestionChip } from '@/components/ui';
 import { BUCKET_CONFIG, BUCKETS } from '@/types';
 import type { GoalFormInput, Bucket } from '@/types';
 
@@ -65,9 +67,25 @@ const Icons = {
 export function StepBucket() {
   const t = useTranslations('goalForm.step4');
   const tBuckets = useTranslations('buckets');
+  const tAI = useTranslations('ai');
   const { data, updateData, setStepValid } = useFormWizard<Partial<GoalFormInput>>();
 
   const selectedBucket = data.bucket;
+  const title = data.title || '';
+  const description = data.description || '';
+  const amount = data.amount;
+  const targetDate = data.targetDate;
+
+  // AI suggestion hook
+  const {
+    suggestion,
+    reasoning,
+    isLoading: isAILoading,
+    error: aiError,
+    getSuggestion,
+    clearSuggestion,
+    retry,
+  } = useAISuggestion('bucket');
 
   // Validation
   useEffect(() => {
@@ -76,19 +94,80 @@ export function StepBucket() {
 
   const handleSelect = (bucket: Bucket) => {
     updateData({ bucket });
+    // Clear suggestion when user manually selects
+    if (suggestion) {
+      clearSuggestion();
+    }
   };
+
+  // Handle AI suggestion request
+  const handleGetSuggestion = useCallback(() => {
+    if (title.length >= 3 || description.length >= 3) {
+      getSuggestion(description || title, {
+        title,
+        description,
+        amount,
+        targetDate,
+      });
+    }
+  }, [title, description, amount, targetDate, getSuggestion]);
+
+  // Handle accepting AI suggestion
+  const handleAcceptSuggestion = useCallback(
+    (suggestedBucket: string) => {
+      const bucket = suggestedBucket.toLowerCase() as Bucket;
+      if (BUCKETS.includes(bucket)) {
+        updateData({ bucket });
+      }
+    },
+    [updateData]
+  );
+
+  // Check if we can request a suggestion
+  const canRequestSuggestion = (title.length >= 3 || description.length >= 3) && !isAILoading;
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-          {t('title')}
-        </h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+            {t('title')}
+          </h2>
+          {canRequestSuggestion && !suggestion && !isAILoading && !selectedBucket && (
+            <button
+              type="button"
+              onClick={handleGetSuggestion}
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-info hover:text-info/80 transition-colors"
+            >
+              <SparklesIcon className="w-3.5 h-3.5" />
+              {tAI('suggestion')}
+            </button>
+          )}
+        </div>
         <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
           {t('subtitle')}
         </p>
       </div>
+
+      {/* AI Suggestion Chip */}
+      {(suggestion || isAILoading || aiError) && (
+        <AISuggestionChip
+          suggestion={
+            suggestion
+              ? `${tBuckets(`${suggestion}.name`)}${reasoning ? ` - ${reasoning}` : ''}`
+              : null
+          }
+          isLoading={isAILoading}
+          error={aiError || undefined}
+          onAccept={() => suggestion && handleAcceptSuggestion(suggestion)}
+          onDismiss={clearSuggestion}
+          onRetry={retry}
+          acceptLabel={tAI('useThis')}
+          dismissLabel={tAI('dismiss')}
+          retryLabel={tAI('retry')}
+        />
+      )}
 
       {/* Bucket Selection Cards */}
       <div className="grid gap-4">
@@ -188,5 +267,26 @@ export function StepBucket() {
         </div>
       </div>
     </div>
+  );
+}
+
+/**
+ * Sparkles icon for AI suggestion button
+ */
+function SparklesIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"
+      />
+    </svg>
   );
 }

@@ -16,6 +16,7 @@ export {
   Select,
   Badge,
   BucketBadge,
+  AISuggestionChip,
 } from './ui';
 
 // Form Wizard Components

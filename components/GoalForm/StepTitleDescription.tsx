@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
-import { Input, Textarea, Label } from '@/components/ui';
+import { Input, Textarea, Label, AISuggestionChip } from '@/components/ui';
 import { useFormWizard } from '@/components/FormWizard';
+import { useAISuggestion } from '@/hooks';
 import type { GoalFormInput } from '@/types';
 
 // =============================================================================
@@ -20,10 +21,21 @@ const MIN_DESCRIPTION_LENGTH = 20;
 export function StepTitleDescription() {
   const t = useTranslations('goalForm.step1');
   const tExamples = useTranslations('examples');
+  const tAI = useTranslations('ai');
   const { data, updateData, setStepValid } = useFormWizard<Partial<GoalFormInput>>();
 
   const title = data.title || '';
   const description = data.description || '';
+
+  // AI suggestion hook
+  const {
+    suggestion,
+    isLoading: isAILoading,
+    error: aiError,
+    getSuggestion,
+    clearSuggestion,
+    retry,
+  } = useAISuggestion('description');
 
   // Validation
   const titleError = title.length > 0 && title.length < MIN_TITLE_LENGTH;
@@ -37,6 +49,25 @@ export function StepTitleDescription() {
   useEffect(() => {
     setStepValid(isValid);
   }, [isValid, setStepValid]);
+
+  // Handle AI suggestion request
+  const handleGetSuggestion = useCallback(() => {
+    const input = description || title;
+    if (input.length >= 3) {
+      getSuggestion(input, { title });
+    }
+  }, [description, title, getSuggestion]);
+
+  // Handle accepting AI suggestion
+  const handleAcceptSuggestion = useCallback(
+    (suggestedDescription: string) => {
+      updateData({ description: suggestedDescription });
+    },
+    [updateData]
+  );
+
+  // Check if we can request a suggestion
+  const canRequestSuggestion = (title.length >= 3 || description.length >= 3) && !isAILoading;
 
   return (
     <div className="space-y-6">
@@ -72,9 +103,21 @@ export function StepTitleDescription() {
 
       {/* Description Field */}
       <div className="space-y-2">
-        <Label htmlFor="description" required>
-          {t('descriptionLabel')}
-        </Label>
+        <div className="flex items-center justify-between">
+          <Label htmlFor="description" required>
+            {t('descriptionLabel')}
+          </Label>
+          {canRequestSuggestion && !suggestion && !isAILoading && (
+            <button
+              type="button"
+              onClick={handleGetSuggestion}
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-info hover:text-info/80 transition-colors"
+            >
+              <SparklesIcon className="w-3.5 h-3.5" />
+              {tAI('suggestion')}
+            </button>
+          )}
+        </div>
         <Textarea
           id="description"
           placeholder={t('descriptionPlaceholder')}
@@ -102,6 +145,19 @@ export function StepTitleDescription() {
             {description.length}/500
           </span>
         </div>
+
+        {/* AI Suggestion Chip */}
+        <AISuggestionChip
+          suggestion={suggestion}
+          isLoading={isAILoading}
+          error={aiError || undefined}
+          onAccept={handleAcceptSuggestion}
+          onDismiss={clearSuggestion}
+          onRetry={retry}
+          acceptLabel={tAI('useThis')}
+          dismissLabel={tAI('dismiss')}
+          retryLabel={tAI('retry')}
+        />
       </div>
 
       {/* SMART Tip */}
@@ -177,5 +233,26 @@ function ExampleCard({ title, description }: { title: string; description: strin
         {description}
       </p>
     </button>
+  );
+}
+
+/**
+ * Sparkles icon for AI suggestion button
+ */
+function SparklesIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"
+      />
+    </svg>
   );
 }

@@ -158,5 +158,13 @@
     "select": "Idioma",
     "en": "Inglés",
     "es": "Español"
+  },
+  "ai": {
+    "suggestion": "Sugerencia de IA",
+    "loading": "La IA está generando una sugerencia, por favor espera...",
+    "error": "No se pudo generar la sugerencia",
+    "useThis": "Usar esto",
+    "dismiss": "Descartar",
+    "retry": "Reintentar"
   }
 }

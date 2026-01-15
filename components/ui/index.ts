@@ -29,3 +29,7 @@ export {
   type BadgeProps,
   type BucketBadgeProps,
 } from './Badge';
+export {
+  AISuggestionChip,
+  type AISuggestionChipProps,
+} from './AISuggestionChip';

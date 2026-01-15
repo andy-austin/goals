@@ -158,5 +158,13 @@
     "select": "Language",
     "en": "English",
     "es": "Spanish"
+  },
+  "ai": {
+    "suggestion": "AI Suggestion",
+    "loading": "AI is generating a suggestion, please wait...",
+    "error": "Unable to generate suggestion",
+    "useThis": "Use this",
+    "dismiss": "Dismiss",
+    "retry": "Retry"
   }
 }
