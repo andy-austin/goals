@@ -29,7 +29,8 @@ export type Currency =
   | 'CHF'  // Swiss Franc
   | 'MXN'  // Mexican Peso
   | 'BRL'  // Brazilian Real
-  | 'UYU'; // Uruguayan Peso
+  | 'UYU'  // Uruguayan Peso
+  | 'UYI'; // Uruguay Peso en Unidades Indexadas (Index Unit)
 
 // =============================================================================
 // Core Interfaces
@@ -213,7 +214,7 @@ export const BUCKET_CONFIG: Record<Bucket, {
  * All supported currencies as an array (ISO 4217 codes)
  */
 export const CURRENCIES: Currency[] = [
-  'USD', 'EUR', 'GBP', 'JPY', 'CAD', 'AUD', 'CHF', 'MXN', 'BRL', 'UYU'
+  'USD', 'EUR', 'GBP', 'JPY', 'CAD', 'AUD', 'CHF', 'MXN', 'BRL', 'UYU', 'UYI'
 ];
 
 // =============================================================================
