@@ -168,7 +168,7 @@ async function callGemini(prompt: string): Promise<string> {
     throw new Error('Gemini client not initialized');
   }
 
-  const model = gemini.getGenerativeModel({ model: 'gemini-1.5-flash' });
+  const model = gemini.getGenerativeModel({ model: 'gemini-3-flash-preview' });
   const result = await model.generateContent(prompt);
   const response = result.response;
   return response.text();
