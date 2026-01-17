@@ -1,10 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
+import { DndContext, closestCenter } from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { restrictToVerticalAxis, restrictToParentElement } from '@dnd-kit/modifiers';
 import { BUCKET_CONFIG, Bucket, Goal } from '@/types';
-import { GoalCard } from './GoalCard';
-import { Button } from '@/components/ui';
+import { SortableGoalCard } from './SortableGoalCard';
+import { useGoals } from '@/context';
+import { useSortableList } from '@/hooks';
 
 interface BucketSectionProps {
   bucket: Bucket;
@@ -41,8 +45,21 @@ const Icons = {
 export function BucketSection({ bucket, goals }: BucketSectionProps) {
   const tBuckets = useTranslations('buckets');
   const [isExpanded, setIsExpanded] = useState(true);
+  const { reorderGoalsInBucket } = useGoals();
   const config = BUCKET_CONFIG[bucket];
   const Icon = Icons[bucket];
+
+  // Memoize the reorder callback to maintain referential equality
+  const handleReorder = useCallback(
+    (orderedIds: string[]) => reorderGoalsInBucket(bucket, orderedIds),
+    [bucket, reorderGoalsInBucket]
+  );
+
+  // Use custom hook for DnD logic
+  const { sensors, handleDragEnd } = useSortableList({
+    items: goals,
+    onReorder: handleReorder,
+  });
 
   return (
     <div className="rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-950 overflow-hidden">
@@ -90,11 +107,23 @@ export function BucketSection({ bucket, goals }: BucketSectionProps) {
               No goals in this bucket yet.
             </div>
           ) : (
-            <div className="space-y-3">
-              {goals.map((goal) => (
-                <GoalCard key={goal.id} goal={goal} />
-              ))}
-            </div>
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
+              modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+            >
+              <SortableContext
+                items={goals.map((g) => g.id)}
+                strategy={verticalListSortingStrategy}
+              >
+                <div className="space-y-3">
+                  {goals.map((goal) => (
+                    <SortableGoalCard key={goal.id} goal={goal} />
+                  ))}
+                </div>
+              </SortableContext>
+            </DndContext>
           )}
         </div>
       )}

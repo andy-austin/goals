@@ -3,7 +3,7 @@
 This document tracks the implementation progress of the Investment Goals application.
 
 ## Last Updated
-2026-01-14
+2026-01-17
 
 ---
 
@@ -12,19 +12,13 @@ This document tracks the implementation progress of the Investment Goals applica
 **Milestone 1: Project Setup & Foundation** - COMPLETE (5/5 issues completed)
 **Milestone 2: Goal Creation Flow** - COMPLETE (8/8 issues completed)
 **Milestone 3: AI-Powered Suggestions** - COMPLETE (6/6 issues completed)
+**Milestone 4: Goal Templates & Examples** - COMPLETE (3/3 issues completed)
+**Milestone 5: Prioritization UI** - IN PROGRESS (2/3 issues completed)
 
 ### Completed in This Session
-- Issue #19: Create AI suggestion chip component
-- Issue #15: Implement AI suggestion for goal description refinement
-- Issue #16: Implement AI suggestion for target amounts
-- Issue #17: Implement AI suggestion for bucket classification
-- Issue #18: Implement AI suggestion for "why it matters" statement
-- Issue #14: Setup AI Backend Integration & Multi-provider Support
-
-### Milestone 3 Complete
-
-**Milestone 4: Goal Templates & Examples** - COMPLETE (3/3 issues completed)
-**Milestone 5: Prioritization UI** - IN PROGRESS (1/3 issues completed)
+- Issue #26: Implement Drag-and-Drop Goal Reordering
+- Code quality review and refactoring
+- Comprehensive E2E test suite with Playwright
 
 ---
 
@@ -47,6 +41,56 @@ This document tracks the implementation progress of the Investment Goals applica
 **Features Implemented:**
 - Goal card with priority and due date indicators
 - Overdue status calculation
+
+### Issue #26: Implement Drag-and-Drop Goal Reordering
+**Status:** Completed
+**Files:**
+- `components/Dashboard/SortableGoalCard.tsx` - New sortable wrapper component
+- `components/Dashboard/GoalCard.tsx` - Updated with drag handle support
+- `components/Dashboard/BucketSection.tsx` - Updated with DnD context
+- `components/Dashboard/index.ts` - Updated exports
+
+**Dependencies Added:**
+- `@dnd-kit/core` - Core drag and drop functionality
+- `@dnd-kit/sortable` - Sortable list utilities
+- `@dnd-kit/utilities` - CSS transform utilities
+- `@dnd-kit/modifiers` - Movement restriction modifiers
+
+**Features Implemented:**
+- Drag-and-drop reordering within each bucket
+- Visual drag handle with 6-dot grip icon
+- Smooth animations during drag
+- Visual feedback while dragging (shadow, ring)
+- Keyboard accessibility for reordering
+- Vertical movement restriction
+- Priority numbers auto-update after reorder
+- Persists order to localStorage
+
+**Component Architecture:**
+
+| Component | Description |
+|-----------|-------------|
+| `SortableGoalCard` | Wrapper that adds dnd-kit sortable behavior |
+| `GoalCard` | Base card with optional drag handle slot |
+| `BucketSection` | Contains DndContext and SortableContext |
+| `DragHandle` | 6-dot grip button for drag interaction |
+
+**DnD Configuration:**
+- `PointerSensor` with 8px activation distance
+- `KeyboardSensor` with coordinate getter
+- `closestCenter` collision detection
+- Vertical axis restriction
+- Parent element containment
+
+**Accessibility Features:**
+| Feature | Implementation |
+|---------|----------------|
+| Keyboard navigation | Arrow keys to move items |
+| Focus management | Focus ring on drag handle |
+| Screen reader | `aria-label` on drag handle |
+| Activation | 8px movement threshold prevents accidental drags |
+
+---
 
 ### Issue #29: Build Dashboard Page with Bucket View
 **Status:** Completed
@@ -733,6 +777,11 @@ goals/
 │   ├── useAISuggestion.ts    # Hook for AI-powered suggestions
 │   └── index.ts              # Hooks exports
 ├── components/
+│   ├── Dashboard/
+│   │   ├── BucketSection.tsx     # Collapsible bucket section with DnD
+│   │   ├── GoalCard.tsx          # Goal card with drag handle support
+│   │   ├── SortableGoalCard.tsx  # Sortable wrapper for GoalCard
+│   │   └── index.ts              # Dashboard component exports
 │   ├── FormWizard/
 │   │   ├── FormWizard.tsx        # Main wizard wrapper component
 │   │   ├── FormWizardContext.tsx # Context and state management
@@ -978,6 +1027,47 @@ Note: You typically don't need to call these directly - the GoalsContext handles
 
 ---
 
+### Using the Sortable List Hook
+
+```typescript
+'use client';
+
+import { useSortableList } from '@/hooks';
+
+interface Item {
+  id: string;
+  name: string;
+}
+
+function MySortableList({ items }: { items: Item[] }) {
+  const handleReorder = (orderedIds: string[]) => {
+    console.log('New order:', orderedIds);
+  };
+
+  const { sensors, handleDragEnd } = useSortableList({
+    items,
+    onReorder: handleReorder,
+    activationDistance: 8, // optional, default is 8
+  });
+
+  return (
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragEnd={handleDragEnd}
+    >
+      <SortableContext items={items.map(item => item.id)}>
+        {items.map(item => (
+          <SortableItem key={item.id} item={item} />
+        ))}
+      </SortableContext>
+    </DndContext>
+  );
+}
+```
+
+---
+
 ### Using Goals State (useGoals hook)
 ```typescript
 'use client';
@@ -1029,10 +1119,67 @@ function MyComponent() {
 
 ---
 
+## E2E Testing
+
+### Test Setup
+
+The project uses Playwright for end-to-end testing.
+
+**Configuration:** `playwright.config.ts`
+- Base URL: `http://localhost:3000`
+- Browser: Chromium (Firefox and WebKit available but disabled for faster development)
+- Auto-starts dev server before tests
+
+**Test Files:**
+| File | Description | Tests |
+|------|-------------|-------|
+| `tests/dashboard.spec.ts` | Dashboard functionality | 9 tests |
+| `tests/goal-creation.spec.ts` | Goal creation wizard flow | 11 tests |
+| `tests/drag-and-drop.spec.ts` | DnD reordering | 4 tests |
+| `tests/persistence.spec.ts` | localStorage persistence | 6 tests |
+
+### Running Tests
+
+```bash
+# Run all tests
+npx playwright test
+
+# Run specific test file
+npx playwright test tests/dashboard.spec.ts
+
+# Run with UI mode
+npx playwright test --ui
+
+# Run only Chromium
+npx playwright test --project=chromium
+```
+
+### Test Coverage
+
+| Feature | Coverage |
+|---------|----------|
+| Dashboard empty state | ✅ |
+| Dashboard with goals | ✅ |
+| Navigation | ✅ |
+| Goal creation wizard (all steps) | ✅ |
+| Template selection | ✅ |
+| Drag-and-drop reordering | ✅ |
+| localStorage persistence | ✅ |
+| Error handling (corrupted data) | ✅ |
+
+### Key Testing Patterns
+
+1. **localStorage Setup:** Use `page.addInitScript()` to set localStorage before page load
+2. **Step Navigation:** Check for step content headings rather than step indicators
+3. **Form Fields:** Use proper ARIA roles (`spinbutton` for number inputs)
+4. **Button Matching:** Use `{ exact: true }` for buttons with common names like "Next"
+
+---
+
 ## Pending Implementation
 
 ### Milestone 5: Prioritization UI
-- [ ] Issue #26: Implement Drag-and-Drop Goal Reordering
+- [x] Issue #26: Implement Drag-and-Drop Goal Reordering
 - [ ] Issue #27: Create Timeline Visualization Component
 - [ ] Issue #28: Create Goal Detail Modal/Sidebar
 

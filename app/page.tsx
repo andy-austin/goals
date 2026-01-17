@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useGoals } from '@/context';
@@ -9,9 +10,10 @@ import { formatCurrency, BUCKETS } from '@/types';
 export default function DashboardPage() {
   const t = useTranslations('dashboard');
   const { goals, totalGoals, totalAmount, getAllGoalsByBucket } = useGoals();
-  const goalsByBucket = getAllGoalsByBucket();
 
-  const currency = goals.length > 0 ? goals[0].currency : 'USD';
+  // Memoize to avoid recomputing on every render
+  const goalsByBucket = useMemo(() => getAllGoalsByBucket(), [getAllGoalsByBucket]);
+  const currency = useMemo(() => goals.length > 0 ? goals[0].currency : 'USD', [goals]);
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">

@@ -6,3 +6,5 @@ export {
   type UseAISuggestionOptions,
   type UseAISuggestionReturn,
 } from './useAISuggestion';
+
+export { useSortableList } from './useSortableList';

@@ -41,10 +41,6 @@ function isProviderAvailable(): boolean {
   return !!anthropic;
 }
 
-function getProviderName(): string {
-  return AI_PROVIDER === 'gemini' ? 'Gemini' : 'Anthropic';
-}
-
 function getMissingEnvVar(): string {
   return AI_PROVIDER === 'gemini' ? 'GEMINI_API_KEY' : 'ANTHROPIC_API_KEY';
 }

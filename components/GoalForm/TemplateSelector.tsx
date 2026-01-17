@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { BUCKET_CONFIG, BUCKETS, Bucket, GoalTemplate } from '@/types';
 import { GOAL_TEMPLATES } from '@/lib/templates';
-import { Card } from '@/components/ui';
 
 // =============================================================================
 // Props
@@ -41,7 +40,6 @@ const Icons = {
 // =============================================================================
 
 export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
-  const t = useTranslations('goalForm.templates'); // We'll need to add this namespace
   const tBuckets = useTranslations('buckets');
   const [activeBucket, setActiveBucket] = useState<Bucket>('safety');
 
