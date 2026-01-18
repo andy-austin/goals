@@ -86,7 +86,7 @@ test.describe('Timeline Visualization', () => {
   });
 
   test('shows today marker', async ({ page }) => {
-    await expect(page.getByText('Today')).toBeVisible();
+    await expect(page.getByText('Today').first()).toBeVisible();
   });
 
   test('shows bucket legend', async ({ page }) => {
@@ -116,24 +116,26 @@ test.describe('Timeline Visualization', () => {
   });
 
   test('displays goal markers with titles', async ({ page }) => {
-    // Goals should be visible as markers
-    await expect(page.getByRole('button', { name: /Emergency Fund/i })).toBeVisible();
-    await expect(page.getByRole('button', { name: /House Down Payment/i })).toBeVisible();
+    // Goals should be visible as markers in the timeline (using the specific aria-label)
+    await expect(page.getByRole('button', { name: 'Goal: Emergency Fund' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Goal: House Down Payment' })).toBeVisible();
   });
 
   test('clicking goal marker opens detail modal', async ({ page }) => {
-    // Click on Emergency Fund goal
-    await page.getByRole('button', { name: /Emergency Fund/i }).click();
+    // Click on Emergency Fund goal (use specific aria-label from timeline marker)
+    await page.getByRole('button', { name: 'Goal: Emergency Fund' }).click();
 
     // Modal should appear with goal details
     await expect(page.getByRole('heading', { name: 'Emergency Fund' })).toBeVisible();
-    await expect(page.getByText('$15,000')).toBeVisible();
-    await expect(page.getByText('Peace of mind and financial security')).toBeVisible();
+    // Use a more specific selector for the modal content
+    const modal = page.locator('.fixed.inset-0');
+    await expect(modal.getByText('$15,000')).toBeVisible();
+    await expect(modal.getByText('Peace of mind and financial security')).toBeVisible();
   });
 
   test('modal can be closed', async ({ page }) => {
-    // Open modal
-    await page.getByRole('button', { name: /Emergency Fund/i }).click();
+    // Open modal (use specific aria-label from timeline marker)
+    await page.getByRole('button', { name: 'Goal: Emergency Fund' }).click();
     await expect(page.getByRole('heading', { name: 'Emergency Fund' })).toBeVisible();
 
     // Close via X button
@@ -142,8 +144,8 @@ test.describe('Timeline Visualization', () => {
   });
 
   test('hovering goal shows tooltip', async ({ page }) => {
-    // Hover over a goal marker
-    const goalMarker = page.getByRole('button', { name: /Emergency Fund/i });
+    // Hover over a goal marker (use specific aria-label from timeline marker)
+    const goalMarker = page.getByRole('button', { name: 'Goal: Emergency Fund' });
     await goalMarker.hover();
 
     // Tooltip should appear
@@ -238,5 +240,49 @@ test.describe('Timeline - Goal Clustering', () => {
 
     // Should show cluster indicator with count "2"
     await expect(page.getByRole('button', { name: '2 goals' })).toBeVisible();
+  });
+});
+
+test.describe('Timeline - Gantt Chart', () => {
+  test.beforeEach(async ({ page }) => {
+    const testGoals = createTestGoals();
+    await page.addInitScript((goals) => {
+      localStorage.setItem(
+        'investment-goals-v1',
+        JSON.stringify({ version: 1, goals })
+      );
+    }, testGoals);
+    await page.goto('/timeline');
+  });
+
+  test('displays Gantt View section', async ({ page }) => {
+    await expect(page.getByText('Gantt View')).toBeVisible();
+  });
+
+  test('shows all goals as rows in Gantt chart', async ({ page }) => {
+    // Each goal should appear in the Gantt chart
+    const ganttSection = page.locator('text=Gantt View').locator('..').locator('..');
+
+    // Check for goal titles in Gantt rows
+    await expect(page.getByText('Emergency Fund').first()).toBeVisible();
+    await expect(page.getByText('House Down Payment').first()).toBeVisible();
+    await expect(page.getByText('Dream Vacation').first()).toBeVisible();
+  });
+
+  test('Gantt rows show goal amounts', async ({ page }) => {
+    // Goals should show their amounts in the Gantt rows
+    await expect(page.getByText('$15,000.00').first()).toBeVisible();
+    await expect(page.getByText('$60,000.00').first()).toBeVisible();
+    await expect(page.getByText('$10,000.00').first()).toBeVisible();
+  });
+
+  test('clicking Gantt row opens goal modal', async ({ page }) => {
+    // Find the Emergency Fund text in the Gantt chart label area and click it
+    const ganttLabels = page.locator('.w-\\[180px\\]');
+    await ganttLabels.filter({ hasText: 'Emergency Fund' }).click();
+
+    // Modal should appear with goal details
+    await expect(page.getByRole('heading', { name: 'Emergency Fund' })).toBeVisible();
+    await expect(page.getByText('Peace of mind and financial security')).toBeVisible();
   });
 });

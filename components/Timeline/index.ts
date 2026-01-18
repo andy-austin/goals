@@ -13,5 +13,7 @@ export { TimelineGapMarker } from './TimelineGapMarker';
 export { TimelineTodayMarker } from './TimelineTodayMarker';
 export { TimelineGoalTooltip } from './TimelineGoalTooltip';
 export { TimelineZoomControls } from './TimelineZoomControls';
-export { useTimelineCalculations } from './useTimelineCalculations';
+export { GanttChart } from './GanttChart';
+export { GanttRow } from './GanttRow';
+export { useTimelineCalculations, dateToPosition } from './useTimelineCalculations';
 export * from './timeline.types';

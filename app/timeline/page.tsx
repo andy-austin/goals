@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useGoals } from '@/context';
 import { Timeline, Card } from '@/components';
+import { GanttChart, useTimelineCalculations } from '@/components/Timeline';
 import type { ZoomLevel } from '@/components/Timeline/timeline.types';
 import type { Goal } from '@/types';
 
@@ -10,6 +11,9 @@ export default function TimelinePage() {
   const { goals } = useGoals();
   const [zoomLevel, setZoomLevel] = useState<ZoomLevel>('all');
   const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null);
+
+  // Get timeline calculations for the Gantt chart
+  const { config, todayPosition } = useTimelineCalculations(goals, zoomLevel);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
@@ -43,12 +47,22 @@ export default function TimelinePage() {
           </div>
         </Card>
       ) : (
-        <Timeline
-          goals={goals}
-          zoomLevel={zoomLevel}
-          onZoomChange={setZoomLevel}
-          onGoalSelect={setSelectedGoal}
-        />
+        <div className="space-y-8">
+          <Timeline
+            goals={goals}
+            zoomLevel={zoomLevel}
+            onZoomChange={setZoomLevel}
+            onGoalSelect={setSelectedGoal}
+          />
+
+          {/* Gantt Chart View */}
+          <GanttChart
+            goals={goals}
+            config={config}
+            todayPosition={todayPosition}
+            onGoalSelect={setSelectedGoal}
+          />
+        </div>
       )}
 
       {/* Goal Detail Modal/Sidebar - Simple version for now */}
