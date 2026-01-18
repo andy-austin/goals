@@ -16,6 +16,13 @@ This document tracks the implementation progress of the Investment Goals applica
 **Milestone 5: Prioritization UI** - COMPLETE (3/3 issues completed)
 
 ### Completed in This Session
+- Issue #36: Refactor Language Selector to use flags ✅ CLOSED
+- Refactored `LanguageSwitcher` from a select dropdown to side-by-side flag buttons
+- Used emoji flags (🇺🇸, 🇪🇸) for consistent visual representation
+- Created reusable `Tooltip` component in `components/ui/Tooltip.tsx`
+- Replaced native `title` attribute with custom Tooltip for instant feedback
+- Integrated with `next-intl` for localized button titles
+- Updated `i18n` config to remove unused `localeNames` constant
 - Issue #27: Create Timeline Visualization Component ✅ CLOSED
 - Issue #28: Create Goal Detail Modal/Sidebar ✅ CLOSED
 - Horizontal scrollable timeline with goals positioned by target date

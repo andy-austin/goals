@@ -1,4 +1,5 @@
-export { Button, type ButtonProps } from './Button';
+export * from './Tooltip';
+export * from './Button';
 export {
   Card,
   CardHeader,
