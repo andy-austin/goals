@@ -171,5 +171,10 @@
     "useThis": "Use this",
     "dismiss": "Dismiss",
     "retry": "Retry"
+  },
+  "export": {
+    "copy": "Copy",
+    "copySuccess": "Goals copied to clipboard",
+    "copyError": "Failed to copy"
   }
 }

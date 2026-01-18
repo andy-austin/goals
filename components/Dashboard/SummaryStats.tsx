@@ -1,9 +1,10 @@
 'use client';
 
-import { useMemo, type ReactNode } from 'react';
-import { useTranslations } from 'next-intl';
-import { Card } from '@/components/ui';
+import { useMemo, useCallback, type ReactNode } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
+import { Card, useToast } from '@/components/ui';
 import { formatCurrency, BUCKET_CONFIG, type Goal, type Bucket } from '@/types';
+import { formatGoalsAsText, copyToClipboard } from '@/lib';
 
 interface SummaryStatsProps {
   goals: Goal[];
@@ -73,11 +74,24 @@ const BucketIcons: Record<Bucket, ReactNode> = {
 export function SummaryStats({ goals, totalAmount }: SummaryStatsProps) {
   const t = useTranslations('dashboard');
   const tBuckets = useTranslations('buckets');
+  const tExport = useTranslations('export');
+  const locale = useLocale();
+  const { showToast } = useToast();
 
   const currency = useMemo(() => goals.length > 0 ? goals[0].currency : 'USD', [goals]);
   const bucketCounts = useMemo(() => countByBucket(goals), [goals]);
   const nextGoal = useMemo(() => getNextGoal(goals), [goals]);
   const daysUntilNext = useMemo(() => nextGoal ? getDaysUntil(nextGoal.targetDate) : 0, [nextGoal]);
+
+  const handleCopy = useCallback(async () => {
+    const text = formatGoalsAsText(goals, locale);
+    const success = await copyToClipboard(text);
+    if (success) {
+      showToast(tExport('copySuccess'), 'success');
+    } else {
+      showToast(tExport('copyError'), 'error');
+    }
+  }, [goals, locale, showToast, tExport]);
 
   if (goals.length === 0) {
     return null;
@@ -87,7 +101,7 @@ export function SummaryStats({ goals, totalAmount }: SummaryStatsProps) {
     <Card className="mb-8 overflow-hidden">
       <div className="p-4 sm:p-6">
         {/* Main stats row */}
-        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <span className="text-2xl font-bold text-foreground">
             {goals.length} {goals.length === 1 ? t('stats.goal') : t('stats.goals')}
           </span>

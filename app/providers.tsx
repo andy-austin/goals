@@ -1,6 +1,7 @@
 'use client';
 
 import { GoalsProvider } from '@/context';
+import { ToastProvider } from '@/components/ui';
 import type { ReactNode } from 'react';
 
 interface ProvidersProps {
@@ -10,7 +11,9 @@ interface ProvidersProps {
 export function Providers({ children }: ProvidersProps) {
   return (
     <GoalsProvider>
-      {children}
+      <ToastProvider>
+        {children}
+      </ToastProvider>
     </GoalsProvider>
   );
 }

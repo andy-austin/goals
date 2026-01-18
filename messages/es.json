@@ -171,5 +171,10 @@
     "useThis": "Usar esto",
     "dismiss": "Descartar",
     "retry": "Reintentar"
+  },
+  "export": {
+    "copy": "Copiar",
+    "copySuccess": "Metas copiadas al portapapeles",
+    "copyError": "Error al copiar"
   }
 }

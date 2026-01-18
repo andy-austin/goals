@@ -33,3 +33,7 @@ export {
   AISuggestionChip,
   type AISuggestionChipProps,
 } from './AISuggestionChip';
+export {
+  ToastProvider,
+  useToast,
+} from './Toast';
