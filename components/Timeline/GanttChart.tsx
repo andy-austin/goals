@@ -18,6 +18,7 @@ export interface GanttChartProps extends Omit<HTMLAttributes<HTMLDivElement>, 'c
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 const ROW_HEIGHT = 48;
+const LEFT_PADDING = 60; // Padding to avoid cropping "Today" label
 
 /**
  * Calculate bar width for a goal (from today to target date)
@@ -31,12 +32,68 @@ function calculateBarWidth(goal: Goal, config: TimelineConfig): number {
 }
 
 /**
+ * Generate date labels for the Gantt chart header
+ */
+function generateDateLabels(config: TimelineConfig, todayPosition: number, goals: Goal[]): Array<{ label: string; position: number }> {
+  const labels: Array<{ label: string; position: number }> = [];
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Add Today label
+  labels.push({ label: 'Today', position: todayPosition + LEFT_PADDING });
+
+  // Find the furthest goal target date to ensure labels extend far enough
+  let maxTargetDate = new Date(today);
+  maxTargetDate.setFullYear(maxTargetDate.getFullYear() + 1); // Minimum 1 year
+
+  for (const goal of goals) {
+    const targetDate = new Date(goal.targetDate);
+    if (targetDate > maxTargetDate) {
+      maxTargetDate = targetDate;
+    }
+  }
+  // Add some buffer beyond the furthest goal
+  maxTargetDate.setMonth(maxTargetDate.getMonth() + 6);
+
+  // Calculate interval based on zoom level
+  let monthInterval = 1;
+  if (config.zoomLevel === '5years') {
+    monthInterval = 6;
+  } else if (config.zoomLevel === '10years' || config.zoomLevel === 'all') {
+    monthInterval = 12;
+  } else if (config.zoomLevel === '1year') {
+    monthInterval = 2;
+  }
+
+  // Generate future date labels
+  const currentDate = new Date(today);
+  currentDate.setDate(1); // Start from first of month
+  currentDate.setMonth(currentDate.getMonth() + monthInterval);
+
+  while (currentDate <= maxTargetDate) {
+    const daysFromToday = (currentDate.getTime() - today.getTime()) / MS_PER_DAY;
+    const position = todayPosition + (daysFromToday * config.pixelsPerDay) + LEFT_PADDING;
+
+    const label = currentDate.toLocaleDateString('en-US', {
+      month: 'short',
+      year: currentDate.getMonth() === 0 ? 'numeric' : undefined,
+    });
+    labels.push({ label, position });
+
+    currentDate.setMonth(currentDate.getMonth() + monthInterval);
+  }
+
+  return labels;
+}
+
+/**
  * Gantt chart showing goals as horizontal bars from today to target date
  */
 export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
   ({ goals, config, todayPosition, onGoalSelect, className = '', ...props }, ref) => {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [hoveredGoalId, setHoveredGoalId] = useState<string | null>(null);
+    const [tooltipPosition, setTooltipPosition] = useState<{ x: number; y: number } | null>(null);
 
     // Sort goals by target date
     const sortedGoals = useMemo(() => {
@@ -45,20 +102,25 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
       );
     }, [goals]);
 
-    // Calculate bar data for each goal
+    // Calculate bar data for each goal with left padding
     const goalBars = useMemo(() => {
       return sortedGoals.map((goal) => ({
         goal,
-        barStartX: todayPosition,
+        barStartX: todayPosition + LEFT_PADDING,
         barWidth: calculateBarWidth(goal, config),
       }));
     }, [sortedGoals, config, todayPosition]);
+
+    // Generate date labels based on goals
+    const dateLabels = useMemo(() => {
+      return generateDateLabels(config, todayPosition, goals);
+    }, [config, todayPosition, goals]);
 
     // Sync scroll position on initial load
     useEffect(() => {
       if (scrollContainerRef.current) {
         const containerWidth = scrollContainerRef.current.clientWidth;
-        const scrollPosition = Math.max(0, todayPosition - containerWidth * 0.15);
+        const scrollPosition = Math.max(0, todayPosition + LEFT_PADDING - containerWidth * 0.15);
         scrollContainerRef.current.scrollTo({
           left: scrollPosition,
           behavior: 'smooth',
@@ -72,6 +134,15 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
 
     const totalHeight = sortedGoals.length * ROW_HEIGHT;
 
+    // Calculate total width to extend beyond all bars and date labels
+    const maxBarEnd = goalBars.reduce((max, { barStartX, barWidth }) => {
+      return Math.max(max, barStartX + barWidth);
+    }, 0);
+    const maxLabelPosition = dateLabels.length > 0
+      ? Math.max(...dateLabels.map(l => l.position))
+      : 0;
+    const totalWidth = Math.max(config.totalWidth + LEFT_PADDING + 100, maxBarEnd + 100, maxLabelPosition + 100);
+
     return (
       <div ref={ref} className={`space-y-2 ${className}`} {...props}>
         {/* Header */}
@@ -82,17 +153,16 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
         </div>
 
         {/* Gantt chart container */}
-        <div className="rounded-lg border border-border bg-background overflow-hidden">
+        <div className="rounded-lg border border-border bg-background overflow-x-clip overflow-y-visible">
           <div className="flex">
             {/* Fixed left column - Goal labels */}
-            <div className="w-[180px] shrink-0 border-r border-border bg-background z-10">
+            <div className="w-[140px] sm:w-[180px] shrink-0 border-r border-border bg-background z-10">
               {/* Header */}
-              <div className="h-8 px-3 flex items-center border-b border-border bg-muted/30">
+              <div className="h-10 px-2 sm:px-3 flex items-center border-b border-border bg-muted/30">
                 <span className="text-xs font-medium text-muted-foreground">Goal</span>
               </div>
               {/* Goal labels */}
               {sortedGoals.map((goal) => {
-                const bucketConfig = BUCKET_CONFIG[goal.bucket];
                 const targetDate = new Date(goal.targetDate);
                 const today = new Date();
                 const daysRemaining = Math.ceil((targetDate.getTime() - today.getTime()) / MS_PER_DAY);
@@ -101,18 +171,19 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
                 return (
                   <div
                     key={goal.id}
-                    className="h-12 px-3 py-2 border-b border-border/50 hover:bg-muted/30 transition-colors"
+                    className="h-12 px-2 sm:px-3 py-2 border-b border-border/50 hover:bg-muted/30 transition-colors"
                   >
                     <button
                       type="button"
                       onClick={() => onGoalSelect?.(goal)}
                       className="w-full text-left focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 rounded"
                     >
-                      <div className="font-medium text-sm text-foreground truncate">
+                      <div className="font-medium text-xs sm:text-sm text-foreground truncate">
                         {goal.title}
                       </div>
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <span>{formatCurrency(goal.amount, goal.currency)}</span>
+                      <div className="flex items-center gap-1 sm:gap-2 text-[10px] sm:text-xs text-muted-foreground">
+                        <span className="hidden sm:inline">{formatCurrency(goal.amount, goal.currency)}</span>
+                        <span className="sm:hidden">{formatCurrency(goal.amount, goal.currency).replace('.00', '')}</span>
                         <span className="text-muted-foreground/50">·</span>
                         <span className={isOverdue ? 'text-red-500' : ''}>
                           {isOverdue ? `${Math.abs(daysRemaining)}d overdue` : `${daysRemaining}d`}
@@ -127,30 +198,44 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
             {/* Scrollable right area - Bars */}
             <div
               ref={scrollContainerRef}
-              className="flex-1 overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent"
+              className="flex-1 overflow-x-auto overflow-y-visible scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent"
               style={{ WebkitOverflowScrolling: 'touch' }}
             >
               <div
                 className="relative"
-                style={{ width: config.totalWidth + 100, minWidth: '100%' }}
+                style={{ width: totalWidth, minWidth: '100%' }}
               >
-                {/* Header with Today label */}
-                <div className="h-8 border-b border-border bg-muted/30 relative">
-                  <div
-                    className="absolute text-xs text-primary font-medium top-1/2 -translate-y-1/2"
-                    style={{ left: todayPosition - 15 }}
-                  >
-                    Today
-                  </div>
+                {/* Header with date labels */}
+                <div className="h-10 border-b border-border bg-muted/30 relative">
+                  {dateLabels.map(({ label, position }, idx) => (
+                    <div
+                      key={`${label}-${idx}`}
+                      className={`absolute text-xs top-1/2 -translate-y-1/2 whitespace-nowrap ${
+                        label === 'Today' ? 'text-primary font-medium' : 'text-muted-foreground'
+                      }`}
+                      style={{ left: position, transform: 'translate(-50%, -50%)' }}
+                    >
+                      {label}
+                    </div>
+                  ))}
                 </div>
 
-                {/* Bars container */}
-                <div className="relative" style={{ height: totalHeight }}>
+                {/* Bars container with top padding for tooltips */}
+                <div className="relative pt-12" style={{ height: totalHeight + 48 }}>
                   {/* Today vertical line */}
                   <div
                     className="absolute top-0 bottom-0 w-px bg-primary/50 z-10"
-                    style={{ left: todayPosition }}
+                    style={{ left: todayPosition + LEFT_PADDING }}
                   />
+
+                  {/* Vertical grid lines for date markers */}
+                  {dateLabels.slice(1).map(({ label, position }, idx) => (
+                    <div
+                      key={`line-${label}-${idx}`}
+                      className="absolute top-0 bottom-0 w-px bg-border/30"
+                      style={{ left: position }}
+                    />
+                  ))}
 
                   {/* Goal bars */}
                   {goalBars.map(({ goal, barStartX, barWidth }, index) => {
@@ -161,7 +246,7 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
                     return (
                       <div
                         key={goal.id}
-                        className="absolute left-0 right-0"
+                        className="absolute left-0 right-0 flex items-center"
                         style={{
                           top: index * ROW_HEIGHT,
                           height: ROW_HEIGHT,
@@ -170,19 +255,37 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
                         {/* Row background with border */}
                         <div className="absolute inset-0 border-b border-border/50" />
 
-                        {/* Bar */}
+                        {/* Bar - vertically centered with flex */}
                         <div
-                          className="absolute top-1/2 -translate-y-1/2 h-6 rounded cursor-pointer transition-all"
+                          className="absolute h-6 rounded cursor-pointer transition-all"
                           style={{
                             left: barStartX,
                             width: barWidth,
+                            top: '50%',
+                            transform: `translateY(-50%) ${isHovered ? 'scaleY(1.15)' : 'scaleY(1)'}`,
                             backgroundColor: bucketConfig.colorVar,
                             opacity: isHovered ? 1 : 0.85,
-                            transform: `translateY(-50%) ${isHovered ? 'scaleY(1.1)' : 'scaleY(1)'}`,
                           }}
                           onClick={() => onGoalSelect?.(goal)}
-                          onMouseEnter={() => setHoveredGoalId(goal.id)}
-                          onMouseLeave={() => setHoveredGoalId(null)}
+                          onMouseEnter={(e) => {
+                            setHoveredGoalId(goal.id);
+                            const rect = e.currentTarget.getBoundingClientRect();
+                            setTooltipPosition({
+                              x: e.clientX - rect.left,
+                              y: e.clientY - rect.top
+                            });
+                          }}
+                          onMouseMove={(e) => {
+                            const rect = e.currentTarget.getBoundingClientRect();
+                            setTooltipPosition({
+                              x: e.clientX - rect.left,
+                              y: e.clientY - rect.top
+                            });
+                          }}
+                          onMouseLeave={() => {
+                            setHoveredGoalId(null);
+                            setTooltipPosition(null);
+                          }}
                           role="button"
                           tabIndex={0}
                           onKeyDown={(e) => {
@@ -192,23 +295,59 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
                           }}
                           aria-label={`${goal.title}: ${formatCurrency(goal.amount, goal.currency)}, target ${targetDate.toLocaleDateString()}`}
                         >
-                          {/* Hover tooltip */}
-                          {isHovered && (
-                            <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 z-50 whitespace-nowrap pointer-events-none">
-                              <div className="bg-background border border-border rounded-lg px-3 py-2 shadow-lg text-sm">
-                                <div className="font-medium text-foreground">{goal.title}</div>
-                                <div className="text-muted-foreground">
-                                  {targetDate.toLocaleDateString('en-US', {
-                                    month: 'short',
-                                    day: 'numeric',
-                                    year: 'numeric',
-                                  })}
+                          {/* Hover tooltip - follows cursor position */}
+                          {isHovered && tooltipPosition && (
+                            index === 0 ? (
+                              // First row: show tooltip to the right to avoid top cropping
+                              <div
+                                className="absolute z-50 whitespace-nowrap pointer-events-none"
+                                style={{
+                                  left: tooltipPosition.x + 16,
+                                  top: '50%',
+                                  transform: 'translateY(-50%)',
+                                }}
+                              >
+                                <div className="bg-white dark:bg-zinc-900 border border-border rounded-lg px-3 py-2 shadow-lg text-sm">
+                                  <div className="font-medium text-foreground">{goal.title}</div>
+                                  <div className="text-muted-foreground">
+                                    {targetDate.toLocaleDateString('en-US', {
+                                      month: 'short',
+                                      day: 'numeric',
+                                      year: 'numeric',
+                                    })}
+                                  </div>
+                                </div>
+                                {/* Arrow pointing left */}
+                                <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1">
+                                  <div className="h-2 w-2 rotate-45 bg-white dark:bg-zinc-900 border-l border-b border-border" />
                                 </div>
                               </div>
-                              <div className="absolute left-1/2 -translate-x-1/2 top-full">
-                                <div className="h-2 w-2 rotate-45 -translate-y-1 bg-background border-b border-r border-border" />
+                            ) : (
+                              // Other rows: show tooltip above
+                              <div
+                                className="absolute z-50 whitespace-nowrap pointer-events-none -translate-x-1/2"
+                                style={{
+                                  left: tooltipPosition.x,
+                                  bottom: '100%',
+                                  marginBottom: '8px',
+                                }}
+                              >
+                                <div className="bg-white dark:bg-zinc-900 border border-border rounded-lg px-3 py-2 shadow-lg text-sm">
+                                  <div className="font-medium text-foreground">{goal.title}</div>
+                                  <div className="text-muted-foreground">
+                                    {targetDate.toLocaleDateString('en-US', {
+                                      month: 'short',
+                                      day: 'numeric',
+                                      year: 'numeric',
+                                    })}
+                                  </div>
+                                </div>
+                                {/* Arrow pointing down */}
+                                <div className="absolute left-1/2 -translate-x-1/2 -bottom-1">
+                                  <div className="h-2 w-2 rotate-45 bg-white dark:bg-zinc-900 border-b border-r border-border" />
+                                </div>
                               </div>
-                            </div>
+                            )
                           )}
                         </div>
                       </div>

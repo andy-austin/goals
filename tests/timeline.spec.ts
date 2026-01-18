@@ -277,9 +277,9 @@ test.describe('Timeline - Gantt Chart', () => {
   });
 
   test('clicking Gantt row opens goal modal', async ({ page }) => {
-    // Find the Emergency Fund text in the Gantt chart label area and click it
-    const ganttLabels = page.locator('.w-\\[180px\\]');
-    await ganttLabels.filter({ hasText: 'Emergency Fund' }).click();
+    // Find the Emergency Fund button in the Gantt chart label area and click it
+    const ganttButton = page.getByRole('button', { name: /Emergency Fund.*\$15,000/ });
+    await ganttButton.first().click();
 
     // Modal should appear with goal details
     await expect(page.getByRole('heading', { name: 'Emergency Fund' })).toBeVisible();
