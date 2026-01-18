@@ -16,6 +16,7 @@ This document tracks the implementation progress of the Investment Goals applica
 **Milestone 5: Prioritization UI** - COMPLETE (3/3 issues completed)
 
 ### Completed in This Session
+- Issue #33: Implement Copy to Clipboard Functionality ✅ CLOSED
 - Issue #36: Refactor Language Selector to use flags ✅ CLOSED
 - Refactored `LanguageSwitcher` from a select dropdown to side-by-side flag buttons
 - Used emoji flags (🇺🇸, 🇪🇸) for consistent visual representation
@@ -144,6 +145,76 @@ This document tracks the implementation progress of the Investment Goals applica
 - `onGoalSelect` callback from `Timeline` component
 - `onGoalSelect` callback from `GanttChart` component
 - Both set `selectedGoal` state to open modal
+
+---
+
+### Issue #30: Create Summary Statistics Component
+**Status:** ✅ Completed & Closed
+**Files:**
+- `components/Dashboard/SummaryStats.tsx` - Summary stats component
+
+**Features Implemented:**
+- Total goals count and amount display
+- Bucket breakdown with icons (Safety, Growth, Dream)
+- Next upcoming goal with days countdown
+- Formatted currency display using Intl.NumberFormat
+- Responsive design (stacks on mobile)
+
+**Component Props:**
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `goals` | `Goal[]` | Array of goals to summarize |
+| `totalAmount` | `number` | Pre-calculated total amount |
+
+---
+
+### Issue #33: Implement Copy to Clipboard Functionality
+**Status:** ✅ Completed & Closed
+**Files:**
+- `lib/export.ts` - Export utilities (formatGoalsAsText, copyToClipboard)
+- `lib/index.ts` - Updated exports
+- `components/ui/Toast.tsx` - Toast notification component and provider
+- `components/ui/index.ts` - Updated exports
+- `components/Dashboard/SummaryStats.tsx` - Added copy button
+- `app/providers.tsx` - Added ToastProvider
+- `app/globals.css` - Added slide-in animation
+- `messages/en.json` - English translations for export
+- `messages/es.json` - Spanish translations for export
+
+**Features Implemented:**
+- `formatGoalsAsText(goals, locale)` - Formats goals as structured plain text
+  - Header with generation date
+  - Goals grouped by bucket (Safety, Growth, Dream)
+  - Priority numbers, amounts, target dates, time remaining
+  - Footer with total goals and amount
+  - Full i18n support (English/Spanish)
+- `copyToClipboard(text)` - Copies text with browser fallback
+  - Uses modern Clipboard API when available
+  - Falls back to textarea + execCommand for older browsers
+- Toast notification system
+  - `ToastProvider` wraps app in providers.tsx
+  - `useToast()` hook for showing notifications
+  - Auto-dismiss after 3 seconds
+  - Slide-in animation
+- Copy button in SummaryStats
+  - Icon + label (label hidden on mobile)
+  - Success/error toast feedback
+
+**Toast API:**
+
+| Property/Method | Type | Description |
+|-----------------|------|-------------|
+| `showToast(message, type)` | `(string, 'success' \| 'error' \| 'info' \| 'warning') => void` | Show a toast notification |
+
+**Translations Added:**
+```json
+"export": {
+  "copy": "Copy",
+  "copySuccess": "Goals copied to clipboard",
+  "copyError": "Failed to copy"
+}
+```
 
 ---
 
@@ -1311,10 +1382,10 @@ npx playwright test --project=chromium
 - [x] Issue #28: Create Goal Detail Modal/Sidebar ✅ CLOSED
 
 ### Milestone 6: Goal Summary & Export
-- [ ] Issue #30: Create Summary Statistics Component (partial: basic stats on dashboard)
+- [x] Issue #30: Create Summary Statistics Component ✅ CLOSED
 - [ ] Issue #31: Implement PDF Export Functionality
 - [ ] Issue #32: Implement Print-Friendly View
-- [ ] Issue #33: Implement Copy to Clipboard Functionality
+- [x] Issue #33: Implement Copy to Clipboard Functionality ✅ CLOSED
 - [ ] Issue #34: Create Export Menu Component
 
 See GitHub Issues for full backlog:

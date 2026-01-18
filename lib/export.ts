@@ -2,9 +2,7 @@
  * Export utilities for goals
  */
 
-import { formatCurrency, BUCKET_CONFIG, type Goal, type Bucket } from '@/types';
-
-const MS_PER_DAY = 24 * 60 * 60 * 1000;
+import { formatCurrency, type Goal, type Bucket } from '@/types';
 
 /**
  * Calculate months until a target date
