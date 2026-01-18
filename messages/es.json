@@ -21,7 +21,12 @@
     "stats": {
       "totalGoals": "Total de Metas",
       "totalTarget": "Objetivo Total",
-      "buckets": "Categorías"
+      "buckets": "Categorías",
+      "goal": "meta",
+      "goals": "metas",
+      "total": "total",
+      "nextGoal": "Próxima meta",
+      "days": "días"
     },
     "empty": {
       "title": "Sin metas todavía",

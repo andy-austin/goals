@@ -21,7 +21,12 @@
     "stats": {
       "totalGoals": "Total Goals",
       "totalTarget": "Total Target",
-      "buckets": "Buckets"
+      "buckets": "Buckets",
+      "goal": "goal",
+      "goals": "goals",
+      "total": "total",
+      "nextGoal": "Next goal",
+      "days": "days"
     },
     "empty": {
       "title": "No goals yet",

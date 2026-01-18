@@ -4,8 +4,8 @@ import { useMemo } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useGoals } from '@/context';
-import { Button, Card, CardContent, BucketSection } from '@/components';
-import { formatCurrency, BUCKETS } from '@/types';
+import { Button, Card, BucketSection, SummaryStats } from '@/components';
+import { BUCKETS } from '@/types';
 
 export default function DashboardPage() {
   const t = useTranslations('dashboard');
@@ -13,7 +13,6 @@ export default function DashboardPage() {
 
   // Memoize to avoid recomputing on every render
   const goalsByBucket = useMemo(() => getAllGoalsByBucket(), [getAllGoalsByBucket]);
-  const currency = useMemo(() => goals.length > 0 ? goals[0].currency : 'USD', [goals]);
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
@@ -27,29 +26,8 @@ export default function DashboardPage() {
         </p>
       </div>
 
-      {/* Stats Overview */}
-      <div className="mb-8 grid gap-4 sm:grid-cols-3">
-        <Card>
-          <CardContent className="pt-6">
-            <p className="text-sm font-medium text-muted-foreground">{t('stats.totalGoals')}</p>
-            <p className="mt-1 text-2xl font-semibold text-foreground">{totalGoals}</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="pt-6">
-            <p className="text-sm font-medium text-muted-foreground">{t('stats.totalTarget')}</p>
-            <p className="mt-1 text-2xl font-semibold text-foreground">
-              {formatCurrency(totalAmount, currency)}
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="pt-6">
-            <p className="text-sm font-medium text-muted-foreground">{t('stats.buckets')}</p>
-            <p className="mt-1 text-2xl font-semibold text-foreground">3</p>
-          </CardContent>
-        </Card>
-      </div>
+      {/* Summary Stats */}
+      <SummaryStats goals={goals} totalAmount={totalAmount} />
 
       {/* Goals by Bucket */}
       {totalGoals === 0 ? (
