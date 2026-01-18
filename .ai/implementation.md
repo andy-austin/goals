@@ -3,7 +3,7 @@
 This document tracks the implementation progress of the Investment Goals application.
 
 ## Last Updated
-2026-01-17
+2026-01-18
 
 ---
 
@@ -16,19 +16,22 @@ This document tracks the implementation progress of the Investment Goals applica
 **Milestone 5: Prioritization UI** - COMPLETE (3/3 issues completed)
 
 ### Completed in This Session
-- Issue #27: Create Timeline Visualization Component
+- Issue #27: Create Timeline Visualization Component ✅ CLOSED
+- Issue #28: Create Goal Detail Modal/Sidebar ✅ CLOSED
 - Horizontal scrollable timeline with goals positioned by target date
 - Zoom controls (1 Year, 5 Years, 10+ Years, All)
 - Goal clustering for close dates
 - Click to view goal details modal
-- 14 new E2E tests for timeline functionality
+- Gantt Chart visualization with horizontal bars from Today to target date
+- Cursor-following tooltips with goal info
+- 14+ E2E tests for timeline functionality
 
 ---
 
 ## Completed Features
 
 ### Issue #27: Create Timeline Visualization Component
-**Status:** Completed
+**Status:** ✅ Completed & Closed
 **Files:**
 - `components/Timeline/Timeline.tsx` - Main container with horizontal scroll
 - `components/Timeline/TimelineAxis.tsx` - Grid lines and month/year labels
@@ -37,11 +40,14 @@ This document tracks the implementation progress of the Investment Goals applica
 - `components/Timeline/TimelineTodayMarker.tsx` - "Today" vertical line
 - `components/Timeline/TimelineZoomControls.tsx` - Zoom level buttons
 - `components/Timeline/TimelineGoalTooltip.tsx` - Hover tooltip
+- `components/Timeline/TimelineGapMarker.tsx` - Gap indicator for skipped time
+- `components/Timeline/GanttChart.tsx` - Gantt chart visualization
+- `components/Timeline/GanttRow.tsx` - Individual Gantt row
 - `components/Timeline/useTimelineCalculations.ts` - Date-to-position hook
 - `components/Timeline/timeline.types.ts` - TypeScript types
 - `components/Timeline/index.ts` - Barrel exports
-- `app/timeline/page.tsx` - Updated timeline page
-- `tests/timeline.spec.ts` - E2E tests (14 tests)
+- `app/timeline/page.tsx` - Updated timeline page with modal
+- `tests/timeline.spec.ts` - E2E tests (14+ tests)
 
 **Features Implemented:**
 - Horizontal scrollable timeline showing goals by target date
@@ -49,11 +55,23 @@ This document tracks the implementation progress of the Investment Goals applica
 - "Today" marker with label and vertical line
 - Zoom levels: 1 Year, 5 Years, 10+ Years, All
 - Goal clustering when dates are close (within 40px)
+- Gap markers showing skipped time periods
 - Click goal to open detail modal
 - Hover tooltip with goal info (title, amount, date, days remaining)
 - Bucket legend (Safety, Growth, Dream)
 - Empty state with CTA to create goals
 - Responsive design with horizontal scroll on mobile
+
+**Gantt Chart Features (Bonus):**
+- Horizontal bars from Today to target date for each goal
+- Fixed left column with goal labels (title, amount, days remaining)
+- Scrollable bar area with date labels (Today, months, years)
+- Color-coded bars by bucket
+- Cursor-following tooltips showing goal title and target date
+- First row tooltip shows to the right (avoids top clipping)
+- Other rows show tooltip above
+- Click bar to open goal detail modal
+- Responsive design (narrower labels on mobile)
 
 **Component Architecture:**
 
@@ -85,6 +103,40 @@ This document tracks the implementation progress of the Investment Goals applica
 | `clusters` | `GoalCluster[]` | Clustered goals |
 | `axisMarks` | `TimelineAxisMark[]` | Month/year labels |
 | `todayPosition` | `number` | X position of today marker |
+
+---
+
+### Issue #28: Create Goal Detail Modal/Sidebar
+**Status:** ✅ Completed & Closed
+**Files:**
+- `app/timeline/page.tsx` - Modal implementation (lines 69-128)
+
+**Features Implemented:**
+- Modal displays all goal information:
+  - Title and description
+  - Target amount with currency formatting (Intl.NumberFormat)
+  - Target date with locale formatting
+  - "Why it matters" statement
+- Opens from timeline marker click
+- Opens from Gantt chart bar/row click
+- Close via X button
+- Close by clicking outside (backdrop)
+- Responsive design (works on mobile)
+- Focus management for accessibility
+
+**Modal Content:**
+| Section | Display |
+|---------|---------|
+| Title | Goal title as h2 heading |
+| Description | Full description text |
+| Target Amount | Formatted with currency symbol |
+| Target Date | Formatted as "Mon DD, YYYY" |
+| Why It Matters | Italic quote with border separator |
+
+**Triggers:**
+- `onGoalSelect` callback from `Timeline` component
+- `onGoalSelect` callback from `GanttChart` component
+- Both set `selectedGoal` state to open modal
 
 ---
 
@@ -1246,13 +1298,13 @@ npx playwright test --project=chromium
 
 ## Pending Implementation
 
-### Milestone 5: Prioritization UI
-- [x] Issue #26: Implement Drag-and-Drop Goal Reordering
-- [x] Issue #27: Create Timeline Visualization Component
-- [ ] Issue #28: Create Goal Detail Modal/Sidebar (basic version included in timeline)
+### Milestone 5: Prioritization UI - COMPLETE (3/3 issues)
+- [x] Issue #26: Implement Drag-and-Drop Goal Reordering ✅
+- [x] Issue #27: Create Timeline Visualization Component ✅ CLOSED
+- [x] Issue #28: Create Goal Detail Modal/Sidebar ✅ CLOSED
 
 ### Milestone 6: Goal Summary & Export
-- [ ] Issue #30: Create Summary Statistics Component
+- [ ] Issue #30: Create Summary Statistics Component (partial: basic stats on dashboard)
 - [ ] Issue #31: Implement PDF Export Functionality
 - [ ] Issue #32: Implement Print-Friendly View
 - [ ] Issue #33: Implement Copy to Clipboard Functionality

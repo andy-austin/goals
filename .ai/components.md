@@ -13,6 +13,11 @@ Reusable React components that form the application's user interface. Built with
 | `components/ui/Input.tsx` | Form inputs (Input, Textarea, Label, Select) |
 | `components/ui/Badge.tsx` | Badge and BucketBadge for labels/chips |
 | `components/ui/index.ts` | Barrel export for UI components |
+| `components/Timeline/Timeline.tsx` | Main timeline visualization |
+| `components/Timeline/GanttChart.tsx` | Gantt chart with horizontal bars |
+| `components/Timeline/TimelineZoomControls.tsx` | Zoom level buttons |
+| `components/Timeline/useTimelineCalculations.ts` | Timeline calculation hook |
+| `components/Timeline/index.ts` | Timeline component exports |
 | `components/index.ts` | Main component exports |
 
 ---
@@ -258,7 +263,114 @@ import { BucketBadge } from '@/components';
 **Used by:**
 - `app/page.tsx` - Dashboard
 - `app/layout.tsx` - Header
-- Future: Goal creation forms, timeline, etc.
+- `app/timeline/page.tsx` - Timeline page with Gantt chart
+
+---
+
+## Timeline Components
+
+### Timeline
+Main timeline visualization showing goals positioned by target date.
+
+**File:** `components/Timeline/Timeline.tsx`
+
+**Props:**
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `goals` | `Goal[]` | required | Goals to display |
+| `zoomLevel` | `ZoomLevel` | `'all'` | Current zoom level |
+| `onZoomChange` | `(level: ZoomLevel) => void` | - | Zoom change callback |
+| `onGoalSelect` | `(goal: Goal) => void` | - | Goal click callback |
+
+**Usage:**
+```tsx
+import { Timeline } from '@/components';
+
+<Timeline
+  goals={goals}
+  zoomLevel={zoomLevel}
+  onZoomChange={setZoomLevel}
+  onGoalSelect={setSelectedGoal}
+/>
+```
+
+---
+
+### GanttChart
+Gantt chart visualization showing goals as horizontal bars from Today to target date.
+
+**File:** `components/Timeline/GanttChart.tsx`
+
+**Props:**
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `goals` | `Goal[]` | required | Goals to display |
+| `config` | `TimelineConfig` | required | Timeline configuration |
+| `todayPosition` | `number` | required | X position of today marker |
+| `onGoalSelect` | `(goal: Goal) => void` | - | Goal click callback |
+
+**Features:**
+- Fixed left column with goal labels (title, amount, days remaining)
+- Scrollable bar area with date labels
+- Color-coded bars by bucket
+- Cursor-following tooltips
+- First row tooltip shows to the right (avoids clipping)
+- Responsive design (narrower labels on mobile)
+
+**Usage:**
+```tsx
+import { GanttChart, useTimelineCalculations } from '@/components/Timeline';
+
+const { config, todayPosition } = useTimelineCalculations(goals, zoomLevel);
+
+<GanttChart
+  goals={goals}
+  config={config}
+  todayPosition={todayPosition}
+  onGoalSelect={setSelectedGoal}
+/>
+```
+
+---
+
+### TimelineZoomControls
+Button group for selecting zoom levels.
+
+**File:** `components/Timeline/TimelineZoomControls.tsx`
+
+**Props:**
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `ZoomLevel` | required | Current zoom level |
+| `onChange` | `(level: ZoomLevel) => void` | required | Zoom change callback |
+
+**Zoom Levels:**
+| Level | Label | Description |
+|-------|-------|-------------|
+| `'all'` | All | Shows all goals |
+| `'1year'` | 1 Year | 12 month view |
+| `'5years'` | 5 Years | 60 month view |
+| `'10years'` | 10+ Years | 120 month view |
+
+---
+
+### useTimelineCalculations
+Hook for calculating timeline positions and configurations.
+
+**File:** `components/Timeline/useTimelineCalculations.ts`
+
+**Usage:**
+```tsx
+import { useTimelineCalculations } from '@/components/Timeline';
+
+const {
+  config,          // TimelineConfig with zoom settings
+  goalPositions,   // Goals with x positions
+  clusters,        // Clustered goals
+  axisMarks,       // Month/year labels
+  todayPosition,   // X position of today marker
+} = useTimelineCalculations(goals, zoomLevel);
+```
 
 ---
 
