@@ -173,12 +173,15 @@
     "retry": "Retry"
   },
   "export": {
+    "export": "Export",
     "copy": "Copy",
+    "copyToClipboard": "Copy to Clipboard",
     "copySuccess": "Goals copied to clipboard",
     "copyError": "Failed to copy",
     "pdf": "PDF",
     "pdfExport": "Export as PDF",
     "pdfSuccess": "PDF downloaded successfully",
-    "pdfError": "Failed to generate PDF"
+    "pdfError": "Failed to generate PDF",
+    "print": "Print"
   }
 }

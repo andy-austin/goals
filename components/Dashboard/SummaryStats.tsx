@@ -1,10 +1,10 @@
 'use client';
 
-import { useMemo, useCallback, type ReactNode } from 'react';
-import { useTranslations, useLocale } from 'next-intl';
-import { Card, useToast } from '@/components/ui';
+import { useMemo, type ReactNode } from 'react';
+import { useTranslations } from 'next-intl';
+import { Card } from '@/components/ui';
 import { formatCurrency, BUCKET_CONFIG, type Goal, type Bucket } from '@/types';
-import { formatGoalsAsText, copyToClipboard, generateGoalsPDF } from '@/lib';
+import { ExportMenu } from './ExportMenu';
 
 interface SummaryStatsProps {
   goals: Goal[];
@@ -74,33 +74,11 @@ const BucketIcons: Record<Bucket, ReactNode> = {
 export function SummaryStats({ goals, totalAmount }: SummaryStatsProps) {
   const t = useTranslations('dashboard');
   const tBuckets = useTranslations('buckets');
-  const tExport = useTranslations('export');
-  const locale = useLocale();
-  const { showToast } = useToast();
 
   const currency = useMemo(() => goals.length > 0 ? goals[0].currency : 'USD', [goals]);
   const bucketCounts = useMemo(() => countByBucket(goals), [goals]);
   const nextGoal = useMemo(() => getNextGoal(goals), [goals]);
   const daysUntilNext = useMemo(() => nextGoal ? getDaysUntil(nextGoal.targetDate) : 0, [nextGoal]);
-
-  const handleCopy = useCallback(async () => {
-    const text = formatGoalsAsText(goals, locale);
-    const success = await copyToClipboard(text);
-    if (success) {
-      showToast(tExport('copySuccess'), 'success');
-    } else {
-      showToast(tExport('copyError'), 'error');
-    }
-  }, [goals, locale, showToast, tExport]);
-
-  const handlePdfExport = useCallback(() => {
-    try {
-      generateGoalsPDF(goals, locale);
-      showToast(tExport('pdfSuccess'), 'success');
-    } catch {
-      showToast(tExport('pdfError'), 'error');
-    }
-  }, [goals, locale, showToast, tExport]);
 
   if (goals.length === 0) {
     return null;
@@ -119,27 +97,8 @@ export function SummaryStats({ goals, totalAmount }: SummaryStatsProps) {
             {formatCurrency(totalAmount, currency)}
           </span>
           <span className="text-muted-foreground">{t('stats.total')}</span>
-          <div className="ml-auto flex items-center gap-1">
-            <button
-              onClick={handleCopy}
-              className="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
-              title={tExport('copy')}
-            >
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-              </svg>
-              <span className="hidden sm:inline">{tExport('copy')}</span>
-            </button>
-            <button
-              onClick={handlePdfExport}
-              className="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
-              title={tExport('pdfExport')}
-            >
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              <span className="hidden sm:inline">{tExport('pdf')}</span>
-            </button>
+          <div className="ml-auto">
+            <ExportMenu goals={goals} />
           </div>
         </div>
 

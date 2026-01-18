@@ -17,7 +17,9 @@ This document tracks the implementation progress of the Investment Goals applica
 
 ### Completed in This Session
 - Issue #31: Implement PDF Export Functionality ✅ CLOSED
+- Issue #32: Implement Print-Friendly View ✅ CLOSED
 - Issue #33: Implement Copy to Clipboard Functionality ✅ CLOSED
+- Issue #34: Create Export Menu Component ✅ CLOSED
 - Issue #36: Refactor Language Selector to use flags ✅ CLOSED
 - Refactored `LanguageSwitcher` from a select dropdown to side-by-side flag buttons
 - Used emoji flags (🇺🇸, 🇪🇸) for consistent visual representation
@@ -252,6 +254,43 @@ This document tracks the implementation progress of the Investment Goals applica
 
 **Dependencies Added:**
 - `jspdf` - Browser-side PDF generation library
+
+---
+
+### Issue #32: Implement Print-Friendly View
+**Status:** ✅ Completed & Closed
+**Files:**
+- `app/globals.css` - Print-specific CSS
+- `components/Header.tsx` - Added no-print class
+- `components/ui/Toast.tsx` - Added no-print class to container
+- `components/Dashboard/SummaryStats.tsx` - Added print button
+- `messages/en.json` - English translation
+- `messages/es.json` - Spanish translation
+
+**Features Implemented:**
+- Comprehensive `@media print` CSS styles:
+  - Light color scheme reset for print
+  - Hide non-printable elements (nav, header, buttons, toasts)
+  - Card styles optimized for print (borders, no shadows)
+  - Bucket section styling with colored left borders
+  - Page break handling (`break-inside: avoid`)
+  - A4 page setup with 2cm margins
+- `no-print` class for hiding elements during print
+- Print button in SummaryStats alongside copy and PDF buttons
+- Triggers browser's native print dialog via `window.print()`
+
+**Print CSS Classes:**
+
+| Class | Purpose |
+|-------|---------|
+| `.no-print` | Hides element during print |
+| `.print-card` | Print-optimized card styling |
+| `.print-bucket-section` | Bucket section with page break handling |
+| `.print-goal-card` | Goal card for print |
+| `.print-header` | Print header styling |
+| `.print-bucket-header` | Bucket header with colored border |
+| `.print-priority` | Priority badge (colored circle) |
+| `.print-footer` | Fixed footer with page numbers |
 
 ---
 
@@ -1418,12 +1457,12 @@ npx playwright test --project=chromium
 - [x] Issue #27: Create Timeline Visualization Component ✅ CLOSED
 - [x] Issue #28: Create Goal Detail Modal/Sidebar ✅ CLOSED
 
-### Milestone 6: Goal Summary & Export
+### Milestone 6: Goal Summary & Export - COMPLETE (5/5 issues completed)
 - [x] Issue #30: Create Summary Statistics Component ✅ CLOSED
 - [x] Issue #31: Implement PDF Export Functionality ✅ CLOSED
-- [ ] Issue #32: Implement Print-Friendly View
+- [x] Issue #32: Implement Print-Friendly View ✅ CLOSED
 - [x] Issue #33: Implement Copy to Clipboard Functionality ✅ CLOSED
-- [ ] Issue #34: Create Export Menu Component
+- [x] Issue #34: Create Export Menu Component ✅ CLOSED
 
 See GitHub Issues for full backlog:
 - [Milestone 1: Project Setup & Foundation](https://github.com/andy-austin/goals/milestone/1) - 5/5 complete

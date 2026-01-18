@@ -173,12 +173,15 @@
     "retry": "Reintentar"
   },
   "export": {
+    "export": "Exportar",
     "copy": "Copiar",
+    "copyToClipboard": "Copiar al Portapapeles",
     "copySuccess": "Metas copiadas al portapapeles",
     "copyError": "Error al copiar",
     "pdf": "PDF",
     "pdfExport": "Exportar como PDF",
     "pdfSuccess": "PDF descargado exitosamente",
-    "pdfError": "Error al generar PDF"
+    "pdfError": "Error al generar PDF",
+    "print": "Imprimir"
   }
 }

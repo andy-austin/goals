@@ -241,3 +241,171 @@ body {
 .animate-slide-in {
   animation: slide-in 0.3s ease-out;
 }
+
+/* =============================================================================
+   Print Styles
+   ============================================================================= */
+
+@media print {
+  /* Reset colors for print */
+  :root {
+    --background: #ffffff;
+    --foreground: #000000;
+    --muted: #f5f5f5;
+    --muted-foreground: #525252;
+    --border: #d4d4d4;
+    --primary: #059669;
+    --bucket-safety: #22c55e;
+    --bucket-growth: #3b82f6;
+    --bucket-dream: #a855f7;
+  }
+
+  /* Force light background */
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  /* Hide non-printable elements */
+  .no-print,
+  header,
+  nav,
+  .toast-container,
+  button:not(.print-visible),
+  [role="dialog"],
+  [role="alert"] {
+    display: none !important;
+  }
+
+  /* Reset card styles for print */
+  .print-card {
+    border: 1px solid #d4d4d4 !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: white !important;
+  }
+
+  /* Bucket section styling */
+  .print-bucket-section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Goal card for print */
+  .print-goal-card {
+    border: 1px solid #e5e5e5 !important;
+    border-radius: 0.375rem;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    background: #fafafa !important;
+  }
+
+  /* Print header */
+  .print-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e5e5e5;
+  }
+
+  .print-header h1 {
+    font-size: 24pt;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  .print-header .print-date {
+    font-size: 10pt;
+    color: #666;
+  }
+
+  .print-header .print-summary {
+    font-size: 14pt;
+    margin-top: 0.5rem;
+  }
+
+  /* Bucket header colors */
+  .print-bucket-header {
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.75rem;
+    border-left: 4px solid currentColor;
+    font-weight: bold;
+    font-size: 14pt;
+  }
+
+  .print-bucket-header.safety {
+    border-left-color: #22c55e;
+    color: #166534;
+  }
+
+  .print-bucket-header.growth {
+    border-left-color: #3b82f6;
+    color: #1e40af;
+  }
+
+  .print-bucket-header.dream {
+    border-left-color: #a855f7;
+    color: #6b21a8;
+  }
+
+  /* Priority badge */
+  .print-priority {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    font-size: 10pt;
+    font-weight: bold;
+    color: white;
+    margin-right: 0.5rem;
+  }
+
+  .print-priority.safety { background-color: #22c55e; }
+  .print-priority.growth { background-color: #3b82f6; }
+  .print-priority.dream { background-color: #a855f7; }
+
+  /* Footer */
+  .print-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 9pt;
+    color: #666;
+    padding: 0.5rem;
+    border-top: 1px solid #e5e5e5;
+  }
+
+  /* Page setup */
+  @page {
+    size: A4;
+    margin: 2cm;
+  }
+
+  /* Links - show URL in print */
+  a[href]:after {
+    content: none;
+  }
+
+  /* Ensure images print */
+  img {
+    max-width: 100% !important;
+  }
+
+  /* Remove shadows and unnecessary styles */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+}
