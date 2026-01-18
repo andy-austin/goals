@@ -6,6 +6,7 @@ import { TimelineAxis } from './TimelineAxis';
 import { TimelineTodayMarker } from './TimelineTodayMarker';
 import { TimelineGoalMarker } from './TimelineGoalMarker';
 import { TimelineGoalCluster } from './TimelineGoalCluster';
+import { TimelineGapMarker } from './TimelineGapMarker';
 import { TimelineZoomControls } from './TimelineZoomControls';
 import { useTimelineCalculations } from './useTimelineCalculations';
 import type { TimelineProps, ZoomLevel } from './timeline.types';
@@ -87,7 +88,7 @@ export const Timeline = forwardRef<HTMLDivElement, Props>(
           >
             {/* Timeline content */}
             <div
-              className="relative min-h-[200px] py-4"
+              className="relative min-h-[280px] py-4"
               style={{
                 width: config.totalWidth + 100, // Extra padding at end
                 minWidth: '100%',
@@ -98,6 +99,11 @@ export const Timeline = forwardRef<HTMLDivElement, Props>(
 
               {/* Today marker */}
               <TimelineTodayMarker xPosition={todayPosition} />
+
+              {/* Gap markers for compressed view */}
+              {config.gaps?.map((gap, index) => (
+                <TimelineGapMarker key={`gap-${index}`} gap={gap} />
+              ))}
 
               {/* Goal markers or clusters */}
               {clusters.map((cluster) =>

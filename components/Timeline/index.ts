@@ -9,6 +9,7 @@ export { Timeline } from './Timeline';
 export { TimelineAxis } from './TimelineAxis';
 export { TimelineGoalMarker } from './TimelineGoalMarker';
 export { TimelineGoalCluster } from './TimelineGoalCluster';
+export { TimelineGapMarker } from './TimelineGapMarker';
 export { TimelineTodayMarker } from './TimelineTodayMarker';
 export { TimelineGoalTooltip } from './TimelineGoalTooltip';
 export { TimelineZoomControls } from './TimelineZoomControls';

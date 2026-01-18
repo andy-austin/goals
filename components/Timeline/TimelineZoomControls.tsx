@@ -7,7 +7,7 @@ export interface ZoomControlsProps
   extends TimelineZoomControlsProps,
     Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {}
 
-const ZOOM_ORDER: ZoomLevel[] = ['1year', '5years', '10years', 'all'];
+const ZOOM_ORDER: ZoomLevel[] = ['all', '1year', '5years', '10years'];
 
 /**
  * Button group for selecting timeline zoom level

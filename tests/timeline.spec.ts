@@ -75,10 +75,10 @@ test.describe('Timeline Visualization', () => {
   });
 
   test('shows zoom controls', async ({ page }) => {
+    await expect(page.getByRole('button', { name: 'All' })).toBeVisible();
     await expect(page.getByRole('button', { name: '1 Year' })).toBeVisible();
     await expect(page.getByRole('button', { name: '5 Years' })).toBeVisible();
     await expect(page.getByRole('button', { name: '10+ Years' })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'All' })).toBeVisible();
   });
 
   test('displays goals count', async ({ page }) => {
@@ -90,21 +90,23 @@ test.describe('Timeline Visualization', () => {
   });
 
   test('shows bucket legend', async ({ page }) => {
-    await expect(page.getByText('Safety')).toBeVisible();
-    await expect(page.getByText('Growth')).toBeVisible();
-    await expect(page.getByText('Dream')).toBeVisible();
+    // Legend items are in the footer area with specific styling
+    const legend = page.locator('.flex.flex-wrap.items-center.gap-4.text-xs');
+    await expect(legend.getByText('Safety')).toBeVisible();
+    await expect(legend.getByText('Growth')).toBeVisible();
+    await expect(legend.getByText('Dream')).toBeVisible();
   });
 
   test('zoom controls change active state', async ({ page }) => {
-    // Default should be 5 Years
-    const fiveYearsBtn = page.getByRole('button', { name: '5 Years' });
-    await expect(fiveYearsBtn).toHaveAttribute('aria-pressed', 'true');
+    // Default should be All
+    const allBtn = page.getByRole('button', { name: 'All' });
+    await expect(allBtn).toHaveAttribute('aria-pressed', 'true');
 
     // Click 1 Year
     const oneYearBtn = page.getByRole('button', { name: '1 Year' });
     await oneYearBtn.click();
     await expect(oneYearBtn).toHaveAttribute('aria-pressed', 'true');
-    await expect(fiveYearsBtn).toHaveAttribute('aria-pressed', 'false');
+    await expect(allBtn).toHaveAttribute('aria-pressed', 'false');
 
     // Click 10+ Years
     const tenYearsBtn = page.getByRole('button', { name: '10+ Years' });
@@ -187,7 +189,7 @@ test.describe('Timeline - Responsive', () => {
 
     // Timeline should still be visible
     await expect(page.getByRole('heading', { name: 'Timeline' })).toBeVisible();
-    await expect(page.getByRole('button', { name: '5 Years' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'All' })).toBeVisible();
   });
 });
 

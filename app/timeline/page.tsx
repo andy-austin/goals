@@ -8,7 +8,7 @@ import type { Goal } from '@/types';
 
 export default function TimelinePage() {
   const { goals } = useGoals();
-  const [zoomLevel, setZoomLevel] = useState<ZoomLevel>('5years');
+  const [zoomLevel, setZoomLevel] = useState<ZoomLevel>('all');
   const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null);
 
   return (

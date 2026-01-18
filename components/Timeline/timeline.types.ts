@@ -7,12 +7,27 @@ import type { Goal } from '@/types';
 
 /**
  * Available zoom levels for the timeline
+ * - 'fit': Compresses gaps to fit all goals in view with ellipsis for large gaps
  */
 export type ZoomLevel = '1year' | '5years' | '10years' | 'all';
 
 /**
  * Configuration for the timeline based on zoom level
  */
+/**
+ * A gap/break in the timeline shown as ellipsis
+ */
+export interface TimelineGap {
+  /** X position of the gap */
+  xPosition: number;
+  /** Start date of the gap */
+  startDate: Date;
+  /** End date of the gap */
+  endDate: Date;
+  /** Years skipped in this gap */
+  yearsSkipped: number;
+}
+
 export interface TimelineConfig {
   /** Current zoom level */
   zoomLevel: ZoomLevel;
@@ -24,6 +39,10 @@ export interface TimelineConfig {
   pixelsPerDay: number;
   /** Total width of the timeline in pixels */
   totalWidth: number;
+  /** Whether this is a compressed "fit" view */
+  isCompressed?: boolean;
+  /** Gap markers for compressed view */
+  gaps?: TimelineGap[];
 }
 
 /**
@@ -148,8 +167,8 @@ export interface TimelineGoalTooltipProps {
  * Zoom level display configuration
  */
 export const ZOOM_LEVELS: Record<ZoomLevel, { label: string; months: number }> = {
+  'all': { label: 'All', months: 0 }, // Compresses to fit all goals
   '1year': { label: '1 Year', months: 12 },
   '5years': { label: '5 Years', months: 60 },
   '10years': { label: '10+ Years', months: 120 },
-  'all': { label: 'All', months: 0 }, // Dynamic based on goals
 };

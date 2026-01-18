@@ -24,9 +24,9 @@ export const TimelineGoalTooltip = forwardRef<HTMLDivElement, TooltipProps>(
       <div
         ref={ref}
         className={`
-          absolute left-1/2 bottom-full mb-2 z-50
+          absolute left-1/2 top-full mt-2 z-50
           -translate-x-1/2 transform
-          min-w-[200px] max-w-[280px]
+          min-w-[280px] max-w-[360px]
           rounded-lg border border-border bg-background
           p-3 shadow-lg
           ${className}
@@ -35,8 +35,8 @@ export const TimelineGoalTooltip = forwardRef<HTMLDivElement, TooltipProps>(
         {...props}
       >
         {/* Arrow pointer */}
-        <div className="absolute left-1/2 top-full -translate-x-1/2 transform">
-          <div className="h-2 w-2 rotate-45 transform border-b border-r border-border bg-background" />
+        <div className="absolute left-1/2 bottom-full -translate-x-1/2 transform">
+          <div className="h-2 w-2 rotate-45 transform border-t border-l border-border bg-background" />
         </div>
 
         {/* Content */}
