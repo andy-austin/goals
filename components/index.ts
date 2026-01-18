@@ -12,3 +12,6 @@ export * from './GoalForm';
 
 // Dashboard Components
 export * from './Dashboard';
+
+// Timeline Components
+export * from './Timeline';
