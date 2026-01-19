@@ -88,9 +88,9 @@ export default function CreateGoalPage() {
           {mode === 'wizard' ? t('createTitle') : t('createTitle')} 
           {/* Note: Could have different titles for selection screen */}
         </h1>
-        <div className="mt-2 flex items-center gap-2 text-zinc-600 dark:text-zinc-400">
+        <p className="mt-2 text-zinc-600 dark:text-zinc-400">
           {t('createSubtitle')}
-          <Tooltip content={t('learnMoreSmart')}>
+          <Tooltip content={t('learnMoreSmart')} className="ml-1.5 align-middle -translate-y-px">
             <a
               href="https://en.wikipedia.org/wiki/SMART_criteria"
               target="_blank"
@@ -101,7 +101,7 @@ export default function CreateGoalPage() {
               ?
             </a>
           </Tooltip>
-        </div>
+        </p>
       </div>
 
       {mode === 'selection' ? (
@@ -109,7 +109,7 @@ export default function CreateGoalPage() {
           {/* Start Custom Goal Section */}
           <section>
             <Card className="border-dashed border-2 hover:border-primary/50 transition-colors cursor-pointer" onClick={handleStartCustom}>
-              <CardContent className="flex items-center justify-between p-6">
+              <CardContent className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-6 gap-4">
                 <div>
                   <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
                     {t('selection.title')}
@@ -118,7 +118,9 @@ export default function CreateGoalPage() {
                     {t('selection.description')}
                   </p>
                 </div>
-                <Button onClick={(e) => { e.stopPropagation(); handleStartCustom(); }}>
+                <Button 
+                  onClick={(e) => { e.stopPropagation(); handleStartCustom(); }}
+                >
                   {t('selection.cta')}
                 </Button>
               </CardContent>
