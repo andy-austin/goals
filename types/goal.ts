@@ -277,7 +277,7 @@ export function formatDate(date: string | Date | undefined, locale = 'en-US'): s
   // Verify date is valid
   if (isNaN(d.getTime())) return 'Invalid Date';
 
-  return d.toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' });
+  return d.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
 /**
