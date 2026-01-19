@@ -45,7 +45,17 @@
       "whyItMatters": "Why it matters"
     },
     "noVisible": "No goals visible in this time range. Try a different zoom level.",
-    "goalsCount": "{count, plural, =1 {# goal} other {# goals}}"
+    "goalsCount": "{count, plural, =1 {# goal} other {# goals}}",
+    "zoom": {
+      "all": "All",
+      "1year": "1 Year",
+      "5years": "5 Years",
+      "10years": "10+ Years",
+      "label": "Timeline zoom level"
+    },
+    "gap": {
+      "yearsSkipped": "{count, plural, =1 {# year skipped} other {# years skipped}}"
+    }
   },
   "gantt": {
     "title": "Gantt view",

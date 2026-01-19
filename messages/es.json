@@ -45,7 +45,17 @@
       "whyItMatters": "Por qué es importante"
     },
     "noVisible": "No hay objetivos visibles en este rango de tiempo. Intenta con otro nivel de zoom.",
-    "goalsCount": "{count, plural, =1 {# objetivo} other {# objetivos}}"
+    "goalsCount": "{count, plural, =1 {# objetivo} other {# objetivos}}",
+    "zoom": {
+      "all": "Todo",
+      "1year": "1 Año",
+      "5years": "5 Años",
+      "10years": "10+ Años",
+      "label": "Nivel de zoom de la línea de tiempo"
+    },
+    "gap": {
+      "yearsSkipped": "{count, plural, =1 {# año omitido} other {# años omitidos}}"
+    }
   },
   "gantt": {
     "title": "Vista de Gantt",

@@ -1,7 +1,8 @@
 'use client';
 
 import { forwardRef, type HTMLAttributes } from 'react';
-import { ZOOM_LEVELS, type TimelineZoomControlsProps, type ZoomLevel } from './timeline.types';
+import { useTranslations } from 'next-intl';
+import { type TimelineZoomControlsProps, type ZoomLevel } from './timeline.types';
 
 export interface ZoomControlsProps
   extends TimelineZoomControlsProps,
@@ -14,17 +15,18 @@ const ZOOM_ORDER: ZoomLevel[] = ['all', '1year', '5years', '10years'];
  */
 export const TimelineZoomControls = forwardRef<HTMLDivElement, ZoomControlsProps>(
   ({ currentLevel, onChange, className = '', ...props }, ref) => {
+    const t = useTranslations('timeline.zoom');
+
     return (
       <div
         ref={ref}
         className={`inline-flex rounded-lg border border-border bg-background p-1 ${className}`}
         role="group"
-        aria-label="Timeline zoom level"
+        aria-label={t('label')}
         {...props}
       >
         {ZOOM_ORDER.map((level) => {
           const isActive = level === currentLevel;
-          const config = ZOOM_LEVELS[level];
 
           return (
             <button
@@ -42,7 +44,7 @@ export const TimelineZoomControls = forwardRef<HTMLDivElement, ZoomControlsProps
               `}
               aria-pressed={isActive}
             >
-              {config.label}
+              {t(level)}
             </button>
           );
         })}

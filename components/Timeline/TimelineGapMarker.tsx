@@ -1,6 +1,7 @@
 'use client';
 
 import { forwardRef, type HTMLAttributes } from 'react';
+import { useTranslations } from 'next-intl';
 import type { TimelineGap } from './timeline.types';
 
 export interface TimelineGapMarkerProps extends HTMLAttributes<HTMLDivElement> {
@@ -14,6 +15,8 @@ export interface TimelineGapMarkerProps extends HTMLAttributes<HTMLDivElement> {
  */
 export const TimelineGapMarker = forwardRef<HTMLDivElement, TimelineGapMarkerProps>(
   ({ gap, className = '', ...props }, ref) => {
+    const t = useTranslations('timeline.gap');
+
     return (
       <div
         ref={ref}
@@ -35,7 +38,7 @@ export const TimelineGapMarker = forwardRef<HTMLDivElement, TimelineGapMarkerPro
         {/* Years skipped label */}
         {gap.yearsSkipped > 0 && (
           <div className="absolute bottom-4 bg-background px-2 py-0.5 rounded text-xs text-muted-foreground whitespace-nowrap">
-            {gap.yearsSkipped} year{gap.yearsSkipped > 1 ? 's' : ''} skipped
+            {t('yearsSkipped', { count: gap.yearsSkipped })}
           </div>
         )}
       </div>
