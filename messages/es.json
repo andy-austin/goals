@@ -157,9 +157,10 @@
     "selection": {
       "title": "Empezar desde Cero",
       "description": "Crea un objetivo totalmente personalizado definido enteramente por ti.",
-      "cta": "Crear Objetivo",
+      "cta": "Crear Personalizado",
       "divider": "o elige una plantilla"
     },
+    "learnMoreSmart": "Aprende más sobre los objetivos SMART",
     "validation": {
       "specific": "Específico",
       "specificDesc": "Título claro y descripción detallada.",

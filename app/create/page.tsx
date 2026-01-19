@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { FormWizard, FormStep, StepTitleDescription, StepAmountCurrency, StepTargetDate, StepBucket, StepWhyItMatters, TemplateSelector, Button, Card, CardContent } from '@/components';
+import { FormWizard, FormStep, StepTitleDescription, StepAmountCurrency, StepTargetDate, StepBucket, StepWhyItMatters, TemplateSelector, Button, Card, CardContent, Tooltip } from '@/components';
 import { useGoals } from '@/context';
 import { validateSMART } from '@/lib';
 import type { GoalFormInput, GoalTemplate } from '@/types';
@@ -86,10 +86,20 @@ export default function CreateGoalPage() {
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
           {mode === 'wizard' ? t('createTitle') : t('createTitle')} 
-          {/* Note: Could have different titles for selection screen */}
         </h1>
-        <p className="mt-2 text-zinc-600 dark:text-zinc-400">
+        <p className="mt-2 flex items-center gap-2 text-zinc-600 dark:text-zinc-400">
           {t('createSubtitle')}
+          <Tooltip content={t('learnMoreSmart')}>
+            <a
+              href="https://en.wikipedia.org/wiki/SMART_criteria"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-zinc-200 text-[10px] font-bold text-zinc-600 transition-colors hover:bg-primary hover:text-white dark:bg-zinc-800 dark:text-zinc-400"
+              aria-label={t('learnMoreSmart')}
+            >
+              ?
+            </a>
+          </Tooltip>
         </p>
       </div>
 
