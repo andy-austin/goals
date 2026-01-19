@@ -269,11 +269,7 @@ body {
   }
 
   /* Hide non-printable elements */
-  .no-print,
-  header,
-  nav,
-  .toast-container,
-  button:not(.print-visible),
+  button,
   [role="dialog"],
   [role="alert"] {
     display: none !important;
