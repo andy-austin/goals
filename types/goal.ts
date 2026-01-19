@@ -243,6 +243,19 @@ export function formatCurrency(amount: number, currency: Currency, locale = 'en-
 }
 
 /**
+ * Get the symbol or short code for a currency
+ */
+export function getCurrencySymbol(currency: Currency, locale = 'en-US'): string {
+  if (currency === 'UYI') return 'UI';
+  
+  return new Intl.NumberFormat(locale, { 
+    style: 'currency', 
+    currency,
+    currencyDisplay: 'symbol'
+  }).formatToParts(0).find(part => part.type === 'currency')?.value ?? currency;
+}
+
+/**
  * Get the display name of a currency
  */
 export function getCurrencyName(currency: Currency, locale = 'en-US'): string {
