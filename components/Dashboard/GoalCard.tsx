@@ -3,6 +3,8 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
 import { Goal, formatCurrency } from '@/types';
+import { useGoals } from '@/context';
+import { useToast } from '@/components/ui';
 
 interface GoalCardProps extends HTMLAttributes<HTMLDivElement> {
   goal: Goal;
@@ -13,6 +15,10 @@ interface GoalCardProps extends HTMLAttributes<HTMLDivElement> {
 export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
   function GoalCard({ goal, dragHandle, isDragging = false, className = '', style, ...props }, ref) {
     const t = useTranslations('dashboard');
+    const { deleteGoal } = useGoals();
+    const { showToast } = useToast();
+    const commonT = useTranslations('common');
+
     // Calculate days remaining (simple version, could move to helper)
     const today = new Date();
     const target = new Date(goal.targetDate);
@@ -20,6 +26,13 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
     const daysRemaining = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
     const isOverdue = daysRemaining < 0;
+
+    const handleDelete = () => {
+      if (window.confirm(commonT('confirmDeleteMessage'))) {
+        deleteGoal(goal.id);
+        showToast(`${commonT('delete')} ${goal.title}`, 'success');
+      }
+    };
 
     return (
       <div
@@ -44,11 +57,24 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
             </div>
           </div>
 
-          {/* Priority Badge or Indicator */}
+          {/* Priority Badge and Actions */}
           <div className="flex items-center gap-2">
-             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-zinc-100 text-xs font-medium text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400">
-               #{goal.priority}
-             </span>
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-zinc-100 text-xs font-medium text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400">
+              #{goal.priority}
+            </span>
+            <button
+              type="button"
+              onClick={handleDelete}
+              className="rounded p-1 text-zinc-400 hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/20 dark:hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
+              aria-label={commonT('delete')}
+              title={commonT('delete')}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 6h18"/>
+                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+              </svg>
+            </button>
           </div>
         </div>
 

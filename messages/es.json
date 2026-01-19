@@ -1,6 +1,8 @@
 {
   "common": {
     "appName": "Objetivos de Inversión",
+    "appDescription": "Define y prioriza tus objetivos financieros usando el marco SMART",
+    "logo": "Objetivos",
     "loading": "Cargando...",
     "save": "Guardar",
     "cancel": "Cancelar",
@@ -8,12 +10,37 @@
     "next": "Siguiente",
     "create": "Crear",
     "delete": "Eliminar",
-    "edit": "Editar"
+    "edit": "Editar",
+    "confirmDeleteTitle": "¿Eliminar Objetivo?",
+    "confirmDeleteMessage": "¿Estás seguro de que deseas eliminar este objetivo? Esta acción no se puede deshacer."
   },
   "nav": {
     "dashboard": "Panel",
     "createGoal": "Crear Objetivo",
     "timeline": "Línea de Tiempo"
+  },
+  "timeline": {
+    "title": "Línea de Tiempo",
+    "subtitle": "Visualiza tus objetivos e hitos a lo largo del tiempo.",
+    "empty": {
+      "title": "Sin objetivos todavía",
+      "description": "Crea tu primer objetivo financiero para verlo en la línea de tiempo.",
+      "cta": "Crear un Objetivo"
+    },
+    "details": {
+      "targetAmount": "Monto Objetivo",
+      "targetDate": "Fecha Objetivo",
+      "whyItMatters": "Por qué es importante"
+    },
+    "noVisible": "No hay objetivos visibles en este rango de tiempo. Intenta con otro nivel de zoom.",
+    "goalsCount": "{count, plural, =1 {# objetivo} other {# objetivos}}"
+  },
+  "gantt": {
+    "title": "Vista de Gantt",
+    "goal": "Objetivo",
+    "today": "Hoy",
+    "days": "d",
+    "overdue": "vencido"
   },
   "dashboard": {
     "title": "Panel",
@@ -35,7 +62,7 @@
       "description": "Comienza creando tu primer objetivo de inversión.",
       "cta": "Crear Objetivo"
     },
-    "goalsCount": "objetivos",
+    "goalsCount": "{count, plural, =1 {# objetivo} other {# objetivos}}",
     "noBucketGoals": "Sin objetivos de {bucket} todavía",
     "actions": {
       "addGoal": "Agregar Objetivo",

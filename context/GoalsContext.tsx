@@ -30,7 +30,8 @@ type GoalsAction =
   | { type: 'ADD_GOAL'; payload: Goal }
   | { type: 'SET_GOALS'; payload: Goal[] }
   | { type: 'UPDATE_GOAL_PRIORITY'; payload: { goalId: string; newPriority: number } }
-  | { type: 'REORDER_GOALS_IN_BUCKET'; payload: { bucket: Bucket; orderedIds: string[] } };
+  | { type: 'REORDER_GOALS_IN_BUCKET'; payload: { bucket: Bucket; orderedIds: string[] } }
+  | { type: 'DELETE_GOAL'; payload: string };
 
 interface GoalsContextValue {
   /** All goals */
@@ -38,6 +39,9 @@ interface GoalsContextValue {
 
   /** Add a new goal (auto-generates id, createdAt, and priority) */
   addGoal: (input: CreateGoalInput) => Goal;
+
+  /** Delete a goal by ID */
+  deleteGoal: (goalId: string) => void;
 
   /** Get all goals */
   getGoals: () => Goal[];
@@ -120,6 +124,12 @@ function goalsReducer(state: GoalsState, action: GoalsAction): GoalsState {
       };
     }
 
+    case 'DELETE_GOAL':
+      return {
+        ...state,
+        goals: state.goals.filter((goal) => goal.id !== action.payload),
+      };
+
     default:
       return state;
   }
@@ -171,6 +181,10 @@ export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProp
     return newGoal;
   }, [state.goals]);
 
+  const deleteGoal = useCallback((goalId: string): void => {
+    dispatch({ type: 'DELETE_GOAL', payload: goalId });
+  }, []);
+
   const getGoals = useCallback((): Goal[] => {
     return state.goals;
   }, [state.goals]);
@@ -210,6 +224,7 @@ export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProp
   const value: GoalsContextValue = useMemo(() => ({
     goals: state.goals,
     addGoal,
+    deleteGoal,
     getGoals,
     getGoalsByBucket,
     getAllGoalsByBucket,
@@ -221,6 +236,7 @@ export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProp
   }), [
     state.goals,
     addGoal,
+    deleteGoal,
     getGoals,
     getGoalsByBucket,
     getAllGoalsByBucket,

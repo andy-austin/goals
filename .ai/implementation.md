@@ -37,6 +37,37 @@ This document tracks the implementation progress of the Investment Goals applica
 - Cursor-following tooltips with goal info
 - 14+ E2E tests for timeline functionality
 
+### Issue #36: Refactor Language Selector to use flags
+**Status:** ✅ Completed & Closed
+**Files:**
+- `components/LanguageSwitcher.tsx` - Flag-based language switcher
+- `components/ui/Tooltip.tsx` - Reusable tooltip component
+- `i18n/config.ts` - Updated config
+- `app/globals.css` - Tooltip animations
+
+**Features Implemented:**
+- Refactored `LanguageSwitcher` from a select dropdown to side-by-side flag buttons
+- Used emoji flags (🇺🇸, 🇪🇸) for consistent visual representation
+- Created reusable `Tooltip` component in `components/ui/Tooltip.tsx`
+- Replaced native `title` attribute with custom Tooltip for instant feedback
+- Integrated with `next-intl` for localized button titles
+- Updated `i18n` config to remove unused `localeNames` constant
+
+### Implement Delete Goal Functionality
+**Status:** ✅ Completed
+**Files:**
+- `context/GoalsContext.tsx` - Added DELETE_GOAL action and reducer logic
+- `components/Dashboard/GoalCard.tsx` - Added delete button and confirmation
+- `messages/en.json` - Added confirmation messages
+- `messages/es.json` - Added confirmation messages
+
+**Features Implemented:**
+- Delete button (trash icon) on goal cards
+- Browser native confirmation dialog ("Are you sure...")
+- Context action to remove goal from state and localStorage
+- Success toast notification upon deletion
+- Fully localized confirmation messages
+
 ---
 
 ## Completed Features
