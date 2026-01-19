@@ -126,7 +126,7 @@ export function StepAmountCurrency() {
               </option>
             ))}
           </Select>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {(['USD', 'UYU', 'UYI'] as const).map((code) => (
               <Button
                 key={code}
@@ -134,7 +134,7 @@ export function StepAmountCurrency() {
                 variant={currency === code ? 'primary' : 'secondary'}
                 size="sm"
                 onClick={() => updateData({ currency: code })}
-                className="flex-1"
+                className="h-8 px-3 text-xs"
               >
                 {code === 'UYI' ? 'UI' : code}
               </Button>
