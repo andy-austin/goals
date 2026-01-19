@@ -82,16 +82,16 @@ function GoalPreviewCard() {
   const daysRemaining = 847;
 
   return (
-    <div className="bg-card rounded-2xl shadow-xl border border-border/50 p-6 max-w-md mx-auto animate-float">
-      <div className="flex items-start justify-between mb-4">
+    <div className="bg-card rounded-2xl shadow-2xl border border-border/30 p-6 max-w-md mx-auto animate-float ring-1 ring-black/5">
+      <div className="flex items-start justify-between mb-5">
         <div>
-          <span className="inline-block px-3 py-1 rounded-full bg-trust-light text-trust text-xs font-medium mb-2">
+          <span className="inline-block px-3 py-1 rounded-full bg-trust-light text-trust text-xs font-semibold mb-2 border border-trust/20">
             High Priority
           </span>
-          <h3 className="text-xl font-semibold text-foreground">House Down Payment</h3>
-          <p className="text-sm text-muted-foreground">Target: December 2026</p>
+          <h3 className="text-xl font-bold text-foreground">House Down Payment</h3>
+          <p className="text-sm text-muted-foreground mt-0.5">Target: December 2026</p>
         </div>
-        <div className="w-12 h-12 rounded-xl bg-growth-light flex items-center justify-center">
+        <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-growth-light to-growth-light/50 flex items-center justify-center shadow-sm border border-growth/10">
           <span className="text-2xl">🏠</span>
         </div>
       </div>
@@ -99,34 +99,34 @@ function GoalPreviewCard() {
       <div className="space-y-4">
         <div>
           <div className="flex justify-between text-sm mb-2">
-            <span className="text-muted-foreground">Progress</span>
-            <span className="font-semibold text-foreground">{progress.toFixed(0)}%</span>
+            <span className="text-muted-foreground font-medium">Progress</span>
+            <span className="font-bold text-foreground">{progress.toFixed(0)}%</span>
           </div>
-          <div className="h-3 bg-secondary rounded-full overflow-hidden">
+          <div className="h-3 bg-muted rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-growth rounded-full transition-all duration-1000 ease-out"
+              className="h-full bg-gradient-growth rounded-full transition-all duration-1000 ease-out shadow-sm"
               style={{ width: `${progress}%` }}
             />
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div className="p-3 rounded-xl bg-muted/50">
-            <p className="text-xs text-muted-foreground mb-1">Current</p>
-            <p className="text-lg font-bold text-foreground">${currentAmount.toLocaleString()}</p>
+        <div className="grid grid-cols-2 gap-3">
+          <div className="p-4 rounded-xl bg-muted/70 border border-border/50">
+            <p className="text-xs text-muted-foreground mb-1 font-medium">Current</p>
+            <p className="text-xl font-bold text-foreground">${currentAmount.toLocaleString()}</p>
           </div>
-          <div className="p-3 rounded-xl bg-muted/50">
-            <p className="text-xs text-muted-foreground mb-1">Target</p>
-            <p className="text-lg font-bold text-foreground">${targetAmount.toLocaleString()}</p>
+          <div className="p-4 rounded-xl bg-growth-light/50 border border-growth/20">
+            <p className="text-xs text-growth mb-1 font-medium">Target</p>
+            <p className="text-xl font-bold text-foreground">${targetAmount.toLocaleString()}</p>
           </div>
         </div>
 
-        <div className="flex items-center justify-between pt-2 border-t border-border">
+        <div className="flex items-center justify-between pt-3 border-t border-border/50">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-growth animate-pulse" />
             <span className="text-sm text-muted-foreground">{daysRemaining} days remaining</span>
           </div>
-          <span className="text-sm font-medium text-growth">On Track</span>
+          <span className="text-sm font-semibold text-growth">On Track</span>
         </div>
       </div>
     </div>

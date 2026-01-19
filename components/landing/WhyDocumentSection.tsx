@@ -20,13 +20,13 @@ const benefits = [
 
 export function WhyDocumentSection() {
   return (
-    <section id="features" className="py-20 lg:py-32 bg-background relative overflow-hidden">
+    <section id="features" className="py-16 lg:py-20 bg-background relative overflow-hidden">
       {/* Background decoration */}
-      <div className="absolute top-1/2 left-0 w-96 h-96 bg-growth/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-      <div className="absolute top-1/2 right-0 w-96 h-96 bg-trust/5 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
+      <div className="absolute top-1/2 left-0 w-96 h-96 bg-growth/8 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+      <div className="absolute top-1/2 right-0 w-96 h-96 bg-trust/8 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
 
       <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
           {/* Left content */}
           <div>
             <span className="inline-block px-4 py-2 rounded-full bg-trust-light text-trust text-sm font-medium mb-4">
@@ -41,15 +41,15 @@ export function WhyDocumentSection() {
               fewer emotional decisions and achieve better long-term returns.
             </p>
 
-            <div className="space-y-6">
+            <div className="space-y-5">
               {benefits.map((benefit) => (
-                <div key={benefit.title} className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-growth-light flex items-center justify-center">
+                <div key={benefit.title} className="group flex gap-4 p-4 rounded-xl hover:bg-muted/50 transition-all duration-300">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-growth-light flex items-center justify-center border border-growth/20 group-hover:scale-110 transition-transform duration-300">
                     <benefit.icon className="w-6 h-6 text-growth" />
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-foreground mb-1">{benefit.title}</h3>
-                    <p className="text-muted-foreground">{benefit.description}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{benefit.description}</p>
                   </div>
                 </div>
               ))}
@@ -57,31 +57,31 @@ export function WhyDocumentSection() {
           </div>
 
           {/* Right - Quote card */}
-          <div className="relative">
-            <div className="bg-gradient-hero rounded-2xl p-8 lg:p-10 text-primary-foreground shadow-xl">
-              <div className="text-6xl leading-none opacity-30 mb-4">&ldquo;</div>
-              <blockquote className="text-xl lg:text-2xl font-medium leading-relaxed mb-6">
+          <div className="relative lg:ml-4">
+            <div className="bg-gradient-hero rounded-2xl p-6 lg:p-8 text-primary-foreground shadow-2xl ring-1 ring-black/10">
+              <div className="text-5xl leading-none opacity-30 mb-3">&ldquo;</div>
+              <blockquote className="text-lg lg:text-xl font-medium leading-relaxed mb-5">
                 The biggest risk in investing isn&apos;t volatility—it&apos;s selling at the wrong time
                 because you forgot why you started.
               </blockquote>
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-primary-foreground/20 flex items-center justify-center">
-                  <span className="text-lg font-bold">FG</span>
+                <div className="w-10 h-10 rounded-full bg-primary-foreground/20 flex items-center justify-center">
+                  <span className="text-base font-bold">FG</span>
                 </div>
                 <div>
-                  <p className="font-semibold">FinGoal Team</p>
-                  <p className="text-sm opacity-80">Built for intentional investors</p>
+                  <p className="font-semibold text-sm">FinGoal Team</p>
+                  <p className="text-xs opacity-80">Built for intentional investors</p>
                 </div>
               </div>
             </div>
 
             {/* Stats floating card */}
-            <div className="absolute -bottom-6 -left-6 bg-card rounded-xl shadow-xl border border-border/50 p-5 max-w-xs">
-              <div className="flex items-center gap-3 mb-3">
-                <CheckCircle2 className="w-8 h-8 text-growth" />
+            <div className="absolute -bottom-4 -left-4 lg:-bottom-6 lg:-left-6 bg-card rounded-xl shadow-2xl border border-border/50 p-4 max-w-[240px] ring-1 ring-black/5">
+              <div className="flex items-center gap-3 mb-2">
+                <CheckCircle2 className="w-7 h-7 text-growth" />
                 <span className="text-2xl font-bold text-foreground">42%</span>
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-xs text-muted-foreground leading-relaxed">
                 More likely to stay invested during volatility when goals are documented
               </p>
             </div>

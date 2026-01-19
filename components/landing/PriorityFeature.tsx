@@ -49,9 +49,9 @@ const priorityBadges = {
 
 export function PriorityFeature() {
   return (
-    <section className="py-20 lg:py-32 bg-muted/30">
+    <section className="py-16 lg:py-20 bg-muted/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
           {/* Left - Drag and drop mockup */}
           <div className="order-2 lg:order-1">
             <div className="bg-card rounded-2xl shadow-xl border border-border/50 p-6 lg:p-8">
