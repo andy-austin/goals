@@ -10,6 +10,7 @@ export function Header() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const t = useTranslations('nav');
+  const tCommon = useTranslations('common');
 
   const navItems = [
     { href: '/', label: t('dashboard') },
@@ -36,7 +37,7 @@ export function Header() {
             />
           </svg>
           <span className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-            Goals
+            {tCommon('logo')}
           </span>
         </Link>
 

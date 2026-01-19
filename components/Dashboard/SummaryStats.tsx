@@ -90,7 +90,7 @@ export function SummaryStats({ goals, totalAmount }: SummaryStatsProps) {
         {/* Main stats row */}
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-2xl font-bold text-foreground">
-            {goals.length} {goals.length === 1 ? t('stats.goal') : t('stats.goals')}
+            {t('goalsCount', { count: goals.length })}
           </span>
           <span className="text-muted-foreground">·</span>
           <span className="text-xl font-semibold text-foreground">

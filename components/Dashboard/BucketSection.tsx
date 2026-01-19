@@ -44,6 +44,7 @@ const Icons = {
 
 export function BucketSection({ bucket, goals }: BucketSectionProps) {
   const tBuckets = useTranslations('buckets');
+  const tDashboard = useTranslations('dashboard');
   const [isExpanded, setIsExpanded] = useState(true);
   const { reorderGoalsInBucket } = useGoals();
   const config = BUCKET_CONFIG[bucket];
@@ -81,7 +82,7 @@ export function BucketSection({ bucket, goals }: BucketSectionProps) {
               {tBuckets(`${bucket}.name`)}
             </h2>
             <p className="text-sm text-zinc-500 dark:text-zinc-400">
-              {goals.length} goals
+              {tDashboard('goalsCount', { count: goals.length })}
             </p>
           </div>
         </div>
@@ -104,7 +105,7 @@ export function BucketSection({ bucket, goals }: BucketSectionProps) {
         <div className="border-t border-zinc-100 px-6 py-6 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/20">
           {goals.length === 0 ? (
             <div className="text-center py-4 text-zinc-500 text-sm">
-              No goals in this bucket yet.
+              {tDashboard('noBucketGoals', { bucket: tBuckets(`${bucket}.name`).toLowerCase() })}
             </div>
           ) : (
             <DndContext

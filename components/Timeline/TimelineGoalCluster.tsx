@@ -1,6 +1,7 @@
 'use client';
 
 import { forwardRef, useState, type HTMLAttributes } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
 import { BUCKET_CONFIG, formatCurrency } from '@/types';
 import type { TimelineGoalClusterProps } from './timeline.types';
 
@@ -14,6 +15,8 @@ export interface ClusterProps
 export const TimelineGoalCluster = forwardRef<HTMLDivElement, ClusterProps>(
   ({ cluster, onClick, className = '', ...props }, ref) => {
     const [isExpanded, setIsExpanded] = useState(false);
+    const t = useTranslations('timeline');
+    const locale = useLocale();
 
     // Get unique buckets in this cluster
     const bucketCounts = cluster.goals.reduce(
@@ -82,7 +85,7 @@ export const TimelineGoalCluster = forwardRef<HTMLDivElement, ClusterProps>(
                       </span>
                     </div>
                     <span className="text-xs text-muted-foreground shrink-0">
-                      {formatCurrency(goal.amount, goal.currency)}
+                      {formatCurrency(goal.amount, goal.currency, locale)}
                     </span>
                   </button>
                 );
@@ -119,7 +122,7 @@ export const TimelineGoalCluster = forwardRef<HTMLDivElement, ClusterProps>(
             backgroundColor: primaryConfig.bgColorVar,
             borderColor: primaryConfig.colorVar,
           }}
-          aria-label={`${cluster.goals.length} goals`}
+          aria-label={t('goalsCount', { count: cluster.goals.length })}
           aria-expanded={isExpanded}
           aria-haspopup="menu"
         >

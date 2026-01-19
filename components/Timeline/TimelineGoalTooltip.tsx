@@ -1,7 +1,7 @@
 'use client';
 
 import { forwardRef, type HTMLAttributes } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { BUCKET_CONFIG, formatCurrency } from '@/types';
 import type { TimelineGoalTooltipProps } from './timeline.types';
 
@@ -16,6 +16,7 @@ export const TimelineGoalTooltip = forwardRef<HTMLDivElement, TooltipProps>(
   ({ goal, className = '', ...props }, ref) => {
     const t = useTranslations('dashboard');
     const tBuckets = useTranslations('buckets');
+    const locale = useLocale();
     const bucketConfig = BUCKET_CONFIG[goal.bucket];
     const targetDate = new Date(goal.targetDate);
     const today = new Date();
@@ -62,13 +63,13 @@ export const TimelineGoalTooltip = forwardRef<HTMLDivElement, TooltipProps>(
 
           {/* Amount */}
           <div className="text-lg font-bold text-foreground">
-            {formatCurrency(goal.amount, goal.currency)}
+            {formatCurrency(goal.amount, goal.currency, locale)}
           </div>
 
           {/* Date and time remaining */}
           <div className="flex items-center justify-between text-sm">
             <span className="text-muted-foreground">
-              {targetDate.toLocaleDateString('en-US', {
+              {targetDate.toLocaleDateString(locale, {
                 month: 'short',
                 day: 'numeric',
                 year: 'numeric',

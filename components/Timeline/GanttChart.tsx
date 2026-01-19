@@ -1,6 +1,7 @@
 'use client';
 
 import { forwardRef, useRef, useEffect, useMemo, useState, type HTMLAttributes } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
 import type { Goal } from '@/types';
 import { BUCKET_CONFIG, formatCurrency } from '@/types';
 import type { TimelineConfig } from './timeline.types';
@@ -34,13 +35,19 @@ function calculateBarWidth(goal: Goal, config: TimelineConfig): number {
 /**
  * Generate date labels for the Gantt chart header
  */
-function generateDateLabels(config: TimelineConfig, todayPosition: number, goals: Goal[]): Array<{ label: string; position: number }> {
+function generateDateLabels(
+  config: TimelineConfig, 
+  todayPosition: number, 
+  goals: Goal[], 
+  tGantt: (key: string) => string, 
+  locale: string
+): Array<{ label: string; position: number }> {
   const labels: Array<{ label: string; position: number }> = [];
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
   // Add Today label
-  labels.push({ label: 'Today', position: todayPosition + LEFT_PADDING });
+  labels.push({ label: tGantt('today'), position: todayPosition + LEFT_PADDING });
 
   // Find the furthest goal target date to ensure labels extend far enough
   let maxTargetDate = new Date(today);
@@ -74,7 +81,7 @@ function generateDateLabels(config: TimelineConfig, todayPosition: number, goals
     const daysFromToday = (currentDate.getTime() - today.getTime()) / MS_PER_DAY;
     const position = todayPosition + (daysFromToday * config.pixelsPerDay) + LEFT_PADDING;
 
-    const label = currentDate.toLocaleDateString('en-US', {
+    const label = currentDate.toLocaleDateString(locale, {
       month: 'short',
       year: currentDate.getMonth() === 0 ? 'numeric' : undefined,
     });
@@ -94,6 +101,8 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [hoveredGoalId, setHoveredGoalId] = useState<string | null>(null);
     const [tooltipPosition, setTooltipPosition] = useState<{ x: number; y: number } | null>(null);
+    const tGantt = useTranslations('gantt');
+    const locale = useLocale();
 
     // Sort goals by target date
     const sortedGoals = useMemo(() => {
@@ -113,8 +122,8 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
 
     // Generate date labels based on goals
     const dateLabels = useMemo(() => {
-      return generateDateLabels(config, todayPosition, goals);
-    }, [config, todayPosition, goals]);
+      return generateDateLabels(config, todayPosition, goals, tGantt, locale);
+    }, [config, todayPosition, goals, tGantt, locale]);
 
     // Sync scroll position on initial load
     useEffect(() => {
@@ -148,7 +157,7 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
         {/* Header */}
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-medium text-muted-foreground">
-            Gantt View
+            {tGantt('title')}
           </h3>
         </div>
 
@@ -159,7 +168,7 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
             <div className="w-[140px] sm:w-[180px] shrink-0 border-r border-border bg-background z-10">
               {/* Header */}
               <div className="h-10 px-2 sm:px-3 flex items-center border-b border-border bg-muted/30">
-                <span className="text-xs font-medium text-muted-foreground">Goal</span>
+                <span className="text-xs font-medium text-muted-foreground">{tGantt('goal')}</span>
               </div>
               {/* Goal labels */}
               {sortedGoals.map((goal) => {
@@ -182,11 +191,13 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
                         {goal.title}
                       </div>
                       <div className="flex items-center gap-1 sm:gap-2 text-[10px] sm:text-xs text-muted-foreground">
-                        <span className="hidden sm:inline">{formatCurrency(goal.amount, goal.currency)}</span>
-                        <span className="sm:hidden">{formatCurrency(goal.amount, goal.currency).replace('.00', '')}</span>
+                        <span className="hidden sm:inline">{formatCurrency(goal.amount, goal.currency, locale)}</span>
+                        <span className="sm:hidden">{formatCurrency(goal.amount, goal.currency, locale).replace('.00', '')}</span>
                         <span className="text-muted-foreground/50">·</span>
                         <span className={isOverdue ? 'text-red-500' : ''}>
-                          {isOverdue ? `${Math.abs(daysRemaining)}d overdue` : `${daysRemaining}d`}
+                          {isOverdue 
+                            ? `${Math.abs(daysRemaining)}${tGantt('days')} ${tGantt('overdue')}` 
+                            : `${daysRemaining}${tGantt('days')}`}
                         </span>
                       </div>
                     </button>
@@ -211,7 +222,7 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
                     <div
                       key={`${label}-${idx}`}
                       className={`absolute text-xs top-1/2 -translate-y-1/2 whitespace-nowrap ${
-                        label === 'Today' ? 'text-primary font-medium' : 'text-muted-foreground'
+                        label === tGantt('today') ? 'text-primary font-medium' : 'text-muted-foreground'
                       }`}
                       style={{ left: position, transform: 'translate(-50%, -50%)' }}
                     >
@@ -293,7 +304,7 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
                               onGoalSelect?.(goal);
                             }
                           }}
-                          aria-label={`${goal.title}: ${formatCurrency(goal.amount, goal.currency)}, target ${targetDate.toLocaleDateString()}`}
+                          aria-label={`${goal.title}: ${formatCurrency(goal.amount, goal.currency, locale)}, target ${targetDate.toLocaleDateString(locale)}`}
                         >
                           {/* Hover tooltip - follows cursor position */}
                           {isHovered && tooltipPosition && (
@@ -310,7 +321,7 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
                                 <div className="bg-white dark:bg-zinc-900 border border-border rounded-lg px-3 py-2 shadow-lg text-sm">
                                   <div className="font-medium text-foreground">{goal.title}</div>
                                   <div className="text-muted-foreground">
-                                    {targetDate.toLocaleDateString('en-US', {
+                                    {targetDate.toLocaleDateString(locale, {
                                       month: 'short',
                                       day: 'numeric',
                                       year: 'numeric',
@@ -335,7 +346,7 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
                                 <div className="bg-white dark:bg-zinc-900 border border-border rounded-lg px-3 py-2 shadow-lg text-sm">
                                   <div className="font-medium text-foreground">{goal.title}</div>
                                   <div className="text-muted-foreground">
-                                    {targetDate.toLocaleDateString('en-US', {
+                                    {targetDate.toLocaleDateString(locale, {
                                       month: 'short',
                                       day: 'numeric',
                                       year: 'numeric',

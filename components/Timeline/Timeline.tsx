@@ -1,6 +1,7 @@
 'use client';
 
 import { forwardRef, useRef, useEffect, type HTMLAttributes } from 'react';
+import { useTranslations } from 'next-intl';
 import type { Goal } from '@/types';
 import { TimelineAxis } from './TimelineAxis';
 import { TimelineTodayMarker } from './TimelineTodayMarker';
@@ -26,6 +27,8 @@ export interface Props
 export const Timeline = forwardRef<HTMLDivElement, Props>(
   ({ goals, zoomLevel, onZoomChange, onGoalSelect, className = '', ...props }, ref) => {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const t = useTranslations('timeline');
+    const tBuckets = useTranslations('buckets');
     const { config, clusters, axisMarks, todayPosition } = useTimelineCalculations(
       goals,
       zoomLevel
@@ -64,7 +67,7 @@ export const Timeline = forwardRef<HTMLDivElement, Props>(
             onChange={onZoomChange}
           />
           <div className="text-sm text-muted-foreground">
-            {goals.length} goal{goals.length !== 1 ? 's' : ''}
+            {t('goalsCount', { count: goals.length })}
           </div>
         </div>
 
@@ -127,7 +130,7 @@ export const Timeline = forwardRef<HTMLDivElement, Props>(
               {clusters.length === 0 && goals.length > 0 && (
                 <div className="absolute inset-0 flex items-center justify-center">
                   <p className="text-muted-foreground">
-                    No goals visible in this time range. Try a different zoom level.
+                    {t('noVisible')}
                   </p>
                 </div>
               )}
@@ -139,15 +142,15 @@ export const Timeline = forwardRef<HTMLDivElement, Props>(
         <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
           <div className="flex items-center gap-1.5">
             <div className="h-2 w-2 rounded-full bg-bucket-safety" />
-            <span>Safety</span>
+            <span>{tBuckets('safety.name')}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <div className="h-2 w-2 rounded-full bg-bucket-growth" />
-            <span>Growth</span>
+            <span>{tBuckets('growth.name')}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <div className="h-2 w-2 rounded-full bg-bucket-dream" />
-            <span>Dream</span>
+            <span>{tBuckets('dream.name')}</span>
           </div>
         </div>
       </div>

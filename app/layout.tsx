@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider } from 'next-intl';
-import { getLocale, getMessages } from 'next-intl/server';
+import { getLocale, getMessages, getTranslations } from 'next-intl/server';
 import { Providers } from "./providers";
 import { Header } from "@/components";
 import "./globals.css";
@@ -16,10 +16,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Investment Goals",
-  description: "Define and prioritize your financial goals using the SMART framework",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('common');
+ 
+  return {
+    title: t('appName'),
+    description: t('appDescription'),
+  };
+}
 
 export default async function RootLayout({
   children,
@@ -48,3 +52,4 @@ export default async function RootLayout({
     </html>
   );
 }
+
