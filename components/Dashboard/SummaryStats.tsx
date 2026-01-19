@@ -1,10 +1,11 @@
 'use client';
 
-import { useMemo, type ReactNode } from 'react';
+import { useMemo, type ReactNode, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { Card } from '@/components/ui';
+import { Card, Tooltip } from '@/components/ui';
 import { formatCurrency, BUCKET_CONFIG, type Goal, type Bucket, type Currency } from '@/types';
 import { ExportMenu } from './ExportMenu';
+import { useAISuggestion } from '@/hooks/useAISuggestion';
 
 interface SummaryStatsProps {
   goals: Goal[];
@@ -76,6 +77,9 @@ export function SummaryStats({ goals }: SummaryStatsProps) {
   const tBuckets = useTranslations('buckets');
   const locale = useLocale();
 
+  // AI Conversion hook
+  const { suggestion: convertedTotal, getSuggestion: getConvertedTotal, isLoading: isConverting } = useAISuggestion('convert');
+
   const totalsByCurrency = useMemo(() => {
     const totals: Record<string, number> = {};
     for (const goal of goals) {
@@ -89,6 +93,30 @@ export function SummaryStats({ goals }: SummaryStatsProps) {
   const nextGoal = useMemo(() => getNextGoal(goals), [goals]);
   const daysUntilNext = useMemo(() => nextGoal ? getDaysUntil(nextGoal.targetDate) : 0, [nextGoal]);
 
+  const targetCurrency = goals[0]?.currency;
+
+  useEffect(() => {
+    if (goals.length > 0 && currencyCodes.length > 1 && targetCurrency) {
+      // Create a summary of amounts to convert
+      const amountsSummary = goals.map(g => `${g.amount} ${g.currency}`).join('\n');
+      
+      // Generate a stable cache key based on the data being converted
+      const sortedTotals = Object.entries(totalsByCurrency).sort(([a], [b]) => a.localeCompare(b));
+      const cacheKey = `conv-${targetCurrency}-${JSON.stringify(sortedTotals)}`;
+
+      // Debounce slightly or just call
+      const timer = setTimeout(() => {
+        getConvertedTotal(amountsSummary, { 
+          currency: targetCurrency,
+          cacheKey,
+          cacheTtl: 12 * 60 * 60 * 1000 // 12 hours
+        });
+      }, 500);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [goals, currencyCodes.length, targetCurrency, getConvertedTotal, totalsByCurrency]);
+
   if (goals.length === 0) {
     return null;
   }
@@ -99,24 +127,43 @@ export function SummaryStats({ goals }: SummaryStatsProps) {
         {/* Main stats header */}
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-1">
-            {/* Goals count */}
-            <div className="text-2xl font-bold text-foreground">
-              {t('goalsCount', { count: goals.length })}
+            {/* Goals count and AI approximate total */}
+            <div className="flex items-baseline gap-3 flex-wrap">
+              <div className="text-2xl font-bold text-foreground">
+                {t('goalsCount', { count: goals.length })}
+              </div>
+              
+              {/* AI Estimated Total */}
+              {currencyCodes.length > 1 && targetCurrency && (
+                <div className="flex items-baseline gap-2">
+                  {isConverting ? (
+                    <span className="text-sm text-muted-foreground animate-pulse">
+                      {t('stats.estimating')}
+                    </span>
+                  ) : convertedTotal ? (
+                    <Tooltip 
+                      content={t('stats.estimatedTotal', { currency: targetCurrency })}
+                      align="start"
+                    >
+                      <span className="text-lg font-medium text-muted-foreground cursor-help border-b border-dotted border-muted-foreground/50">
+                        ≈ {formatCurrency(parseFloat(convertedTotal), targetCurrency, locale)}
+                      </span>
+                    </Tooltip>
+                  ) : null}
+                </div>
+              )}
             </div>
 
             {/* Currency totals */}
-            <div className="space-y-0.5">
+            <div className="hidden sm:flex sm:flex-row sm:items-baseline sm:gap-x-2">
               {currencyCodes.map((code, index) => (
                 <div key={code} className="flex items-center gap-1.5">
                   {index > 0 && (
                     <span className="text-muted-foreground text-sm">+</span>
                   )}
-                  <span className={`font-semibold text-foreground ${index === 0 ? 'text-xl' : 'text-lg'}`}>
+                  <span className="text-md font-medium text-muted-foreground">
                     {formatCurrency(totalsByCurrency[code], code, locale)}
                   </span>
-                  {index === currencyCodes.length - 1 && (
-                    <span className="text-sm text-muted-foreground">{t('stats.total')}</span>
-                  )}
                 </div>
               ))}
             </div>
@@ -144,18 +191,20 @@ export function SummaryStats({ goals }: SummaryStatsProps) {
         {/* Next goal */}
         {nextGoal && (
           <div className="mt-4 pt-4 border-t border-border">
-            <div className="flex items-center gap-2 text-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 text-sm">
               <span className="text-muted-foreground">{t('stats.nextGoal')}:</span>
-              <span className="font-medium text-foreground">{nextGoal.title}</span>
-              <span
-                className="px-2 py-0.5 rounded-full text-xs font-medium text-nowrap"
-                style={{
-                  backgroundColor: `color-mix(in srgb, ${BUCKET_CONFIG[nextGoal.bucket].colorVar} 15%, transparent)`,
-                  color: BUCKET_CONFIG[nextGoal.bucket].colorVar
-                }}
-              >
-                {daysUntilNext} {t('stats.days')}
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="font-medium text-foreground">{nextGoal.title}</span>
+                <span
+                  className="px-2 py-0.5 rounded-full text-xs font-medium text-nowrap"
+                  style={{
+                    backgroundColor: `color-mix(in srgb, ${BUCKET_CONFIG[nextGoal.bucket].colorVar} 15%, transparent)`,
+                    color: BUCKET_CONFIG[nextGoal.bucket].colorVar
+                  }}
+                >
+                  {daysUntilNext} {t('stats.days')}
+                </span>
+              </div>
             </div>
           </div>
         )}

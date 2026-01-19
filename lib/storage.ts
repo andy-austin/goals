@@ -170,6 +170,78 @@ export function clearGoals(): void {
   }
 }
 
+// =============================================================================
+// Cache Operations
+// =============================================================================
+
+const CACHE_KEY_PREFIX = 'goals-cache-';
+
+interface CacheItem<T> {
+  value: T;
+  expiresAt: number;
+}
+
+/**
+ * Save data to cache with a Time To Live (TTL)
+ */
+export function setCache<T>(key: string, value: T, ttlMs: number): void {
+  if (typeof window === 'undefined') return;
+  try {
+    const item: CacheItem<T> = {
+      value,
+      expiresAt: Date.now() + ttlMs,
+    };
+    localStorage.setItem(CACHE_KEY_PREFIX + key, JSON.stringify(item));
+  } catch (e) {
+    console.warn('[storage] Failed to set cache:', e);
+  }
+}
+
+/**
+ * Retrieve data from cache if it hasn't expired
+ */
+export function getCache<T>(key: string): T | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = localStorage.getItem(CACHE_KEY_PREFIX + key);
+    if (!raw) return null;
+
+    const item: CacheItem<T> = JSON.parse(raw);
+    if (Date.now() > item.expiresAt) {
+      localStorage.removeItem(CACHE_KEY_PREFIX + key);
+      return null;
+    }
+    return item.value;
+  } catch (e) {
+    console.warn('[storage] Failed to get cache:', e);
+    return null;
+  }
+}
+
+/**
+ * Clear expired items from cache
+ */
+export function clearExpiredCache(): void {
+  if (typeof window === 'undefined') return;
+  try {
+    const now = Date.now();
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key?.startsWith(CACHE_KEY_PREFIX)) {
+        const raw = localStorage.getItem(key);
+        if (raw) {
+          const item: CacheItem<unknown> = JSON.parse(raw);
+          if (now > item.expiresAt) {
+            localStorage.removeItem(key);
+          }
+        }
+      }
+    }
+  } catch (e) {
+    console.warn('[storage] Failed to clear expired cache:', e);
+  }
+}
+
 /**
  * Check if localStorage is available
  */

@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useCallback, useRef } from 'react';
+import { getCache, setCache } from '@/lib/storage';
 
-export type SuggestionType = 'description' | 'amount' | 'bucket' | 'whyItMatters';
+export type SuggestionType = 'description' | 'amount' | 'bucket' | 'whyItMatters' | 'convert';
 
 export interface SuggestionContext {
   title?: string;
@@ -11,6 +12,10 @@ export interface SuggestionContext {
   currency?: string;
   targetDate?: string;
   bucket?: string;
+  /** Optional key to cache the result in localStorage */
+  cacheKey?: string;
+  /** TTL for the cache in ms (defaults to 24h) */
+  cacheTtl?: number;
 }
 
 export interface SuggestionResult {
@@ -96,6 +101,17 @@ export function useAISuggestion(
       setIsLoading(true);
       setError(null);
 
+      // Check cache first
+      if (context?.cacheKey) {
+        const cached = getCache<SuggestionResult>(context.cacheKey);
+        if (cached) {
+          setSuggestion(cached.suggestion);
+          setReasoning(cached.reasoning || null);
+          setIsLoading(false);
+          return;
+        }
+      }
+
       try {
         const response = await fetch('/api/ai/suggest', {
           method: 'POST',
@@ -117,6 +133,11 @@ export function useAISuggestion(
         const data: SuggestionResult = await response.json();
         setSuggestion(data.suggestion);
         setReasoning(data.reasoning || null);
+
+        // Save to cache if key provided
+        if (context?.cacheKey) {
+          setCache(context.cacheKey, data, context.cacheTtl || 24 * 60 * 60 * 1000);
+        }
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Failed to generate suggestion';
         setError(message);

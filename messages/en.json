@@ -75,7 +75,9 @@
       "goals": "goals",
       "total": "total",
       "nextGoal": "Next goal",
-      "days": "days"
+      "days": "days",
+      "estimating": "Estimating total...",
+      "estimatedTotal": "Estimated total in {currency} based on current exchange rates"
     },
     "daysLeft": "{count} days left",
     "overdueBy": "Overdue by {count} days",

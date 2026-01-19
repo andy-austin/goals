@@ -75,7 +75,9 @@
       "goals": "objetivos",
       "total": "total",
       "nextGoal": "Próximo objetivo",
-      "days": "días"
+      "days": "días",
+      "estimating": "Estimando total...",
+      "estimatedTotal": "Monto total estimado en {currency} basado en tipos de cambio actuales"
     },
     "daysLeft": "{count} días restantes",
     "overdueBy": "Vencido hace {count} días",

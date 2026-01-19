@@ -49,7 +49,7 @@ function getMissingEnvVar(): string {
 // Types
 // =============================================================================
 
-export type SuggestionType = 'description' | 'amount' | 'bucket' | 'whyItMatters';
+export type SuggestionType = 'description' | 'amount' | 'bucket' | 'whyItMatters' | 'convert';
 
 interface SuggestRequest {
   type: SuggestionType;
@@ -134,6 +134,19 @@ Create a personalized, emotionally compelling statement (1-2 sentences) that:
 4. Feels personal, not generic
 
 Respond with ONLY the motivation statement, no explanation or quotes.`,
+
+  convert: (input, context) => `You are a financial assistant. Calculate the total sum of the provided amounts in ${context?.currency || 'USD'}.
+
+Amounts to convert and sum:
+${input}
+
+Target Currency: ${context?.currency || 'USD'}
+
+Use approximate current market exchange rates.
+
+Respond in this exact format:
+TOTAL: [number, no currency symbol, round to 2 decimals]
+REASONING: [brief explanation of rates used]`,
 };
 
 // =============================================================================
@@ -223,6 +236,15 @@ export async function POST(request: NextRequest) {
       const reasoningMatch = responseText.match(/REASONING:\s*(.+)/);
       response = {
         suggestion: bucketMatch ? bucketMatch[1].toLowerCase() : responseText,
+        reasoning: reasoningMatch ? reasoningMatch[1].trim() : undefined,
+      };
+    } else if (type === 'convert') {
+      const totalMatch = responseText.match(/TOTAL:\s*([\d\.,]+)/);
+      const reasoningMatch = responseText.match(/REASONING:\s*(.+)/);
+      // Clean up the number (remove commas if present)
+      const cleanTotal = totalMatch ? totalMatch[1].replace(/,/g, '') : responseText;
+      response = {
+        suggestion: cleanTotal,
         reasoning: reasoningMatch ? reasoningMatch[1].trim() : undefined,
       };
     } else {
