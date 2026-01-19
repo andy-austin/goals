@@ -2,7 +2,7 @@
   "common": {
     "appName": "Investment goals",
     "appDescription": "Define and prioritize your financial goals using the SMART framework",
-    "logo": "Goals",
+    "logo": "FinGoal",
     "loading": "Loading...",
     "save": "Save",
     "cancel": "Cancel",
@@ -296,6 +296,163 @@
       "title": "Early retirement boost",
       "description": "Additional investment to accelerate retirement timeline.",
       "whyItMatters": "To gain freedom of time sooner."
+    }
+  },
+  "landing": {
+    "header": {
+      "methodology": "Methodology",
+      "calculator": "Calculator",
+      "features": "Features",
+      "dashboard": "Dashboard",
+      "getStarted": "Get Started"
+    },
+    "hero": {
+      "badge": "Intentional investing starts here",
+      "titleLine1": "Stop Saving.",
+      "titleLine2": "Start Planning.",
+      "description": "Define, prioritize, and document your investment goals with purpose. Know exactly why you're investing, and stay the course when markets get volatile.",
+      "startGoal": "Start Your First Goal",
+      "howItWorks": "See How It Works",
+      "security": "Bank-level security",
+      "stats": "12k+ goals created",
+      "card": {
+        "title": "House Down Payment",
+        "targetDate": "Target: December 2026",
+        "progress": "Progress",
+        "current": "Current",
+        "target": "Target",
+        "daysRemaining": "{days} days remaining",
+        "onTrack": "On Track"
+      }
+    },
+    "methodology": {
+      "badge": "Our Methodology",
+      "titlePrefix": "Six pillars of",
+      "titleSuffix": "intentional investing",
+      "description": "Every great financial outcome starts with a clear goal. Our structured approach ensures you capture every detail needed to succeed.",
+      "steps": {
+        "purpose": {
+          "title": "Goal Purpose",
+          "description": "Define what the money is for: retirement, a home, education, or a dream vacation."
+        },
+        "amount": {
+          "title": "Target Amount",
+          "description": "Set a specific, measurable number. Know exactly how much you need."
+        },
+        "date": {
+          "title": "Target Date",
+          "description": "Establish your time horizon. When do you need this money?"
+        },
+        "currency": {
+          "title": "Currency",
+          "description": "Multi-currency support for USD, EUR, and local currencies (ARS/CLP/MXN)."
+        },
+        "bucket": {
+          "title": "Goal Bucket",
+          "description": "Categorize into Safety, Growth, or Dream buckets based on urgency and risk."
+        },
+        "why": {
+          "title": "Why It Matters",
+          "description": "Document your emotional anchor: the 'why' that keeps you committed."
+        }
+      },
+      "flow": {
+        "purpose": "Purpose",
+        "amount": "Amount",
+        "timeline": "Timeline",
+        "currency": "Currency",
+        "bucket": "Bucket",
+        "why": "Why"
+      }
+    },
+    "calculator": {
+      "badge": "Goal Calculator",
+      "titlePrefix": "See your path to",
+      "titleSuffix": "any goal",
+      "description": "Enter your target and timeframe. We'll calculate exactly how much you need to save monthly.",
+      "inputs": {
+        "title": "Your Goal Details",
+        "currency": "Currency",
+        "targetAmount": "Target Amount",
+        "timeHorizon": "Time Horizon (Years)",
+        "disclaimer": "Calculation assumes 7% annual return (historical market average)"
+      },
+      "results": {
+        "title": "Your Savings Plan",
+        "monthlySavings": "Monthly Savings Required",
+        "totalContributions": "Total Contributions",
+        "estimatedGrowth": "Estimated Growth",
+        "targetDate": "Target Date",
+        "createGoal": "Create this Goal"
+      }
+    },
+    "whyDocument": {
+      "badge": "The Science Behind It",
+      "titlePrefix": "Why writing down goals",
+      "titleSuffix": "actually works",
+      "description": "Behavioral finance research shows that investors who document their goals make fewer emotional decisions and achieve better long-term returns.",
+      "benefits": {
+        "clarity": {
+          "title": "Clarity defeats panic",
+          "description": "Written goals create psychological commitment. When markets drop 20%, you'll remember why you're investing, not just that you're losing money."
+        },
+        "fomo": {
+          "title": "Defense against FOMO",
+          "description": "Documented priorities protect you from chasing hot stocks or crypto pumps that don't align with your actual life goals."
+        },
+        "persistence": {
+          "title": "Stay the course",
+          "description": "Studies show investors who write down their goals are 42% more likely to stay invested during market volatility."
+        }
+      },
+      "quote": "The biggest risk in investing isn't volatility, it's selling at the wrong time because you forgot why you started.",
+      "team": "FinGoal Team",
+      "teamRole": "Built for intentional investors",
+      "statDesc": "More likely to stay invested during volatility when goals are documented"
+    },
+    "priority": {
+      "dragTitle": "Your Goals",
+      "dragSubtitle": "Drag to reorder",
+      "organizeBy": "Organize by bucket type",
+      "badge": "The 3 Buckets Method",
+      "titlePrefix": "Organize goals by",
+      "titleSuffix": "purpose",
+      "description": "Not all goals are created equal. The 3 Buckets methodology helps you categorize and prioritize based on urgency and risk tolerance. Drag and drop to set your order within each bucket.",
+      "buckets": {
+        "safety": {
+          "title": "Safety Bucket",
+          "description": "Non-negotiable, urgent goals like emergency funds and health expenses"
+        },
+        "growth": {
+          "title": "Growth Bucket",
+          "description": "Goals that improve your standard of living: house, education, car"
+        },
+        "dream": {
+          "title": "Dream Bucket",
+          "description": "Aspirational goals you can afford to take risks on: travel, business"
+        }
+      },
+      "mockGoals": {
+        "emergencyFund": "Emergency Fund",
+        "houseDownPayment": "House Down Payment",
+        "education": "Kids' Education",
+        "vacation": "Dream Vacation"
+      }
+    },
+    "cta": {
+      "title": "Start investing with intention",
+      "description": "Join thousands of investors who've transformed their savings into purposeful, goal-driven wealth building. Your first goal is just a click away.",
+      "features": {
+        "unlimited": "Unlimited goals",
+        "multiCurrency": "Multi-currency support",
+        "tracking": "Progress tracking",
+        "priority": "Priority management"
+      },
+      "button": "Create your first Goal",
+      "footer": "Free to start • No credit card required"
+    },
+    "footer": {
+      "rights": "© {year} FinGoal. All rights reserved."
     }
   }
 }

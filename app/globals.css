@@ -9,15 +9,19 @@
   --background: #ffffff;
   --foreground: #171717;
 
+  /* Card */
+  --card: #ffffff;
+  --card-foreground: #171717;
+
   /* Neutral Colors */
   --muted: #f4f4f5;
   --muted-foreground: #71717a;
   --border: #e4e4e7;
 
-  /* Primary (Emerald - main app color) */
-  --primary: #059669;
+  /* Primary (Deep navy blue - trust) */
+  --primary: hsl(222 47% 18%);
   --primary-foreground: #ffffff;
-  --primary-hover: #047857;
+  --primary-hover: hsl(222 47% 15%);
 
   /* Secondary */
   --secondary: #f4f4f5;
@@ -43,6 +47,21 @@
   --bucket-dream-light: #f3e8ff;
   --bucket-dream-dark: #6b21a8;
 
+  /* Growth green (for landing page) */
+  --growth: hsl(152 45% 42%);
+  --growth-light: hsl(152 40% 95%);
+  --growth-foreground: #ffffff;
+
+  /* Trust blue (for landing page) */
+  --trust: hsl(217 91% 60%);
+  --trust-light: hsl(217 80% 96%);
+  --trust-foreground: #ffffff;
+
+  /* Priority colors */
+  --priority-high: hsl(0 72% 51%);
+  --priority-medium: hsl(38 92% 50%);
+  --priority-low: hsl(152 45% 42%);
+
   /* Semantic Colors */
   --success: #22c55e;
   --success-foreground: #ffffff;
@@ -58,6 +77,13 @@
   --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.05);
+  --shadow-glow: 0 0 40px -10px hsl(152 45% 42% / 0.3);
+
+  /* Gradients */
+  --gradient-hero: linear-gradient(135deg, hsl(222 47% 18%) 0%, hsl(217 91% 35%) 100%);
+  --gradient-growth: linear-gradient(135deg, hsl(152 45% 42%) 0%, hsl(152 50% 55%) 100%);
+  --gradient-subtle: linear-gradient(180deg, hsl(210 20% 98%) 0%, hsl(0 0% 100%) 100%);
 
   /* Border Radius */
   --radius-sm: 0.25rem;
@@ -82,20 +108,24 @@
     --background: #09090b;
     --foreground: #fafafa;
 
+    /* Card */
+    --card: hsl(222 47% 11%);
+    --card-foreground: #fafafa;
+
     /* Neutral Colors */
     --muted: #27272a;
     --muted-foreground: #a1a1aa;
     --border: #27272a;
 
-    /* Primary (Emerald - main app color) */
-    --primary: #10b981;
-    --primary-foreground: #ffffff;
-    --primary-hover: #059669;
+    /* Primary (Deep navy blue - trust) */
+    --primary: #fafafa;
+    --primary-foreground: hsl(222 47% 11%);
+    --primary-hover: #e4e4e7;
 
     /* Secondary */
-    --secondary: #27272a;
+    --secondary: hsl(217 33% 17%);
     --secondary-foreground: #fafafa;
-    --secondary-hover: #3f3f46;
+    --secondary-hover: hsl(217 33% 25%);
 
     /* Destructive */
     --destructive: #ef4444;
@@ -115,6 +145,16 @@
     --bucket-dream: #c084fc;
     --bucket-dream-light: #6b21a8;
     --bucket-dream-dark: #e9d5ff;
+
+    /* Growth green (for landing page) - adjusted for dark mode */
+    --growth: hsl(152 45% 42%);
+    --growth-light: hsl(152 30% 15%);
+    --growth-foreground: #ffffff;
+
+    /* Trust blue (for landing page) - adjusted for dark mode */
+    --trust: hsl(217 91% 60%);
+    --trust-light: hsl(217 50% 15%);
+    --trust-foreground: #ffffff;
 
     /* Semantic Colors - adjusted for dark mode */
     --success: #4ade80;
@@ -144,6 +184,10 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
 
+  /* Card */
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary-hover: var(--primary-hover);
@@ -168,6 +212,20 @@
   --color-bucket-dream-light: var(--bucket-dream-light);
   --color-bucket-dream-dark: var(--bucket-dream-dark);
 
+  /* Growth/Trust colors for landing page */
+  --color-growth: var(--growth);
+  --color-growth-light: var(--growth-light);
+  --color-growth-foreground: var(--growth-foreground);
+
+  --color-trust: var(--trust);
+  --color-trust-light: var(--trust-light);
+  --color-trust-foreground: var(--trust-foreground);
+
+  /* Priority colors */
+  --color-priority-high: var(--priority-high);
+  --color-priority-medium: var(--priority-medium);
+  --color-priority-low: var(--priority-low);
+
   /* Semantic Colors */
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
@@ -187,6 +245,8 @@
   --shadow-default: var(--shadow);
   --shadow-md: var(--shadow-md);
   --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-glow: var(--shadow-glow);
 
   /* Border Radius */
   --radius-sm: var(--radius-sm);
@@ -224,6 +284,38 @@ body {
 }
 
 /* =============================================================================
+   Utility Classes
+   ============================================================================= */
+
+/* Gradient text */
+.text-gradient-hero {
+  background: var(--gradient-hero);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-growth {
+  background: var(--gradient-growth);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gradient backgrounds */
+.bg-gradient-hero {
+  background: var(--gradient-hero);
+}
+
+.bg-gradient-growth {
+  background: var(--gradient-growth);
+}
+
+.bg-gradient-subtle {
+  background: var(--gradient-subtle);
+}
+
+/* =============================================================================
    Animations
    ============================================================================= */
 
@@ -238,8 +330,51 @@ body {
   }
 }
 
+@keyframes slide-in-right {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
 .animate-slide-in {
   animation: slide-in 0.3s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.6s ease-out both;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out both;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }
 
 /* =============================================================================

@@ -4,7 +4,6 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages, getTranslations } from 'next-intl/server';
 import { Analytics } from "@vercel/analytics/next"
 import { Providers } from "./providers";
-import { Header } from "@/components";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -19,7 +18,7 @@ const geistMono = Geist_Mono({
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('common');
- 
+
   return {
     title: t('appName'),
     description: t('appDescription'),
@@ -41,13 +40,8 @@ export default async function RootLayout({
       >
         <NextIntlClientProvider messages={messages}>
           <Providers>
-            <div className="flex min-h-screen flex-col bg-zinc-50 dark:bg-zinc-950">
-              <Header />
-              <main className="flex-1">
-                {children}
-                <Analytics />
-              </main>
-            </div>
+            {children}
+            <Analytics />
           </Providers>
         </NextIntlClientProvider>
       </body>

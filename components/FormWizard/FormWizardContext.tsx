@@ -4,6 +4,7 @@ import {
   createContext,
   useContext,
   useState,
+  useEffect,
   useCallback,
   useMemo,
   type ReactNode,
@@ -66,6 +67,16 @@ export function FormWizardProvider<T extends Record<string, unknown>>({
   const [currentStep, setCurrentStep] = useState(0);
   const [data, setData] = useState<Partial<T>>(initialData);
   const [stepValidation, setStepValidation] = useState<Record<number, boolean>>({});
+
+  // Sync data state when initialData prop changes
+  useEffect(() => {
+    if (initialData && Object.keys(initialData).length > 0) {
+      const timer = setTimeout(() => {
+        setData((prev) => ({ ...prev, ...initialData }));
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+  }, [initialData]);
 
   const isFirstStep = currentStep === 0;
   const isLastStep = currentStep === totalSteps - 1;

@@ -183,7 +183,7 @@ test.describe('Goal Creation - Complete Flow', () => {
     await page.getByRole('button', { name: 'Create', exact: true }).click();
 
     // Should redirect to dashboard
-    await expect(page).toHaveURL('/');
+    await expect(page).toHaveURL('/dashboard');
 
     // Goal should appear on dashboard (use heading role to be specific)
     await expect(page.getByRole('heading', { name: 'Emergency Fund' })).toBeVisible();
