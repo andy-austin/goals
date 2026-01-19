@@ -49,7 +49,7 @@ export function FormWizard<T extends Record<string, unknown>>({
       initialData={initialData}
       onComplete={onComplete}
     >
-      <div className={`space-y-6 ${className}`}>
+      <div className={`space-y-6 pb-6 ${className}`}>
         {/* Progress indicator */}
         <StepIndicator steps={steps} />
 

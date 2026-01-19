@@ -18,12 +18,26 @@ export default function DashboardPage() {
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
       {/* Page Header */}
       <div className="mb-8 print:hidden">
-        <h1 className="text-2xl font-bold text-foreground">
-          {t('title')}
-        </h1>
-        <p className="mt-2 text-muted-foreground">
-          {t('subtitle')}
-        </p>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h1 className="text-2xl font-bold text-foreground">
+              {t('title')}
+            </h1>
+            <p className="mt-2 text-muted-foreground">
+              {t('subtitle')}
+            </p>
+          </div>
+          {totalGoals > 0 && (
+            <div className="flex gap-2 sm:gap-3">
+              <Link href="/create">
+                <Button size="sm">{t('actions.addGoal')}</Button>
+              </Link>
+              <Link href="/timeline">
+                <Button size="sm" variant="secondary">{t('actions.viewTimeline')}</Button>
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Summary Stats */}
@@ -66,17 +80,6 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {/* Quick Actions */}
-      {totalGoals > 0 && (
-        <div className="mt-8 flex justify-center gap-4">
-          <Link href="/create">
-            <Button>{t('actions.addGoal')}</Button>
-          </Link>
-          <Link href="/timeline">
-            <Button variant="secondary">{t('actions.viewTimeline')}</Button>
-          </Link>
-        </div>
-      )}
     </div>
   );
 }

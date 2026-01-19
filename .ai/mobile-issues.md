@@ -1,16 +1,3 @@
-1. Missing Spanish Translations on Timeline Page
-
-Location: app/timeline/page.tsx or Timeline components
-┌────────────────────────────┬─────────────────────────────────────────┬───────────────────────────────────────┐
-│ Element │ Current (English)            │ Expected (Spanish)           │
-├────────────────────────────┼─────────────────────────────────────────┼───────────────────────────────────────┤
-│ Zoom buttons │ "All", "1 Year", "5 Years", "10+ Years" │ "Todo", "1 Año", "5 Años", "10+ Años" │
-├────────────────────────────┼─────────────────────────────────────────┼───────────────────────────────────────┤
-│ Gap indicators │ "2 years skipped", "7 years skipped"    │ "2 años omitidos", "7 años omitidos"  │
-├────────────────────────────┼─────────────────────────────────────────┼───────────────────────────────────────┤
-│ Days abbreviation in Gantt │ "89d", "364d", "1095d"                  │ "89d" (or "89 días")                  │
-└────────────────────────────┴─────────────────────────────────────────┴───────────────────────────────────────┘
-
 2. Form Navigation Buttons Partially Hidden
 
 Location: Form steps (visible in screenshots)
