@@ -184,7 +184,7 @@ export function StepAmountCurrency() {
           )}
           
           <div className="flex flex-wrap gap-2">
-            {[1000, 5000, 10000, 25000, 50000, 100000].map((val) => (
+            {[1000, 5000, 10000, 50000].map((val) => (
               <Button
                 key={val}
                 type="button"
