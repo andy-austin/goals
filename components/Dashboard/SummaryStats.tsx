@@ -1,9 +1,9 @@
 'use client';
 
 import { useMemo, type ReactNode } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Card } from '@/components/ui';
-import { formatCurrency, BUCKET_CONFIG, type Goal, type Bucket } from '@/types';
+import { formatCurrency, BUCKET_CONFIG, type Goal, type Bucket, type Currency } from '@/types';
 import { ExportMenu } from './ExportMenu';
 
 interface SummaryStatsProps {
@@ -71,11 +71,20 @@ const BucketIcons: Record<Bucket, ReactNode> = {
   ),
 };
 
-export function SummaryStats({ goals, totalAmount }: SummaryStatsProps) {
+export function SummaryStats({ goals }: SummaryStatsProps) {
   const t = useTranslations('dashboard');
   const tBuckets = useTranslations('buckets');
+  const locale = useLocale();
 
-  const currency = useMemo(() => goals.length > 0 ? goals[0].currency : 'USD', [goals]);
+  const totalsByCurrency = useMemo(() => {
+    const totals: Record<string, number> = {};
+    for (const goal of goals) {
+      totals[goal.currency] = (totals[goal.currency] || 0) + goal.amount;
+    }
+    return totals;
+  }, [goals]);
+
+  const currencyCodes = Object.keys(totalsByCurrency) as Currency[];
   const bucketCounts = useMemo(() => countByBucket(goals), [goals]);
   const nextGoal = useMemo(() => getNextGoal(goals), [goals]);
   const daysUntilNext = useMemo(() => nextGoal ? getDaysUntil(nextGoal.targetDate) : 0, [nextGoal]);
@@ -93,9 +102,18 @@ export function SummaryStats({ goals, totalAmount }: SummaryStatsProps) {
             {t('goalsCount', { count: goals.length })}
           </span>
           <span className="text-muted-foreground">·</span>
-          <span className="text-xl font-semibold text-foreground">
-            {formatCurrency(totalAmount, currency)}
-          </span>
+          
+          <div className="flex flex-wrap items-center gap-2">
+            {currencyCodes.map((code, index) => (
+              <div key={code} className="flex items-center gap-2">
+                {index > 0 && <span className="text-muted-foreground">+</span>}
+                <span className="text-xl font-semibold text-foreground">
+                  {formatCurrency(totalsByCurrency[code], code, locale)}
+                </span>
+              </div>
+            ))}
+          </div>
+
           <span className="text-muted-foreground">{t('stats.total')}</span>
           <div className="ml-auto">
             <ExportMenu goals={goals} />
