@@ -13,7 +13,7 @@ export function Header() {
   const tCommon = useTranslations('common');
 
   const navItems = [
-    { href: '/', label: t('dashboard') },
+    { href: '/dashboard', label: t('dashboard') },
     { href: '/create', label: t('createGoal') },
     { href: '/timeline', label: t('timeline') },
   ];

@@ -77,7 +77,7 @@ export default function CreateGoalPage() {
       });
 
       setIsSubmitting(false);
-      router.push('/');
+      router.push('/dashboard');
     }, 800);
   };
 
