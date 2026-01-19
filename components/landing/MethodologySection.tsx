@@ -1,4 +1,4 @@
-import { Target, DollarSign, Calendar, Globe, BarChart3, Gauge } from 'lucide-react';
+import { Target, DollarSign, Calendar, Globe, Layers, Heart } from 'lucide-react';
 
 const steps = [
   {
@@ -30,16 +30,16 @@ const steps = [
     bgColor: "bg-trust-light",
   },
   {
-    icon: BarChart3,
-    title: "Priority Level",
-    description: "Rank your goals to handle trade-offs when resources are limited.",
+    icon: Layers,
+    title: "Goal Bucket",
+    description: "Categorize into Safety, Growth, or Dream buckets based on urgency and risk.",
     color: "text-growth",
     bgColor: "bg-growth-light",
   },
   {
-    icon: Gauge,
-    title: "Risk Tolerance",
-    description: "Assess your comfort level—from conservative to aggressive—for each goal.",
+    icon: Heart,
+    title: "Why It Matters",
+    description: "Document your emotional anchor—the 'why' that keeps you committed.",
     color: "text-trust",
     bgColor: "bg-trust-light",
   },
@@ -83,19 +83,19 @@ export function MethodologySection() {
           ))}
         </div>
 
-        {/* Visual flow - more compact */}
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-2 text-sm">
+        {/* Visual flow - hidden on mobile */}
+        <div className="mt-10 hidden sm:flex flex-wrap items-center justify-center gap-2 text-sm">
           <span className="px-3 py-1.5 rounded-full bg-growth-light text-growth font-semibold border border-growth/20">Purpose</span>
           <span className="text-muted-foreground/60">→</span>
           <span className="px-3 py-1.5 rounded-full bg-trust-light text-trust font-semibold border border-trust/20">Amount</span>
           <span className="text-muted-foreground/60">→</span>
-          <span className="px-3 py-1.5 rounded-full bg-growth-light text-growth font-semibold border border-growth/20">Time</span>
+          <span className="px-3 py-1.5 rounded-full bg-growth-light text-growth font-semibold border border-growth/20">Timeline</span>
           <span className="text-muted-foreground/60">→</span>
           <span className="px-3 py-1.5 rounded-full bg-trust-light text-trust font-semibold border border-trust/20">Currency</span>
           <span className="text-muted-foreground/60">→</span>
-          <span className="px-3 py-1.5 rounded-full bg-growth-light text-growth font-semibold border border-growth/20">Priority</span>
+          <span className="px-3 py-1.5 rounded-full bg-growth-light text-growth font-semibold border border-growth/20">Bucket</span>
           <span className="text-muted-foreground/60">→</span>
-          <span className="px-3 py-1.5 rounded-full bg-trust-light text-trust font-semibold border border-trust/20">Risk</span>
+          <span className="px-3 py-1.5 rounded-full bg-trust-light text-trust font-semibold border border-trust/20">Why</span>
         </div>
       </div>
     </section>

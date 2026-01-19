@@ -138,39 +138,39 @@ export function GoalCalculator() {
             </div>
 
             {/* Results card */}
-            <div className="bg-gradient-hero rounded-2xl shadow-xl p-6 lg:p-8 text-primary-foreground">
-              <h3 className="text-xl font-semibold mb-6 flex items-center gap-2 opacity-90">
+            <div className="bg-gradient-hero rounded-2xl shadow-xl p-6 lg:p-8">
+              <h3 className="text-xl font-semibold mb-6 flex items-center gap-2 text-white">
                 <Calculator className="w-5 h-5" />
                 Your Savings Plan
               </h3>
 
               <div className="space-y-6">
-                <div className="p-5 rounded-xl bg-primary-foreground/10 backdrop-blur">
-                  <p className="text-sm opacity-80 mb-1">Monthly Savings Required</p>
-                  <p className="text-4xl lg:text-5xl font-bold">
+                <div className="p-5 rounded-xl bg-white/15 backdrop-blur">
+                  <p className="text-sm text-white/90 mb-1">Monthly Savings Required</p>
+                  <p className="text-4xl lg:text-5xl font-bold text-white">
                     {formatCurrency(calculations.monthlySavings)}
                   </p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="p-4 rounded-xl bg-primary-foreground/10 backdrop-blur">
-                    <p className="text-xs opacity-70 mb-1">Total Contributions</p>
-                    <p className="text-xl font-semibold">{formatCurrency(calculations.totalContributions)}</p>
+                  <div className="p-4 rounded-xl bg-white/15 backdrop-blur">
+                    <p className="text-xs text-white/80 mb-1">Total Contributions</p>
+                    <p className="text-xl font-semibold text-white">{formatCurrency(calculations.totalContributions)}</p>
                   </div>
-                  <div className="p-4 rounded-xl bg-primary-foreground/10 backdrop-blur">
-                    <p className="text-xs opacity-70 mb-1">Estimated Growth</p>
+                  <div className="p-4 rounded-xl bg-white/15 backdrop-blur">
+                    <p className="text-xs text-white/80 mb-1">Estimated Growth</p>
                     <p className="text-xl font-semibold text-green-300">+{formatCurrency(calculations.estimatedGrowth)}</p>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-4 border-t border-primary-foreground/20">
+                <div className="flex items-center justify-between pt-4 border-t border-white/20">
                   <div>
-                    <p className="text-xs opacity-70">Target Date</p>
-                    <p className="font-medium">{calculations.targetDate}</p>
+                    <p className="text-xs text-white/80">Target Date</p>
+                    <p className="font-medium text-white">{calculations.targetDate}</p>
                   </div>
                   <Link
                     href="/create"
-                    className="inline-flex items-center justify-center h-12 px-8 rounded-lg bg-secondary text-secondary-foreground font-semibold shadow-lg hover:bg-secondary/90 transition-colors"
+                    className="inline-flex items-center justify-center h-12 px-8 rounded-lg bg-white text-gray-900 font-semibold shadow-lg hover:bg-gray-100 transition-colors"
                   >
                     Create This Goal
                   </Link>

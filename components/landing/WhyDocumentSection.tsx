@@ -57,26 +57,26 @@ export function WhyDocumentSection() {
           </div>
 
           {/* Right - Quote card */}
-          <div className="relative lg:ml-4">
-            <div className="bg-gradient-hero rounded-2xl p-6 lg:p-8 text-primary-foreground shadow-2xl ring-1 ring-black/10">
-              <div className="text-5xl leading-none opacity-30 mb-3">&ldquo;</div>
-              <blockquote className="text-lg lg:text-xl font-medium leading-relaxed mb-5">
+          <div className="lg:ml-4">
+            <div className="bg-gradient-hero rounded-2xl p-6 lg:p-8 shadow-2xl ring-1 ring-black/10">
+              <div className="text-5xl leading-none text-white/40 mb-3">&ldquo;</div>
+              <blockquote className="text-lg lg:text-xl font-medium leading-relaxed mb-5 text-white">
                 The biggest risk in investing isn&apos;t volatility—it&apos;s selling at the wrong time
                 because you forgot why you started.
               </blockquote>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary-foreground/20 flex items-center justify-center">
-                  <span className="text-base font-bold">FG</span>
+                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                  <span className="text-base font-bold text-white">FG</span>
                 </div>
                 <div>
-                  <p className="font-semibold text-sm">FinGoal Team</p>
-                  <p className="text-xs opacity-80">Built for intentional investors</p>
+                  <p className="font-semibold text-sm text-white">FinGoal Team</p>
+                  <p className="text-xs text-white/80">Built for intentional investors</p>
                 </div>
               </div>
             </div>
 
-            {/* Stats floating card */}
-            <div className="absolute -bottom-4 -left-4 lg:-bottom-6 lg:-left-6 bg-card rounded-xl shadow-2xl border border-border/50 p-4 max-w-[240px] ring-1 ring-black/5">
+            {/* Stats card - below quote */}
+            <div className="mt-4 bg-card rounded-xl shadow-xl border border-border/50 p-4 sm:max-w-[280px] ring-1 ring-black/5">
               <div className="flex items-center gap-3 mb-2">
                 <CheckCircle2 className="w-7 h-7 text-growth" />
                 <span className="text-2xl font-bold text-foreground">42%</span>

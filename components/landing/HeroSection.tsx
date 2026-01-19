@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, Target, TrendingUp, Shield } from 'lucide-react';
+import { ArrowRight, Target, TrendingUp, Shield, Home } from 'lucide-react';
 
 export function HeroSection() {
   return (
@@ -85,14 +85,15 @@ function GoalPreviewCard() {
     <div className="bg-card rounded-2xl shadow-2xl border border-border/30 p-6 max-w-md mx-auto animate-float ring-1 ring-black/5">
       <div className="flex items-start justify-between mb-5">
         <div>
-          <span className="inline-block px-3 py-1 rounded-full bg-trust-light text-trust text-xs font-semibold mb-2 border border-trust/20">
-            High Priority
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-950/50 dark:text-blue-400 text-xs font-semibold mb-2">
+            <TrendingUp className="w-3 h-3" />
+            Growth
           </span>
           <h3 className="text-xl font-bold text-foreground">House Down Payment</h3>
           <p className="text-sm text-muted-foreground mt-0.5">Target: December 2026</p>
         </div>
-        <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-growth-light to-growth-light/50 flex items-center justify-center shadow-sm border border-growth/10">
-          <span className="text-2xl">🏠</span>
+        <div className="w-14 h-14 rounded-xl bg-blue-100 dark:bg-blue-950/50 flex items-center justify-center shadow-sm border border-blue-200 dark:border-blue-800">
+          <Home className="w-7 h-7 text-blue-600 dark:text-blue-400" />
         </div>
       </div>
 
