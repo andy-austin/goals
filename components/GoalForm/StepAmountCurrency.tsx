@@ -191,9 +191,9 @@ export function StepAmountCurrency() {
                 variant="secondary"
                 size="sm"
                 onClick={() => updateData({ amount: val })}
-                className="h-8 w-[80px] text-xs"
+                className="h-8 w-[105px] text-xs"
               >
-                {new Intl.NumberFormat('en-US', { style: 'currency', currency: currency, maximumFractionDigits: 0 }).format(val)}
+                {formatCurrency(val, currency)}
               </Button>
             ))}
           </div>
