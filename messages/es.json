@@ -2,7 +2,7 @@
   "common": {
     "appName": "Objetivos de inversión",
     "appDescription": "Define y prioriza tus objetivos financieros usando el marco SMART",
-    "logo": "Objetivos",
+    "logo": "FinGoal",
     "loading": "Cargando...",
     "save": "Guardar",
     "cancel": "Cancelar",
@@ -296,6 +296,163 @@
       "title": "Impulso para jubilación anticipada",
       "description": "Inversión adicional para acelerar el cronograma de jubilación.",
       "whyItMatters": "Para ganar libertad de tiempo más pronto."
+    }
+  },
+  "landing": {
+    "header": {
+      "methodology": "Metodología",
+      "calculator": "Calculadora",
+      "features": "Características",
+      "dashboard": "Panel",
+      "getStarted": "Empezar"
+    },
+    "hero": {
+      "badge": "La inversión intencional comienza aquí",
+      "titleLine1": "Deja de Ahorrar.",
+      "titleLine2": "Empieza a Planear.",
+      "description": "Define, prioriza y documenta tus objetivos de inversión con propósito. Sé exactamente por qué estás invirtiendo—y mantén el rumbo cuando los mercados se vuelvan volátiles.",
+      "startGoal": "Inicia tu Primer Objetivo",
+      "howItWorks": "Mira Cómo Funciona",
+      "security": "Seguridad nivel bancario",
+      "stats": "12k+ objetivos creados",
+      "card": {
+        "title": "Enganche de Casa",
+        "targetDate": "Meta: Diciembre 2026",
+        "progress": "Progreso",
+        "current": "Actual",
+        "target": "Meta",
+        "daysRemaining": "{days} días restantes",
+        "onTrack": "En camino"
+      }
+    },
+    "methodology": {
+      "badge": "Nuestra Metodología",
+      "titlePrefix": "Seis pilares de",
+      "titleSuffix": "inversión intencional",
+      "description": "Todo gran resultado financiero comienza con un objetivo claro. Nuestro enfoque estructurado asegura que captures cada detalle necesario para tener éxito.",
+      "steps": {
+        "purpose": {
+          "title": "Propósito del Objetivo",
+          "description": "Define para qué es el dinero—retiro, una casa, educación o unas vacaciones soñadas."
+        },
+        "amount": {
+          "title": "Monto Objetivo",
+          "description": "Establece un número específico y medible. Sé exactamente cuánto necesitas."
+        },
+        "date": {
+          "title": "Fecha Objetivo",
+          "description": "Establece tu horizonte de tiempo. ¿Cuándo necesitas este dinero?"
+        },
+        "currency": {
+          "title": "Moneda",
+          "description": "Soporte multi-moneda para USD, EUR y monedas locales (ARS/CLP/MXN)."
+        },
+        "bucket": {
+          "title": "Categoría",
+          "description": "Categoriza en cubetas de Seguridad, Crecimiento o Sueño basado en urgencia y riesgo."
+        },
+        "why": {
+          "title": "Por qué es Importante",
+          "description": "Documenta tu ancla emocional—el 'por qué' que te mantiene comprometido."
+        }
+      },
+      "flow": {
+        "purpose": "Propósito",
+        "amount": "Monto",
+        "timeline": "Línea de tiempo",
+        "currency": "Moneda",
+        "bucket": "Categoría",
+        "why": "Por qué"
+      }
+    },
+    "calculator": {
+      "badge": "Calculadora de Objetivos",
+      "titlePrefix": "Ve tu camino a",
+      "titleSuffix": "cualquier objetivo",
+      "description": "Ingresa tu meta y plazo. Calcularemos exactamente cuánto necesitas ahorrar mensualmente.",
+      "inputs": {
+        "title": "Detalles de tu Objetivo",
+        "currency": "Moneda",
+        "targetAmount": "Monto Objetivo",
+        "timeHorizon": "Horizonte de Tiempo (Años)",
+        "disclaimer": "El cálculo asume 7% de retorno anual (promedio histórico del mercado)"
+      },
+      "results": {
+        "title": "Tu Plan de Ahorro",
+        "monthlySavings": "Ahorro Mensual Requerido",
+        "totalContributions": "Contribuciones Totales",
+        "estimatedGrowth": "Crecimiento Estimado",
+        "targetDate": "Fecha Objetivo",
+        "createGoal": "Crear este Objetivo"
+      }
+    },
+    "whyDocument": {
+      "badge": "La Ciencia Detrás",
+      "titlePrefix": "Por qué escribir objetivos",
+      "titleSuffix": "realmente funciona",
+      "description": "La investigación en finanzas conductuales muestra que los inversores que documentan sus objetivos toman menos decisiones emocionales y logran mejores retornos a largo plazo.",
+      "benefits": {
+        "clarity": {
+          "title": "La claridad vence al pánico",
+          "description": "Los objetivos escritos crean compromiso psicológico. Cuando los mercados caen 20%, recordarás por qué estás invirtiendo—no solo que estás perdiendo dinero."
+        },
+        "fomo": {
+          "title": "Defensa contra FOMO",
+          "description": "Las prioridades documentadas te protegen de perseguir acciones de moda o criptomonedas que no se alinean con tus objetivos de vida reales."
+        },
+        "persistence": {
+          "title": "Mantén el rumbo",
+          "description": "Estudios muestran que los inversores que escriben sus objetivos tienen 42% más probabilidad de mantenerse invertidos durante la volatilidad del mercado."
+        }
+      },
+      "quote": "El mayor riesgo en la inversión no es la volatilidad—es vender en el momento equivocado porque olvidaste por qué empezaste.",
+      "team": "Equipo FinGoal",
+      "teamRole": "Construido para inversores intencionales",
+      "statDesc": "Más probabilidad de mantenerse invertido durante volatilidad cuando los objetivos están documentados"
+    },
+    "priority": {
+      "dragTitle": "Tus Objetivos",
+      "dragSubtitle": "Arrastra para reordenar",
+      "organizeBy": "Organizar por tipo de categoría",
+      "badge": "El Método de 3 Cubetas",
+      "titlePrefix": "Organiza objetivos por",
+      "titleSuffix": "propósito",
+      "description": "No todos los objetivos son iguales. La metodología de 3 Cubetas te ayuda a categorizar y priorizar basado en urgencia y tolerancia al riesgo. Arrastra y suelta para establecer tu orden dentro de cada cubeta.",
+      "buckets": {
+        "safety": {
+          "title": "Cubeta de Seguridad",
+          "description": "Objetivos urgentes y no negociables como fondos de emergencia y gastos de salud"
+        },
+        "growth": {
+          "title": "Cubeta de Crecimiento",
+          "description": "Objetivos que mejoran tu nivel de vida—casa, educación, auto"
+        },
+        "dream": {
+          "title": "Cubeta de Sueño",
+          "description": "Objetivos aspiracionales en los que puedes arriesgarte—viajes, negocios"
+        }
+      },
+      "mockGoals": {
+        "emergencyFund": "Fondo de Emergencia",
+        "houseDownPayment": "Enganche de Casa",
+        "education": "Educación de Hijos",
+        "vacation": "Vacaciones Soñadas"
+      }
+    },
+    "cta": {
+      "title": "Empieza a invertir con intención",
+      "description": "Únete a miles de inversores que han transformado sus ahorros en construcción de riqueza con propósito. Tu primer objetivo está a un clic de distancia.",
+      "features": {
+        "unlimited": "Objetivos ilimitados",
+        "multiCurrency": "Soporte multi-moneda",
+        "tracking": "Rastreo de progreso",
+        "priority": "Gestión de prioridades"
+      },
+      "button": "Crea Tu Primer Objetivo",
+      "footer": "Gratis para empezar • No requiere tarjeta de crédito"
+    },
+    "footer": {
+      "rights": "© {year} FinGoal. Todos los derechos reservados."
     }
   }
 }

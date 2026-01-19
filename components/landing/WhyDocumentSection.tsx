@@ -1,24 +1,24 @@
 import { Brain, Shield, TrendingDown, CheckCircle2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
-const benefits = [
+const benefitsConfig = [
   {
     icon: Brain,
-    title: "Clarity defeats panic",
-    description: "Written goals create psychological commitment. When markets drop 20%, you'll remember why you're investing—not just that you're losing money.",
+    key: "clarity",
   },
   {
     icon: Shield,
-    title: "Defense against FOMO",
-    description: "Documented priorities protect you from chasing hot stocks or crypto pumps that don't align with your actual life goals.",
+    key: "fomo",
   },
   {
     icon: TrendingDown,
-    title: "Stay the course",
-    description: "Studies show investors who write down their goals are 42% more likely to stay invested during market volatility.",
+    key: "persistence",
   },
 ];
 
 export function WhyDocumentSection() {
+  const t = useTranslations('landing.whyDocument');
+
   return (
     <section id="features" className="py-16 lg:py-20 bg-background relative overflow-hidden">
       {/* Background decoration */}
@@ -30,26 +30,25 @@ export function WhyDocumentSection() {
           {/* Left content */}
           <div>
             <span className="inline-block px-4 py-2 rounded-full bg-trust-light text-trust text-sm font-medium mb-4">
-              The Science Behind It
+              {t('badge')}
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-              Why writing down goals{" "}
-              <span className="text-gradient-hero">actually works</span>
+              {t('titlePrefix')}{" "}
+              <span className="text-gradient-hero">{t('titleSuffix')}</span>
             </h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Behavioral finance research shows that investors who document their goals make
-              fewer emotional decisions and achieve better long-term returns.
+              {t('description')}
             </p>
 
             <div className="space-y-5">
-              {benefits.map((benefit) => (
-                <div key={benefit.title} className="group flex gap-4 p-4 rounded-xl hover:bg-muted/50 transition-all duration-300">
+              {benefitsConfig.map((benefit) => (
+                <div key={benefit.key} className="group flex gap-4 p-4 rounded-xl hover:bg-muted/50 transition-all duration-300">
                   <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-growth-light flex items-center justify-center border border-growth/20 group-hover:scale-110 transition-transform duration-300">
                     <benefit.icon className="w-6 h-6 text-growth" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-1">{benefit.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{benefit.description}</p>
+                    <h3 className="text-lg font-semibold text-foreground mb-1">{t(`benefits.${benefit.key}.title`)}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{t(`benefits.${benefit.key}.description`)}</p>
                   </div>
                 </div>
               ))}
@@ -61,16 +60,15 @@ export function WhyDocumentSection() {
             <div className="bg-gradient-hero rounded-2xl p-6 lg:p-8 shadow-2xl ring-1 ring-black/10">
               <div className="text-5xl leading-none text-white/40 mb-3">&ldquo;</div>
               <blockquote className="text-lg lg:text-xl font-medium leading-relaxed mb-5 text-white">
-                The biggest risk in investing isn&apos;t volatility—it&apos;s selling at the wrong time
-                because you forgot why you started.
+                {t('quote')}
               </blockquote>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
                   <span className="text-base font-bold text-white">FG</span>
                 </div>
                 <div>
-                  <p className="font-semibold text-sm text-white">FinGoal Team</p>
-                  <p className="text-xs text-white/80">Built for intentional investors</p>
+                  <p className="font-semibold text-sm text-white">{t('team')}</p>
+                  <p className="text-xs text-white/80">{t('teamRole')}</p>
                 </div>
               </div>
             </div>
@@ -82,7 +80,7 @@ export function WhyDocumentSection() {
                 <span className="text-2xl font-bold text-foreground">42%</span>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                More likely to stay invested during volatility when goals are documented
+                {t('statDesc')}
               </p>
             </div>
           </div>

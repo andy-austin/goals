@@ -1,13 +1,26 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { Calculator, TrendingUp, Calendar, DollarSign, Target } from 'lucide-react';
+import { useTranslations, useLocale } from 'next-intl';
 
 export function GoalCalculator() {
+  const t = useTranslations('landing.calculator');
+  const locale = useLocale();
   const [targetAmount, setTargetAmount] = useState<string>("50000");
   const [years, setYears] = useState<string>("5");
   const [currency, setCurrency] = useState<string>("USD");
+  const [now, setNow] = useState<number>(0);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setNow(Date.now());
+      setMounted(true);
+    }, 0);
+    return () => clearTimeout(timer);
+  }, []);
 
   const annualReturn = 0.07; // 7% placeholder
 
@@ -24,16 +37,20 @@ export function GoalCalculator() {
     const totalContributions = monthlySavings * months;
     const estimatedGrowth = target - totalContributions;
 
+    const targetDate = mounted 
+      ? new Date(now + timeYears * 365 * 24 * 60 * 60 * 1000).toLocaleDateString(locale, {
+          month: 'long',
+          year: 'numeric',
+        })
+      : '';
+
     return {
       monthlySavings: Math.round(monthlySavings * 100) / 100,
       totalContributions: Math.round(totalContributions),
       estimatedGrowth: Math.round(estimatedGrowth),
-      targetDate: new Date(Date.now() + timeYears * 365 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', {
-        month: 'long',
-        year: 'numeric',
-      }),
+      targetDate: targetDate ? targetDate.charAt(0).toUpperCase() + targetDate.slice(1) : '',
     };
-  }, [targetAmount, years]);
+  }, [targetAmount, years, locale, now, mounted]);
 
   const currencySymbols: Record<string, string> = {
     USD: "$",
@@ -44,7 +61,7 @@ export function GoalCalculator() {
   };
 
   const formatCurrency = (amount: number) => {
-    return `${currencySymbols[currency]}${amount.toLocaleString()}`;
+    return `${currencySymbols[currency]}${amount.toLocaleString(locale)}`;
   };
 
   return (
@@ -53,14 +70,14 @@ export function GoalCalculator() {
         <div className="text-center max-w-3xl mx-auto mb-10">
           <span className="inline-block px-4 py-2 rounded-full bg-growth-light text-growth text-sm font-semibold mb-4 border border-growth/20">
             <Calculator className="w-4 h-4 inline mr-2" />
-            Goal Calculator
+            {t('badge')}
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            See your path to{" "}
-            <span className="text-gradient-growth">any goal</span>
+            {t('titlePrefix')}{" "}
+            <span className="text-gradient-growth">{t('titleSuffix')}</span>
           </h2>
           <p className="text-lg text-muted-foreground">
-            Enter your target and timeframe. We&apos;ll calculate exactly how much you need to save monthly.
+            {t('description')}
           </p>
         </div>
 
@@ -70,13 +87,13 @@ export function GoalCalculator() {
             <div className="bg-card rounded-2xl shadow-xl border border-border/50 p-6 lg:p-8">
               <h3 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
                 <Target className="w-5 h-5 text-growth" />
-                Your Goal Details
+                {t('inputs.title')}
               </h3>
 
               <div className="space-y-6">
                 <div className="space-y-2">
                   <label htmlFor="currency" className="text-sm font-medium text-foreground">
-                    Currency
+                    {t('inputs.currency')}
                   </label>
                   <select
                     id="currency"
@@ -94,7 +111,7 @@ export function GoalCalculator() {
 
                 <div className="space-y-2">
                   <label htmlFor="target" className="text-sm font-medium text-foreground">
-                    Target Amount
+                    {t('inputs.targetAmount')}
                   </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
@@ -111,7 +128,7 @@ export function GoalCalculator() {
 
                 <div className="space-y-2">
                   <label htmlFor="years" className="text-sm font-medium text-foreground">
-                    Time Horizon (Years)
+                    {t('inputs.timeHorizon')}
                   </label>
                   <div className="relative">
                     <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
@@ -131,7 +148,7 @@ export function GoalCalculator() {
                 <div className="pt-2 border-t border-border">
                   <p className="text-xs text-muted-foreground flex items-center gap-1">
                     <TrendingUp className="w-3 h-3" />
-                    Calculation assumes 7% annual return (historical market average)
+                    {t('inputs.disclaimer')}
                   </p>
                 </div>
               </div>
@@ -141,12 +158,12 @@ export function GoalCalculator() {
             <div className="bg-gradient-hero rounded-2xl shadow-xl p-6 lg:p-8">
               <h3 className="text-xl font-semibold mb-6 flex items-center gap-2 text-white">
                 <Calculator className="w-5 h-5" />
-                Your Savings Plan
+                {t('results.title')}
               </h3>
 
               <div className="space-y-6">
                 <div className="p-5 rounded-xl bg-white/15 backdrop-blur">
-                  <p className="text-sm text-white/90 mb-1">Monthly Savings Required</p>
+                  <p className="text-sm text-white/90 mb-1">{t('results.monthlySavings')}</p>
                   <p className="text-4xl lg:text-5xl font-bold text-white">
                     {formatCurrency(calculations.monthlySavings)}
                   </p>
@@ -154,25 +171,25 @@ export function GoalCalculator() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="p-4 rounded-xl bg-white/15 backdrop-blur">
-                    <p className="text-xs text-white/80 mb-1">Total Contributions</p>
+                    <p className="text-xs text-white/80 mb-1">{t('results.totalContributions')}</p>
                     <p className="text-xl font-semibold text-white">{formatCurrency(calculations.totalContributions)}</p>
                   </div>
                   <div className="p-4 rounded-xl bg-white/15 backdrop-blur">
-                    <p className="text-xs text-white/80 mb-1">Estimated Growth</p>
+                    <p className="text-xs text-white/80 mb-1">{t('results.estimatedGrowth')}</p>
                     <p className="text-xl font-semibold text-green-300">+{formatCurrency(calculations.estimatedGrowth)}</p>
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between pt-4 border-t border-white/20">
                   <div>
-                    <p className="text-xs text-white/80">Target Date</p>
+                    <p className="text-xs text-white/80">{t('results.targetDate')}</p>
                     <p className="font-medium text-white">{calculations.targetDate}</p>
                   </div>
                   <Link
                     href="/create"
                     className="inline-flex items-center justify-center h-12 px-8 rounded-lg bg-white text-gray-900 font-semibold shadow-lg hover:bg-gray-100 transition-colors"
                   >
-                    Create This Goal
+                    {t('results.createGoal')}
                   </Link>
                 </div>
               </div>

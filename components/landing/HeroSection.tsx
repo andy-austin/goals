@@ -2,8 +2,11 @@
 
 import Link from 'next/link';
 import { ArrowRight, Target, TrendingUp, Shield, Home } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export function HeroSection() {
+  const t = useTranslations('landing.hero');
+
   return (
     <section className="relative pt-20 pb-12 lg:pt-28 lg:pb-16 overflow-hidden">
       {/* Background gradient - more visible */}
@@ -17,18 +20,17 @@ export function HeroSection() {
           <div className="text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-growth-light text-growth text-sm font-medium mb-6 animate-fade-in border border-growth/20">
               <Target className="w-4 h-4" />
-              Intentional investing starts here
+              {t('badge')}
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-[1.1] mb-6 animate-fade-in">
-              Stop Saving.
+              {t('titleLine1')}
               <br />
-              <span className="text-gradient-growth">Start Planning.</span>
+              <span className="text-gradient-growth">{t('titleLine2')}</span>
             </h1>
 
             <p className="text-lg text-muted-foreground max-w-lg mx-auto lg:mx-0 mb-8 animate-fade-in leading-relaxed">
-              Define, prioritize, and document your investment goals with purpose.
-              Know exactly why you&apos;re investing—and stay the course when markets get volatile.
+              {t('description')}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start animate-fade-in">
@@ -36,14 +38,14 @@ export function HeroSection() {
                 href="/create"
                 className="inline-flex items-center justify-center gap-2 h-12 px-6 text-base font-semibold rounded-xl bg-gradient-growth text-growth-foreground shadow-lg hover:shadow-glow hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 whitespace-nowrap"
               >
-                Start Your First Goal
+                {t('startGoal')}
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href="#methodology"
                 className="inline-flex items-center justify-center gap-2 h-12 px-6 text-base font-semibold rounded-xl border-2 border-border bg-card/50 text-foreground hover:bg-card hover:border-growth/50 transition-all duration-200 whitespace-nowrap"
               >
-                See How It Works
+                {t('howItWorks')}
               </Link>
             </div>
 
@@ -51,11 +53,11 @@ export function HeroSection() {
             <div className="flex items-center gap-6 mt-8 justify-center lg:justify-start animate-fade-in">
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Shield className="w-4 h-4 text-growth" />
-                <span className="text-sm">Bank-level security</span>
+                <span className="text-sm">{t('security')}</span>
               </div>
               <div className="flex items-center gap-2 text-muted-foreground">
                 <TrendingUp className="w-4 h-4 text-growth" />
-                <span className="text-sm">12k+ goals created</span>
+                <span className="text-sm">{t('stats')}</span>
               </div>
             </div>
           </div>
@@ -76,6 +78,7 @@ export function HeroSection() {
 }
 
 function GoalPreviewCard() {
+  const t = useTranslations('landing.hero.card');
   const targetAmount = 50000;
   const currentAmount = 32500;
   const progress = (currentAmount / targetAmount) * 100;
@@ -89,8 +92,8 @@ function GoalPreviewCard() {
             <TrendingUp className="w-3 h-3" />
             Growth
           </span>
-          <h3 className="text-xl font-bold text-foreground">House Down Payment</h3>
-          <p className="text-sm text-muted-foreground mt-0.5">Target: December 2026</p>
+          <h3 className="text-xl font-bold text-foreground">{t('title')}</h3>
+          <p className="text-sm text-muted-foreground mt-0.5">{t('targetDate')}</p>
         </div>
         <div className="w-14 h-14 rounded-xl bg-blue-100 dark:bg-blue-950/50 flex items-center justify-center shadow-sm border border-blue-200 dark:border-blue-800">
           <Home className="w-7 h-7 text-blue-600 dark:text-blue-400" />
@@ -100,7 +103,7 @@ function GoalPreviewCard() {
       <div className="space-y-4">
         <div>
           <div className="flex justify-between text-sm mb-2">
-            <span className="text-muted-foreground font-medium">Progress</span>
+            <span className="text-muted-foreground font-medium">{t('progress')}</span>
             <span className="font-bold text-foreground">{progress.toFixed(0)}%</span>
           </div>
           <div className="h-3 bg-muted rounded-full overflow-hidden">
@@ -113,11 +116,11 @@ function GoalPreviewCard() {
 
         <div className="grid grid-cols-2 gap-3">
           <div className="p-4 rounded-xl bg-muted/70 border border-border/50">
-            <p className="text-xs text-muted-foreground mb-1 font-medium">Current</p>
+            <p className="text-xs text-muted-foreground mb-1 font-medium">{t('current')}</p>
             <p className="text-xl font-bold text-foreground">${currentAmount.toLocaleString()}</p>
           </div>
           <div className="p-4 rounded-xl bg-growth-light/50 border border-growth/20">
-            <p className="text-xs text-growth mb-1 font-medium">Target</p>
+            <p className="text-xs text-growth mb-1 font-medium">{t('target')}</p>
             <p className="text-xl font-bold text-foreground">${targetAmount.toLocaleString()}</p>
           </div>
         </div>
@@ -125,9 +128,9 @@ function GoalPreviewCard() {
         <div className="flex items-center justify-between pt-3 border-t border-border/50">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-growth animate-pulse" />
-            <span className="text-sm text-muted-foreground">{daysRemaining} days remaining</span>
+            <span className="text-sm text-muted-foreground">{t('daysRemaining', { days: daysRemaining })}</span>
           </div>
-          <span className="text-sm font-semibold text-growth">On Track</span>
+          <span className="text-sm font-semibold text-growth">{t('onTrack')}</span>
         </div>
       </div>
     </div>
