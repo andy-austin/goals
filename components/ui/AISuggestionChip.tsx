@@ -202,7 +202,7 @@ export const AISuggestionChip = forwardRef<HTMLDivElement, AISuggestionChipProps
                 <button
                   type="button"
                   onClick={onRetry}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-error hover:bg-error/10 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-error hover:bg-error/10 rounded-md transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   aria-label={retryLabel}
                 >
                   <RefreshIcon className="w-4 h-4" />
@@ -212,7 +212,7 @@ export const AISuggestionChip = forwardRef<HTMLDivElement, AISuggestionChipProps
               <button
                 type="button"
                 onClick={handleDismiss}
-                className="p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                className="p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 aria-label={dismissLabel}
               >
                 <XIcon className="w-4 h-4" />
@@ -246,7 +246,7 @@ export const AISuggestionChip = forwardRef<HTMLDivElement, AISuggestionChipProps
             <button
               type="button"
               onClick={handleDismiss}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               <XIcon className="w-4 h-4" />
               {dismissLabel}
@@ -254,7 +254,7 @@ export const AISuggestionChip = forwardRef<HTMLDivElement, AISuggestionChipProps
             <button
               type="button"
               onClick={handleAccept}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-info-foreground bg-info hover:bg-info/90 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-info-foreground bg-info hover:bg-info/90 rounded-md transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               <CheckIcon className="w-4 h-4" />
               {acceptLabel}

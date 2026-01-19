@@ -152,7 +152,7 @@ export function StepAmountCurrency() {
               <button
                 type="button"
                 onClick={handleGetSuggestion}
-                className="inline-flex items-center gap-1.5 text-xs font-medium text-info hover:text-info/80 transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs font-medium text-info hover:text-info/80 transition-colors cursor-pointer"
               >
                 <SparklesIcon className="w-3.5 h-3.5" />
                 {tAI('suggestion')}

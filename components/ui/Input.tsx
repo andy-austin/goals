@@ -76,7 +76,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
       <div className="relative">
         <select
           ref={ref}
-          className={`flex h-10 w-full appearance-none rounded-md border bg-background px-3 pr-10 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${
+          className={`flex h-10 w-full appearance-none rounded-md border bg-background px-3 pr-10 py-2 text-sm cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${
             error
               ? 'border-error focus-visible:ring-error'
               : 'border-border'
