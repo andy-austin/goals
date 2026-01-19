@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
-import { Calculator, TrendingUp, Calendar, DollarSign, Target } from 'lucide-react';
+import { Calculator, TrendingUp, Calendar, DollarSign, Target, ChevronDown } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 
 export function GoalCalculator() {
@@ -95,18 +95,21 @@ export function GoalCalculator() {
                   <label htmlFor="currency" className="text-sm font-medium text-foreground">
                     {t('inputs.currency')}
                   </label>
-                  <select
-                    id="currency"
-                    value={currency}
-                    onChange={(e) => setCurrency(e.target.value)}
-                    className="w-full h-12 px-3 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                  >
-                    <option value="USD">🇺🇸 USD - US Dollar</option>
-                    <option value="EUR">🇪🇺 EUR - Euro</option>
-                    <option value="ARS">🇦🇷 ARS - Argentine Peso</option>
-                    <option value="CLP">🇨🇱 CLP - Chilean Peso</option>
-                    <option value="MXN">🇲🇽 MXN - Mexican Peso</option>
-                  </select>
+                  <div className="relative">
+                    <select
+                      id="currency"
+                      value={currency}
+                      onChange={(e) => setCurrency(e.target.value)}
+                      className="w-full h-12 pl-3 pr-10 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring appearance-none"
+                    >
+                      <option value="USD">🇺🇸 USD - US Dollar</option>
+                      <option value="EUR">🇪🇺 EUR - Euro</option>
+                      <option value="ARS">🇦🇷 ARS - Argentine Peso</option>
+                      <option value="CLP">🇨🇱 CLP - Chilean Peso</option>
+                      <option value="MXN">🇲🇽 MXN - Mexican Peso</option>
+                    </select>
+                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                  </div>
                 </div>
 
                 <div className="space-y-2">
