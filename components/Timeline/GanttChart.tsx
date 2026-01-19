@@ -3,7 +3,7 @@
 import { forwardRef, useRef, useEffect, useMemo, useState, type HTMLAttributes } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import type { Goal } from '@/types';
-import { BUCKET_CONFIG, formatCurrency } from '@/types';
+import { BUCKET_CONFIG, formatCurrency, formatDate } from '@/types';
 import type { TimelineConfig } from './timeline.types';
 
 export interface GanttChartProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
@@ -304,7 +304,7 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
                               onGoalSelect?.(goal);
                             }
                           }}
-                          aria-label={`${goal.title}: ${formatCurrency(goal.amount, goal.currency, locale)}, target ${targetDate.toLocaleDateString(locale)}`}
+                          aria-label={`${goal.title}: ${formatCurrency(goal.amount, goal.currency, locale)}, target ${formatDate(targetDate, locale)}`}
                         >
                           {/* Hover tooltip - follows cursor position */}
                           {isHovered && tooltipPosition && (
@@ -321,11 +321,7 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
                                 <div className="bg-white dark:bg-zinc-900 border border-border rounded-lg px-3 py-2 shadow-lg text-sm">
                                   <div className="font-medium text-foreground">{goal.title}</div>
                                   <div className="text-muted-foreground">
-                                    {targetDate.toLocaleDateString(locale, {
-                                      month: 'short',
-                                      day: 'numeric',
-                                      year: 'numeric',
-                                    })}
+                                    {formatDate(targetDate, locale)}
                                   </div>
                                 </div>
                                 {/* Arrow pointing left */}
@@ -346,11 +342,7 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
                                 <div className="bg-white dark:bg-zinc-900 border border-border rounded-lg px-3 py-2 shadow-lg text-sm">
                                   <div className="font-medium text-foreground">{goal.title}</div>
                                   <div className="text-muted-foreground">
-                                    {targetDate.toLocaleDateString(locale, {
-                                      month: 'short',
-                                      day: 'numeric',
-                                      year: 'numeric',
-                                    })}
+                                    {formatDate(targetDate, locale)}
                                   </div>
                                 </div>
                                 {/* Arrow pointing down */}

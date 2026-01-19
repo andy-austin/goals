@@ -256,6 +256,31 @@ export function getCurrencySymbol(currency: Currency, locale = 'en-US'): string 
 }
 
 /**
+ * Format a date string or Date object with locale support
+ */
+export function formatDate(date: string | Date | undefined, locale = 'en-US'): string {
+  if (!date) return '—';
+  
+  let d: Date;
+  if (typeof date === 'string') {
+    // Parse YYYY-MM-DD manually to avoid UTC timezone issues if it matches that format
+    if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      const [year, month, day] = date.split('-').map(Number);
+      d = new Date(year, month - 1, day);
+    } else {
+      d = new Date(date);
+    }
+  } else {
+    d = date;
+  }
+  
+  // Verify date is valid
+  if (isNaN(d.getTime())) return 'Invalid Date';
+
+  return d.toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+/**
  * Get the display name of a currency
  */
 export function getCurrencyName(currency: Currency, locale = 'en-US'): string {

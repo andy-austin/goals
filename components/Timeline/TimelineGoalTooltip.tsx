@@ -2,7 +2,7 @@
 
 import { forwardRef, type HTMLAttributes } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { BUCKET_CONFIG, formatCurrency } from '@/types';
+import { BUCKET_CONFIG, formatCurrency, formatDate } from '@/types';
 import type { TimelineGoalTooltipProps } from './timeline.types';
 
 export interface TooltipProps
@@ -69,11 +69,7 @@ export const TimelineGoalTooltip = forwardRef<HTMLDivElement, TooltipProps>(
           {/* Date and time remaining */}
           <div className="flex items-center justify-between text-sm">
             <span className="text-muted-foreground">
-              {targetDate.toLocaleDateString(locale, {
-                month: 'short',
-                day: 'numeric',
-                year: 'numeric',
-              })}
+              {formatDate(targetDate, locale)}
             </span>
             <span
               className={`font-medium ${

@@ -1,8 +1,8 @@
 'use client';
 
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
-import { useTranslations } from 'next-intl';
-import { Goal, formatCurrency } from '@/types';
+import { useTranslations, useLocale } from 'next-intl';
+import { Goal, formatCurrency, formatDate } from '@/types';
 import { useGoals } from '@/context';
 import { useToast } from '@/components/ui';
 
@@ -15,6 +15,7 @@ interface GoalCardProps extends HTMLAttributes<HTMLDivElement> {
 export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
   function GoalCard({ goal, dragHandle, isDragging = false, className = '', style, ...props }, ref) {
     const t = useTranslations('dashboard');
+    const locale = useLocale();
     const { deleteGoal } = useGoals();
     const { showToast } = useToast();
     const commonT = useTranslations('common');
@@ -52,7 +53,7 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
                 {goal.title}
               </h3>
               <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                {formatCurrency(goal.amount, goal.currency)}
+                {formatCurrency(goal.amount, goal.currency, locale)}
               </p>
             </div>
           </div>
@@ -87,7 +88,7 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
             </span>
           </div>
           <div className="text-xs text-zinc-400">
-            {new Date(goal.targetDate).toLocaleDateString()}
+            {formatDate(goal.targetDate, locale)}
           </div>
         </div>
       </div>

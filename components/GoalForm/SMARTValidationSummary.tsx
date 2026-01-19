@@ -1,28 +1,11 @@
 'use client';
 
 import { useMemo } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { useFormWizard } from '@/components/FormWizard';
-import { BUCKET_CONFIG, formatCurrency } from '@/types';
+import { BUCKET_CONFIG, formatCurrency, formatDate } from '@/types';
 import { validateSMART } from '@/lib';
 import type { GoalFormInput } from '@/types';
-
-// =============================================================================
-// Helpers
-// =============================================================================
-
-function formatDate(dateString: string | undefined) {
-  if (!dateString) return '—';
-  // Parse YYYY-MM-DD manually to avoid UTC timezone issues
-  const [year, month, day] = dateString.split('-').map(Number);
-  // Create date at local midnight
-  const date = new Date(year, month - 1, day);
-  
-  // Verify date is valid
-  if (isNaN(date.getTime())) return 'Invalid Date';
-
-  return date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
-}
 
 // =============================================================================
 // Component
@@ -31,6 +14,7 @@ function formatDate(dateString: string | undefined) {
 export function SMARTValidationSummary() {
   const t = useTranslations('goalForm.validation');
   const tBuckets = useTranslations('buckets');
+  const locale = useLocale();
   const { data } = useFormWizard<Partial<GoalFormInput>>();
 
   const validation = useMemo(() => validateSMART(data), [data]);
@@ -46,7 +30,7 @@ export function SMARTValidationSummary() {
         label: t('measurable'),
         isValid: validation.measurable.isValid,
         description: data.amount && data.currency
-          ? t('measurableDescWithAmount', { amount: formatCurrency(data.amount, data.currency) })
+          ? t('measurableDescWithAmount', { amount: formatCurrency(data.amount, data.currency, locale) })
           : t('measurableDesc'),
       },
       {
@@ -63,11 +47,11 @@ export function SMARTValidationSummary() {
         label: t('timeBound'),
         isValid: validation.timeBound.isValid,
         description: data.targetDate
-          ? t('timeBoundDescWithDate', { date: formatDate(data.targetDate) })
+          ? t('timeBoundDescWithDate', { date: formatDate(data.targetDate, locale) })
           : t('timeBoundDesc'),
       },
     ];
-  }, [validation, data.amount, data.currency, data.targetDate, t]);
+  }, [validation, data.amount, data.currency, data.targetDate, t, locale]);
 
   return (
     <div className="space-y-4">
@@ -129,13 +113,13 @@ export function SMARTValidationSummary() {
              <div className="text-sm">
                 <span className="text-zinc-500">{t('target')}:</span>{' '}
                 <span className="font-semibold text-zinc-900 dark:text-zinc-100">
-                  {data.amount && data.currency ? formatCurrency(data.amount, data.currency) : '—'}
+                  {data.amount && data.currency ? formatCurrency(data.amount, data.currency, locale) : '—'}
                 </span>
              </div>
              <div className="text-sm">
                 <span className="text-zinc-500">{t('by')}:</span>{' '}
                 <span className="font-semibold text-zinc-900 dark:text-zinc-100">
-                  {formatDate(data.targetDate)}
+                  {formatDate(data.targetDate, locale)}
                 </span>
              </div>
           </div>

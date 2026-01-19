@@ -7,7 +7,7 @@ import { Timeline, Card } from '@/components';
 import { GanttChart, useTimelineCalculations } from '@/components/Timeline';
 import type { ZoomLevel } from '@/components/Timeline/timeline.types';
 import type { Goal } from '@/types';
-import { formatCurrency } from '@/types';
+import { formatCurrency, formatDate } from '@/types';
 
 export default function TimelinePage() {
   const { goals } = useGoals();
@@ -109,11 +109,7 @@ export default function TimelinePage() {
                 <div>
                   <div className="text-sm text-muted-foreground">{t('details.targetDate')}</div>
                   <div className="text-lg font-semibold text-foreground">
-                    {new Date(selectedGoal.targetDate).toLocaleDateString(locale, {
-                      month: 'short',
-                      day: 'numeric',
-                      year: 'numeric',
-                    })}
+                    {formatDate(selectedGoal.targetDate, locale)}
                   </div>
                 </div>
               </div>
