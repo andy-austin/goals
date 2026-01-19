@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "Investment Goals",
+    "appName": "Investment goals",
     "appDescription": "Define and prioritize your financial goals using the SMART framework",
     "logo": "Goals",
     "loading": "Loading...",
@@ -9,14 +9,26 @@
     "back": "Back",
     "next": "Next",
     "create": "Create",
+    "creating": "Creating...",
     "delete": "Delete",
     "edit": "Edit",
+    "stepIndicator": {
+      "stepOf": "Step {current} of {total}",
+      "progress": "Form progress: Step {current} of {total}, {label}",
+      "completed": "Completed",
+      "status": {
+        "completed": "completed",
+        "current": "current",
+        "upcoming": "upcoming"
+      },
+      "stepLabel": "Step {index}: {label}, {status}"
+    },
     "confirmDeleteTitle": "Delete Goal?",
     "confirmDeleteMessage": "Are you sure you want to delete this goal? This action cannot be undone."
   },
   "nav": {
     "dashboard": "Dashboard",
-    "createGoal": "Create Goal",
+    "createGoal": "Create goal",
     "timeline": "Timeline"
   },
   "timeline": {
@@ -25,18 +37,18 @@
     "empty": {
       "title": "No goals yet",
       "description": "Create your first financial goal to see it on the timeline.",
-      "cta": "Create a Goal"
+      "cta": "Create Goal"
     },
     "details": {
-      "targetAmount": "Target Amount",
-      "targetDate": "Target Date",
+      "targetAmount": "Target amount",
+      "targetDate": "Target date",
       "whyItMatters": "Why it matters"
     },
     "noVisible": "No goals visible in this time range. Try a different zoom level.",
     "goalsCount": "{count, plural, =1 {# goal} other {# goals}}"
   },
   "gantt": {
-    "title": "Gantt View",
+    "title": "Gantt view",
     "goal": "Goal",
     "today": "Today",
     "days": "d",
@@ -46,8 +58,8 @@
     "title": "Dashboard",
     "subtitle": "Track and manage your investment goals.",
     "stats": {
-      "totalGoals": "Total Goals",
-      "totalTarget": "Total Target",
+      "totalGoals": "Total goals",
+      "totalTarget": "Total target",
       "buckets": "Buckets",
       "goal": "goal",
       "goals": "goals",
@@ -65,8 +77,8 @@
     "goalsCount": "{count, plural, =1 {# goal} other {# goals}}",
     "noBucketGoals": "No {bucket} goals yet",
     "actions": {
-      "addGoal": "Add Goal",
-      "viewTimeline": "View Timeline"
+      "addGoal": "Add goal",
+      "viewTimeline": "View timeline"
     }
   },
   "buckets": {
@@ -84,7 +96,7 @@
     }
   },
   "goalForm": {
-    "createTitle": "Create a New Goal",
+    "createTitle": "Create a new goal",
     "createSubtitle": "Define your investment goal using the SMART framework",
     "steps": {
       "details": "Details",
@@ -96,8 +108,8 @@
     "step1": {
       "title": "What's your goal?",
       "subtitle": "Be specific about what you want to achieve. A clear goal is the first step to success.",
-      "titleLabel": "Goal Title",
-      "titlePlaceholder": "e.g., House Down Payment, Emergency Fund, Dream Vacation",
+      "titleLabel": "Goal title",
+      "titlePlaceholder": "e.g., House down payment, Emergency fund, Dream vacation",
       "titleError": "Please enter a goal title (at least 3 characters)",
       "descriptionLabel": "Description",
       "descriptionPlaceholder": "Describe your goal in detail. What exactly do you want to achieve? The more specific, the better.",
@@ -109,24 +121,24 @@
     "step2": {
       "title": "Set your target",
       "subtitle": "How much do you need to achieve this goal?",
-      "amountLabel": "Target Amount",
+      "amountLabel": "Target amount",
       "amountPlaceholder": "0.00",
       "amountError": "Please enter a valid amount greater than 0",
       "currencyLabel": "Currency",
       "smartTip": "SMART Tip: Make it Measurable",
       "smartTipText": "Giving your goal a specific dollar amount makes it real. You can't track progress towards \"saving some money\", but you can track progress towards $10,000.",
-      "quickSelect": "Quick Select"
+      "quickSelect": "Quick select"
     },
     "step3": {
       "title": "When do you need it?",
       "subtitle": "Set a realistic deadline. A goal without a date is just a dream.",
-      "dateLabel": "Target Date",
+      "dateLabel": "Target date",
       "dateError": "Please select a date in the future",
       "timeHorizon": "Time horizon: {time}",
       "smartTip": "SMART Tip: Make it Time-bound",
       "smartTipText": "A deadline creates a sense of urgency and helps you calculate exactly how much you need to save each month to reach your goal.",
       "quickSelect": {
-        "label": "Quick Select",
+        "label": "Quick select",
         "1year": "1 Year",
         "3years": "3 Years",
         "5years": "5 Years",
@@ -143,7 +155,7 @@
     "step5": {
       "title": "Why does this matter?",
       "subtitle": "Connect your goal to an emotional anchor. This is what will keep you going when saving gets tough.",
-      "whyLabel": "Your Motivation",
+      "whyLabel": "Your motivation",
       "whyPlaceholder": "e.g., I want to provide financial security for my family, or I want to have the freedom to travel the world.",
       "whyError": "Please enter at least 10 characters",
       "smartTip": "SMART Tip: Make it Relevant",
@@ -155,9 +167,9 @@
       "example4": "To have the freedom to pursue my passion projects."
     },
     "selection": {
-      "title": "Start from Scratch",
+      "title": "Start from scratch",
       "description": "Create a fully custom goal defined entirely by you.",
-      "cta": "Create Custom",
+      "cta": "Create goal",
       "divider": "or choose a template"
     },
     "learnMoreSmart": "Learn more about SMART goals",
@@ -174,24 +186,24 @@
       "timeBound": "Time-bound",
       "timeBoundDesc": "No deadline set.",
       "timeBoundDescWithDate": "Deadline set for {date}.",
-      "summaryTitle": "SMART Validation Summary",
-      "goalPreview": "Goal Preview",
-      "untitledGoal": "Untitled Goal",
+      "summaryTitle": "SMART validation summary",
+      "goalPreview": "Goal preview",
+      "untitledGoal": "Untitled goal",
       "target": "Target",
       "by": "By"
     }
   },
   "examples": {
     "emergencyFund": {
-      "title": "Emergency Fund",
+      "title": "Emergency fund",
       "description": "Build a safety net covering 6 months of living expenses for unexpected situations"
     },
     "houseDownPayment": {
-      "title": "House Down Payment",
+      "title": "House down payment",
       "description": "Save 20% down payment for a 3-bedroom home in the suburbs within 3 years"
     },
     "dreamVacation": {
-      "title": "Dream Vacation",
+      "title": "Dream vacation",
       "description": "Plan and save for a 2-week trip to Japan including flights, hotels, and experiences"
     }
   },
@@ -201,7 +213,7 @@
     "es": "Spanish"
   },
   "ai": {
-    "suggestion": "AI Suggestion",
+    "suggestion": "AI suggestion",
     "loading": "AI is generating a suggestion, please wait...",
     "error": "Unable to generate suggestion",
     "useThis": "Use this",
@@ -214,27 +226,27 @@
   "templates": {
     "months": "months",
     "emergency-fund": {
-      "title": "Emergency Fund",
+      "title": "Emergency fund",
       "description": "A financial safety net to cover unexpected expenses like medical bills or home repairs.",
       "whyItMatters": "To provide peace of mind and prevent debt when life throws a curveball."
     },
     "health-insurance": {
-      "title": "Health Insurance Deductible",
+      "title": "Health insurance deductible",
       "description": "Savings set aside to cover your max out-of-pocket health costs.",
       "whyItMatters": "To ensure medical care is never delayed due to cost."
     },
     "job-loss-buffer": {
-      "title": "Job Loss Buffer",
+      "title": "Job loss buffer",
       "description": "Extended savings to cover living expenses during a career transition.",
       "whyItMatters": "To maintain my lifestyle and reduce stress while finding the right next career move."
     },
     "house-down-payment": {
-      "title": "House Down Payment",
+      "title": "House down payment",
       "description": "Savings for the initial payment on a new home.",
       "whyItMatters": "To build equity and have a place to call my own."
     },
     "new-car": {
-      "title": "New Car",
+      "title": "New car",
       "description": "Funds to purchase a reliable vehicle.",
       "whyItMatters": "To have reliable transportation for work and family trips."
     },
@@ -244,32 +256,32 @@
       "whyItMatters": "To celebrate our union with family and friends without starting marriage in debt."
     },
     "education": {
-      "title": "Education / Certification",
+      "title": "Education / certification",
       "description": "Investment in new skills, degree, or professional certification.",
       "whyItMatters": "To advance my career and increase my earning potential."
     },
     "home-renovation": {
-      "title": "Home Renovation",
+      "title": "Home renovation",
       "description": "Upgrades to improve comfort or value of your current home.",
       "whyItMatters": "To create a more functional and enjoyable living space."
     },
     "luxury-vacation": {
-      "title": "Luxury Vacation",
+      "title": "Luxury vacation",
       "description": "A once-in-a-lifetime trip or extended travel experience.",
       "whyItMatters": "To create lifelong memories and experience new cultures."
     },
     "sabbatical": {
-      "title": "Sabbatical Year",
+      "title": "Sabbatical year",
       "description": "Funding for a year off work to travel or pursue personal projects.",
       "whyItMatters": "To recharge and rediscover my passions outside of work."
     },
     "start-business": {
-      "title": "Start a Business",
+      "title": "Start a business",
       "description": "Seed capital to launch a new venture.",
       "whyItMatters": "To build something of my own and achieve financial independence."
     },
     "early-retirement": {
-      "title": "Early Retirement Boost",
+      "title": "Early retirement boost",
       "description": "Additional investment to accelerate retirement timeline.",
       "whyItMatters": "To gain freedom of time sooner."
     }

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useFormWizard } from './FormWizardContext';
 
 // =============================================================================
@@ -20,6 +21,7 @@ interface StepIndicatorProps {
 // =============================================================================
 
 export function StepIndicator({ steps, className = '' }: StepIndicatorProps) {
+  const t = useTranslations('common.stepIndicator');
   const { currentStep, totalSteps } = useFormWizard();
 
   const progressPercentage = ((currentStep + 1) / totalSteps) * 100;
@@ -28,17 +30,21 @@ export function StepIndicator({ steps, className = '' }: StepIndicatorProps) {
     <div
       className={`w-full ${className}`}
       role="group"
-      aria-label={`Form progress: Step ${currentStep + 1} of ${totalSteps}, ${steps[currentStep]?.label}`}
+      aria-label={t('progress', {
+        current: currentStep + 1,
+        total: totalSteps,
+        label: steps[currentStep]?.label,
+      })}
     >
       {/* Screen reader live region for step changes */}
       <div className="sr-only" aria-live="polite" aria-atomic="true">
-        Step {currentStep + 1} of {totalSteps}: {steps[currentStep]?.label}
+        {t('stepOf', { current: currentStep + 1, total: totalSteps })}: {steps[currentStep]?.label}
       </div>
 
       {/* Mobile: Simple text indicator */}
       <div className="flex items-center justify-between sm:hidden">
         <span className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
-          Step {currentStep + 1} of {totalSteps}
+          {t('stepOf', { current: currentStep + 1, total: totalSteps })}
         </span>
         <span className="text-sm text-zinc-600 dark:text-zinc-400">
           {steps[currentStep]?.label}
@@ -53,13 +59,18 @@ export function StepIndicator({ steps, className = '' }: StepIndicatorProps) {
               const isCompleted = index < currentStep;
               const isCurrent = index === currentStep;
 
-              const stepStatus = isCompleted ? 'completed' : isCurrent ? 'current' : 'upcoming';
+              const stepStatusKey = isCompleted ? 'completed' : isCurrent ? 'current' : 'upcoming';
+              const stepStatus = t(`status.${stepStatusKey}`);
 
               return (
                 <li
                   key={step.label}
                   className="relative flex flex-1 flex-col items-center"
-                  aria-label={`Step ${index + 1}: ${step.label}, ${stepStatus}`}
+                  aria-label={t('stepLabel', {
+                    index: index + 1,
+                    label: step.label,
+                    status: stepStatus,
+                  })}
                 >
                   {/* Connector line */}
                   {index < steps.length - 1 && (
@@ -96,7 +107,7 @@ export function StepIndicator({ steps, className = '' }: StepIndicatorProps) {
                             clipRule="evenodd"
                           />
                         </svg>
-                        <span className="sr-only">Completed</span>
+                        <span className="sr-only">{t('completed')}</span>
                       </>
                     ) : (
                       <span aria-hidden="true">{index + 1}</span>
@@ -131,7 +142,7 @@ export function StepIndicator({ steps, className = '' }: StepIndicatorProps) {
           aria-valuenow={currentStep + 1}
           aria-valuemin={1}
           aria-valuemax={totalSteps}
-          aria-label={`Step ${currentStep + 1} of ${totalSteps}`}
+          aria-label={t('stepOf', { current: currentStep + 1, total: totalSteps })}
         >
           <div
             className="h-1 rounded-full bg-primary transition-all duration-300"

@@ -39,7 +39,7 @@ export function FormWizard<T extends Record<string, unknown>>({
   initialData,
   onComplete,
   children,
-  submitLabel = 'Create Goal',
+  submitLabel,
   isSubmitting = false,
   className = '',
 }: FormWizardProps<T>) {
