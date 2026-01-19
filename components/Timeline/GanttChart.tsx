@@ -154,13 +154,6 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
 
     return (
       <div ref={ref} className={`space-y-2 ${className}`} {...props}>
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <h3 className="text-sm font-medium text-muted-foreground">
-            {tGantt('title')}
-          </h3>
-        </div>
-
         {/* Gantt chart container */}
         <div className="rounded-lg border border-border bg-background overflow-x-clip overflow-y-visible">
           <div className="flex">

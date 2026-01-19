@@ -66,7 +66,7 @@ export const Timeline = forwardRef<HTMLDivElement, Props>(
             currentLevel={zoomLevel}
             onChange={onZoomChange}
           />
-          <div className="text-sm text-muted-foreground">
+          <div className="hidden sm:block text-sm text-muted-foreground">
             {t('goalsCount', { count: goals.length })}
           </div>
         </div>
