@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { Input, Label, Select, AISuggestionChip, Button } from '@/components/ui';
 import { useFormWizard } from '@/components/FormWizard';
 import { useAISuggestion } from '@/hooks';
-import { getCurrencyOptions } from '@/types';
+import { getCurrencyOptions, getCurrencySymbol, formatCurrency } from '@/types';
 import type { GoalFormInput, Currency } from '@/types';
 
 // =============================================================================
@@ -134,7 +134,7 @@ export function StepAmountCurrency() {
                 variant={currency === code ? 'primary' : 'secondary'}
                 size="sm"
                 onClick={() => updateData({ currency: code })}
-                className="h-8 w-[120px] text-xs"
+                className="h-8 w-[80px] text-xs"
               >
                 {code === 'UYI' ? 'UI' : code}
               </Button>
@@ -162,7 +162,7 @@ export function StepAmountCurrency() {
           <div className="relative">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <span className="text-zinc-500 sm:text-sm">
-                {new Intl.NumberFormat('en-US', { style: 'currency', currency: currency }).formatToParts(0).find(part => part.type === 'currency')?.value}
+                {getCurrencySymbol(currency)}
               </span>
             </div>
             <Input
@@ -191,7 +191,7 @@ export function StepAmountCurrency() {
                 variant="secondary"
                 size="sm"
                 onClick={() => updateData({ amount: val })}
-                className="h-8 w-[120px] text-xs"
+                className="h-8 w-[80px] text-xs"
               >
                 {new Intl.NumberFormat('en-US', { style: 'currency', currency: currency, maximumFractionDigits: 0 }).format(val)}
               </Button>
@@ -205,7 +205,7 @@ export function StepAmountCurrency() {
         <AISuggestionChip
           suggestion={
             suggestion
-              ? `${new Intl.NumberFormat('en-US', { style: 'currency', currency, maximumFractionDigits: 0 }).format(parseFloat(suggestion))}${reasoning ? ` - ${reasoning}` : ''}`
+              ? `${formatCurrency(parseFloat(suggestion), currency)}${reasoning ? ` - ${reasoning}` : ''}`
               : null
           }
           isLoading={isAILoading}
