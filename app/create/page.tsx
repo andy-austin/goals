@@ -41,7 +41,7 @@ export default function CreateGoalPage() {
       description: template.description,
       amount: template.suggestedAmountMin,
       currency: 'USD', // Default currency
-      targetDate: targetDate.toISOString(),
+      targetDate: targetDate.toISOString().split('T')[0],
       bucket: template.bucket,
       whyItMatters: template.sampleWhyItMatters,
     });
