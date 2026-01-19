@@ -96,32 +96,37 @@ export function SummaryStats({ goals }: SummaryStatsProps) {
   return (
     <Card className="mb-8 overflow-hidden">
       <div className="p-4 sm:p-6">
-        {/* Main stats row */}
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-2xl font-bold text-foreground">
-            {t('goalsCount', { count: goals.length })}
-          </span>
-          <span className="text-muted-foreground">·</span>
-          
-          <div className="flex flex-wrap items-center gap-2">
-            {currencyCodes.map((code, index) => (
-              <div key={code} className="flex items-center gap-2">
-                {index > 0 && <span className="text-muted-foreground">+</span>}
-                <span className="text-xl font-semibold text-foreground">
-                  {formatCurrency(totalsByCurrency[code], code, locale)}
-                </span>
-              </div>
-            ))}
+        {/* Main stats header */}
+        <div className="flex items-start justify-between gap-4">
+          <div className="space-y-1">
+            {/* Goals count */}
+            <div className="text-2xl font-bold text-foreground">
+              {t('goalsCount', { count: goals.length })}
+            </div>
+
+            {/* Currency totals */}
+            <div className="space-y-0.5">
+              {currencyCodes.map((code, index) => (
+                <div key={code} className="flex items-center gap-1.5">
+                  {index > 0 && (
+                    <span className="text-muted-foreground text-sm">+</span>
+                  )}
+                  <span className={`font-semibold text-foreground ${index === 0 ? 'text-xl' : 'text-lg'}`}>
+                    {formatCurrency(totalsByCurrency[code], code, locale)}
+                  </span>
+                  {index === currencyCodes.length - 1 && (
+                    <span className="text-sm text-muted-foreground">{t('stats.total')}</span>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
 
-          <span className="text-muted-foreground">{t('stats.total')}</span>
-          <div className="ml-auto">
-            <ExportMenu goals={goals} />
-          </div>
+          <ExportMenu goals={goals} />
         </div>
 
         {/* Bucket breakdown */}
-        <div className="mt-3 flex flex-wrap items-center gap-4">
+        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1">
           {(['safety', 'growth', 'dream'] as Bucket[]).map((bucket) => (
             <div
               key={bucket}
@@ -129,7 +134,7 @@ export function SummaryStats({ goals }: SummaryStatsProps) {
               style={{ color: BUCKET_CONFIG[bucket].colorVar }}
             >
               {BucketIcons[bucket]}
-              <span className="text-sm font-medium">
+              <span className="text-sm font-medium whitespace-nowrap">
                 {bucketCounts[bucket]} {tBuckets(`${bucket}.name`)}
               </span>
             </div>
