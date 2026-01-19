@@ -66,7 +66,7 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
             <button
               type="button"
               onClick={handleDelete}
-              className="rounded p-1 text-zinc-400 hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/20 dark:hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
+              className="rounded p-1 text-zinc-400 hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/20 dark:hover:text-red-400 transition-colors"
               aria-label={commonT('delete')}
               title={commonT('delete')}
             >
