@@ -169,7 +169,7 @@ export function StepAmountCurrency() {
               id="amount"
               type="number"
               placeholder={t('amountPlaceholder')}
-              className="pl-12"
+              className="pl-16"
               value={amount === undefined ? '' : amount}
               onChange={handleAmountChange}
               error={amountError}

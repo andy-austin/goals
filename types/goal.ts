@@ -226,20 +226,15 @@ export const CURRENCIES: Currency[] = [
  * Handles symbol placement, decimal places, and thousand separators automatically
  */
 export function formatCurrency(amount: number, currency: Currency, locale = 'en-US'): string {
-  // Special handling for UYI (Unidad Indexada) - display as "UI" instead of "UYI"
-  if (currency === 'UYI') {
-    const formatted = new Intl.NumberFormat(locale, {
-      style: 'decimal',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(amount);
-    return `UI ${formatted}`;
-  }
-
-  return new Intl.NumberFormat(locale, {
-    style: 'currency',
-    currency,
+  const code = currency === 'UYI' ? 'UI' : currency;
+  
+  const formattedAmount = new Intl.NumberFormat(locale, {
+    style: 'decimal',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   }).format(amount);
+
+  return `${code} ${formattedAmount}`;
 }
 
 /**
