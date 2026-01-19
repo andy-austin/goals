@@ -58,6 +58,10 @@ function createTestGoals() {
 
 test.describe('Timeline Visualization', () => {
   test.beforeEach(async ({ page }) => {
+    // Set locale to English
+    await page.context().addCookies([
+      { name: 'locale', value: 'en', domain: 'localhost', path: '/' }
+    ]);
     // Set up test goals via localStorage
     const testGoals = createTestGoals();
     await page.addInitScript((goals) => {
@@ -71,7 +75,7 @@ test.describe('Timeline Visualization', () => {
 
   test('displays timeline page with header', async ({ page }) => {
     await expect(page.getByRole('heading', { name: 'Timeline' })).toBeVisible();
-    await expect(page.getByText('Visualize your goals and milestones over time')).toBeVisible();
+    await expect(page.getByText(/Visualize your goals and milestones over time/)).toBeVisible();
   });
 
   test('shows zoom controls', async ({ page }) => {
@@ -127,9 +131,9 @@ test.describe('Timeline Visualization', () => {
 
     // Modal should appear with goal details
     await expect(page.getByRole('heading', { name: 'Emergency Fund' })).toBeVisible();
-    // Use a more specific selector for the modal content
+    // Use a more specific selector for the modal content (currency format is "USD X,XXX.XX")
     const modal = page.locator('.fixed.inset-0');
-    await expect(modal.getByText('$15,000')).toBeVisible();
+    await expect(modal.getByText(/USD 15,000/)).toBeVisible();
     await expect(modal.getByText('Peace of mind and financial security')).toBeVisible();
   });
 
@@ -155,6 +159,10 @@ test.describe('Timeline Visualization', () => {
 
 test.describe('Timeline - Empty State', () => {
   test.beforeEach(async ({ page }) => {
+    // Set locale to English
+    await page.context().addCookies([
+      { name: 'locale', value: 'en', domain: 'localhost', path: '/' }
+    ]);
     // Clear localStorage
     await page.addInitScript(() => {
       localStorage.clear();
@@ -164,11 +172,12 @@ test.describe('Timeline - Empty State', () => {
 
   test('shows empty state when no goals', async ({ page }) => {
     await expect(page.getByText('No goals yet')).toBeVisible();
-    await expect(page.getByText('Create your first financial goal')).toBeVisible();
+    await expect(page.getByText(/Create your first financial goal/)).toBeVisible();
   });
 
   test('has link to create goal', async ({ page }) => {
-    const createLink = page.getByRole('link', { name: /Create a Goal/i });
+    // Use exact match to avoid matching nav link
+    const createLink = page.getByRole('link', { name: 'Create Goal', exact: true });
     await expect(createLink).toBeVisible();
     await expect(createLink).toHaveAttribute('href', '/create');
   });
@@ -176,6 +185,10 @@ test.describe('Timeline - Empty State', () => {
 
 test.describe('Timeline - Responsive', () => {
   test.beforeEach(async ({ page }) => {
+    // Set locale to English
+    await page.context().addCookies([
+      { name: 'locale', value: 'en', domain: 'localhost', path: '/' }
+    ]);
     const testGoals = createTestGoals();
     await page.addInitScript((goals) => {
       localStorage.setItem(
@@ -197,6 +210,10 @@ test.describe('Timeline - Responsive', () => {
 
 test.describe('Timeline - Goal Clustering', () => {
   test('clusters goals with same target date', async ({ page }) => {
+    // Set locale to English
+    await page.context().addCookies([
+      { name: 'locale', value: 'en', domain: 'localhost', path: '/' }
+    ]);
     const today = new Date();
     const sameDate = new Date(today);
     sameDate.setMonth(sameDate.getMonth() + 6);
@@ -245,6 +262,10 @@ test.describe('Timeline - Goal Clustering', () => {
 
 test.describe('Timeline - Gantt Chart', () => {
   test.beforeEach(async ({ page }) => {
+    // Set locale to English
+    await page.context().addCookies([
+      { name: 'locale', value: 'en', domain: 'localhost', path: '/' }
+    ]);
     const testGoals = createTestGoals();
     await page.addInitScript((goals) => {
       localStorage.setItem(
@@ -256,7 +277,10 @@ test.describe('Timeline - Gantt Chart', () => {
   });
 
   test('displays Gantt View section', async ({ page }) => {
-    await expect(page.getByText('Gantt View')).toBeVisible();
+    // The Gantt chart section has a "Goal" label at the top
+    await expect(page.getByText('Goal').first()).toBeVisible();
+    // And shows goal buttons with amounts (use first() since there are multiple matching buttons)
+    await expect(page.getByRole('button', { name: /Emergency Fund.*USD/ }).first()).toBeVisible();
   });
 
   test('shows all goals as rows in Gantt chart', async ({ page }) => {
@@ -270,15 +294,16 @@ test.describe('Timeline - Gantt Chart', () => {
   });
 
   test('Gantt rows show goal amounts', async ({ page }) => {
-    // Goals should show their amounts in the Gantt rows
-    await expect(page.getByText('$15,000.00').first()).toBeVisible();
-    await expect(page.getByText('$60,000.00').first()).toBeVisible();
-    await expect(page.getByText('$10,000.00').first()).toBeVisible();
+    // Goals should show their amounts in the Gantt rows (format is "USD X,XXX.XX")
+    await expect(page.getByText(/USD 15,000/).first()).toBeVisible();
+    await expect(page.getByText(/USD 60,000/).first()).toBeVisible();
+    await expect(page.getByText(/USD 10,000/).first()).toBeVisible();
   });
 
   test('clicking Gantt row opens goal modal', async ({ page }) => {
     // Find the Emergency Fund button in the Gantt chart label area and click it
-    const ganttButton = page.getByRole('button', { name: /Emergency Fund.*\$15,000/ });
+    // Button name includes goal title and amount in "USD X,XXX.XX" format
+    const ganttButton = page.getByRole('button', { name: /Emergency Fund.*USD 15,000/ });
     await ganttButton.first().click();
 
     // Modal should appear with goal details

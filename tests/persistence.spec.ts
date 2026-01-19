@@ -1,6 +1,13 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('LocalStorage Persistence', () => {
+  test.beforeEach(async ({ page }) => {
+    // Set locale to English
+    await page.context().addCookies([
+      { name: 'locale', value: 'en', domain: 'localhost', path: '/' }
+    ]);
+  });
+
   test('goals persist after page refresh', async ({ page }) => {
     // Use addInitScript to set localStorage before the page loads
     const testGoal = {
@@ -26,14 +33,14 @@ test.describe('LocalStorage Persistence', () => {
     // Navigate to the page - app should load the goal
     await page.goto('/');
 
-    // Goal should be visible
-    await expect(page.getByText('Persistence Test Goal')).toBeVisible();
+    // Goal should be visible (use heading role to be specific)
+    await expect(page.getByRole('heading', { name: 'Persistence Test Goal' })).toBeVisible();
 
     // Reload the page
     await page.reload();
 
     // Goal should still be visible after refresh
-    await expect(page.getByText('Persistence Test Goal')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Persistence Test Goal' })).toBeVisible();
   });
 
   test('localStorage contains correct data structure', async ({ page }) => {
@@ -61,7 +68,7 @@ test.describe('LocalStorage Persistence', () => {
     await page.goto('/');
 
     // Wait for the goal to be visible (confirms hydration is complete)
-    await expect(page.getByText('Structure Test')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Structure Test' })).toBeVisible();
 
     // Verify the storage structure after app has processed it
     const storageData = await page.evaluate(() => {
@@ -139,18 +146,18 @@ test.describe('LocalStorage Persistence', () => {
     // Navigate to the page
     await page.goto('/');
 
-    // Wait for goals to be visible (confirms hydration)
-    await expect(page.getByText('First Goal')).toBeVisible();
-    await expect(page.getByText('Second Goal')).toBeVisible();
-    await expect(page.getByText('Third Goal')).toBeVisible();
+    // Wait for goals to be visible (confirms hydration) - use heading role
+    await expect(page.getByRole('heading', { name: 'First Goal' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Second Goal' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Third Goal' })).toBeVisible();
 
     // Reload the page
     await page.reload();
 
     // Goals should still be visible after reload
-    await expect(page.getByText('First Goal')).toBeVisible();
-    await expect(page.getByText('Second Goal')).toBeVisible();
-    await expect(page.getByText('Third Goal')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'First Goal' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Second Goal' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Third Goal' })).toBeVisible();
 
     // Verify all goals persisted in localStorage
     const storageData = await page.evaluate(() => {
@@ -212,7 +219,7 @@ test.describe('LocalStorage Persistence', () => {
 
     await page.goto('/');
 
-    // Valid goal should be displayed
-    await expect(page.getByText('Valid Goal')).toBeVisible();
+    // Valid goal should be displayed (use heading role)
+    await expect(page.getByRole('heading', { name: 'Valid Goal' })).toBeVisible();
   });
 });

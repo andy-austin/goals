@@ -2,6 +2,10 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Drag and Drop Goal Reordering', () => {
   test.beforeEach(async ({ page }) => {
+    // Set locale to English
+    await page.context().addCookies([
+      { name: 'locale', value: 'en', domain: 'localhost', path: '/' }
+    ]);
     // Set up multiple goals in the same bucket
     await page.goto('/');
     await page.evaluate(() => {
@@ -63,10 +67,10 @@ test.describe('Drag and Drop Goal Reordering', () => {
   test('goals display priority numbers correctly', async ({ page }) => {
     await page.goto('/');
 
-    // Goals should be visible
-    await expect(page.getByText('First Safety Goal')).toBeVisible();
-    await expect(page.getByText('Second Safety Goal')).toBeVisible();
-    await expect(page.getByText('Third Safety Goal')).toBeVisible();
+    // Goals should be visible (use heading role to be specific)
+    await expect(page.getByRole('heading', { name: 'First Safety Goal' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Second Safety Goal' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Third Safety Goal' })).toBeVisible();
 
     // Priority badges should be present
     await expect(page.getByText('#1').first()).toBeVisible();
@@ -88,9 +92,9 @@ test.describe('Drag and Drop Goal Reordering', () => {
   test('goals can be reordered via drag and drop', async ({ page }) => {
     await page.goto('/');
 
-    // Get the first and second goal cards
-    const firstGoal = page.getByText('First Safety Goal');
-    const secondGoal = page.getByText('Second Safety Goal');
+    // Get the first and second goal cards (use heading role to be specific)
+    const firstGoal = page.getByRole('heading', { name: 'First Safety Goal' });
+    const secondGoal = page.getByRole('heading', { name: 'Second Safety Goal' });
 
     // Get bounding boxes
     const firstBox = await firstGoal.boundingBox();
@@ -117,9 +121,10 @@ test.describe('Drag and Drop Goal Reordering', () => {
     // Wait for reorder to complete
     await page.waitForTimeout(500);
 
-    // Verify the order changed - First goal should now be #2
-    // The titles should appear in different order now
-    const goalTitles = await page.getByText(/Safety Goal/).allTextContents();
-    expect(goalTitles.length).toBe(3);
+    // Verify all goals are still present after reorder
+    // Use headings to be specific (each goal appears in both heading and "Next goal" span)
+    await expect(page.getByRole('heading', { name: 'First Safety Goal' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Second Safety Goal' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Third Safety Goal' })).toBeVisible();
   });
 });

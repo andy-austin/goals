@@ -2,6 +2,10 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Goal Creation Flow', () => {
   test.beforeEach(async ({ page }) => {
+    // Set locale to English
+    await page.context().addCookies([
+      { name: 'locale', value: 'en', domain: 'localhost', path: '/' }
+    ]);
     // Clear localStorage before each test
     await page.addInitScript(() => {
       localStorage.clear();
@@ -10,14 +14,14 @@ test.describe('Goal Creation Flow', () => {
   });
 
   test('displays creation method selection', async ({ page }) => {
-    // Should show two options
-    await expect(page.getByRole('heading', { name: 'Start from Scratch' })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Create Custom' })).toBeVisible();
+    // Should show start from scratch option
+    await expect(page.getByRole('heading', { name: /start from scratch/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /create goal/i }).first()).toBeVisible();
   });
 
   test('can select "Start from Scratch" option', async ({ page }) => {
-    // Click Create Custom button
-    await page.getByRole('button', { name: 'Create Custom' }).click();
+    // Click Create goal button (the CTA for start from scratch)
+    await page.getByRole('button', { name: /create goal/i }).first().click();
 
     // Should show the wizard with step 1 content
     await expect(page.getByRole('heading', { name: "What's your goal?" })).toBeVisible();
@@ -26,7 +30,7 @@ test.describe('Goal Creation Flow', () => {
 
   test('can navigate through wizard steps', async ({ page }) => {
     // Start from scratch
-    await page.getByRole('button', { name: 'Create Custom' }).click();
+    await page.getByRole('button', { name: /create goal/i }).first().click();
 
     // Step 1: Fill in title and description
     await page.getByRole('textbox', { name: /goal title/i }).fill('Test Emergency Fund');
@@ -51,7 +55,7 @@ test.describe('Goal Creation Flow', () => {
 
   test('validates step 1 inputs', async ({ page }) => {
     // Start from scratch
-    await page.getByRole('button', { name: 'Create Custom' }).click();
+    await page.getByRole('button', { name: /create goal/i }).first().click();
 
     // Verify we're on step 1
     await expect(page.getByRole('heading', { name: "What's your goal?" })).toBeVisible();
@@ -72,7 +76,7 @@ test.describe('Goal Creation Flow', () => {
 
   test('can go back to previous steps', async ({ page }) => {
     // Start from scratch
-    await page.getByRole('button', { name: 'Create Custom' }).click();
+    await page.getByRole('button', { name: /create goal/i }).first().click();
 
     // Fill step 1
     await page.getByRole('textbox', { name: /goal title/i }).fill('Test Goal');
@@ -94,7 +98,7 @@ test.describe('Goal Creation Flow', () => {
 
   test('bucket selection works', async ({ page }) => {
     // Navigate to bucket selection step
-    await page.getByRole('button', { name: 'Create Custom' }).click();
+    await page.getByRole('button', { name: /create goal/i }).first().click();
 
     // Fill steps 1-3
     await page.getByRole('textbox', { name: /goal title/i }).fill('Test Goal');
@@ -122,7 +126,7 @@ test.describe('Goal Creation Flow', () => {
 
   test('quick select buttons work for amount', async ({ page }) => {
     // Navigate to amount step
-    await page.getByRole('button', { name: 'Create Custom' }).click();
+    await page.getByRole('button', { name: /create goal/i }).first().click();
     await page.getByRole('textbox', { name: /goal title/i }).fill('Test Goal');
     await page.getByRole('textbox', { name: /description/i }).fill('A test goal description that is long enough');
     await page.getByRole('button', { name: 'Next', exact: true }).click();
@@ -130,8 +134,8 @@ test.describe('Goal Creation Flow', () => {
     // Should be on amount step
     await expect(page.getByRole('heading', { name: 'Set your target' })).toBeVisible();
 
-    // Click a quick select amount button
-    await page.getByRole('button', { name: /\$5,000/i }).click();
+    // Click a quick select amount button (format is "USD X,XXX.XX")
+    await page.getByRole('button', { name: /USD 5,000/i }).click();
 
     // Amount input should have that value
     await expect(page.getByRole('spinbutton', { name: /target amount/i })).toHaveValue('5000');
@@ -140,6 +144,10 @@ test.describe('Goal Creation Flow', () => {
 
 test.describe('Goal Creation - Complete Flow', () => {
   test.beforeEach(async ({ page }) => {
+    // Set locale to English
+    await page.context().addCookies([
+      { name: 'locale', value: 'en', domain: 'localhost', path: '/' }
+    ]);
     await page.addInitScript(() => {
       localStorage.clear();
     });
@@ -148,7 +156,7 @@ test.describe('Goal Creation - Complete Flow', () => {
 
   test('can create a complete goal', async ({ page }) => {
     // Start from scratch
-    await page.getByRole('button', { name: 'Create Custom' }).click();
+    await page.getByRole('button', { name: /create goal/i }).first().click();
 
     // Step 1: Title and Description
     await page.getByRole('textbox', { name: /goal title/i }).fill('Emergency Fund');
@@ -171,19 +179,23 @@ test.describe('Goal Creation - Complete Flow', () => {
     await expect(page.getByRole('heading', { name: /why does this matter/i })).toBeVisible();
     await page.getByRole('textbox', { name: /your motivation/i }).fill('This will give me peace of mind and financial security');
 
-    // Complete the goal
-    await page.getByRole('button', { name: /create goal/i }).click();
+    // Complete the goal (button text is just "Create" on the final step)
+    await page.getByRole('button', { name: 'Create', exact: true }).click();
 
     // Should redirect to dashboard
     await expect(page).toHaveURL('/');
 
-    // Goal should appear on dashboard
-    await expect(page.getByText('Emergency Fund')).toBeVisible();
+    // Goal should appear on dashboard (use heading role to be specific)
+    await expect(page.getByRole('heading', { name: 'Emergency Fund' })).toBeVisible();
   });
 });
 
 test.describe('Template Selection', () => {
   test.beforeEach(async ({ page }) => {
+    // Set locale to English
+    await page.context().addCookies([
+      { name: 'locale', value: 'en', domain: 'localhost', path: '/' }
+    ]);
     await page.addInitScript(() => {
       localStorage.clear();
     });
@@ -204,6 +216,7 @@ test.describe('Template Selection', () => {
 
     // Should now be in the wizard with pre-filled data - check for step 1 content
     await expect(page.getByRole('heading', { name: "What's your goal?" })).toBeVisible();
-    await expect(page.getByRole('textbox', { name: /goal title/i })).toHaveValue('Emergency Fund');
+    // Note: Template title uses lowercase 'fund' per translations
+    await expect(page.getByRole('textbox', { name: /goal title/i })).toHaveValue('Emergency fund');
   });
 });
