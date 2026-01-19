@@ -5,56 +5,56 @@ import { ArrowRight, Target, TrendingUp, Shield } from 'lucide-react';
 
 export function HeroSection() {
   return (
-    <section className="relative pt-16 pb-20 lg:pt-24 lg:pb-32 overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-subtle" />
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-trust-light/30 blur-3xl rounded-full transform translate-x-1/2" />
-      <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-growth-light/40 blur-3xl rounded-full transform -translate-x-1/2" />
+    <section className="relative pt-20 pb-12 lg:pt-28 lg:pb-16 overflow-hidden">
+      {/* Background gradient - more visible */}
+      <div className="absolute inset-0 bg-gradient-to-br from-growth-light/40 via-transparent to-trust-light/30" />
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-trust/10 blur-[100px] rounded-full transform translate-x-1/3 -translate-y-1/4" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-growth/15 blur-[100px] rounded-full transform -translate-x-1/3 translate-y-1/4" />
 
       <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left content */}
           <div className="text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-growth-light text-growth text-sm font-medium mb-6 animate-fade-in">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-growth-light text-growth text-sm font-medium mb-6 animate-fade-in border border-growth/20">
               <Target className="w-4 h-4" />
               Intentional investing starts here
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6 animate-fade-in">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-[1.1] mb-6 animate-fade-in">
               Stop Saving.
               <br />
               <span className="text-gradient-growth">Start Planning.</span>
             </h1>
 
-            <p className="text-lg sm:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-8 animate-fade-in">
+            <p className="text-lg text-muted-foreground max-w-lg mx-auto lg:mx-0 mb-8 animate-fade-in leading-relaxed">
               Define, prioritize, and document your investment goals with purpose.
               Know exactly why you&apos;re investing—and stay the course when markets get volatile.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start animate-fade-in">
               <Link
                 href="/create"
-                className="inline-flex items-center justify-center gap-2 h-14 px-10 text-lg font-semibold rounded-xl bg-gradient-growth text-growth-foreground shadow-lg hover:shadow-glow hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+                className="inline-flex items-center justify-center gap-2 h-12 px-6 text-base font-semibold rounded-xl bg-gradient-growth text-growth-foreground shadow-lg hover:shadow-glow hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 whitespace-nowrap"
               >
                 Start Your First Goal
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href="#methodology"
-                className="inline-flex items-center justify-center gap-2 h-14 px-10 text-lg font-semibold rounded-xl border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-200"
+                className="inline-flex items-center justify-center gap-2 h-12 px-6 text-base font-semibold rounded-xl border-2 border-border bg-card/50 text-foreground hover:bg-card hover:border-growth/50 transition-all duration-200 whitespace-nowrap"
               >
                 See How It Works
               </Link>
             </div>
 
             {/* Trust badges */}
-            <div className="flex items-center gap-6 mt-10 justify-center lg:justify-start animate-fade-in">
+            <div className="flex items-center gap-6 mt-8 justify-center lg:justify-start animate-fade-in">
               <div className="flex items-center gap-2 text-muted-foreground">
-                <Shield className="w-5 h-5 text-growth" />
+                <Shield className="w-4 h-4 text-growth" />
                 <span className="text-sm">Bank-level security</span>
               </div>
               <div className="flex items-center gap-2 text-muted-foreground">
-                <TrendingUp className="w-5 h-5 text-growth" />
+                <TrendingUp className="w-4 h-4 text-growth" />
                 <span className="text-sm">12k+ goals created</span>
               </div>
             </div>
@@ -66,8 +66,8 @@ export function HeroSection() {
               <GoalPreviewCard />
             </div>
             {/* Decorative elements */}
-            <div className="absolute -top-4 -right-4 w-72 h-72 bg-trust/5 rounded-full blur-2xl" />
-            <div className="absolute -bottom-8 -left-8 w-64 h-64 bg-growth/10 rounded-full blur-2xl" />
+            <div className="absolute -top-8 -right-8 w-80 h-80 bg-trust/8 rounded-full blur-3xl" />
+            <div className="absolute -bottom-12 -left-12 w-72 h-72 bg-growth/12 rounded-full blur-3xl" />
           </div>
         </div>
       </div>
