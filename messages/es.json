@@ -154,6 +154,12 @@
       "example3": "Disfrutar mis años de retiro sin estrés financiero.",
       "example4": "Tener la libertad de perseguir mis proyectos personales."
     },
+    "selection": {
+      "title": "Empezar desde Cero",
+      "description": "Crea un objetivo totalmente personalizado definido enteramente por ti.",
+      "cta": "Crear Objetivo",
+      "divider": "o elige una plantilla"
+    },
     "validation": {
       "specific": "Específico",
       "specificDesc": "Título claro y descripción detallada.",

@@ -154,6 +154,12 @@
       "example3": "To enjoy my retirement years without financial stress.",
       "example4": "To have the freedom to pursue my passion projects."
     },
+    "selection": {
+      "title": "Start from Scratch",
+      "description": "Create a fully custom goal defined entirely by you.",
+      "cta": "Create Custom",
+      "divider": "or choose a template"
+    },
     "validation": {
       "specific": "Specific",
       "specificDesc": "Clear title and detailed description.",

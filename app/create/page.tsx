@@ -101,14 +101,14 @@ export default function CreateGoalPage() {
               <CardContent className="flex items-center justify-between p-6">
                 <div>
                   <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-                    Start from Scratch
+                    {t('selection.title')}
                   </h3>
                   <p className="text-zinc-600 dark:text-zinc-400">
-                    Create a fully custom goal defined entirely by you.
+                    {t('selection.description')}
                   </p>
                 </div>
                 <Button onClick={(e) => { e.stopPropagation(); handleStartCustom(); }}>
-                  Create Custom
+                  {t('selection.cta')}
                 </Button>
               </CardContent>
             </Card>
@@ -120,7 +120,7 @@ export default function CreateGoalPage() {
             </div>
             <div className="relative flex justify-center">
               <span className="bg-zinc-50 dark:bg-zinc-950 px-2 text-sm text-zinc-500">
-                or choose a template
+                {t('selection.divider')}
               </span>
             </div>
           </div>
