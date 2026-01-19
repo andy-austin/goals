@@ -44,11 +44,16 @@ export function GoalCalculator() {
         })
       : '';
 
+    const isoTargetDate = mounted 
+      ? new Date(now + timeYears * 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+      : '';
+
     return {
       monthlySavings: Math.round(monthlySavings * 100) / 100,
       totalContributions: Math.round(totalContributions),
       estimatedGrowth: Math.round(estimatedGrowth),
       targetDate: targetDate ? targetDate.charAt(0).toUpperCase() + targetDate.slice(1) : '',
+      isoTargetDate,
     };
   }, [targetAmount, years, locale, now, mounted]);
 
@@ -63,6 +68,14 @@ export function GoalCalculator() {
   const formatCurrency = (amount: number) => {
     return `${currencySymbols[currency]}${amount.toLocaleString(locale)}`;
   };
+
+  const createGoalHref = useMemo(() => {
+    const params = new URLSearchParams();
+    if (targetAmount) params.set('amount', targetAmount);
+    if (currency) params.set('currency', currency);
+    if (calculations.isoTargetDate) params.set('date', calculations.isoTargetDate);
+    return `/create?${params.toString()}`;
+  }, [targetAmount, currency, calculations.isoTargetDate]);
 
   return (
     <section id="calculator" className="py-16 lg:py-20 bg-muted/40">
@@ -183,14 +196,14 @@ export function GoalCalculator() {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-4 border-t border-white/20">
-                  <div>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-4 border-t border-white/20 gap-4 sm:gap-0">
+                  <div className="text-left">
                     <p className="text-xs text-white/80">{t('results.targetDate')}</p>
                     <p className="font-medium text-white">{calculations.targetDate}</p>
                   </div>
                   <Link
-                    href="/create"
-                    className="inline-flex items-center justify-center h-12 px-8 rounded-lg bg-white text-gray-900 font-semibold shadow-lg hover:bg-gray-100 transition-colors"
+                    href={createGoalHref}
+                    className="inline-flex items-center justify-center h-12 px-8 rounded-lg bg-white text-gray-900 font-semibold shadow-lg hover:bg-gray-100 transition-colors w-full sm:w-auto"
                   >
                     {t('results.createGoal')}
                   </Link>

@@ -1,12 +1,13 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { FormWizard, FormStep, StepTitleDescription, StepAmountCurrency, StepTargetDate, StepBucket, StepWhyItMatters, TemplateSelector, Button, Card, CardContent, Tooltip } from '@/components';
 import { useGoals } from '@/context';
 import { validateSMART } from '@/lib';
-import type { GoalFormInput, GoalTemplate } from '@/types';
+import type { GoalFormInput, GoalTemplate, Currency } from '@/types';
+import { CURRENCIES } from '@/types';
 
 // =============================================================================
 // Main Page Component
@@ -15,12 +16,40 @@ import type { GoalFormInput, GoalTemplate } from '@/types';
 export default function CreateGoalPage() {
   const t = useTranslations('goalForm');
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { addGoal } = useGoals();
   
   // State for wizard mode and initial data
   const [mode, setMode] = useState<'selection' | 'wizard'>('selection');
   const [initialData, setInitialData] = useState<Partial<GoalFormInput>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Initialize from URL params if present
+  useEffect(() => {
+    const amount = searchParams.get('amount');
+    const currency = searchParams.get('currency');
+    const date = searchParams.get('date');
+
+    if (amount || currency || date) {
+      const timer = setTimeout(() => {
+        setInitialData(prev => {
+          // Validate currency param against allowed currencies
+          const validatedCurrency = currency && CURRENCIES.includes(currency as Currency) 
+            ? (currency as Currency) 
+            : undefined;
+
+          return {
+            ...prev,
+            amount: amount ? parseFloat(amount) : undefined,
+            currency: validatedCurrency,
+            targetDate: date || undefined,
+          };
+        });
+        setMode('wizard');
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+  }, [searchParams]);
 
   const steps = [
     { label: t('steps.details') },

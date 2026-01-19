@@ -310,7 +310,7 @@
       "badge": "La inversión intencional comienza aquí",
       "titleLine1": "Deja de Ahorrar.",
       "titleLine2": "Empieza a Planear.",
-      "description": "Define, prioriza y documenta tus objetivos de inversión con propósito. Sé exactamente por qué estás invirtiendo—y mantén el rumbo cuando los mercados se vuelvan volátiles.",
+      "description": "Define, prioriza y documenta tus objetivos de inversión con propósito. Sé exactamente por qué estás invirtiendo, y mantén el rumbo cuando los mercados se vuelvan volátiles.",
       "startGoal": "Inicia tu Primer Objetivo",
       "howItWorks": "Mira Cómo Funciona",
       "security": "Seguridad nivel bancario",
@@ -333,7 +333,7 @@
       "steps": {
         "purpose": {
           "title": "Propósito del Objetivo",
-          "description": "Define para qué es el dinero—retiro, una casa, educación o unas vacaciones soñadas."
+          "description": "Define para qué es el dinero: retiro, una casa, educación o unas vacaciones soñadas."
         },
         "amount": {
           "title": "Monto Objetivo",
@@ -353,7 +353,7 @@
         },
         "why": {
           "title": "Por qué es Importante",
-          "description": "Documenta tu ancla emocional—el 'por qué' que te mantiene comprometido."
+          "description": "Documenta tu ancla emocional: el 'por qué' que te mantiene comprometido."
         }
       },
       "flow": {
@@ -394,7 +394,7 @@
       "benefits": {
         "clarity": {
           "title": "La claridad vence al pánico",
-          "description": "Los objetivos escritos crean compromiso psicológico. Cuando los mercados caen 20%, recordarás por qué estás invirtiendo—no solo que estás perdiendo dinero."
+          "description": "Los objetivos escritos crean compromiso psicológico. Cuando los mercados caen 20%, recordarás por qué estás invirtiendo, no solo que estás perdiendo dinero."
         },
         "fomo": {
           "title": "Defensa contra FOMO",
@@ -405,7 +405,7 @@
           "description": "Estudios muestran que los inversores que escriben sus objetivos tienen 42% más probabilidad de mantenerse invertidos durante la volatilidad del mercado."
         }
       },
-      "quote": "El mayor riesgo en la inversión no es la volatilidad—es vender en el momento equivocado porque olvidaste por qué empezaste.",
+      "quote": "El mayor riesgo en la inversión no es la volatilidad, es vender en el momento equivocado porque olvidaste por qué empezaste.",
       "team": "Equipo FinGoal",
       "teamRole": "Construido para inversores intencionales",
       "statDesc": "Más probabilidad de mantenerse invertido durante volatilidad cuando los objetivos están documentados"
@@ -425,11 +425,11 @@
         },
         "growth": {
           "title": "Cubeta de Crecimiento",
-          "description": "Objetivos que mejoran tu nivel de vida—casa, educación, auto"
+          "description": "Objetivos que mejoran tu nivel de vida: casa, educación, auto"
         },
         "dream": {
           "title": "Cubeta de Sueño",
-          "description": "Objetivos aspiracionales en los que puedes arriesgarte—viajes, negocios"
+          "description": "Objetivos aspiracionales en los que puedes arriesgarte: viajes, negocios"
         }
       },
       "mockGoals": {
@@ -448,7 +448,7 @@
         "tracking": "Rastreo de progreso",
         "priority": "Gestión de prioridades"
       },
-      "button": "Crea Tu Primer Objetivo",
+      "button": "Crea tu primer Objetivo",
       "footer": "Gratis para empezar • No requiere tarjeta de crédito"
     },
     "footer": {

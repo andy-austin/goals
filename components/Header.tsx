@@ -23,7 +23,7 @@ export function Header() {
     <header className="print:hidden sticky top-0 z-50 border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6">
         {/* Logo/Title */}
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/dashboard" className="flex items-center gap-2">
           <div className="w-9 h-9 rounded-lg bg-gradient-growth flex items-center justify-center">
             <TrendingUp className="w-5 h-5 text-growth-foreground" />
           </div>

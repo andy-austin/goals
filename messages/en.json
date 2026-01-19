@@ -310,7 +310,7 @@
       "badge": "Intentional investing starts here",
       "titleLine1": "Stop Saving.",
       "titleLine2": "Start Planning.",
-      "description": "Define, prioritize, and document your investment goals with purpose. Know exactly why you're investing—and stay the course when markets get volatile.",
+      "description": "Define, prioritize, and document your investment goals with purpose. Know exactly why you're investing, and stay the course when markets get volatile.",
       "startGoal": "Start Your First Goal",
       "howItWorks": "See How It Works",
       "security": "Bank-level security",
@@ -333,7 +333,7 @@
       "steps": {
         "purpose": {
           "title": "Goal Purpose",
-          "description": "Define what the money is for—retirement, a home, education, or a dream vacation."
+          "description": "Define what the money is for: retirement, a home, education, or a dream vacation."
         },
         "amount": {
           "title": "Target Amount",
@@ -353,7 +353,7 @@
         },
         "why": {
           "title": "Why It Matters",
-          "description": "Document your emotional anchor—the 'why' that keeps you committed."
+          "description": "Document your emotional anchor: the 'why' that keeps you committed."
         }
       },
       "flow": {
@@ -383,7 +383,7 @@
         "totalContributions": "Total Contributions",
         "estimatedGrowth": "Estimated Growth",
         "targetDate": "Target Date",
-        "createGoal": "Create This Goal"
+        "createGoal": "Create this Goal"
       }
     },
     "whyDocument": {
@@ -394,7 +394,7 @@
       "benefits": {
         "clarity": {
           "title": "Clarity defeats panic",
-          "description": "Written goals create psychological commitment. When markets drop 20%, you'll remember why you're investing—not just that you're losing money."
+          "description": "Written goals create psychological commitment. When markets drop 20%, you'll remember why you're investing, not just that you're losing money."
         },
         "fomo": {
           "title": "Defense against FOMO",
@@ -405,7 +405,7 @@
           "description": "Studies show investors who write down their goals are 42% more likely to stay invested during market volatility."
         }
       },
-      "quote": "The biggest risk in investing isn't volatility—it's selling at the wrong time because you forgot why you started.",
+      "quote": "The biggest risk in investing isn't volatility, it's selling at the wrong time because you forgot why you started.",
       "team": "FinGoal Team",
       "teamRole": "Built for intentional investors",
       "statDesc": "More likely to stay invested during volatility when goals are documented"
@@ -425,11 +425,11 @@
         },
         "growth": {
           "title": "Growth Bucket",
-          "description": "Goals that improve your standard of living—house, education, car"
+          "description": "Goals that improve your standard of living: house, education, car"
         },
         "dream": {
           "title": "Dream Bucket",
-          "description": "Aspirational goals you can afford to take risks on—travel, business"
+          "description": "Aspirational goals you can afford to take risks on: travel, business"
         }
       },
       "mockGoals": {
@@ -448,7 +448,7 @@
         "tracking": "Progress tracking",
         "priority": "Priority management"
       },
-      "button": "Create Your First Goal",
+      "button": "Create your first Goal",
       "footer": "Free to start • No credit card required"
     },
     "footer": {
