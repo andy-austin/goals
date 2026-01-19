@@ -41,6 +41,7 @@ const Icons = {
 
 export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
   const tBuckets = useTranslations('buckets');
+  const tTemplates = useTranslations('templates');
   const [activeBucket, setActiveBucket] = useState<Bucket>('safety');
 
   // Filter templates by active bucket
@@ -78,7 +79,12 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
         {templates.map((template) => (
           <button
             key={template.id}
-            onClick={() => onSelect(template)}
+            onClick={() => onSelect({
+              ...template,
+              title: tTemplates(`${template.id}.title`),
+              description: tTemplates(`${template.id}.description`),
+              sampleWhyItMatters: tTemplates(`${template.id}.whyItMatters`),
+            })}
             className="text-left group relative flex flex-col gap-3 rounded-xl border border-zinc-200 bg-white p-4 transition-all hover:border-[var(--bucket-color)] hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900"
             style={{
               '--bucket-color': BUCKET_CONFIG[template.bucket].colorVar,
@@ -86,18 +92,16 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
           >
             <div className="flex items-start justify-between w-full">
               <h3 className="font-semibold text-zinc-900 dark:text-zinc-100 group-hover:text-[var(--bucket-color)]">
-                {template.title}
+                {tTemplates(`${template.id}.title`)}
               </h3>
-              {/* Optional: Icon rendering if we mapped string icon names to components */}
             </div>
-            
+
             <p className="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2">
-              {template.description}
+              {tTemplates(`${template.id}.description`)}
             </p>
 
             <div className="mt-auto pt-2 flex items-center gap-2 text-xs font-medium text-zinc-500 dark:text-zinc-500">
-               {/* Metadata badges could go here (e.g. "3-6 months") */}
-               <span>{template.suggestedTimelineMonths} months</span>
+               <span>{template.suggestedTimelineMonths} {tTemplates('months')}</span>
                <span>•</span>
                <span>${template.suggestedAmountMin.toLocaleString()} - ${template.suggestedAmountMax.toLocaleString()}</span>
             </div>

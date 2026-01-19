@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "Metas de Inversión",
+    "appName": "Objetivos de Inversión",
     "loading": "Cargando...",
     "save": "Guardar",
     "cancel": "Cancelar",
@@ -12,51 +12,53 @@
   },
   "nav": {
     "dashboard": "Panel",
-    "createGoal": "Crear Meta",
+    "createGoal": "Crear Objetivo",
     "timeline": "Línea de Tiempo"
   },
   "dashboard": {
     "title": "Panel",
-    "subtitle": "Rastrea y gestiona tus metas de inversión.",
+    "subtitle": "Rastrea y gestiona tus objetivos de inversión.",
     "stats": {
-      "totalGoals": "Total de Metas",
-      "totalTarget": "Objetivo Total",
+      "totalGoals": "Total de Objetivos",
+      "totalTarget": "Monto Total",
       "buckets": "Categorías",
-      "goal": "meta",
-      "goals": "metas",
+      "goal": "objetivo",
+      "goals": "objetivos",
       "total": "total",
-      "nextGoal": "Próxima meta",
+      "nextGoal": "Próximo objetivo",
       "days": "días"
     },
+    "daysLeft": "{count} días restantes",
+    "overdueBy": "Vencido hace {count} días",
     "empty": {
-      "title": "Sin metas todavía",
-      "description": "Comienza creando tu primera meta de inversión.",
-      "cta": "Crear Meta"
+      "title": "Sin objetivos todavía",
+      "description": "Comienza creando tu primer objetivo de inversión.",
+      "cta": "Crear Objetivo"
     },
-    "goalsCount": "metas",
-    "noBucketGoals": "Sin metas de {bucket} todavía",
+    "goalsCount": "objetivos",
+    "noBucketGoals": "Sin objetivos de {bucket} todavía",
     "actions": {
-      "addGoal": "Agregar Meta",
+      "addGoal": "Agregar Objetivo",
       "viewTimeline": "Ver Línea de Tiempo"
     }
   },
   "buckets": {
     "safety": {
       "name": "Seguridad",
-      "description": "Metas urgentes y no negociables como fondos de emergencia"
+      "description": "Objetivos urgentes y no negociables como fondos de emergencia"
     },
     "growth": {
       "name": "Crecimiento",
-      "description": "Metas que mejoran tu nivel de vida"
+      "description": "Objetivos que mejoran tu nivel de vida"
     },
     "dream": {
       "name": "Sueño",
-      "description": "Metas aspiracionales que puedes arriesgar"
+      "description": "Objetivos aspiracionales que puedes arriesgar"
     }
   },
   "goalForm": {
-    "createTitle": "Crear una Nueva Meta",
-    "createSubtitle": "Define tu meta de inversión usando el marco SMART.",
+    "createTitle": "Crear un Nuevo Objetivo",
+    "createSubtitle": "Define tu objetivo de inversión usando el marco SMART.",
     "steps": {
       "details": "Detalles",
       "amount": "Monto",
@@ -65,37 +67,37 @@
       "why": "Por qué"
     },
     "step1": {
-      "title": "¿Cuál es tu meta?",
-      "subtitle": "Sé específico sobre lo que quieres lograr. Una meta clara es el primer paso hacia el éxito.",
-      "titleLabel": "Título de la Meta",
+      "title": "¿Cuál es tu objetivo?",
+      "subtitle": "Sé específico sobre lo que quieres lograr. Un objetivo claro es el primer paso hacia el éxito.",
+      "titleLabel": "Título del Objetivo",
       "titlePlaceholder": "ej., Enganche de Casa, Fondo de Emergencia, Vacaciones Soñadas",
       "titleError": "Por favor ingresa un título (al menos 3 caracteres)",
       "descriptionLabel": "Descripción",
-      "descriptionPlaceholder": "Describe tu meta en detalle. ¿Qué exactamente quieres lograr? Entre más específico, mejor.",
-      "descriptionError": "Por favor sé específico sobre tu meta (al menos 20 caracteres)",
+      "descriptionPlaceholder": "Describe tu objetivo en detalle. ¿Qué exactamente quieres lograr? Entre más específico, mejor.",
+      "descriptionError": "Por favor sé específico sobre tu objetivo (al menos 20 caracteres)",
       "smartTip": "Consejo SMART: Sé Específico",
-      "smartTipText": "En lugar de \"ahorrar dinero\", intenta \"Ahorrar $50,000 para el enganche de una casa de 3 recámaras en Austin\". Las metas específicas son más fáciles de planear y rastrear.",
+      "smartTipText": "En lugar de \"ahorrar dinero\", intenta \"Ahorrar $50,000 para el enganche de una casa de 3 recámaras en Austin\". Los objetivos específicos son más fáciles de planear y rastrear.",
       "examples": "Ejemplos"
     },
     "step2": {
-      "title": "Define tu objetivo",
-      "subtitle": "¿Cuánto necesitas para lograr esta meta?",
+      "title": "Define tu monto",
+      "subtitle": "¿Cuánto necesitas para lograr este objetivo?",
       "amountLabel": "Monto Objetivo",
       "amountPlaceholder": "0.00",
       "amountError": "Por favor ingresa un monto válido mayor a 0",
       "currencyLabel": "Moneda",
       "smartTip": "Consejo SMART: Hazlo Medible",
-      "smartTipText": "Darle a tu meta un monto específico la hace real. No puedes rastrear el progreso hacia \"ahorrar algo de dinero\", pero sí puedes hacerlo hacia $10,000.",
+      "smartTipText": "Darle a tu objetivo un monto específico lo hace real. No puedes rastrear el progreso hacia \"ahorrar algo de dinero\", pero sí puedes hacerlo hacia $10,000.",
       "quickSelect": "Selección Rápida"
     },
     "step3": {
       "title": "¿Cuándo lo necesitas?",
-      "subtitle": "Establece una fecha límite realista. Una meta sin fecha es solo un sueño.",
+      "subtitle": "Establece una fecha límite realista. Un objetivo sin fecha es solo un sueño.",
       "dateLabel": "Fecha Objetivo",
       "dateError": "Por favor selecciona una fecha en el futuro",
       "timeHorizon": "Horizonte de tiempo: {time}",
       "smartTip": "Consejo SMART: Ponle Tiempo Límite",
-      "smartTipText": "Una fecha límite crea sentido de urgencia y te ayuda a calcular exactamente cuánto necesitas ahorrar cada mes para alcanzar tu meta.",
+      "smartTipText": "Una fecha límite crea sentido de urgencia y te ayuda a calcular exactamente cuánto necesitas ahorrar cada mes para alcanzar tu objetivo.",
       "quickSelect": {
         "label": "Selección Rápida",
         "1year": "1 Año",
@@ -106,19 +108,19 @@
       }
     },
     "step4": {
-      "title": "Categoriza tu meta",
-      "subtitle": "¿En qué categoría encaja esta meta? Esto ayuda a determinar la estrategia de inversión correcta.",
+      "title": "Categoriza tu objetivo",
+      "subtitle": "¿En qué categoría encaja este objetivo? Esto ayuda a determinar la estrategia de inversión correcta.",
       "smartTip": "¿Por qué Categorizar?",
-      "smartTipText": "Diferentes metas requieren diferentes estrategias de inversión. Las metas de Seguridad necesitan bajo riesgo. Las metas de Crecimiento balancean riesgo y recompensa. Las metas de Sueño pueden permitirse mayor riesgo."
+      "smartTipText": "Diferentes objetivos requieren diferentes estrategias de inversión. Los objetivos de Seguridad necesitan bajo riesgo. Los objetivos de Crecimiento balancean riesgo y recompensa. Los objetivos de Sueño pueden permitirse mayor riesgo."
     },
     "step5": {
       "title": "¿Por qué es importante?",
-      "subtitle": "Conecta tu meta con un ancla emocional. Esto es lo que te mantendrá cuando ahorrar se ponga difícil.",
+      "subtitle": "Conecta tu objetivo con un ancla emocional. Esto es lo que te mantendrá cuando ahorrar se ponga difícil.",
       "whyLabel": "Tu Motivación",
       "whyPlaceholder": "ej., Quiero proveer seguridad financiera para mi familia, o quiero tener la libertad de viajar por el mundo.",
       "whyError": "Por favor ingresa al menos 10 caracteres",
       "smartTip": "Consejo SMART: Hazlo Relevante",
-      "smartTipText": "Una meta relevante te importa y se alinea con tus otras metas. Si la meta no es importante, no la cumplirás.",
+      "smartTipText": "Un objetivo relevante te importa y se alinea con tus otros objetivos. Si el objetivo no es importante, no lo cumplirás.",
       "examples": "Ejemplos",
       "example1": "Tener paz mental sabiendo que puedo manejar gastos inesperados.",
       "example2": "Construir un legado para mis hijos y su educación.",
@@ -129,8 +131,8 @@
       "specific": "Específico",
       "specificDesc": "Título claro y descripción detallada.",
       "measurable": "Medible",
-      "measurableDesc": "Objetivo de un monto específico.",
-      "measurableDescWithAmount": "Objetivo de {amount}.",
+      "measurableDesc": "Monto específico definido.",
+      "measurableDescWithAmount": "Monto de {amount}.",
       "achievable": "Alcanzable",
       "achievableDesc": "El tiempo y monto parecen realistas.",
       "relevant": "Relevante",
@@ -139,9 +141,9 @@
       "timeBoundDesc": "Sin fecha límite establecida.",
       "timeBoundDescWithDate": "Fecha límite: {date}.",
       "summaryTitle": "Resumen de Validación SMART",
-      "goalPreview": "Vista Previa de la Meta",
-      "untitledGoal": "Meta Sin Título",
-      "target": "Objetivo",
+      "goalPreview": "Vista Previa del Objetivo",
+      "untitledGoal": "Objetivo Sin Título",
+      "target": "Monto",
       "by": "Para"
     }
   },
@@ -174,5 +176,68 @@
   },
   "export": {
     "print": "Imprimir"
+  },
+  "templates": {
+    "months": "meses",
+    "emergency-fund": {
+      "title": "Fondo de Emergencia",
+      "description": "Una red de seguridad financiera para cubrir gastos inesperados como facturas médicas o reparaciones del hogar.",
+      "whyItMatters": "Para tener tranquilidad y evitar deudas cuando la vida presenta imprevistos."
+    },
+    "health-insurance": {
+      "title": "Deducible de Seguro Médico",
+      "description": "Ahorros reservados para cubrir tus gastos máximos de salud.",
+      "whyItMatters": "Para asegurar que la atención médica nunca se retrase por cuestiones de costo."
+    },
+    "job-loss-buffer": {
+      "title": "Reserva por Pérdida de Empleo",
+      "description": "Ahorros extendidos para cubrir gastos de vida durante una transición de carrera.",
+      "whyItMatters": "Para mantener mi estilo de vida y reducir el estrés mientras encuentro el siguiente paso profesional adecuado."
+    },
+    "house-down-payment": {
+      "title": "Enganche de Casa",
+      "description": "Ahorros para el pago inicial de una nueva casa.",
+      "whyItMatters": "Para construir patrimonio y tener un lugar propio."
+    },
+    "new-car": {
+      "title": "Auto Nuevo",
+      "description": "Fondos para comprar un vehículo confiable.",
+      "whyItMatters": "Para tener transporte confiable para el trabajo y viajes familiares."
+    },
+    "wedding": {
+      "title": "Boda",
+      "description": "Presupuesto para la ceremonia, recepción y luna de miel.",
+      "whyItMatters": "Para celebrar nuestra unión con familia y amigos sin comenzar el matrimonio con deudas."
+    },
+    "education": {
+      "title": "Educación / Certificación",
+      "description": "Inversión en nuevas habilidades, título o certificación profesional.",
+      "whyItMatters": "Para avanzar en mi carrera y aumentar mi potencial de ingresos."
+    },
+    "home-renovation": {
+      "title": "Renovación del Hogar",
+      "description": "Mejoras para aumentar la comodidad o el valor de tu casa actual.",
+      "whyItMatters": "Para crear un espacio de vida más funcional y agradable."
+    },
+    "luxury-vacation": {
+      "title": "Vacaciones de Lujo",
+      "description": "Un viaje único en la vida o una experiencia de viaje extendida.",
+      "whyItMatters": "Para crear recuerdos inolvidables y experimentar nuevas culturas."
+    },
+    "sabbatical": {
+      "title": "Año Sabático",
+      "description": "Financiamiento para un año sin trabajar para viajar o perseguir proyectos personales.",
+      "whyItMatters": "Para recargar energías y redescubrir mis pasiones fuera del trabajo."
+    },
+    "start-business": {
+      "title": "Iniciar un Negocio",
+      "description": "Capital semilla para lanzar un nuevo emprendimiento.",
+      "whyItMatters": "Para construir algo propio y lograr independencia financiera."
+    },
+    "early-retirement": {
+      "title": "Impulso para Jubilación Anticipada",
+      "description": "Inversión adicional para acelerar el cronograma de jubilación.",
+      "whyItMatters": "Para ganar libertad de tiempo más pronto."
+    }
   }
 }

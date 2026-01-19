@@ -28,6 +28,8 @@
       "nextGoal": "Next goal",
       "days": "days"
     },
+    "daysLeft": "{count} days left",
+    "overdueBy": "Overdue by {count} days",
     "empty": {
       "title": "No goals yet",
       "description": "Get started by creating your first investment goal.",
@@ -174,5 +176,68 @@
   },
   "export": {
     "print": "Print"
+  },
+  "templates": {
+    "months": "months",
+    "emergency-fund": {
+      "title": "Emergency Fund",
+      "description": "A financial safety net to cover unexpected expenses like medical bills or home repairs.",
+      "whyItMatters": "To provide peace of mind and prevent debt when life throws a curveball."
+    },
+    "health-insurance": {
+      "title": "Health Insurance Deductible",
+      "description": "Savings set aside to cover your max out-of-pocket health costs.",
+      "whyItMatters": "To ensure medical care is never delayed due to cost."
+    },
+    "job-loss-buffer": {
+      "title": "Job Loss Buffer",
+      "description": "Extended savings to cover living expenses during a career transition.",
+      "whyItMatters": "To maintain my lifestyle and reduce stress while finding the right next career move."
+    },
+    "house-down-payment": {
+      "title": "House Down Payment",
+      "description": "Savings for the initial payment on a new home.",
+      "whyItMatters": "To build equity and have a place to call my own."
+    },
+    "new-car": {
+      "title": "New Car",
+      "description": "Funds to purchase a reliable vehicle.",
+      "whyItMatters": "To have reliable transportation for work and family trips."
+    },
+    "wedding": {
+      "title": "Wedding",
+      "description": "Budget for the ceremony, reception, and honeymoon.",
+      "whyItMatters": "To celebrate our union with family and friends without starting marriage in debt."
+    },
+    "education": {
+      "title": "Education / Certification",
+      "description": "Investment in new skills, degree, or professional certification.",
+      "whyItMatters": "To advance my career and increase my earning potential."
+    },
+    "home-renovation": {
+      "title": "Home Renovation",
+      "description": "Upgrades to improve comfort or value of your current home.",
+      "whyItMatters": "To create a more functional and enjoyable living space."
+    },
+    "luxury-vacation": {
+      "title": "Luxury Vacation",
+      "description": "A once-in-a-lifetime trip or extended travel experience.",
+      "whyItMatters": "To create lifelong memories and experience new cultures."
+    },
+    "sabbatical": {
+      "title": "Sabbatical Year",
+      "description": "Funding for a year off work to travel or pursue personal projects.",
+      "whyItMatters": "To recharge and rediscover my passions outside of work."
+    },
+    "start-business": {
+      "title": "Start a Business",
+      "description": "Seed capital to launch a new venture.",
+      "whyItMatters": "To build something of my own and achieve financial independence."
+    },
+    "early-retirement": {
+      "title": "Early Retirement Boost",
+      "description": "Additional investment to accelerate retirement timeline.",
+      "whyItMatters": "To gain freedom of time sooner."
+    }
   }
 }

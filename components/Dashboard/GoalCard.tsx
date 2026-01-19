@@ -1,6 +1,7 @@
 'use client';
 
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
+import { useTranslations } from 'next-intl';
 import { Goal, formatCurrency } from '@/types';
 
 interface GoalCardProps extends HTMLAttributes<HTMLDivElement> {
@@ -11,6 +12,7 @@ interface GoalCardProps extends HTMLAttributes<HTMLDivElement> {
 
 export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
   function GoalCard({ goal, dragHandle, isDragging = false, className = '', style, ...props }, ref) {
+    const t = useTranslations('dashboard');
     // Calculate days remaining (simple version, could move to helper)
     const today = new Date();
     const target = new Date(goal.targetDate);
@@ -54,8 +56,8 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
           <div className="flex items-center gap-2 text-xs">
             <span className={`${isOverdue ? 'text-red-600 dark:text-red-400' : 'text-zinc-500'}`}>
               {isOverdue
-                ? `Overdue by ${Math.abs(daysRemaining)} days`
-                : `${daysRemaining} days left`}
+                ? t('overdueBy', { count: Math.abs(daysRemaining) })
+                : t('daysLeft', { count: daysRemaining })}
             </span>
           </div>
           <div className="text-xs text-zinc-400">

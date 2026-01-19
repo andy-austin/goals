@@ -1,6 +1,7 @@
 'use client';
 
 import { forwardRef, type HTMLAttributes } from 'react';
+import { useTranslations } from 'next-intl';
 import { BUCKET_CONFIG, formatCurrency } from '@/types';
 import type { TimelineGoalTooltipProps } from './timeline.types';
 
@@ -13,6 +14,8 @@ export interface TooltipProps
  */
 export const TimelineGoalTooltip = forwardRef<HTMLDivElement, TooltipProps>(
   ({ goal, className = '', ...props }, ref) => {
+    const t = useTranslations('dashboard');
+    const tBuckets = useTranslations('buckets');
     const bucketConfig = BUCKET_CONFIG[goal.bucket];
     const targetDate = new Date(goal.targetDate);
     const today = new Date();
@@ -53,7 +56,7 @@ export const TimelineGoalTooltip = forwardRef<HTMLDivElement, TooltipProps>(
                 color: bucketConfig.colorVar,
               }}
             >
-              {bucketConfig.label}
+              {tBuckets(`${goal.bucket}.name`)}
             </span>
           </div>
 
@@ -77,8 +80,8 @@ export const TimelineGoalTooltip = forwardRef<HTMLDivElement, TooltipProps>(
               }`}
             >
               {isOverdue
-                ? `${Math.abs(daysRemaining)} days overdue`
-                : `${daysRemaining} days left`}
+                ? t('overdueBy', { count: Math.abs(daysRemaining) })
+                : t('daysLeft', { count: daysRemaining })}
             </span>
           </div>
         </div>
