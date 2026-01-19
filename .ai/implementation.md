@@ -16,6 +16,9 @@ This document tracks the implementation progress of the Investment Goals applica
 **Milestone 5: Prioritization UI** - COMPLETE (3/3 issues completed)
 
 ### Completed in This Session
+- Refined Goal Form Step 2 (Amount & Currency) ✅ CLOSED
+- Redesigned currency selection with quick-access buttons for USD, UYU, and UI (Indexed Unit)
+- Improved UX for common currencies
 - Issue #31: Implement PDF Export Functionality ✅ CLOSED
 - Issue #32: Implement Print-Friendly View ✅ CLOSED
 - Issue #33: Implement Copy to Clipboard Functionality ✅ CLOSED

@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
-import { Input, Label, Select, AISuggestionChip } from '@/components/ui';
+import { Input, Label, Select, AISuggestionChip, Button } from '@/components/ui';
 import { useFormWizard } from '@/components/FormWizard';
 import { useAISuggestion } from '@/hooks';
 import { getCurrencyOptions } from '@/types';
@@ -113,17 +113,33 @@ export function StepAmountCurrency() {
           <Label htmlFor="currency" required>
             {t('currencyLabel')}
           </Label>
-          <Select
-            id="currency"
-            value={currency}
-            onChange={(e) => updateData({ currency: e.target.value as Currency })}
-          >
-            {currencyOptions.map((option) => (
-              <option key={option.code} value={option.code}>
-                {option.code} - {option.name}
-              </option>
-            ))}
-          </Select>
+          <div className="flex flex-col gap-2">
+            <div className="flex gap-2">
+              {(['USD', 'UYU', 'UYI'] as const).map((code) => (
+                <Button
+                  key={code}
+                  type="button"
+                  variant={currency === code ? 'primary' : 'secondary'}
+                  size="sm"
+                  onClick={() => updateData({ currency: code })}
+                  className="flex-1"
+                >
+                  {code === 'UYI' ? 'UI' : code}
+                </Button>
+              ))}
+            </div>
+            <Select
+              id="currency"
+              value={currency}
+              onChange={(e) => updateData({ currency: e.target.value as Currency })}
+            >
+              {currencyOptions.map((option) => (
+                <option key={option.code} value={option.code}>
+                  {option.code === 'UYI' ? 'UI' : option.code} - {option.name}
+                </option>
+              ))}
+            </Select>
+          </div>
         </div>
 
         {/* Amount Field */}

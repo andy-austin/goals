@@ -36,9 +36,9 @@ A multi-step form for creating new investment goals, implementing the SMART fram
 
 #### StepAmountCurrency
 **File:** `components/GoalForm/StepAmountCurrency.tsx`
-- **Fields:** Amount (number), Currency (select)
+- **Fields:** Amount (number), Currency (buttons + select)
 - **Validation:** Amount > 0
-- **Features:** Currency formatting preview, Quick select buttons, "SMART Tip" for Measurability
+- **Features:** Quick currency access (USD, UYU, UI), Currency formatting preview, Quick amount select buttons, "SMART Tip" for Measurability
 
 #### StepTargetDate
 **File:** `components/GoalForm/StepTargetDate.tsx`
