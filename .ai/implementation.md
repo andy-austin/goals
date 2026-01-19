@@ -30,6 +30,7 @@ This document tracks the implementation progress of the Investment Goals applica
 - Replaced native `title` attribute with custom Tooltip for instant feedback
 - Integrated with `next-intl` for localized button titles
 - Updated `i18n` config to remove unused `localeNames` constant
+- **Improved mobile visibility**: Moved language flags to the main navigation bar next to the hamburger icon for easier access on small screens. ✅
 - Issue #27: Create Timeline Visualization Component ✅ CLOSED
 - Issue #28: Create Goal Detail Modal/Sidebar ✅ CLOSED
 - Horizontal scrollable timeline with goals positioned by target date

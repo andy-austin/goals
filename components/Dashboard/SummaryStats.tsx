@@ -148,7 +148,7 @@ export function SummaryStats({ goals }: SummaryStatsProps) {
               <span className="text-muted-foreground">{t('stats.nextGoal')}:</span>
               <span className="font-medium text-foreground">{nextGoal.title}</span>
               <span
-                className="px-2 py-0.5 rounded-full text-xs font-medium"
+                className="px-2 py-0.5 rounded-full text-xs font-medium text-nowrap"
                 style={{
                   backgroundColor: `color-mix(in srgb, ${BUCKET_CONFIG[nextGoal.bucket].colorVar} 15%, transparent)`,
                   color: BUCKET_CONFIG[nextGoal.bucket].colorVar
