@@ -134,7 +134,7 @@ export function StepAmountCurrency() {
                 variant={currency === code ? 'primary' : 'secondary'}
                 size="sm"
                 onClick={() => updateData({ currency: code })}
-                className="h-8 px-3 text-xs"
+                className="h-8 w-[120px] text-xs"
               >
                 {code === 'UYI' ? 'UI' : code}
               </Button>
@@ -191,7 +191,7 @@ export function StepAmountCurrency() {
                 variant="secondary"
                 size="sm"
                 onClick={() => updateData({ amount: val })}
-                className="h-8 px-2 text-xs"
+                className="h-8 w-[120px] text-xs"
               >
                 {new Intl.NumberFormat('en-US', { style: 'currency', currency: currency, maximumFractionDigits: 0 }).format(val)}
               </Button>
