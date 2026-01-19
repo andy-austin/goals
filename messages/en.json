@@ -85,7 +85,7 @@
   },
   "goalForm": {
     "createTitle": "Create a New Goal",
-    "createSubtitle": "Define your investment goal using the SMART framework.",
+    "createSubtitle": "Define your investment goal using the SMART framework",
     "steps": {
       "details": "Details",
       "amount": "Amount",

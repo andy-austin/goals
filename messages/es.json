@@ -16,8 +16,8 @@
   },
   "nav": {
     "dashboard": "Panel",
-    "createGoal": "Crear Objetivo",
-    "timeline": "Línea de Tiempo"
+    "createGoal": "Crear objetivo",
+    "timeline": "Línea de tiempo"
   },
   "timeline": {
     "title": "Línea de Tiempo",
@@ -60,7 +60,7 @@
     "empty": {
       "title": "Sin objetivos todavía",
       "description": "Comienza creando tu primer objetivo de inversión.",
-      "cta": "Crear Objetivo"
+      "cta": "Crear objetivo"
     },
     "goalsCount": "{count, plural, =1 {# objetivo} other {# objetivos}}",
     "noBucketGoals": "Sin objetivos de {bucket} todavía",
@@ -84,8 +84,8 @@
     }
   },
   "goalForm": {
-    "createTitle": "Crear un Nuevo Objetivo",
-    "createSubtitle": "Define tu objetivo de inversión usando el marco SMART.",
+    "createTitle": "Crear un nuevo objetivo",
+    "createSubtitle": "Define tu objetivo de inversión usando el marco SMART",
     "steps": {
       "details": "Detalles",
       "amount": "Monto",
@@ -155,9 +155,9 @@
       "example4": "Tener la libertad de perseguir mis proyectos personales."
     },
     "selection": {
-      "title": "Empezar desde Cero",
+      "title": "Empezar desde cero",
       "description": "Crea un objetivo totalmente personalizado definido enteramente por ti.",
-      "cta": "Crear Personalizado",
+      "cta": "Crear objetivo",
       "divider": "o elige una plantilla"
     },
     "learnMoreSmart": "Aprende más sobre los objetivos SMART",
@@ -183,15 +183,15 @@
   },
   "examples": {
     "emergencyFund": {
-      "title": "Fondo de Emergencia",
+      "title": "Fondo de emergencia",
       "description": "Construir un colchón financiero que cubra 6 meses de gastos para situaciones inesperadas"
     },
     "houseDownPayment": {
-      "title": "Enganche de Casa",
+      "title": "Enganche de casa",
       "description": "Ahorrar 20% de enganche para una casa de 3 recámaras en los suburbios en 3 años"
     },
     "dreamVacation": {
-      "title": "Vacaciones Soñadas",
+      "title": "Vacaciones soñadas",
       "description": "Planear y ahorrar para un viaje de 2 semanas a Japón incluyendo vuelos, hoteles y experiencias"
     }
   },
