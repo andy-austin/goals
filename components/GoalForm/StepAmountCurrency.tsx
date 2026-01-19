@@ -110,41 +110,41 @@ export function StepAmountCurrency() {
       <div className="grid gap-6 sm:grid-cols-2">
         {/* Currency Field */}
         <div className="space-y-2">
-          <Label htmlFor="currency" required>
-            {t('currencyLabel')}
-          </Label>
-          <div className="flex flex-col gap-2">
-            <div className="flex gap-2">
-              {(['USD', 'UYU', 'UYI'] as const).map((code) => (
-                <Button
-                  key={code}
-                  type="button"
-                  variant={currency === code ? 'primary' : 'secondary'}
-                  size="sm"
-                  onClick={() => updateData({ currency: code })}
-                  className="flex-1"
-                >
-                  {code === 'UYI' ? 'UI' : code}
-                </Button>
-              ))}
-            </div>
-            <Select
-              id="currency"
-              value={currency}
-              onChange={(e) => updateData({ currency: e.target.value as Currency })}
-            >
-              {currencyOptions.map((option) => (
-                <option key={option.code} value={option.code}>
-                  {option.code === 'UYI' ? 'UI' : option.code} - {option.name}
-                </option>
-              ))}
-            </Select>
+          <div className="flex h-5 items-center justify-between">
+            <Label htmlFor="currency" required>
+              {t('currencyLabel')}
+            </Label>
+          </div>
+          <Select
+            id="currency"
+            value={currency}
+            onChange={(e) => updateData({ currency: e.target.value as Currency })}
+          >
+            {currencyOptions.map((option) => (
+              <option key={option.code} value={option.code}>
+                {option.code === 'UYI' ? 'UI' : option.code} - {option.name}
+              </option>
+            ))}
+          </Select>
+          <div className="flex gap-2">
+            {(['USD', 'UYU', 'UYI'] as const).map((code) => (
+              <Button
+                key={code}
+                type="button"
+                variant={currency === code ? 'primary' : 'secondary'}
+                size="sm"
+                onClick={() => updateData({ currency: code })}
+                className="flex-1"
+              >
+                {code === 'UYI' ? 'UI' : code}
+              </Button>
+            ))}
           </div>
         </div>
 
         {/* Amount Field */}
         <div className="space-y-2">
-          <div className="flex items-center justify-between">
+          <div className="flex h-5 items-center justify-between">
             <Label htmlFor="amount" required>
               {t('amountLabel')}
             </Label>
@@ -182,6 +182,21 @@ export function StepAmountCurrency() {
               {t('amountError')}
             </p>
           )}
+          
+          <div className="flex flex-wrap gap-2">
+            {[1000, 5000, 10000, 25000, 50000, 100000].map((val) => (
+              <Button
+                key={val}
+                type="button"
+                variant="secondary"
+                size="sm"
+                onClick={() => updateData({ amount: val })}
+                className="h-8 px-2 text-xs"
+              >
+                {new Intl.NumberFormat('en-US', { style: 'currency', currency: currency, maximumFractionDigits: 0 }).format(val)}
+              </Button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -233,24 +248,7 @@ export function StepAmountCurrency() {
         </div>
       </div>
 
-      {/* Quick Select Buttons */}
-      <div className="space-y-2">
-        <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">
-          {t('quickSelect')}
-        </p>
-        <div className="flex flex-wrap gap-2">
-          {[1000, 5000, 10000, 25000, 50000, 100000].map((val) => (
-            <button
-              key={val}
-              type="button"
-              onClick={() => updateData({ amount: val })}
-              className="rounded-full border border-zinc-200 px-3 py-1 text-sm text-zinc-600 transition-colors hover:border-primary hover:text-primary dark:border-zinc-800 dark:text-zinc-400 dark:hover:border-primary dark:hover:text-primary"
-            >
-              {new Intl.NumberFormat('en-US', { style: 'currency', currency: currency, maximumFractionDigits: 0 }).format(val)}
-            </button>
-          ))}
-        </div>
-      </div>
+
     </div>
   );
 }
