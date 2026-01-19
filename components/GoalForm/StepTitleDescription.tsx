@@ -111,7 +111,7 @@ export function StepTitleDescription() {
             <button
               type="button"
               onClick={handleGetSuggestion}
-              className="inline-flex items-center gap-1.5 text-xs font-medium text-info hover:text-info/80 transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-info hover:text-info/80 transition-colors cursor-pointer"
             >
               <SparklesIcon className="w-3.5 h-3.5" />
               {tAI('suggestion')}
@@ -224,7 +224,7 @@ function ExampleCard({ title, description }: { title: string; description: strin
     <button
       type="button"
       onClick={handleUseExample}
-      className="group rounded-lg border border-zinc-200 bg-zinc-50 p-3 text-left transition-colors hover:border-primary hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-primary dark:hover:bg-zinc-800"
+      className="group rounded-lg border border-zinc-200 bg-zinc-50 p-3 text-left transition-colors hover:border-primary hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-primary dark:hover:bg-zinc-800 cursor-pointer"
     >
       <p className="text-sm font-medium text-zinc-900 group-hover:text-primary dark:text-zinc-100">
         {title}

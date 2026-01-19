@@ -72,6 +72,7 @@ export const TimelineGoalCluster = forwardRef<HTMLDivElement, ClusterProps>(
                       flex w-full items-center justify-between gap-2
                       rounded-md p-2 text-left
                       hover:bg-muted transition-colors
+                      cursor-pointer
                     "
                     role="menuitem"
                   >

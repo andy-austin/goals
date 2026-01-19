@@ -108,7 +108,7 @@ function ToastItem({ toast, onRemove }: ToastItemProps) {
       <button
         type="button"
         onClick={() => onRemove(toast.id)}
-        className="ml-auto text-white/80 hover:text-white"
+        className="ml-auto text-white/80 hover:text-white cursor-pointer"
         aria-label="Close"
       >
         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

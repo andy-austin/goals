@@ -98,7 +98,7 @@ export function StepWhyItMatters() {
             <button
               type="button"
               onClick={handleGetSuggestion}
-              className="inline-flex items-center gap-1.5 text-xs font-medium text-info hover:text-info/80 transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-info hover:text-info/80 transition-colors cursor-pointer"
             >
               <SparklesIcon className="w-3.5 h-3.5" />
               {tAI('suggestion')}
@@ -194,7 +194,7 @@ export function StepWhyItMatters() {
                   key={example}
                   type="button"
                   onClick={() => updateData({ whyItMatters: example })}
-                  className="text-left text-sm text-zinc-600 hover:text-primary dark:text-zinc-400 dark:hover:text-primary transition-colors"
+                  className="text-left text-sm text-zinc-600 hover:text-primary dark:text-zinc-400 dark:hover:text-primary transition-colors cursor-pointer"
                 >
                   &quot;{example}&quot;
                 </button>

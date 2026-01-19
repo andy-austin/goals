@@ -138,7 +138,7 @@ export function StepBucket() {
             <button
               type="button"
               onClick={handleGetSuggestion}
-              className="inline-flex items-center gap-1.5 text-xs font-medium text-info hover:text-info/80 transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-info hover:text-info/80 transition-colors cursor-pointer"
             >
               <SparklesIcon className="w-3.5 h-3.5" />
               {tAI('suggestion')}
@@ -181,7 +181,7 @@ export function StepBucket() {
               key={bucket}
               type="button"
               onClick={() => handleSelect(bucket)}
-              className={`relative flex items-start gap-4 rounded-xl border p-4 text-left transition-all ${
+              className={`relative flex items-start gap-4 rounded-xl border p-4 text-left transition-all cursor-pointer ${
                 isSelected
                   ? 'border-[var(--bucket-color)] bg-[var(--bucket-bg)] ring-1 ring-[var(--bucket-color)]'
                   : 'border-zinc-200 bg-white hover:border-zinc-300 hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700 dark:hover:bg-zinc-800'

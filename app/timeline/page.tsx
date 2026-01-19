@@ -83,7 +83,7 @@ export default function TimelinePage() {
             <button
               type="button"
               onClick={() => setSelectedGoal(null)}
-              className="absolute top-4 right-4 text-muted-foreground hover:text-foreground"
+              className="absolute top-4 right-4 text-muted-foreground hover:text-foreground cursor-pointer"
               aria-label="Close"
             >
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

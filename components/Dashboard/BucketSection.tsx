@@ -67,7 +67,7 @@ export function BucketSection({ bucket, goals }: BucketSectionProps) {
       {/* Header */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="flex w-full items-center justify-between px-6 py-4 transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-900"
+        className="flex w-full items-center justify-between px-6 py-4 transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-900 cursor-pointer"
         style={{ borderLeft: `4px solid ${config.colorVar}` }}
       >
         <div className="flex items-center gap-4">

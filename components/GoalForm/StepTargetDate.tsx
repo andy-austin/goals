@@ -126,7 +126,7 @@ export function StepTargetDate() {
               key={years}
               type="button"
               onClick={() => setQuickDate(years)}
-              className="rounded-full border border-zinc-200 px-3 py-1 text-sm text-zinc-600 transition-colors hover:border-primary hover:text-primary dark:border-zinc-800 dark:text-zinc-400 dark:hover:border-primary dark:hover:text-primary"
+              className="rounded-full border border-zinc-200 px-3 py-1 text-sm text-zinc-600 transition-colors hover:border-primary hover:text-primary dark:border-zinc-800 dark:text-zinc-400 dark:hover:border-primary dark:hover:text-primary cursor-pointer"
             >
               {t(`quickSelect.${years}year${years > 1 ? 's' : ''}`)}
             </button>

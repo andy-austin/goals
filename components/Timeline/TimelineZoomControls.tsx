@@ -32,7 +32,7 @@ export const TimelineZoomControls = forwardRef<HTMLDivElement, ZoomControlsProps
               type="button"
               onClick={() => onChange(level)}
               className={`
-                rounded-md px-3 py-1.5 text-sm font-medium transition-colors
+                rounded-md px-3 py-1.5 text-sm font-medium transition-colors cursor-pointer
                 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
                 ${
                   isActive

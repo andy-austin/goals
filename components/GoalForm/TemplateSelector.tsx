@@ -59,7 +59,7 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
             <button
               key={bucket}
               onClick={() => setActiveBucket(bucket)}
-              className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-medium rounded-lg transition-all ${
+              className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-medium rounded-lg transition-all cursor-pointer ${
                 isActive
                   ? 'bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 shadow-sm'
                   : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300'
@@ -85,7 +85,7 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
               description: tTemplates(`${template.id}.description`),
               sampleWhyItMatters: tTemplates(`${template.id}.whyItMatters`),
             })}
-            className="text-left group relative flex flex-col gap-3 rounded-xl border border-zinc-200 bg-white p-4 transition-all hover:border-[var(--bucket-color)] hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900"
+            className="text-left group relative flex flex-col gap-3 rounded-xl border border-zinc-200 bg-white p-4 transition-all hover:border-[var(--bucket-color)] hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900 cursor-pointer"
             style={{
               '--bucket-color': BUCKET_CONFIG[template.bucket].colorVar,
             } as React.CSSProperties}

@@ -185,7 +185,7 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
                     <button
                       type="button"
                       onClick={() => onGoalSelect?.(goal)}
-                      className="w-full text-left focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 rounded"
+                      className="w-full text-left focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 rounded cursor-pointer"
                     >
                       <div className="font-medium text-xs sm:text-sm text-foreground truncate">
                         {goal.title}
