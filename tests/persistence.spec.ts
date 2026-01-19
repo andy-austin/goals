@@ -31,7 +31,7 @@ test.describe('LocalStorage Persistence', () => {
     }, testGoal);
 
     // Navigate to the page - app should load the goal
-    await page.goto('/');
+    await page.goto('/dashboard');
 
     // Goal should be visible (use heading role to be specific)
     await expect(page.getByRole('heading', { name: 'Persistence Test Goal' })).toBeVisible();
@@ -65,7 +65,7 @@ test.describe('LocalStorage Persistence', () => {
     }, testGoal);
 
     // Navigate to the page
-    await page.goto('/');
+    await page.goto('/dashboard');
 
     // Wait for the goal to be visible (confirms hydration is complete)
     await expect(page.getByRole('heading', { name: 'Structure Test' })).toBeVisible();
@@ -89,7 +89,7 @@ test.describe('LocalStorage Persistence', () => {
       localStorage.clear();
     });
 
-    await page.goto('/');
+    await page.goto('/dashboard');
 
     // Should show empty state
     await expect(page.getByRole('heading', { name: 'No goals yet' })).toBeVisible();
@@ -144,7 +144,7 @@ test.describe('LocalStorage Persistence', () => {
     }, testGoals);
 
     // Navigate to the page
-    await page.goto('/');
+    await page.goto('/dashboard');
 
     // Wait for goals to be visible (confirms hydration) - use heading role
     await expect(page.getByRole('heading', { name: 'First Goal' })).toBeVisible();
@@ -183,7 +183,7 @@ test.describe('LocalStorage Persistence', () => {
     });
 
     // Navigate - should not crash
-    await page.goto('/');
+    await page.goto('/dashboard');
 
     // Should show empty state (corrupted data should be ignored)
     await expect(page.getByText('No goals yet')).toBeVisible();
@@ -217,7 +217,7 @@ test.describe('LocalStorage Persistence', () => {
       );
     }, partialGoals);
 
-    await page.goto('/');
+    await page.goto('/dashboard');
 
     // Valid goal should be displayed (use heading role)
     await expect(page.getByRole('heading', { name: 'Valid Goal' })).toBeVisible();

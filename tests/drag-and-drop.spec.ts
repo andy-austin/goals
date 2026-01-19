@@ -52,7 +52,7 @@ test.describe('Drag and Drop Goal Reordering', () => {
         JSON.stringify({ version: 1, goals })
       );
     }, testGoals);
-    await page.goto('/');
+    await page.goto('/dashboard');
   });
 
   test('displays drag handles on goal cards', async ({ page }) => {

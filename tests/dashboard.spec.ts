@@ -10,7 +10,7 @@ test.describe('Dashboard', () => {
     await page.addInitScript(() => {
       localStorage.clear();
     });
-    await page.goto('/');
+    await page.goto('/dashboard');
   });
 
   test('displays empty state when no goals exist', async ({ page }) => {
@@ -94,7 +94,7 @@ test.describe('Dashboard with Goals', () => {
         JSON.stringify({ version: 1, goals })
       );
     }, testGoals);
-    await page.goto('/');
+    await page.goto('/dashboard');
   });
 
   test('displays goals in bucket sections', async ({ page }) => {
