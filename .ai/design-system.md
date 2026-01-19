@@ -236,3 +236,26 @@ This enables using `bg-background`, `text-primary`, `bg-bucket-safety`, etc.
 2. Add dark mode variant in `@media (prefers-color-scheme: dark)`
 3. Add Tailwind mapping in `@theme inline` if needed
 4. Update this documentation
+
+---
+
+## Print Styles
+
+The application includes a print-optimized stylesheet that activates automatically when printing (`@media print`).
+
+### Key Features
+- **Hidden Elements:** Navigation, buttons, toasts, and other interactive elements are hidden.
+- **Layout Adjustments:**
+  - Backgrounds forced to white.
+  - Text forced to black.
+  - Cards use simple borders instead of shadows.
+  - Links are cleaned up (no URL expansion).
+- **Page Breaks:**
+  - Avoids breaking inside cards or bucket sections.
+  - Sets margins for A4/Letter paper.
+- **Bucket Styling:**
+  - Retains bucket color coding via left-border strips on print.
+  - Includes a summary header with date generated.
+
+### Testing
+Use the "Print" button in the Export menu or `Cmd+P` / `Ctrl+P` to verify print layout.

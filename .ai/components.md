@@ -13,9 +13,14 @@ Reusable React components that form the application's user interface. Built with
 | `components/ui/Input.tsx` | Form inputs (Input, Textarea, Label, Select) |
 | `components/ui/Badge.tsx` | Badge and BucketBadge for labels/chips |
 | `components/ui/index.ts` | Barrel export for UI components |
+| `components/Dashboard/SummaryStats.tsx` | Dashboard summary statistics and export actions |
+| `components/Dashboard/ExportMenu.tsx` | Print/Export actions dropdown/button |
+| `components/ui/Toast.tsx` | Toast notification system |
+| `components/ui/Tooltip.tsx` | Reusable tooltip component |
 | `components/Timeline/Timeline.tsx` | Main timeline visualization |
 | `components/Timeline/GanttChart.tsx` | Gantt chart with horizontal bars |
 | `components/Timeline/TimelineZoomControls.tsx` | Zoom level buttons |
+| `components/Timeline/TimelineGoalTooltip.tsx` | Hover tooltip for timeline markers |
 | `components/Timeline/useTimelineCalculations.ts` | Timeline calculation hook |
 | `components/Timeline/index.ts` | Timeline component exports |
 | `components/index.ts` | Main component exports |
@@ -35,6 +40,7 @@ Responsive app header with navigation.
 - Mobile hamburger menu
 - Active page indicator
 - Dark mode support
+- Language switcher (flags)
 
 **Usage:**
 ```tsx
@@ -50,6 +56,83 @@ import { Header } from '@/components';
 | `/` | Dashboard |
 | `/create` | Create Goal |
 | `/timeline` | Timeline |
+
+---
+
+### SummaryStats
+Dashboard summary card with total goals, currency breakdown, and export options.
+
+**File:** `components/Dashboard/SummaryStats.tsx`
+
+**Features:**
+- Total goals count
+- Total amount summary (grouped by currency)
+- AI-powered approximate total conversion (if mixed currencies)
+- Next upcoming goal countdown
+- Bucket count breakdown
+- Export menu integration
+
+**Props:**
+| Prop | Type | Description |
+|------|------|-------------|
+| `goals` | `Goal[]` | List of all goals |
+| `totalAmount` | `number` | (Deprecated) Pre-calculated total |
+
+---
+
+### ExportMenu
+Controls for exporting/printing goals.
+
+**File:** `components/Dashboard/ExportMenu.tsx`
+
+**Features:**
+- Print button (triggers browser print)
+- Future: PDF download, Copy to clipboard (handled in SummaryStats currently but moving here)
+
+**Props:**
+| Prop | Type | Description |
+|------|------|-------------|
+| `goals` | `Goal[]` | Goals to export |
+
+---
+
+### Toast
+Notification system for success/error messages.
+
+**File:** `components/ui/Toast.tsx`
+
+**Usage:**
+```tsx
+// In Providers
+<ToastProvider>{children}</ToastProvider>
+
+// In Component
+const { showToast } = useToast();
+showToast('Goal saved!', 'success');
+```
+
+**Types:** `success`, `error`, `info`
+
+---
+
+### Tooltip
+Accessible tooltip component for showing additional info on hover/focus.
+
+**File:** `components/ui/Tooltip.tsx`
+
+**Props:**
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `content` | `string` | required | Text to display |
+| `side` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'` | Positioning |
+| `align` | `'start' \| 'center' \| 'end'` | `'center'` | Alignment |
+
+**Usage:**
+```tsx
+<Tooltip content="Estimated total in USD">
+  <span>$10,000</span>
+</Tooltip>
+```
 
 ---
 

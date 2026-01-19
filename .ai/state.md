@@ -46,7 +46,8 @@ type GoalsAction =
   | { type: 'ADD_GOAL'; payload: Goal }
   | { type: 'SET_GOALS'; payload: Goal[] }
   | { type: 'UPDATE_GOAL_PRIORITY'; payload: { goalId: string; newPriority: number } }
-  | { type: 'REORDER_GOALS_IN_BUCKET'; payload: { bucket: Bucket; orderedIds: string[] } };
+  | { type: 'REORDER_GOALS_IN_BUCKET'; payload: { bucket: Bucket; orderedIds: string[] } }
+  | { type: 'DELETE_GOAL'; payload: string };
 ```
 
 ---
@@ -68,6 +69,7 @@ import { useGoals } from '@/context';
 | `totalGoals` | `number` | Count of all goals |
 | `totalAmount` | `number` | Sum of all goal amounts |
 | `addGoal` | `(input: CreateGoalInput) => Goal` | Add a new goal |
+| `deleteGoal` | `(goalId: string) => void` | Delete a goal by ID |
 | `getGoals` | `() => Goal[]` | Get all goals |
 | `getGoalsByBucket` | `(bucket: Bucket) => Goal[]` | Get goals filtered by bucket |
 | `getAllGoalsByBucket` | `() => GoalsByBucket` | Get goals organized by bucket |

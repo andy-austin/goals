@@ -3,7 +3,7 @@
 This document tracks the implementation progress of the Investment Goals application.
 
 ## Last Updated
-2026-01-18
+2026-01-19
 
 ---
 
@@ -14,8 +14,9 @@ This document tracks the implementation progress of the Investment Goals applica
 **Milestone 3: AI-Powered Suggestions** - COMPLETE (6/6 issues completed)
 **Milestone 4: Goal Templates & Examples** - COMPLETE (3/3 issues completed)
 **Milestone 5: Prioritization UI** - COMPLETE (3/3 issues completed)
+**Milestone 6: Goal Summary & Export** - COMPLETE (5/5 issues completed)
 
-### Completed in This Session
+### Completed in Previous Session
 - Refined Goal Form Step 2 (Amount & Currency) ✅ CLOSED
 - Redesigned currency selection with quick-access buttons for USD, UYU, and UI (Indexed Unit)
 - Improved UX for common currencies
@@ -40,6 +41,29 @@ This document tracks the implementation progress of the Investment Goals applica
 - Gantt Chart visualization with horizontal bars from Today to target date
 - Cursor-following tooltips with goal info
 - 14+ E2E tests for timeline functionality
+
+### Maintenance & Refactoring (New)
+A deep code review identified several areas for improvement in maintainability, accessibility, and mobile UX.
+
+#### Code Quality & Refactoring
+- [ ] Issue #37: Refactor: Centralize hardcoded validation constants
+- [ ] Issue #39: i18n: Remove hardcoded strings from BUCKET_CONFIG types
+- [ ] Issue #41: Refactor: Extract goalsReducer from GoalsContext
+- [ ] Issue #43: Performance: Transition Goals state to Async Storage pattern
+- [ ] Issue #47: Refactor: Standardize dynamic bucket styling to use Tailwind utilities
+- [ ] Issue #48: Maintenance: Externalize AI Model Configuration
+
+#### Mobile UX & Bugs
+- [ ] Issue #38: Bug: Fix mobile viewport height cut-off in Form Wizard
+- [ ] Issue #44: UX: Improve Timeline Marker visibility on mobile
+- [ ] Issue #45: Bug: Fix Gantt Chart tooltip overlap
+- [ ] Issue #46: UX: Implement sticky header for Form Wizard on mobile
+
+#### Accessibility (A11y)
+- [ ] Issue #40: A11y: Improve accessibility of Timeline Tooltips
+- [ ] Issue #42: A11y/UX: Optimize Gantt Chart Tooltip for touch and keyboard
+
+---
 
 ### Issue #36: Refactor Language Selector to use flags
 **Status:** ✅ Completed & Closed
@@ -1487,34 +1511,36 @@ npx playwright test --project=chromium
 
 ## Pending Implementation
 
-### Milestone 5: Prioritization UI - COMPLETE (3/3 issues)
-- [x] Issue #26: Implement Drag-and-Drop Goal Reordering ✅
-- [x] Issue #27: Create Timeline Visualization Component ✅ CLOSED
-- [x] Issue #28: Create Goal Detail Modal/Sidebar ✅ CLOSED
-
-### Milestone 6: Goal Summary & Export - COMPLETE (5/5 issues completed)
-- [x] Issue #30: Create Summary Statistics Component ✅ CLOSED
-- [x] Issue #31: Implement PDF Export Functionality ✅ CLOSED
-- [x] Issue #32: Implement Print-Friendly View ✅ CLOSED
-- [x] Issue #33: Implement Copy to Clipboard Functionality ✅ CLOSED
-- [x] Issue #34: Create Export Menu Component ✅ CLOSED
+### Milestone 7: Maintenance & Refactoring (12 issues)
+- [ ] Issue #37: Refactor: Centralize hardcoded validation constants
+- [ ] Issue #38: Bug: Fix mobile viewport height cut-off in Form Wizard
+- [ ] Issue #39: i18n: Remove hardcoded strings from BUCKET_CONFIG types
+- [ ] Issue #40: A11y: Improve accessibility of Timeline Tooltips
+- [ ] Issue #41: Refactor: Extract goalsReducer from GoalsContext
+- [ ] Issue #42: A11y/UX: Optimize Gantt Chart Tooltip for touch and keyboard
+- [ ] Issue #43: Performance: Transition Goals state to Async Storage pattern
+- [ ] Issue #44: UX: Improve Timeline Marker visibility on mobile
+- [ ] Issue #45: Bug: Fix Gantt Chart tooltip overlap
+- [ ] Issue #46: UX: Implement sticky header for Form Wizard on mobile
+- [ ] Issue #47: Refactor: Standardize dynamic bucket styling to use Tailwind utilities
+- [ ] Issue #48: Maintenance: Externalize AI Model Configuration
 
 See GitHub Issues for full backlog:
 - [Milestone 1: Project Setup & Foundation](https://github.com/andy-austin/goals/milestone/1) - 5/5 complete
 - [Milestone 2: Goal Creation Flow](https://github.com/andy-austin/goals/milestone/2) - 8/8 complete
 - [Milestone 3: AI-Powered Suggestions](https://github.com/andy-austin/goals/milestone/3) - 6/6 complete
 - [Milestone 4: Goal Templates & Examples](https://github.com/andy-austin/goals/milestone/4) - 3/3 complete
-- [Milestone 5: Prioritization UI](https://github.com/andy-austin/goals/milestone/5)
-- [Milestone 6: Goal Summary & Export](https://github.com/andy-austin/goals/milestone/6)
+- [Milestone 5: Prioritization UI](https://github.com/andy-austin/goals/milestone/5) - 3/3 complete
+- [Milestone 6: Goal Summary & Export](https://github.com/andy-austin/goals/milestone/6) - 5/5 complete
+- [Milestone 7: Maintenance & Refactoring](https://github.com/andy-austin/goals/milestone/7) - 0/12 complete
 
 ---
 
 ## Next Steps (Suggested)
 
-1. **Complete Milestone 2** - Implement form steps (Issues #7-13)
-2. **AI Integration** (Milestone 3) - Claude API for suggestions
-3. **Templates** (Milestone 4) - Pre-defined goal templates
-4. **Prioritization UI** (Milestone 5) - Drag-and-drop reordering
+1.  **Address High Priority Bugs**: Fix mobile viewport issues (#38) and tooltip overlaps (#45).
+2.  **Improve Accessibility**: Enhance timeline tooltips (#40, #42).
+3.  **Refactor Critical Paths**: Centralize validation (#37) and bucket types (#39).
 
 ---
 
