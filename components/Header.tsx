@@ -2,22 +2,43 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { TrendingUp } from 'lucide-react';
+import { TrendingUp, LogOut, User } from 'lucide-react';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import { useAuth } from '@/context/AuthContext';
 
 export function Header() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
   const t = useTranslations('nav');
   const tCommon = useTranslations('common');
+  const tAuth = useTranslations('auth');
+  const { user, loading, signOut } = useAuth();
+
+  // Close user menu when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setUserMenuOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const navItems = [
     { href: '/dashboard', label: t('dashboard') },
     { href: '/create', label: t('createGoal') },
     { href: '/timeline', label: t('timeline') },
   ];
+
+  const handleSignOut = async () => {
+    setUserMenuOpen(false);
+    await signOut();
+  };
 
   return (
     <header className="print:hidden sticky top-0 z-50 border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
@@ -53,12 +74,57 @@ export function Header() {
           <div className="ml-2 border-l border-zinc-200 pl-2 dark:border-zinc-700">
             <LanguageSwitcher />
           </div>
+          {/* Auth UI */}
+          <div className="ml-2 border-l border-zinc-200 pl-2 dark:border-zinc-700">
+            {!loading && (
+              user ? (
+                <div className="relative" ref={userMenuRef}>
+                  <button
+                    type="button"
+                    onClick={() => setUserMenuOpen(!userMenuOpen)}
+                    className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 cursor-pointer dark:text-zinc-400 dark:hover:bg-zinc-800/50 dark:hover:text-zinc-100"
+                  >
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">
+                      <User className="h-4 w-4" />
+                    </div>
+                    <span className="max-w-[120px] truncate">
+                      {user.email?.split('@')[0]}
+                    </span>
+                  </button>
+                  {userMenuOpen && (
+                    <div className="absolute right-0 mt-1 w-48 rounded-md border border-zinc-200 bg-white py-1 shadow-lg dark:border-zinc-700 dark:bg-zinc-900">
+                      <div className="border-b border-zinc-200 px-4 py-2 dark:border-zinc-700">
+                        <p className="truncate text-sm font-medium text-foreground">
+                          {user.email}
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={handleSignOut}
+                        className="flex w-full items-center gap-2 px-4 py-2 text-sm text-zinc-600 hover:bg-zinc-50 cursor-pointer dark:text-zinc-400 dark:hover:bg-zinc-800"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        {tAuth('signOut')}
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  href="/auth/login"
+                  className="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
+                >
+                  {tAuth('login')}
+                </Link>
+              )
+            )}
+          </div>
         </nav>
 
         {/* Mobile Actions */}
         <div className="flex items-center gap-2 sm:hidden">
           <LanguageSwitcher />
-          
+
           {/* Mobile Menu Button */}
           <button
             type="button"
@@ -100,6 +166,39 @@ export function Header() {
               </Link>
             );
           })}
+          {/* Mobile Auth */}
+          <div className="mt-2 border-t border-zinc-200 pt-2 dark:border-zinc-700">
+            {!loading && (
+              user ? (
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2 px-3 py-2">
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">
+                      <User className="h-4 w-4" />
+                    </div>
+                    <span className="truncate text-sm font-medium text-foreground">
+                      {user.email}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => { setMobileMenuOpen(false); handleSignOut(); }}
+                    className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-base font-medium text-zinc-600 hover:bg-zinc-50 cursor-pointer dark:text-zinc-400 dark:hover:bg-zinc-800/50"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    {tAuth('signOut')}
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  href="/auth/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block rounded-md px-3 py-2 text-base font-medium text-blue-600 hover:bg-zinc-50 dark:text-blue-400 dark:hover:bg-zinc-800/50"
+                >
+                  {tAuth('login')}
+                </Link>
+              )
+            )}
+          </div>
         </nav>
       )}
     </header>

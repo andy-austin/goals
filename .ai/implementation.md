@@ -1,26 +1,47 @@
-# Landing Page Translation Update
+# Implementation Status
 
-The home screen (landing page) has been fully translated to support internationalization. All hardcoded text strings have been moved to translation files and the components have been updated to use the `useTranslations` hook.
+## Recently Completed
 
-## Changes
+### User Authentication & Account Management (#64)
+Added Supabase Auth + Supabase Postgres integration for user authentication and cloud-synced goal persistence.
 
-### Translation Files
-- **`messages/en.json`**: Added a new `landing` section with structured keys for all landing page sections.
-- **`messages/es.json`**: Added the corresponding Spanish translations.
+**New files created:**
+- `lib/supabase/browser.ts` — Browser-side Supabase client (singleton)
+- `lib/supabase/server.ts` — Server-side Supabase client (for API routes/server components)
+- `lib/supabase/middleware.ts` — Middleware client for session refresh
+- `lib/supabase/goals.ts` — Supabase CRUD operations for goals (fetch, insert, delete, update, upsert)
+- `context/AuthContext.tsx` — AuthProvider + useAuth() hook with session management
+- `middleware.ts` — Next.js middleware for auth token refresh
+- `app/auth/login/page.tsx` — Login page (email/password + Google OAuth)
+- `app/auth/signup/page.tsx` — Registration page (email/password + Google OAuth)
+- `app/auth/callback/route.ts` — OAuth callback handler
+- `supabase/migrations/001_create_goals_table.sql` — Database schema with RLS
+- `.env.local` — Supabase credentials (gitignored)
 
-### Components Updated
-All components in `components/landing/` were refactored:
-- `LandingHeader.tsx`
-- `HeroSection.tsx`
-- `MethodologySection.tsx`
-- `GoalCalculator.tsx` (also fixed a linting error with date handling)
-- `WhyDocumentSection.tsx`
-- `PriorityFeature.tsx`
-- `CTASection.tsx`
-- `Footer.tsx`
+**Modified files:**
+- `context/GoalsContext.tsx` — Auth-aware dual storage (localStorage for anonymous, Supabase for authenticated users, auto-migration on first login)
+- `context/index.ts` — Added AuthContext export
+- `app/providers.tsx` — Added AuthProvider wrapper (outermost)
+- `components/Header.tsx` — Added login button/user menu with sign out
+- `messages/en.json` — Added `auth` translation section
+- `messages/es.json` — Added `auth` translation section (Spanish)
+- `package.json` — Added `@supabase/supabase-js`, `@supabase/ssr`
 
-## Verification
-- **Linting**: Passed (fixed `Date.now()` purity issue).
-- **Build**: Passed (`npm run build` successful).
+**Architecture:**
+- Anonymous users: Goals in localStorage (unchanged from before)
+- Authenticated users: Goals synced to Supabase Postgres with RLS
+- On first login: localStorage goals auto-migrate to Supabase if user has no remote goals
+- Auth state: React Context (`AuthProvider`) wrapping the entire app
 
-The application will now automatically display the landing page in English or Spanish based on the user's browser locale.
+**Database setup required:** Run `supabase/migrations/001_create_goals_table.sql` in Supabase SQL Editor.
+
+### Landing Page Translation (Previous)
+All landing page components translated to English/Spanish via `next-intl`.
+
+## Next Steps
+- #68: Personal Data Privacy Consent (Legal Compliance) — should ship alongside auth
+- #53: Edit Goals — add edit button to goal cards
+- #52: Progress Tracking + Savings Calculator
+- #65: Family/Group Goal Sharing
+- #66: Goal-to-Investment Vehicle Linking
+- #67: Currency Exchange Rate Display
