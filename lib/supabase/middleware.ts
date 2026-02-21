@@ -2,13 +2,20 @@ import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export async function updateSession(request: NextRequest) {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    return NextResponse.next({ request });
+  }
+
   let supabaseResponse = NextResponse.next({
     request,
   });
 
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseAnonKey,
     {
       cookies: {
         getAll() {
@@ -30,7 +37,34 @@ export async function updateSession(request: NextRequest) {
   );
 
   // Refresh the session - this is important for keeping the session alive
-  await supabase.auth.getUser();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  // Server-side only flag — never exposed to the browser (no NEXT_PUBLIC_ prefix).
+  // Allows E2E tests to reach protected routes without real Supabase credentials.
+  if (process.env.PLAYWRIGHT_TEST_MODE === 'true') {
+    return supabaseResponse;
+  }
+
+  const { pathname } = request.nextUrl;
+
+  const protectedPaths = ['/dashboard', '/create', '/timeline'];
+  const isProtected = protectedPaths.some((p) => pathname === p || pathname.startsWith(`${p}/`));
+
+  if (!user && isProtected) {
+    const loginUrl = request.nextUrl.clone();
+    loginUrl.pathname = '/auth/login';
+    loginUrl.searchParams.set('redirectTo', pathname);
+    return NextResponse.redirect(loginUrl);
+  }
+
+  // Redirect logged-in users away from auth pages
+  const authPaths = ['/auth/login', '/auth/signup'];
+  if (user && authPaths.some((p) => pathname.startsWith(p))) {
+    const dashboardUrl = request.nextUrl.clone();
+    dashboardUrl.pathname = '/dashboard';
+    dashboardUrl.search = '';
+    return NextResponse.redirect(dashboardUrl);
+  }
 
   return supabaseResponse;
 }

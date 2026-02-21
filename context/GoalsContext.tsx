@@ -160,7 +160,6 @@ interface GoalsProviderProps {
 export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProps) {
   const [state, dispatch] = useReducer(goalsReducer, { goals: initialGoals });
   const isHydrated = useRef(false);
-  const hasMigrated = useRef(false);
   const { user } = useAuth();
 
   // Load goals: from Supabase if authenticated, from localStorage if not
@@ -173,32 +172,25 @@ export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProp
         const remoteGoals = await fetchGoalsRemote();
         if (cancelled) return;
 
-        // Migrate localStorage goals on first login
-        if (!hasMigrated.current) {
-          const localGoals = loadGoals();
-          if (localGoals.length > 0 && remoteGoals.length === 0) {
-            // User has local goals but no remote goals — migrate
-            await upsertGoals(localGoals, user.id);
-            clearGoals(); // Clear localStorage after migration
-            if (cancelled) return;
-            dispatch({ type: 'SET_GOALS', payload: localGoals });
-          } else {
-            if (localGoals.length > 0) {
-              // Both exist — remote wins, clear local
-              clearGoals();
-            }
-            dispatch({ type: 'SET_GOALS', payload: remoteGoals });
-          }
-          hasMigrated.current = true;
+        const localGoals = loadGoals();
+        if (localGoals.length > 0 && remoteGoals.length === 0) {
+          // User has local goals but no remote goals — migrate
+          await upsertGoals(localGoals, user.id);
+          clearGoals(); // Clear localStorage after migration
+          if (cancelled) return;
+          dispatch({ type: 'SET_GOALS', payload: localGoals });
         } else {
+          if (localGoals.length > 0) {
+            // Both exist — remote wins, clear local
+            clearGoals();
+          }
           dispatch({ type: 'SET_GOALS', payload: remoteGoals });
         }
       } else {
-        // Anonymous: load from localStorage
+        // Anonymous or logged out: load from localStorage.
+        // Always dispatch (even empty) so a previous user's goals are cleared.
         const storedGoals = loadGoals();
-        if (storedGoals.length > 0) {
-          dispatch({ type: 'SET_GOALS', payload: storedGoals });
-        }
+        dispatch({ type: 'SET_GOALS', payload: storedGoals });
       }
       isHydrated.current = true;
     }

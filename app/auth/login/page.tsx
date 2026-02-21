@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useAuth } from '@/context/AuthContext';
@@ -17,6 +17,8 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const { signIn, signInWithGoogle } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get('redirectTo') || '/dashboard';
   const t = useTranslations('auth');
 
   async function handleSubmit(e: React.FormEvent) {
@@ -29,13 +31,13 @@ export default function LoginPage() {
       setError(authError.message);
       setLoading(false);
     } else {
-      router.push('/dashboard');
+      router.push(redirectTo);
     }
   }
 
   async function handleGoogleSignIn() {
     setError('');
-    const { error: authError } = await signInWithGoogle();
+    const { error: authError } = await signInWithGoogle(redirectTo);
     if (authError) {
       setError(authError.message);
     }

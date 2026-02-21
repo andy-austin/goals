@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useAuth } from '@/context/AuthContext';
@@ -17,6 +18,9 @@ export default function SignUpPage() {
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
   const { signUp, signInWithGoogle } = useAuth();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get('redirectTo') || '/dashboard';
   const t = useTranslations('auth');
 
   async function handleSubmit(e: React.FormEvent) {
@@ -30,11 +34,15 @@ export default function SignUpPage() {
     }
 
     setLoading(true);
-    const { error: authError } = await signUp(email, password);
+    const { error: authError, session } = await signUp(email, password);
     if (authError) {
       setError(authError.message);
       setLoading(false);
+    } else if (session) {
+      // Email confirmation is disabled — user is immediately authenticated
+      router.push(redirectTo);
     } else {
+      // Email confirmation required — ask user to check their inbox
       setSuccess(t('checkEmail'));
       setLoading(false);
     }
@@ -42,7 +50,7 @@ export default function SignUpPage() {
 
   async function handleGoogleSignIn() {
     setError('');
-    const { error: authError } = await signInWithGoogle();
+    const { error: authError } = await signInWithGoogle(redirectTo);
     if (authError) {
       setError(authError.message);
     }
