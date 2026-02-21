@@ -1,5 +1,6 @@
 'use client';
 
+import { AuthProvider } from '@/context';
 import { GoalsProvider } from '@/context';
 import { ToastProvider } from '@/components/ui';
 import type { ReactNode } from 'react';
@@ -10,10 +11,12 @@ interface ProvidersProps {
 
 export function Providers({ children }: ProvidersProps) {
   return (
-    <GoalsProvider>
-      <ToastProvider>
-        {children}
-      </ToastProvider>
-    </GoalsProvider>
+    <AuthProvider>
+      <GoalsProvider>
+        <ToastProvider>
+          {children}
+        </ToastProvider>
+      </GoalsProvider>
+    </AuthProvider>
   );
 }

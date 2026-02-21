@@ -16,7 +16,14 @@ import type {
   CreateGoalInput,
   GoalsByBucket,
 } from '@/types';
-import { loadGoals, saveGoals } from '@/lib';
+import { loadGoals, saveGoals, clearGoals } from '@/lib';
+import { useAuth } from './AuthContext';
+import {
+  fetchGoals as fetchGoalsRemote,
+  insertGoal as insertGoalRemote,
+  deleteGoalRemote,
+  upsertGoals,
+} from '@/lib/supabase/goals';
 
 // =============================================================================
 // Types
@@ -153,22 +160,62 @@ interface GoalsProviderProps {
 export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProps) {
   const [state, dispatch] = useReducer(goalsReducer, { goals: initialGoals });
   const isHydrated = useRef(false);
+  const hasMigrated = useRef(false);
+  const { user } = useAuth();
 
-  // Load goals from localStorage on mount (client-side only)
+  // Load goals: from Supabase if authenticated, from localStorage if not
   useEffect(() => {
-    const storedGoals = loadGoals();
-    if (storedGoals.length > 0) {
-      dispatch({ type: 'SET_GOALS', payload: storedGoals });
+    let cancelled = false;
+
+    async function loadData() {
+      if (user) {
+        // Authenticated: load from Supabase
+        const remoteGoals = await fetchGoalsRemote();
+        if (cancelled) return;
+
+        // Migrate localStorage goals on first login
+        if (!hasMigrated.current) {
+          const localGoals = loadGoals();
+          if (localGoals.length > 0 && remoteGoals.length === 0) {
+            // User has local goals but no remote goals — migrate
+            await upsertGoals(localGoals, user.id);
+            clearGoals(); // Clear localStorage after migration
+            if (cancelled) return;
+            dispatch({ type: 'SET_GOALS', payload: localGoals });
+          } else {
+            if (localGoals.length > 0) {
+              // Both exist — remote wins, clear local
+              clearGoals();
+            }
+            dispatch({ type: 'SET_GOALS', payload: remoteGoals });
+          }
+          hasMigrated.current = true;
+        } else {
+          dispatch({ type: 'SET_GOALS', payload: remoteGoals });
+        }
+      } else {
+        // Anonymous: load from localStorage
+        const storedGoals = loadGoals();
+        if (storedGoals.length > 0) {
+          dispatch({ type: 'SET_GOALS', payload: storedGoals });
+        }
+      }
+      isHydrated.current = true;
     }
-    isHydrated.current = true;
-  }, []);
 
-  // Persist goals to localStorage whenever state changes (after hydration)
+    loadData();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [user]);
+
+  // Persist goals to localStorage for anonymous users only
   useEffect(() => {
-    if (isHydrated.current) {
+    if (isHydrated.current && !user) {
       saveGoals(state.goals);
     }
-  }, [state.goals]);
+  }, [state.goals, user]);
 
   const addGoal = useCallback((input: CreateGoalInput): Goal => {
     const newGoal: Goal = {
@@ -178,12 +225,23 @@ export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProp
       priority: getNextPriorityForBucket(state.goals, input.bucket),
     };
     dispatch({ type: 'ADD_GOAL', payload: newGoal });
+
+    // Persist to Supabase if authenticated
+    if (user) {
+      insertGoalRemote(newGoal, user.id);
+    }
+
     return newGoal;
-  }, [state.goals]);
+  }, [state.goals, user]);
 
   const deleteGoal = useCallback((goalId: string): void => {
     dispatch({ type: 'DELETE_GOAL', payload: goalId });
-  }, []);
+
+    // Delete from Supabase if authenticated
+    if (user) {
+      deleteGoalRemote(goalId);
+    }
+  }, [user]);
 
   const getGoals = useCallback((): Goal[] => {
     return state.goals;
