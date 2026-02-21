@@ -57,9 +57,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const signUp = useCallback(async (email: string, password: string) => {
     const supabase = createClient();
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
     const { error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        emailRedirectTo: `${siteUrl}/auth/callback`,
+      },
     });
     return { error };
   }, []);
@@ -75,10 +79,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const signInWithGoogle = useCallback(async () => {
     const supabase = createClient();
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: `${siteUrl}/auth/callback`,
       },
     });
     if (error && error.message.includes('missing OAuth secret')) {
