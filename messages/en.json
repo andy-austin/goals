@@ -473,7 +473,92 @@
       "footer": "Free to start • No credit card required"
     },
     "footer": {
-      "rights": "© {year} FinGoal. All rights reserved."
+      "rights": "© {year} FinGoal. All rights reserved.",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service"
+    }
+  },
+  "consent": {
+    "banner": {
+      "title": "We value your privacy",
+      "description": "We use anonymous analytics to improve your experience. Your goal data stays only on your device and is never shared.",
+      "acceptAll": "Accept All",
+      "decline": "Decline",
+      "privacyPolicy": "Privacy Policy",
+      "terms": "Terms of Service"
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: February 21, 2026",
+    "intro": "FinGoal is committed to protecting your privacy. This policy explains what data we collect, why we collect it, and how you can control it.",
+    "sections": {
+      "dataCollected": {
+        "title": "Data We Collect",
+        "localData": {
+          "heading": "Your Goal Data (Local Only)",
+          "body": "All financial goals you create are stored exclusively in your browser's localStorage. This data never leaves your device and is not transmitted to any server."
+        },
+        "analytics": {
+          "heading": "Anonymous Analytics",
+          "body": "If you consent, we collect anonymous page view data via Vercel Analytics. This includes pages visited and general usage patterns. No personally identifiable information (PII) is collected. Analytics can be declined using the consent banner."
+        }
+      },
+      "howWeUse": {
+        "title": "How We Use Data",
+        "body": "Your local goal data is used solely to display your goals within the application. Anonymous analytics data (when consented) is used to understand which features are most useful so we can improve the product."
+      },
+      "dataSharing": {
+        "title": "Data Sharing",
+        "body": "We do not sell, trade, or share your personal data with third parties. Anonymous analytics data is processed by Vercel, whose privacy policy is available at vercel.com/legal/privacy-policy."
+      },
+      "retention": {
+        "title": "Data Retention & Deletion",
+        "body": "Your goal data is stored in your browser until you clear it. To delete all your data, clear your browser's localStorage for this site (browser Settings → Privacy → Clear browsing data). Your analytics consent preference is also stored in localStorage and can be reset in the same way."
+      },
+      "yourRights": {
+        "title": "Your Rights",
+        "body": "You have the right to access, correct, or delete your data at any time. Since all data is stored locally in your browser, you have full control. You may withdraw analytics consent at any time by clearing localStorage."
+      },
+      "contact": {
+        "title": "Contact",
+        "body": "For privacy-related questions, please open an issue on our GitHub repository."
+      }
+    }
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last updated: February 21, 2026",
+    "intro": "By using FinGoal, you agree to these Terms of Service. Please read them carefully.",
+    "sections": {
+      "service": {
+        "title": "Description of Service",
+        "body": "FinGoal is a free tool that helps you define, organize, and visualize personal financial goals using the SMART framework and the 3 Buckets methodology. The service is provided as-is for informational and organizational purposes."
+      },
+      "notAdvice": {
+        "title": "Not Financial Advice",
+        "body": "FinGoal is not a licensed financial advisor, broker, or investment service. Nothing on this platform constitutes financial, investment, tax, or legal advice. Always consult a qualified professional before making investment decisions. Past performance is not indicative of future results."
+      },
+      "userResponsibilities": {
+        "title": "User Responsibilities",
+        "body": "You are responsible for the accuracy of the goals and data you enter. You agree not to use FinGoal for any unlawful purpose. You are responsible for maintaining the security of your device and browser."
+      },
+      "disclaimer": {
+        "title": "Disclaimer of Warranties",
+        "body": "FinGoal is provided \"as is\" without any warranties, express or implied. We do not guarantee that the service will be uninterrupted, error-free, or that calculations are accurate for your specific financial situation."
+      },
+      "liability": {
+        "title": "Limitation of Liability",
+        "body": "To the fullest extent permitted by law, FinGoal and its creators shall not be liable for any indirect, incidental, or consequential damages arising from your use of the service or reliance on any information provided."
+      },
+      "changes": {
+        "title": "Changes to Terms",
+        "body": "We may update these terms from time to time. Continued use of FinGoal after changes are posted constitutes acceptance of the updated terms."
+      },
+      "contact": {
+        "title": "Contact",
+        "body": "For questions about these terms, please open an issue on our GitHub repository."
+      }
     }
   }
 }

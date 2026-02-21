@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages, getTranslations } from 'next-intl/server';
-import { Analytics } from "@vercel/analytics/next"
 import { Providers } from "./providers";
+import { ConsentBanner } from "@/components/ConsentBanner";
+import { ConditionalAnalytics } from "@/components/ConditionalAnalytics";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -41,7 +42,8 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           <Providers>
             {children}
-            <Analytics />
+            <ConsentBanner />
+            <ConditionalAnalytics />
           </Providers>
         </NextIntlClientProvider>
       </body>
