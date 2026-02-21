@@ -87,6 +87,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
       provider: 'google',
       options: {
         redirectTo: callbackUrl,
+        scopes: 'openid email profile',
+        queryParams: {
+          access_type: 'offline',
+          prompt: 'select_account',
+        },
       },
     });
     if (error && error.message.includes('missing OAuth secret')) {

@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { TrendingUp, LogOut } from 'lucide-react';
@@ -10,7 +10,6 @@ import { useAuth } from '@/context/AuthContext';
 
 export function Header() {
   const pathname = usePathname();
-  const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
@@ -50,7 +49,7 @@ export function Header() {
   const handleSignOut = async () => {
     setUserMenuOpen(false);
     await signOut();
-    router.push('/');
+    window.location.href = '/';
   };
 
   return (
