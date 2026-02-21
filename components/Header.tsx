@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { TrendingUp, LogOut, User } from 'lucide-react';
+import { TrendingUp, LogOut } from 'lucide-react';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { useAuth } from '@/context/AuthContext';
 
@@ -17,6 +17,17 @@ export function Header() {
   const tCommon = useTranslations('common');
   const tAuth = useTranslations('auth');
   const { user, loading, signOut } = useAuth();
+
+  const displayName: string =
+    user?.user_metadata?.full_name ??
+    user?.user_metadata?.name ??
+    user?.email?.split('@')[0] ??
+    '';
+  const avatarUrl: string | null =
+    user?.user_metadata?.avatar_url ?? user?.user_metadata?.picture ?? null;
+  const initials = displayName
+    ? displayName.split(' ').map((n: string) => n[0]).slice(0, 2).join('').toUpperCase()
+    : (user?.email?.[0] ?? '?').toUpperCase();
 
   // Close user menu when clicking outside
   useEffect(() => {
@@ -82,21 +93,37 @@ export function Header() {
                   <button
                     type="button"
                     onClick={() => setUserMenuOpen(!userMenuOpen)}
-                    className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 cursor-pointer dark:text-zinc-400 dark:hover:bg-zinc-800/50 dark:hover:text-zinc-100"
+                    className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm font-medium text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 cursor-pointer dark:text-zinc-400 dark:hover:bg-zinc-800/50 dark:hover:text-zinc-100"
                   >
-                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">
-                      <User className="h-4 w-4" />
+                    <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900 overflow-hidden">
+                      {avatarUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={avatarUrl} alt={displayName} className="h-full w-full object-cover" />
+                      ) : (
+                        <span className="text-xs font-semibold text-blue-700 dark:text-blue-300">{initials}</span>
+                      )}
                     </div>
-                    <span className="max-w-[120px] truncate">
-                      {user.email?.split('@')[0]}
-                    </span>
+                    <span className="max-w-[120px] truncate">{displayName}</span>
                   </button>
                   {userMenuOpen && (
-                    <div className="absolute right-0 mt-1 w-48 rounded-md border border-zinc-200 bg-white py-1 shadow-lg dark:border-zinc-700 dark:bg-zinc-900">
-                      <div className="border-b border-zinc-200 px-4 py-2 dark:border-zinc-700">
-                        <p className="truncate text-sm font-medium text-foreground">
-                          {user.email}
-                        </p>
+                    <div className="absolute right-0 mt-1 w-64 rounded-md border border-zinc-200 bg-white py-1 shadow-lg dark:border-zinc-700 dark:bg-zinc-900">
+                      <div className="border-b border-zinc-200 px-4 py-3 dark:border-zinc-700">
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900 overflow-hidden">
+                            {avatarUrl ? (
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <img src={avatarUrl} alt={displayName} className="h-full w-full object-cover" />
+                            ) : (
+                              <span className="text-sm font-semibold text-blue-700 dark:text-blue-300">{initials}</span>
+                            )}
+                          </div>
+                          <div className="min-w-0">
+                            {user.user_metadata?.full_name && (
+                              <p className="truncate text-sm font-semibold text-foreground">{user.user_metadata.full_name}</p>
+                            )}
+                            <p className="truncate text-xs text-muted-foreground">{user.email}</p>
+                          </div>
+                        </div>
                       </div>
                       <button
                         type="button"
@@ -171,13 +198,21 @@ export function Header() {
             {!loading && (
               user ? (
                 <div className="space-y-1">
-                  <div className="flex items-center gap-2 px-3 py-2">
-                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">
-                      <User className="h-4 w-4" />
+                  <div className="flex items-center gap-3 px-3 py-2">
+                    <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900 overflow-hidden">
+                      {avatarUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={avatarUrl} alt={displayName} className="h-full w-full object-cover" />
+                      ) : (
+                        <span className="text-sm font-semibold text-blue-700 dark:text-blue-300">{initials}</span>
+                      )}
                     </div>
-                    <span className="truncate text-sm font-medium text-foreground">
-                      {user.email}
-                    </span>
+                    <div className="min-w-0">
+                      {user.user_metadata?.full_name && (
+                        <p className="truncate text-sm font-semibold text-foreground">{user.user_metadata.full_name}</p>
+                      )}
+                      <p className="truncate text-xs text-muted-foreground">{user.email}</p>
+                    </div>
                   </div>
                   <button
                     type="button"
