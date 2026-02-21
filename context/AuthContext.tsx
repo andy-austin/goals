@@ -81,6 +81,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
         redirectTo: `${window.location.origin}/auth/callback`,
       },
     });
+    if (error && error.message.includes('missing OAuth secret')) {
+      return {
+        error: {
+          ...error,
+          message: 'Google sign-in is not configured yet. Please use email and password instead.',
+        } as AuthError,
+      };
+    }
     return { error };
   }, []);
 
