@@ -3,3 +3,4 @@
  */
 
 export * from './goal';
+export * from './consent';
