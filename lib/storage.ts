@@ -51,9 +51,9 @@ function serializeGoal(goal: Goal): SerializedGoal {
  */
 function deserializeGoal(serialized: SerializedGoal): Goal {
   return {
-    visibility: 'private',
-    spaceId: null,
     ...serialized,
+    visibility: serialized.visibility ?? 'private',
+    spaceId: serialized.spaceId ?? null,
     targetDate: new Date(serialized.targetDate),
     createdAt: new Date(serialized.createdAt),
   };
