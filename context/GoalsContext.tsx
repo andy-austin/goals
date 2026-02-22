@@ -22,6 +22,7 @@ import {
   fetchGoals as fetchGoalsRemote,
   insertGoal as insertGoalRemote,
   deleteGoalRemote,
+  updateGoalRemote,
   upsertGoals,
 } from '@/lib/supabase/goals';
 
@@ -36,6 +37,7 @@ interface GoalsState {
 type GoalsAction =
   | { type: 'ADD_GOAL'; payload: Goal }
   | { type: 'SET_GOALS'; payload: Goal[] }
+  | { type: 'UPDATE_GOAL'; payload: { goalId: string; updates: Partial<Omit<Goal, 'id' | 'createdAt'>> } }
   | { type: 'UPDATE_GOAL_PRIORITY'; payload: { goalId: string; newPriority: number } }
   | { type: 'REORDER_GOALS_IN_BUCKET'; payload: { bucket: Bucket; orderedIds: string[] } }
   | { type: 'DELETE_GOAL'; payload: string };
@@ -46,6 +48,9 @@ interface GoalsContextValue {
 
   /** Add a new goal (auto-generates id, createdAt, and priority) */
   addGoal: (input: CreateGoalInput) => Goal;
+
+  /** Update an existing goal's fields */
+  updateGoal: (goalId: string, updates: Partial<Omit<Goal, 'id' | 'createdAt'>>) => void;
 
   /** Delete a goal by ID */
   deleteGoal: (goalId: string) => void;
@@ -106,6 +111,16 @@ function goalsReducer(state: GoalsState, action: GoalsAction): GoalsState {
         ...state,
         goals: action.payload,
       };
+
+    case 'UPDATE_GOAL': {
+      const { goalId, updates } = action.payload;
+      return {
+        ...state,
+        goals: state.goals.map((goal) =>
+          goal.id === goalId ? { ...goal, ...updates } : goal
+        ),
+      };
+    }
 
     case 'UPDATE_GOAL_PRIORITY': {
       const { goalId, newPriority } = action.payload;
@@ -228,6 +243,18 @@ export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProp
     return newGoal;
   }, [state.goals, user]);
 
+  const updateGoal = useCallback((goalId: string, updates: Partial<Omit<Goal, 'id' | 'createdAt'>>): void => {
+    dispatch({ type: 'UPDATE_GOAL', payload: { goalId, updates } });
+
+    // Persist to Supabase if authenticated
+    if (user) {
+      const current = state.goals.find((g) => g.id === goalId);
+      if (current) {
+        updateGoalRemote({ ...current, ...updates }, user.id);
+      }
+    }
+  }, [state.goals, user]);
+
   const deleteGoal = useCallback((goalId: string): void => {
     dispatch({ type: 'DELETE_GOAL', payload: goalId });
 
@@ -276,6 +303,7 @@ export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProp
   const value: GoalsContextValue = useMemo(() => ({
     goals: state.goals,
     addGoal,
+    updateGoal,
     deleteGoal,
     getGoals,
     getGoalsByBucket,
@@ -288,6 +316,7 @@ export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProp
   }), [
     state.goals,
     addGoal,
+    updateGoal,
     deleteGoal,
     getGoals,
     getGoalsByBucket,

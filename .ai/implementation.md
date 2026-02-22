@@ -104,9 +104,29 @@ Removed the "Sharing" (visibility) step from the goal creation wizard. Goals are
 
 ---
 
+### Goal Share & Edit from Dashboard
+Added edit and share buttons to dashboard goal cards with modal dialogs.
+
+**New files created:**
+- `components/Dashboard/EditGoalModal.tsx` — Inline edit form modal for all goal fields (title, description, amount, currency, date, bucket, why)
+- `components/Dashboard/ShareGoalModal.tsx` — Visibility/sharing modal using `VisibilityToggle` + space selector; auth-gated
+
+**Modified files:**
+- `context/GoalsContext.tsx` — Added `UPDATE_GOAL` reducer action, `updateGoal()` callback (syncs to Supabase for authenticated users), and `updateGoalRemote` import
+- `components/Dashboard/GoalCard.tsx` — Added edit button (pencil icon) and share button (upload icon); both open respective modals
+- `components/Dashboard/index.ts` — Added `EditGoalModal` and `ShareGoalModal` exports
+- `messages/en.json` — Added `common.saving`, `common.share`, `dashboard.editModal.*`, `dashboard.shareModal.*` keys
+- `messages/es.json` — Same keys in Spanish
+
+**Architecture:**
+- `updateGoal(goalId, updates)` — partial update; merges into existing goal; persists to Supabase if authenticated, to localStorage otherwise (via existing effect)
+- Edit modal reuses `Input`, `Textarea`, `Select`, `Label` UI primitives + validation mirrors create-form rules
+- Share modal reuses `VisibilityToggle` and `SpacesContext`; shows auth gate for anonymous users
+
+---
+
 ## Next Steps
 - #68: Personal Data Privacy Consent (Legal Compliance) — should ship alongside auth
-- #53: Edit Goals — add edit button to goal cards
 - #52: Progress Tracking + Savings Calculator
 - #66: Goal-to-Investment Vehicle Linking
 - #67: Currency Exchange Rate Display

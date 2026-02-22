@@ -14,6 +14,8 @@ Reusable React components that form the application's user interface. Built with
 | `components/ui/Badge.tsx` | Badge and BucketBadge for labels/chips |
 | `components/ui/index.ts` | Barrel export for UI components |
 | `components/Dashboard/SummaryStats.tsx` | Dashboard summary statistics and export actions |
+| `components/Dashboard/EditGoalModal.tsx` | Modal with inline form for editing all goal fields |
+| `components/Dashboard/ShareGoalModal.tsx` | Modal for toggling goal visibility and selecting a space |
 | `components/Dashboard/ExportMenu.tsx` | Print/Export actions dropdown/button |
 | `components/ui/Toast.tsx` | Toast notification system |
 | `components/ui/Tooltip.tsx` | Reusable tooltip component |

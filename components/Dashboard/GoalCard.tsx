@@ -5,6 +5,8 @@ import { useTranslations, useLocale } from 'next-intl';
 import { Goal, formatCurrency, formatDate } from '@/types';
 import { useGoals } from '@/context';
 import { useToast, ConfirmationModal } from '@/components/ui';
+import { EditGoalModal } from './EditGoalModal';
+import { ShareGoalModal } from './ShareGoalModal';
 
 interface GoalCardProps extends HTMLAttributes<HTMLDivElement> {
   goal: Goal;
@@ -20,6 +22,8 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
     const { showToast } = useToast();
     const commonT = useTranslations('common');
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
     // Calculate days remaining (simple version, could move to helper)
     const today = new Date();
@@ -64,10 +68,41 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
             </div>
 
             {/* Priority Badge and Actions */}
-            <div className="flex items-center gap-2">
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-zinc-100 text-xs font-medium text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400">
+            <div className="flex items-center gap-1">
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-zinc-100 text-xs font-medium text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400 mr-1">
                 #{goal.priority}
               </span>
+
+              {/* Share button */}
+              <button
+                type="button"
+                onClick={() => setIsShareModalOpen(true)}
+                className="rounded p-1 text-zinc-400 hover:bg-blue-50 hover:text-blue-500 dark:hover:bg-blue-900/20 dark:hover:text-blue-400 transition-colors cursor-pointer"
+                aria-label={commonT('share')}
+                title={commonT('share')}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                  <polyline points="16 6 12 2 8 6"/>
+                  <line x1="12" y1="2" x2="12" y2="15"/>
+                </svg>
+              </button>
+
+              {/* Edit button */}
+              <button
+                type="button"
+                onClick={() => setIsEditModalOpen(true)}
+                className="rounded p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-300 transition-colors cursor-pointer"
+                aria-label={commonT('edit')}
+                title={commonT('edit')}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                </svg>
+              </button>
+
+              {/* Delete button */}
               <button
                 type="button"
                 onClick={handleDeleteClick}
@@ -106,6 +141,7 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
           </div>
         </div>
 
+        {/* Modals */}
         <ConfirmationModal
           isOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
@@ -115,6 +151,18 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
           confirmLabel={commonT('delete')}
           cancelLabel={commonT('cancel')}
           variant="destructive"
+        />
+
+        <EditGoalModal
+          goal={goal}
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+        />
+
+        <ShareGoalModal
+          goal={goal}
+          isOpen={isShareModalOpen}
+          onClose={() => setIsShareModalOpen(false)}
         />
       </>
     );
