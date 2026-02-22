@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { TrendingUp, LogOut } from 'lucide-react';
+import { TrendingUp, LogOut, Clock, Users } from 'lucide-react';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { useAuth } from '@/context/AuthContext';
 
@@ -43,8 +43,6 @@ export function Header() {
   const navItems = [
     { href: '/dashboard', label: t('dashboard') },
     { href: '/create', label: t('createGoal') },
-    { href: '/timeline', label: t('timeline') },
-    { href: '/spaces', label: t('spaces') },
   ];
 
   const handleSignOut = async () => {
@@ -127,14 +125,34 @@ export function Header() {
                           </div>
                         </div>
                       </div>
-                      <button
-                        type="button"
-                        onClick={handleSignOut}
-                        className="flex w-full items-center gap-2 px-4 py-2 text-sm text-zinc-600 hover:bg-zinc-50 cursor-pointer dark:text-zinc-400 dark:hover:bg-zinc-800"
-                      >
-                        <LogOut className="h-4 w-4" />
-                        {tAuth('signOut')}
-                      </button>
+                      <div className="py-1">
+                        <Link
+                          href="/timeline"
+                          onClick={() => setUserMenuOpen(false)}
+                          className="flex w-full items-center gap-2 px-4 py-2 text-sm text-zinc-600 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:bg-zinc-800"
+                        >
+                          <Clock className="h-4 w-4" />
+                          {t('timeline')}
+                        </Link>
+                        <Link
+                          href="/spaces"
+                          onClick={() => setUserMenuOpen(false)}
+                          className="flex w-full items-center gap-2 px-4 py-2 text-sm text-zinc-600 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:bg-zinc-800"
+                        >
+                          <Users className="h-4 w-4" />
+                          {t('spaces')}
+                        </Link>
+                      </div>
+                      <div className="border-t border-zinc-200 dark:border-zinc-700">
+                        <button
+                          type="button"
+                          onClick={handleSignOut}
+                          className="flex w-full items-center gap-2 px-4 py-2 text-sm text-zinc-600 hover:bg-zinc-50 cursor-pointer dark:text-zinc-400 dark:hover:bg-zinc-800"
+                        >
+                          <LogOut className="h-4 w-4" />
+                          {tAuth('signOut')}
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -216,6 +234,22 @@ export function Header() {
                       <p className="truncate text-xs text-muted-foreground">{user.email}</p>
                     </div>
                   </div>
+                  <Link
+                    href="/timeline"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-base font-medium text-zinc-600 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:bg-zinc-800/50"
+                  >
+                    <Clock className="h-4 w-4" />
+                    {t('timeline')}
+                  </Link>
+                  <Link
+                    href="/spaces"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-base font-medium text-zinc-600 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:bg-zinc-800/50"
+                  >
+                    <Users className="h-4 w-4" />
+                    {t('spaces')}
+                  </Link>
                   <button
                     type="button"
                     onClick={() => { setMobileMenuOpen(false); handleSignOut(); }}
