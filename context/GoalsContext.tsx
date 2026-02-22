@@ -211,9 +211,9 @@ export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProp
 
   const addGoal = useCallback((input: CreateGoalInput): Goal => {
     const newGoal: Goal = {
-      visibility: 'private',
-      spaceId: null,
       ...input,
+      visibility: input.visibility ?? 'private',
+      spaceId: input.spaceId ?? null,
       id: generateId(),
       createdAt: new Date(),
       priority: getNextPriorityForBucket(state.goals, input.bucket),
