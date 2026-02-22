@@ -28,12 +28,12 @@ export default function DashboardPage() {
             </p>
           </div>
           {totalGoals > 0 && (
-            <div className="flex gap-2 sm:gap-3">
-              <Link href="/create">
-                <Button size="sm">{t('actions.addGoal')}</Button>
+            <div className="flex w-full sm:w-auto gap-2 sm:gap-3">
+              <Link href="/create" className="flex-1 sm:flex-initial">
+                <Button size="sm" className="w-full sm:w-auto">{t('actions.addGoal')}</Button>
               </Link>
-              <Link href="/timeline">
-                <Button size="sm" variant="secondary">{t('actions.viewTimeline')}</Button>
+              <Link href="/timeline" className="flex-1 sm:flex-initial">
+                <Button size="sm" variant="secondary" className="w-full sm:w-auto">{t('actions.viewTimeline')}</Button>
               </Link>
             </div>
           )}

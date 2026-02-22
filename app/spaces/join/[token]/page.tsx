@@ -7,6 +7,7 @@
 import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useAuth } from '@/context';
 import { useSpaces } from '@/context';
 import { Button } from '@/components/ui/Button';
@@ -39,6 +40,8 @@ type PageState = 'loading' | 'preview' | 'success' | 'error' | 'expired' | 'logi
 
 export default function JoinSpacePage({ params }: { params: Promise<PageParams> }) {
   const { token } = use(params);
+  const t = useTranslations('spaces');
+  const tAuth = useTranslations('auth');
   const { user } = useAuth();
   const { acceptInvitation } = useSpaces();
   const router = useRouter();
@@ -107,7 +110,7 @@ export default function JoinSpacePage({ params }: { params: Promise<PageParams> 
     return (
       <div className="mx-auto max-w-md px-4 py-16 text-center">
         <div className="w-16 h-16 rounded-full bg-secondary animate-pulse mx-auto mb-4" />
-        <p className="text-muted-foreground">Loading invitation…</p>
+        <p className="text-muted-foreground">{t('loadingInvitation')}</p>
       </div>
     );
   }
@@ -118,19 +121,19 @@ export default function JoinSpacePage({ params }: { params: Promise<PageParams> 
         <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6 text-4xl">
           {invitation?.invitedEmail?.charAt(0)?.toUpperCase() ?? '?'}
         </div>
-        <h1 className="text-2xl font-bold text-foreground mb-2">You&apos;ve been invited!</h1>
+        <h1 className="text-2xl font-bold text-foreground mb-2">{t('joinInvited')}</h1>
         <p className="text-muted-foreground mb-8">
-          Sign in or create an account to join this shared space and collaborate on financial goals.
+          {t('joinInvitedDescription')}
         </p>
         <div className="flex flex-col gap-3">
           <Button onClick={() => router.push(`/auth/login?redirect=/spaces/join/${token}`)}>
-            Sign In
+            {tAuth('login')}
           </Button>
           <Button
             variant="secondary"
             onClick={() => router.push(`/auth/signup?redirect=/spaces/join/${token}`)}
           >
-            Create Account
+            {tAuth('createAccount')}
           </Button>
         </div>
       </div>
@@ -145,20 +148,20 @@ export default function JoinSpacePage({ params }: { params: Promise<PageParams> 
             <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
         </div>
-        <h1 className="text-2xl font-bold text-foreground mb-2">Join Shared Space</h1>
+        <h1 className="text-2xl font-bold text-foreground mb-2">{t('joinPreviewTitle')}</h1>
         <p className="text-muted-foreground mb-2">
-          You&apos;ve been invited to collaborate on shared financial goals.
+          {t('joinPreviewSubtitle')}
         </p>
         <p className="text-sm text-muted-foreground mb-8">
-          Invitation sent to <strong>{invitation?.invitedEmail}</strong>
-          &nbsp;&middot;&nbsp; Expires {invitation?.expiresAt.toLocaleDateString()}
+          {t('joinInvitationSentTo', { email: invitation?.invitedEmail ?? '' })}
+          &nbsp;&middot;&nbsp; {t('joinExpires', { date: invitation?.expiresAt.toLocaleDateString() ?? '' })}
         </p>
         <div className="flex flex-col gap-3">
           <Button onClick={handleAccept} disabled={joining}>
-            {joining ? 'Joining…' : 'Accept Invitation'}
+            {joining ? t('joining') : t('acceptInvitation')}
           </Button>
           <Link href="/dashboard">
-            <Button variant="secondary" className="w-full">Decline</Button>
+            <Button variant="secondary" className="w-full">{t('decline')}</Button>
           </Link>
         </div>
       </div>
@@ -169,18 +172,18 @@ export default function JoinSpacePage({ params }: { params: Promise<PageParams> 
     return (
       <div className="mx-auto max-w-md px-4 py-16 text-center">
         <CheckCircleIcon />
-        <h1 className="mt-4 text-2xl font-bold text-foreground mb-2">You&apos;re in!</h1>
+        <h1 className="mt-4 text-2xl font-bold text-foreground mb-2">{t('joinSuccessTitle')}</h1>
         <p className="text-muted-foreground mb-8">
-          You&apos;ve successfully joined the shared space. You can now collaborate on goals together.
+          {t('joinSuccessMessage')}
         </p>
         <div className="flex flex-col gap-3">
           {joinedSpaceId && (
             <Link href={`/spaces/${joinedSpaceId}`}>
-              <Button className="w-full">View Space</Button>
+              <Button className="w-full">{t('viewSpace')}</Button>
             </Link>
           )}
           <Link href="/spaces">
-            <Button variant="secondary" className="w-full">All Spaces</Button>
+            <Button variant="secondary" className="w-full">{t('allSpaces')}</Button>
           </Link>
         </div>
       </div>
@@ -191,12 +194,12 @@ export default function JoinSpacePage({ params }: { params: Promise<PageParams> 
     return (
       <div className="mx-auto max-w-md px-4 py-16 text-center">
         <ClockIcon />
-        <h1 className="mt-4 text-2xl font-bold text-foreground mb-2">Invitation Expired</h1>
+        <h1 className="mt-4 text-2xl font-bold text-foreground mb-2">{t('inviteExpired')}</h1>
         <p className="text-muted-foreground mb-8">
-          This invitation has expired. Please ask the space owner to send a new one.
+          {t('inviteExpiredDescription')}
         </p>
         <Link href="/dashboard">
-          <Button variant="secondary">Go to Dashboard</Button>
+          <Button variant="secondary">{t('goToDashboard')}</Button>
         </Link>
       </div>
     );
@@ -206,12 +209,12 @@ export default function JoinSpacePage({ params }: { params: Promise<PageParams> 
   return (
     <div className="mx-auto max-w-md px-4 py-16 text-center">
       <XCircleIcon />
-      <h1 className="mt-4 text-2xl font-bold text-foreground mb-2">Invalid Invitation</h1>
+      <h1 className="mt-4 text-2xl font-bold text-foreground mb-2">{t('inviteInvalid')}</h1>
       <p className="text-muted-foreground mb-8">
-        This invitation link is invalid or has already been used.
+        {t('inviteInvalidDescription')}
       </p>
       <Link href="/dashboard">
-        <Button variant="secondary">Go to Dashboard</Button>
+        <Button variant="secondary">{t('goToDashboard')}</Button>
       </Link>
     </div>
   );

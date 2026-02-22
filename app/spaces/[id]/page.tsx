@@ -7,6 +7,7 @@
 import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useSpaces } from '@/context';
 import { useAuth } from '@/context';
 import { useGoals } from '@/context';
@@ -42,6 +43,8 @@ const TrashIcon = () => (
 
 export default function SpaceDetailPage({ params }: { params: Promise<PageParams> }) {
   const { id } = use(params);
+  const t = useTranslations('spaces');
+  const tCommon = useTranslations('common');
   const { user } = useAuth();
   const { spaces, getMemberships, getInvitations, inviteMember, removeMember, leaveSpace, deleteSpace } = useSpaces();
   const { goals } = useGoals();
@@ -109,8 +112,8 @@ export default function SpaceDetailPage({ params }: { params: Promise<PageParams
   if (!user) {
     return (
       <div className="mx-auto max-w-5xl px-4 py-16 text-center">
-        <p className="text-muted-foreground">Please sign in to view this space.</p>
-        <Button className="mt-4" onClick={() => router.push('/auth/login')}>Sign In</Button>
+        <p className="text-muted-foreground">{t('signInToView')}</p>
+        <Button className="mt-4" onClick={() => router.push('/auth/login')}>{t('signIn')}</Button>
       </div>
     );
   }
@@ -118,9 +121,9 @@ export default function SpaceDetailPage({ params }: { params: Promise<PageParams
   if (!loading && !space) {
     return (
       <div className="mx-auto max-w-5xl px-4 py-16 text-center">
-        <p className="text-muted-foreground mb-4">Space not found or you don&apos;t have access.</p>
+        <p className="text-muted-foreground mb-4">{t('spaceNotFound')}</p>
         <Link href="/spaces">
-          <Button variant="secondary">Back to Spaces</Button>
+          <Button variant="secondary">{t('backToSpaces')}</Button>
         </Link>
       </div>
     );
@@ -134,7 +137,7 @@ export default function SpaceDetailPage({ params }: { params: Promise<PageParams
         className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors"
       >
         <ChevronLeftIcon />
-        All Spaces
+        {t('allSpaces')}
       </Link>
 
       {/* Header */}
@@ -148,7 +151,7 @@ export default function SpaceDetailPage({ params }: { params: Promise<PageParams
               <h1 className="text-2xl font-bold text-foreground">{space?.name}</h1>
               {isOwner && (
                 <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium">
-                  Owner
+                  {t('owner')}
                 </span>
               )}
             </div>
@@ -166,7 +169,7 @@ export default function SpaceDetailPage({ params }: { params: Promise<PageParams
             className="flex items-center gap-1.5"
           >
             <PlusIcon />
-            Invite
+            {t('invite')}
           </Button>
           {isOwner && (
             <Button
@@ -176,7 +179,7 @@ export default function SpaceDetailPage({ params }: { params: Promise<PageParams
               className="flex items-center gap-1.5"
             >
               <TrashIcon />
-              Delete Space
+              {t('deleteSpace')}
             </Button>
           )}
         </div>
@@ -187,7 +190,7 @@ export default function SpaceDetailPage({ params }: { params: Promise<PageParams
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle>Shared Goals</CardTitle>
+              <CardTitle>{t('sharedGoalsTitle')}</CardTitle>
               <Badge variant="secondary">{spaceGoals.length}</Badge>
             </div>
           </CardHeader>
@@ -195,10 +198,10 @@ export default function SpaceDetailPage({ params }: { params: Promise<PageParams
             {spaceGoals.length === 0 ? (
               <div className="text-center py-6">
                 <p className="text-sm text-muted-foreground mb-3">
-                  No shared goals yet. Create a goal and share it with this space.
+                  {t('noSharedGoals')}
                 </p>
                 <Link href="/create">
-                  <Button size="sm" variant="secondary">Create a Goal</Button>
+                  <Button size="sm" variant="secondary">{t('createGoal')}</Button>
                 </Link>
               </div>
             ) : (
@@ -226,7 +229,7 @@ export default function SpaceDetailPage({ params }: { params: Promise<PageParams
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle>Members</CardTitle>
+              <CardTitle>{t('membersTitle')}</CardTitle>
               <Badge variant="secondary">{memberships.length}</Badge>
             </div>
           </CardHeader>
@@ -253,7 +256,7 @@ export default function SpaceDetailPage({ params }: { params: Promise<PageParams
           <Card>
             <CardHeader>
               <div className="flex items-center justify-between">
-                <CardTitle>Pending Invitations</CardTitle>
+                <CardTitle>{t('pendingInvitations')}</CardTitle>
                 <Badge variant="warning">{invitations.length}</Badge>
               </div>
             </CardHeader>
@@ -267,10 +270,10 @@ export default function SpaceDetailPage({ params }: { params: Promise<PageParams
                     <div>
                       <p className="text-sm text-foreground">{inv.invitedEmail}</p>
                       <p className="text-xs text-muted-foreground">
-                        Expires {inv.expiresAt.toLocaleDateString()}
+                        {t('expiresOn', { date: inv.expiresAt.toLocaleDateString() })}
                       </p>
                     </div>
-                    <Badge variant="warning">Pending</Badge>
+                    <Badge variant="warning">{t('pending')}</Badge>
                   </div>
                 ))}
               </div>
@@ -292,17 +295,16 @@ export default function SpaceDetailPage({ params }: { params: Promise<PageParams
       {deleteConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
           <div className="bg-background border border-border rounded-xl shadow-xl p-6 w-full max-w-sm">
-            <h3 className="text-lg font-semibold text-foreground mb-2">Delete Space?</h3>
+            <h3 className="text-lg font-semibold text-foreground mb-2">{t('deleteConfirmTitle')}</h3>
             <p className="text-sm text-muted-foreground mb-6">
-              This will permanently delete <strong>{space?.name}</strong> and remove all members.
-              Shared goals will become private.
+              {t('deleteConfirmSharedGoals', { name: space?.name ?? '' })}
             </p>
             <div className="flex justify-end gap-2">
               <Button variant="secondary" onClick={() => setDeleteConfirm(false)}>
-                Cancel
+                {tCommon('cancel')}
               </Button>
               <Button variant="destructive" onClick={handleDeleteSpace}>
-                Delete
+                {tCommon('delete')}
               </Button>
             </div>
           </div>

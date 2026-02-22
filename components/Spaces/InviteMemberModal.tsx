@@ -62,7 +62,7 @@ export function InviteMemberModal({
     setLoading(false);
 
     if (!result) {
-      setError('Failed to create invitation. Please try again.');
+      setError(t('inviteError'));
       return;
     }
 
@@ -129,7 +129,7 @@ export function InviteMemberModal({
             <div className="space-y-4">
               <div>
                 <p className="text-sm text-success font-medium mb-3">
-                  {t('inviteCreated')} Share this link with {email}:
+                  {t('inviteCreated')} {t('shareLink', { email })}
                 </p>
                 <div className="flex items-center gap-2">
                   <input
@@ -145,7 +145,7 @@ export function InviteMemberModal({
                     className="flex-shrink-0 gap-1.5"
                   >
                     {copied ? <CheckIcon /> : <CopyIcon />}
-                    {copied ? 'Copied!' : 'Copy'}
+                    {copied ? t('copied') : t('copy')}
                   </Button>
                 </div>
                 <p className="text-xs text-muted-foreground mt-2">
@@ -165,7 +165,7 @@ export function InviteMemberModal({
                   {t('inviteAnother')}
                 </Button>
                 <Button type="button" onClick={onClose}>
-                  Done
+                  {t('done')}
                 </Button>
               </div>
             </div>

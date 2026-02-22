@@ -5,6 +5,7 @@
  */
 
 import { useState, type FormEvent } from 'react';
+import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/Button';
 import { Input, Label, Textarea } from '@/components/ui/Input';
 
@@ -20,6 +21,8 @@ const XIcon = () => (
 );
 
 export function CreateSpaceModal({ onCreateSpace, onClose }: CreateSpaceModalProps) {
+  const t = useTranslations('spaces');
+  const tCommon = useTranslations('common');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
@@ -36,7 +39,7 @@ export function CreateSpaceModal({ onCreateSpace, onClose }: CreateSpaceModalPro
     setLoading(false);
 
     if (!ok) {
-      setError('Failed to create space. Please try again.');
+      setError(t('createError'));
       return;
     }
 
@@ -49,9 +52,9 @@ export function CreateSpaceModal({ onCreateSpace, onClose }: CreateSpaceModalPro
         {/* Header */}
         <div className="flex items-center justify-between p-5 border-b border-border">
           <div>
-            <h2 className="text-lg font-semibold text-foreground">Create a Shared Space</h2>
+            <h2 className="text-lg font-semibold text-foreground">{t('createTitle')}</h2>
             <p className="text-sm text-muted-foreground mt-0.5">
-              Collaborate on goals with family or a group
+              {t('createSubtitle')}
             </p>
           </div>
           <button
@@ -65,12 +68,12 @@ export function CreateSpaceModal({ onCreateSpace, onClose }: CreateSpaceModalPro
         {/* Body */}
         <form onSubmit={handleSubmit} className="p-5 space-y-4">
           <div>
-            <Label htmlFor="space-name">Space name *</Label>
+            <Label htmlFor="space-name">{t('spaceName')}</Label>
             <Input
               id="space-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="e.g., Smith Family Goals"
+              placeholder={t('spaceNamePlaceholder')}
               required
               maxLength={80}
               className="mt-1"
@@ -78,12 +81,12 @@ export function CreateSpaceModal({ onCreateSpace, onClose }: CreateSpaceModalPro
           </div>
 
           <div>
-            <Label htmlFor="space-description">Description</Label>
+            <Label htmlFor="space-description">{t('descriptionLabel')}</Label>
             <Textarea
               id="space-description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="What is this space for? (optional)"
+              placeholder={t('descriptionPlaceholder')}
               rows={3}
               maxLength={250}
               className="mt-1"
@@ -96,10 +99,10 @@ export function CreateSpaceModal({ onCreateSpace, onClose }: CreateSpaceModalPro
 
           <div className="flex justify-end gap-2 pt-1">
             <Button type="button" variant="secondary" onClick={onClose}>
-              Cancel
+              {tCommon('cancel')}
             </Button>
             <Button type="submit" disabled={loading || !name.trim()}>
-              {loading ? 'Creating…' : 'Create Space'}
+              {loading ? tCommon('creating') : t('createSpace')}
             </Button>
           </div>
         </form>

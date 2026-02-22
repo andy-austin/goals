@@ -6,6 +6,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useSpaces } from '@/context';
 import { useAuth } from '@/context';
 import { Button } from '@/components/ui/Button';
@@ -25,6 +26,8 @@ const UsersGroupIcon = () => (
 );
 
 export default function SpacesPage() {
+  const t = useTranslations('spaces');
+  const tAuth = useTranslations('auth');
   const { user } = useAuth();
   const { spaces, loading, createSpace } = useSpaces();
   const router = useRouter();
@@ -34,11 +37,11 @@ export default function SpacesPage() {
     return (
       <div className="mx-auto max-w-5xl px-4 py-16 text-center">
         <UsersGroupIcon />
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Sign in to use Shared Spaces</h2>
+        <h2 className="mt-4 text-xl font-semibold text-foreground">{t('signInRequired')}</h2>
         <p className="mt-2 text-muted-foreground mb-6">
-          Shared Spaces let you collaborate on financial goals with family or a group.
+          {t('signInDescription')}
         </p>
-        <Button onClick={() => router.push('/auth/login')}>Sign In</Button>
+        <Button onClick={() => router.push('/auth/login')}>{t('signIn')}</Button>
       </div>
     );
   }
@@ -53,14 +56,14 @@ export default function SpacesPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Shared Spaces</h1>
+          <h1 className="text-2xl font-bold text-foreground">{t('title')}</h1>
           <p className="mt-1 text-muted-foreground">
-            Collaborate on financial goals with family or a group
+            {t('subtitle')}
           </p>
         </div>
         <Button onClick={() => setShowCreateModal(true)} className="flex items-center gap-2 self-start sm:self-auto">
           <PlusIcon />
-          New Space
+          {t('newSpace')}
         </Button>
       </div>
 
@@ -74,12 +77,12 @@ export default function SpacesPage() {
       ) : spaces.length === 0 ? (
         <div className="text-center py-16 border border-dashed border-border rounded-xl">
           <UsersGroupIcon />
-          <h2 className="mt-4 text-lg font-semibold text-foreground">No spaces yet</h2>
+          <h2 className="mt-4 text-lg font-semibold text-foreground">{t('noSpaces')}</h2>
           <p className="mt-2 text-sm text-muted-foreground mb-6 max-w-sm mx-auto">
-            Create a space to collaborate on shared financial goals with your family or group.
+            {t('noSpacesDescription')}
           </p>
           <Button onClick={() => setShowCreateModal(true)} variant="secondary">
-            Create Your First Space
+            {t('createFirst')}
           </Button>
         </div>
       ) : (

@@ -5,6 +5,7 @@
  */
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import type { SpaceMembership } from '@/types';
 import { Button } from '@/components/ui/Button';
 
@@ -36,6 +37,7 @@ interface MemberRowProps {
 }
 
 function MemberRow({ membership, isSelf, canRemove, onRemove, removing }: MemberRowProps) {
+  const t = useTranslations('spaces');
   const initials = (membership.displayName ?? membership.userId)
     .slice(0, 2)
     .toUpperCase();
@@ -57,7 +59,7 @@ function MemberRow({ membership, isSelf, canRemove, onRemove, removing }: Member
         </div>
         <div className="flex items-center gap-1 text-xs text-muted-foreground">
           {membership.role === 'owner' ? <CrownIcon /> : <UserIcon />}
-          <span className="capitalize">{membership.role}</span>
+          <span className="capitalize">{membership.role === 'owner' ? t('owner') : t('member')}</span>
         </div>
       </div>
 
@@ -70,7 +72,7 @@ function MemberRow({ membership, isSelf, canRemove, onRemove, removing }: Member
           onClick={() => onRemove(membership.userId)}
           className="text-muted-foreground hover:text-error hover:bg-error/10"
         >
-          {isSelf ? 'Leave' : 'Remove'}
+          {isSelf ? t('leave') : t('remove')}
         </Button>
       )}
     </div>
@@ -83,6 +85,7 @@ export function MembersList({
   isOwner,
   onRemoveMember,
 }: MembersListProps) {
+  const t = useTranslations('spaces');
   const [removingId, setRemovingId] = useState<string | null>(null);
 
   async function handleRemove(userId: string) {
@@ -93,7 +96,7 @@ export function MembersList({
 
   if (memberships.length === 0) {
     return (
-      <p className="text-sm text-muted-foreground py-4 text-center">No members yet.</p>
+      <p className="text-sm text-muted-foreground py-4 text-center">{t('noMembers')}</p>
     );
   }
 
