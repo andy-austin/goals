@@ -5,6 +5,7 @@
  * within a shared space (Issue #65)
  */
 
+import { useTranslations } from 'next-intl';
 import type { GoalVisibility } from '@/types';
 
 interface VisibilityToggleProps {
@@ -26,6 +27,8 @@ const UsersIcon = () => (
 );
 
 export function VisibilityToggle({ value, onChange, disabled = false }: VisibilityToggleProps) {
+  const t = useTranslations('spaces');
+
   return (
     <div className="flex gap-2">
       <button
@@ -41,7 +44,7 @@ export function VisibilityToggle({ value, onChange, disabled = false }: Visibili
         ].join(' ')}
       >
         <LockIcon />
-        Private
+        {t('private')}
       </button>
 
       <button
@@ -57,7 +60,7 @@ export function VisibilityToggle({ value, onChange, disabled = false }: Visibili
         ].join(' ')}
       >
         <UsersIcon />
-        Shared
+        {t('shared')}
       </button>
     </div>
   );

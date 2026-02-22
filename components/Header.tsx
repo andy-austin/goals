@@ -232,7 +232,7 @@ export function Header() {
           )}
 
           {/* Nav items */}
-          <div className="border-t border-zinc-200 pt-2 dark:border-zinc-700 space-y-1">
+          <div className={`${!loading && user ? 'border-t border-zinc-200 dark:border-zinc-700' : ''} pt-2 space-y-1`}>
             {navItems.map((item) => {
               const isActive = pathname === item.href;
               const Icon = item.icon;
@@ -285,13 +285,15 @@ export function Header() {
                   </div>
                 </>
               ) : (
-                <Link
-                  href="/auth/login"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block rounded-md px-3 py-2 text-base font-medium text-blue-600 hover:bg-zinc-50 dark:text-blue-400 dark:hover:bg-zinc-800/50"
-                >
-                  {tAuth('login')}
-                </Link>
+                <div className="pt-2">
+                  <Link
+                    href="/auth/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2.5 text-base font-medium text-white hover:bg-blue-700 transition-colors dark:bg-blue-600 dark:hover:bg-blue-500"
+                  >
+                    {tAuth('login')}
+                  </Link>
+                </div>
               )
             )}
           </div>
