@@ -19,7 +19,7 @@ const PlusIcon = () => (
 );
 
 const UsersGroupIcon = () => (
-  <svg className="w-12 h-12 text-muted-foreground/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+  <svg className="w-12 h-12 text-muted-foreground/40 block mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
   </svg>
 );
@@ -32,7 +32,7 @@ export default function SpacesPage() {
 
   if (!user) {
     return (
-      <div className="mx-auto max-w-3xl px-4 py-16 text-center">
+      <div className="mx-auto max-w-5xl px-4 py-16 text-center">
         <UsersGroupIcon />
         <h2 className="mt-4 text-xl font-semibold text-foreground">Sign in to use Shared Spaces</h2>
         <p className="mt-2 text-muted-foreground mb-6">
@@ -49,7 +49,7 @@ export default function SpacesPage() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
+    <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>

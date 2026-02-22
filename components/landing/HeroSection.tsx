@@ -3,9 +3,12 @@
 import Link from 'next/link';
 import { ArrowRight, Target, TrendingUp, Shield, Home } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useAuth } from '@/context/AuthContext';
 
 export function HeroSection() {
   const t = useTranslations('landing.hero');
+  const tHeader = useTranslations('landing.header');
+  const { user, loading } = useAuth();
 
   return (
     <section className="relative pt-20 pb-12 lg:pt-28 lg:pb-16 overflow-hidden">
@@ -34,13 +37,25 @@ export function HeroSection() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start animate-fade-in">
-              <Link
-                href="/create"
-                className="inline-flex items-center justify-center gap-2 h-12 px-6 text-base font-semibold rounded-xl bg-gradient-growth text-growth-foreground shadow-lg hover:shadow-glow hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 whitespace-nowrap"
-              >
-                {t('startGoal')}
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+              {!loading && (
+                user ? (
+                  <Link
+                    href="/dashboard"
+                    className="inline-flex items-center justify-center gap-2 h-12 px-6 text-base font-semibold rounded-xl bg-gradient-growth text-growth-foreground shadow-lg hover:shadow-glow hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 whitespace-nowrap"
+                  >
+                    {tHeader('dashboard')}
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                ) : (
+                  <Link
+                    href="/create"
+                    className="inline-flex items-center justify-center gap-2 h-12 px-6 text-base font-semibold rounded-xl bg-gradient-growth text-growth-foreground shadow-lg hover:shadow-glow hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 whitespace-nowrap"
+                  >
+                    {t('startGoal')}
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                )
+              )}
               <Link
                 href="#methodology"
                 className="inline-flex items-center justify-center gap-2 h-12 px-6 text-base font-semibold rounded-xl border-2 border-border bg-card/50 text-foreground hover:bg-card hover:border-growth/50 transition-all duration-200 whitespace-nowrap"

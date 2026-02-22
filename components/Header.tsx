@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { TrendingUp, LogOut, Clock, Users } from 'lucide-react';
+import { TrendingUp, LogOut, Clock, Users, LayoutDashboard, PlusCircle } from 'lucide-react';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { useAuth } from '@/context/AuthContext';
 
@@ -41,8 +41,8 @@ export function Header() {
   }, []);
 
   const navItems = [
-    { href: '/dashboard', label: t('dashboard') },
-    { href: '/create', label: t('createGoal') },
+    { href: '/dashboard', label: t('dashboard'), icon: LayoutDashboard },
+    { href: '/create', label: t('createGoal'), icon: PlusCircle },
   ];
 
   const handleSignOut = async () => {
@@ -68,16 +68,18 @@ export function Header() {
         <nav className="hidden sm:flex sm:items-center sm:gap-1">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
+            const Icon = item.icon;
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                className={`inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
                   isActive
                     ? 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
                     : 'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800/50 dark:hover:text-zinc-100'
                 }`}
               >
+                <Icon className="h-4 w-4" />
                 {item.label}
               </Link>
             );
@@ -233,17 +235,19 @@ export function Header() {
           <div className="border-t border-zinc-200 pt-2 dark:border-zinc-700 space-y-1">
             {navItems.map((item) => {
               const isActive = pathname === item.href;
+              const Icon = item.icon;
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`block rounded-md px-3 py-2 text-base font-medium transition-colors ${
+                  className={`flex items-center gap-2 rounded-md px-3 py-2 text-base font-medium transition-colors ${
                     isActive
                       ? 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
                       : 'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800/50 dark:hover:text-zinc-100'
                   }`}
                 >
+                  <Icon className="h-4 w-4" />
                   {item.label}
                 </Link>
               );

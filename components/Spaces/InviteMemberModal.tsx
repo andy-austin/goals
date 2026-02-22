@@ -5,6 +5,7 @@
  */
 
 import { useState, type FormEvent } from 'react';
+import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/Button';
 import { Input, Label } from '@/components/ui/Input';
 
@@ -40,6 +41,8 @@ export function InviteMemberModal({
   onClose,
   baseUrl,
 }: InviteMemberModalProps) {
+  const t = useTranslations('spaces');
+  const tCommon = useTranslations('common');
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -79,9 +82,9 @@ export function InviteMemberModal({
         {/* Header */}
         <div className="flex items-center justify-between p-5 border-b border-border">
           <div>
-            <h2 className="text-lg font-semibold text-foreground">Invite to {spaceName}</h2>
+            <h2 className="text-lg font-semibold text-foreground">{t('inviteTitle', { name: spaceName })}</h2>
             <p className="text-sm text-muted-foreground mt-0.5">
-              Share a link or send an email invitation
+              {t('inviteSubtitle')}
             </p>
           </div>
           <button
@@ -97,7 +100,7 @@ export function InviteMemberModal({
           {!inviteLink ? (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <Label htmlFor="invite-email">Email address</Label>
+                <Label htmlFor="invite-email">{t('inviteEmail')}</Label>
                 <Input
                   id="invite-email"
                   type="email"
@@ -115,10 +118,10 @@ export function InviteMemberModal({
 
               <div className="flex justify-end gap-2 pt-1">
                 <Button type="button" variant="secondary" onClick={onClose}>
-                  Cancel
+                  {tCommon('cancel')}
                 </Button>
                 <Button type="submit" disabled={loading || !email.trim()}>
-                  {loading ? 'Sending…' : 'Send Invitation'}
+                  {loading ? '…' : t('sendInvitation')}
                 </Button>
               </div>
             </form>
@@ -126,7 +129,7 @@ export function InviteMemberModal({
             <div className="space-y-4">
               <div>
                 <p className="text-sm text-success font-medium mb-3">
-                  Invitation created! Share this link with {email}:
+                  {t('inviteCreated')} Share this link with {email}:
                 </p>
                 <div className="flex items-center gap-2">
                   <input
@@ -139,14 +142,14 @@ export function InviteMemberModal({
                     variant="secondary"
                     size="sm"
                     onClick={handleCopy}
-                    className="flex-shrink-0"
+                    className="flex-shrink-0 gap-1.5"
                   >
                     {copied ? <CheckIcon /> : <CopyIcon />}
                     {copied ? 'Copied!' : 'Copy'}
                   </Button>
                 </div>
                 <p className="text-xs text-muted-foreground mt-2">
-                  This link expires in 7 days.
+                  {t('inviteLinkExpiry')}
                 </p>
               </div>
 
@@ -159,7 +162,7 @@ export function InviteMemberModal({
                     setEmail('');
                   }}
                 >
-                  Invite Another
+                  {t('inviteAnother')}
                 </Button>
                 <Button type="button" onClick={onClose}>
                   Done

@@ -4,11 +4,13 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { TrendingUp, Menu, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useAuth } from '@/context/AuthContext';
 
 export function LandingHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const t = useTranslations('landing.header');
   const tCommon = useTranslations('common');
+  const { user, loading } = useAuth();
 
   const handleLogoClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -39,18 +41,23 @@ export function LandingHeader() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <Link
-              href="/dashboard"
-              className="hidden sm:inline-flex items-center justify-center h-9 px-3 text-sm font-medium rounded-md hover:bg-muted transition-colors"
-            >
-              {t('dashboard')}
-            </Link>
-            <Link
-              href="/create"
-              className="inline-flex items-center justify-center h-9 px-4 text-sm font-medium rounded-lg bg-gradient-growth text-growth-foreground shadow-lg hover:shadow-glow hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
-            >
-              {t('getStarted')}
-            </Link>
+            {!loading && (
+              user ? (
+                <Link
+                  href="/dashboard"
+                  className="inline-flex items-center justify-center h-9 px-4 text-sm font-medium rounded-lg bg-gradient-growth text-growth-foreground shadow-lg hover:shadow-glow hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+                >
+                  {t('dashboard')}
+                </Link>
+              ) : (
+                <Link
+                  href="/create"
+                  className="inline-flex items-center justify-center h-9 px-4 text-sm font-medium rounded-lg bg-gradient-growth text-growth-foreground shadow-lg hover:shadow-glow hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+                >
+                  {t('getStarted')}
+                </Link>
+              )
+            )}
 
             {/* Mobile menu button */}
             <button
@@ -94,13 +101,25 @@ export function LandingHeader() {
               >
                 {t('features')}
               </a>
-              <Link
-                href="/dashboard"
-                onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
-              >
-                {t('dashboard')}
-              </Link>
+              {!loading && (
+                user ? (
+                  <Link
+                    href="/dashboard"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
+                  >
+                    {t('dashboard')}
+                  </Link>
+                ) : (
+                  <Link
+                    href="/create"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
+                  >
+                    {t('getStarted')}
+                  </Link>
+                )
+              )}
             </div>
           </nav>
         )}
