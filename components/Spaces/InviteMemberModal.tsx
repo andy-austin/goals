@@ -139,7 +139,7 @@ export function InviteMemberModal({
                     variant="secondary"
                     size="sm"
                     onClick={handleCopy}
-                    className="flex-shrink-0"
+                    className="flex-shrink-0 gap-1.5"
                   >
                     {copied ? <CheckIcon /> : <CopyIcon />}
                     {copied ? 'Copied!' : 'Copy'}
