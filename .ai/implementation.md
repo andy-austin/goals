@@ -2,6 +2,14 @@
 
 ## Recently Completed
 
+### Spaces Global Layout (follow-up to #65)
+All `/spaces/*` routes now render under the global layout with the navbar visible, matching the dashboard/create/timeline feel.
+
+**New files created:**
+- `app/spaces/layout.tsx` — SpacesLayout with Header; identical pattern to other route layouts
+
+---
+
 ### Family/Group Goal Sharing (#65)
 Added public/private visibility for goals and full shared-spaces infrastructure for collaborative financial planning.
 
