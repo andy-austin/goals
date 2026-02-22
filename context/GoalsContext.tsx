@@ -88,7 +88,7 @@ function generateId(): string {
   return `goal_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
 }
 
-function getNextPriorityForBucket(goals: Goal[], bucket: Bucket): number {
+export function getNextPriorityForBucket(goals: Goal[], bucket: Bucket): number {
   const bucketGoals = goals.filter((g) => g.bucket === bucket);
   if (bucketGoals.length === 0) return 1;
   return Math.max(...bucketGoals.map((g) => g.priority)) + 1;
@@ -98,7 +98,7 @@ function getNextPriorityForBucket(goals: Goal[], bucket: Bucket): number {
 // Reducer
 // =============================================================================
 
-function goalsReducer(state: GoalsState, action: GoalsAction): GoalsState {
+export function goalsReducer(state: GoalsState, action: GoalsAction): GoalsState {
   switch (action.type) {
     case 'ADD_GOAL':
       return {
