@@ -154,8 +154,7 @@
       "amount": "Monto",
       "date": "Fecha",
       "category": "Categoría",
-      "why": "Por qué",
-      "visibility": "Compartir"
+      "why": "Por qué"
     },
     "step1": {
       "title": "¿Cuál es tu objetivo?",

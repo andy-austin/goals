@@ -154,8 +154,7 @@
       "amount": "Amount",
       "date": "Date",
       "category": "Category",
-      "why": "Why",
-      "visibility": "Sharing"
+      "why": "Why"
     },
     "step1": {
       "title": "What's your goal?",

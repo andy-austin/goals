@@ -92,6 +92,18 @@ Added Supabase Auth + Supabase Postgres integration for user authentication and 
 ### Landing Page Translation (Previous)
 All landing page components translated to English/Spanish via `next-intl`.
 
+### Remove Share Step from Create Goal Wizard
+Removed the "Sharing" (visibility) step from the goal creation wizard. Goals are now always created as private. Sharing should be done post-creation from the dashboard.
+
+**Modified files:**
+- `app/create/page.tsx` — Removed Step 6 (StepVisibility) from wizard steps array and form rendering; goals now always default to `visibility: 'private'` and `spaceId: null`
+- `messages/en.json` — Removed `goalForm.steps.visibility` translation key
+- `messages/es.json` — Removed `goalForm.steps.visibility` translation key
+
+**Note:** `StepVisibility.tsx` and `VisibilityToggle.tsx` components are intentionally preserved for future use in post-creation sharing from the dashboard.
+
+---
+
 ## Next Steps
 - #68: Personal Data Privacy Consent (Legal Compliance) — should ship alongside auth
 - #53: Edit Goals — add edit button to goal cards
