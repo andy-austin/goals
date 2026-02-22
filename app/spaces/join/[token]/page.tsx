@@ -58,7 +58,9 @@ export default function JoinSpacePage({ params }: { params: Promise<PageParams> 
       if (cancelled) return;
 
       if (!inv) {
-        setPageState('error');
+        // If the user isn't logged in, RLS may have blocked the lookup.
+        // Prompt them to sign in first rather than showing a generic error.
+        setPageState(user ? 'error' : 'login-required');
         return;
       }
 

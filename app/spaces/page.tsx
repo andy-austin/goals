@@ -32,7 +32,7 @@ export default function SpacesPage() {
 
   if (!user) {
     return (
-      <div className="mx-auto max-w-3xl px-4 py-16 text-center">
+      <div className="mx-auto max-w-5xl px-4 py-16 text-center">
         <UsersGroupIcon />
         <h2 className="mt-4 text-xl font-semibold text-foreground">Sign in to use Shared Spaces</h2>
         <p className="mt-2 text-muted-foreground mb-6">
@@ -49,7 +49,7 @@ export default function SpacesPage() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
+    <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>

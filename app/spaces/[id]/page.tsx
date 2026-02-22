@@ -108,7 +108,7 @@ export default function SpaceDetailPage({ params }: { params: Promise<PageParams
 
   if (!user) {
     return (
-      <div className="mx-auto max-w-3xl px-4 py-16 text-center">
+      <div className="mx-auto max-w-5xl px-4 py-16 text-center">
         <p className="text-muted-foreground">Please sign in to view this space.</p>
         <Button className="mt-4" onClick={() => router.push('/auth/login')}>Sign In</Button>
       </div>
@@ -117,7 +117,7 @@ export default function SpaceDetailPage({ params }: { params: Promise<PageParams
 
   if (!loading && !space) {
     return (
-      <div className="mx-auto max-w-3xl px-4 py-16 text-center">
+      <div className="mx-auto max-w-5xl px-4 py-16 text-center">
         <p className="text-muted-foreground mb-4">Space not found or you don&apos;t have access.</p>
         <Link href="/spaces">
           <Button variant="secondary">Back to Spaces</Button>
@@ -127,7 +127,7 @@ export default function SpaceDetailPage({ params }: { params: Promise<PageParams
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
+    <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
       {/* Back */}
       <Link
         href="/spaces"

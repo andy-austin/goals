@@ -46,7 +46,7 @@
     "pending": "Pending",
     "invite": "Invite",
     "inviteTitle": "Invite to {name}",
-    "inviteSubtitle": "Share a link or send an email invitation",
+    "inviteSubtitle": "Enter an email and share the generated invite link",
     "inviteEmail": "Email address",
     "sendInvitation": "Send Invitation",
     "inviteCreated": "Invitation created!",
