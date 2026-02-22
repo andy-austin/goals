@@ -5,6 +5,7 @@
     "logo": "FinGoal",
     "loading": "Cargando...",
     "save": "Guardar",
+    "saving": "Guardando...",
     "cancel": "Cancelar",
     "back": "Atrás",
     "next": "Siguiente",
@@ -12,6 +13,7 @@
     "creating": "Creando...",
     "delete": "Eliminar",
     "edit": "Editar",
+    "share": "Compartir",
     "stepIndicator": {
       "stepOf": "Paso {current} de {total}",
       "progress": "Progreso del formulario: Paso {current} de {total}, {label}",
@@ -171,6 +173,24 @@
     "actions": {
       "addGoal": "Agregar objetivo",
       "viewTimeline": "Ver línea de tiempo"
+    },
+    "editModal": {
+      "title": "Editar objetivo",
+      "bucketLabel": "Categoría",
+      "savedToast": "Objetivo actualizado con éxito"
+    },
+    "shareModal": {
+      "title": "Compartir objetivo",
+      "subtitle": "Elige quién puede ver \"{title}\"",
+      "visibilityLabel": "Visibilidad",
+      "privateDesc": "Solo tú puedes ver este objetivo.",
+      "sharedDesc": "Todos los miembros de tu espacio pueden ver este objetivo.",
+      "spaceLabel": "¿Compartir con qué espacio?",
+      "selectSpace": "Selecciona un espacio…",
+      "noSpaces": "Aún no tienes espacios compartidos.",
+      "createSpaceLink": "Crea un espacio primero →",
+      "sharedToast": "Objetivo compartido con éxito",
+      "madePrivateToast": "El objetivo ahora es privado"
     }
   },
   "buckets": {

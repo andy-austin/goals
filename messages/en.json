@@ -5,6 +5,7 @@
     "logo": "FinGoal",
     "loading": "Loading...",
     "save": "Save",
+    "saving": "Saving...",
     "cancel": "Cancel",
     "back": "Back",
     "next": "Next",
@@ -12,6 +13,7 @@
     "creating": "Creating...",
     "delete": "Delete",
     "edit": "Edit",
+    "share": "Share",
     "stepIndicator": {
       "stepOf": "Step {current} of {total}",
       "progress": "Form progress: Step {current} of {total}, {label}",
@@ -171,6 +173,24 @@
     "actions": {
       "addGoal": "Add goal",
       "viewTimeline": "View timeline"
+    },
+    "editModal": {
+      "title": "Edit Goal",
+      "bucketLabel": "Bucket",
+      "savedToast": "Goal updated successfully"
+    },
+    "shareModal": {
+      "title": "Share Goal",
+      "subtitle": "Choose who can see \"{title}\"",
+      "visibilityLabel": "Visibility",
+      "privateDesc": "Only you can see this goal.",
+      "sharedDesc": "All members of your chosen space can see this goal.",
+      "spaceLabel": "Share with which space?",
+      "selectSpace": "Select a space…",
+      "noSpaces": "You don't have any shared spaces yet.",
+      "createSpaceLink": "Create a space first →",
+      "sharedToast": "Goal shared successfully",
+      "madePrivateToast": "Goal is now private"
     }
   },
   "buckets": {
