@@ -2,6 +2,7 @@
 
 import { AuthProvider } from '@/context';
 import { GoalsProvider } from '@/context';
+import { SpacesProvider } from '@/context';
 import { ToastProvider } from '@/components/ui';
 import type { ReactNode } from 'react';
 
@@ -13,9 +14,11 @@ export function Providers({ children }: ProvidersProps) {
   return (
     <AuthProvider>
       <GoalsProvider>
-        <ToastProvider>
-          {children}
-        </ToastProvider>
+        <SpacesProvider>
+          <ToastProvider>
+            {children}
+          </ToastProvider>
+        </SpacesProvider>
       </GoalsProvider>
     </AuthProvider>
   );

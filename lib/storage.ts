@@ -47,9 +47,12 @@ function serializeGoal(goal: Goal): SerializedGoal {
 
 /**
  * Convert a serialized goal back to a Goal with proper Date objects
+ * Provides defaults for fields added in later schema versions (backward compat)
  */
 function deserializeGoal(serialized: SerializedGoal): Goal {
   return {
+    visibility: 'private',
+    spaceId: null,
     ...serialized,
     targetDate: new Date(serialized.targetDate),
     createdAt: new Date(serialized.createdAt),

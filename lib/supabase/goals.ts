@@ -1,5 +1,5 @@
 import { createClient } from './browser';
-import type { Goal, Bucket, Currency } from '@/types';
+import type { Goal, Bucket, Currency, GoalVisibility } from '@/types';
 
 interface GoalRow {
   id: string;
@@ -13,6 +13,8 @@ interface GoalRow {
   why_it_matters: string;
   priority: number;
   created_at: string;
+  visibility: string;
+  space_id: string | null;
 }
 
 function rowToGoal(row: GoalRow): Goal {
@@ -27,6 +29,8 @@ function rowToGoal(row: GoalRow): Goal {
     whyItMatters: row.why_it_matters,
     priority: row.priority,
     createdAt: new Date(row.created_at),
+    visibility: (row.visibility ?? 'private') as GoalVisibility,
+    spaceId: row.space_id ?? null,
   };
 }
 
@@ -43,6 +47,8 @@ function goalToRow(goal: Goal, userId: string): Omit<GoalRow, 'user_id'> & { use
     why_it_matters: goal.whyItMatters,
     priority: goal.priority,
     created_at: goal.createdAt.toISOString(),
+    visibility: goal.visibility ?? 'private',
+    space_id: goal.spaceId ?? null,
   };
 }
 

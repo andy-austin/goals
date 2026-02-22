@@ -29,7 +29,46 @@
   "nav": {
     "dashboard": "Dashboard",
     "createGoal": "Create goal",
-    "timeline": "Timeline"
+    "timeline": "Timeline",
+    "spaces": "Spaces"
+  },
+  "spaces": {
+    "title": "Shared Spaces",
+    "subtitle": "Collaborate on financial goals with family or a group",
+    "newSpace": "New Space",
+    "noSpaces": "No spaces yet",
+    "noSpacesDescription": "Create a space to collaborate on shared financial goals.",
+    "createFirst": "Create Your First Space",
+    "owner": "Owner",
+    "member": "Member",
+    "members": "{count, plural, =1 {# member} other {# members}}",
+    "sharedGoals": "{count, plural, =1 {# shared goal} other {# shared goals}}",
+    "pending": "Pending",
+    "invite": "Invite",
+    "inviteTitle": "Invite to {name}",
+    "inviteSubtitle": "Share a link or send an email invitation",
+    "inviteEmail": "Email address",
+    "sendInvitation": "Send Invitation",
+    "inviteCreated": "Invitation created!",
+    "inviteLinkExpiry": "This link expires in 7 days.",
+    "inviteAnother": "Invite Another",
+    "joinTitle": "Join Shared Space",
+    "joinSubtitle": "Collaborate on shared financial goals",
+    "acceptInvitation": "Accept Invitation",
+    "inviteSuccess": "You've joined the space!",
+    "inviteExpired": "Invitation Expired",
+    "inviteExpiredDescription": "This invitation has expired. Please ask the space owner to send a new one.",
+    "inviteInvalid": "Invalid Invitation",
+    "inviteInvalidDescription": "This invitation link is invalid or has already been used.",
+    "deleteSpace": "Delete Space",
+    "deleteConfirmTitle": "Delete Space?",
+    "deleteConfirmMessage": "This will permanently delete this space and remove all members.",
+    "leaveSpace": "Leave Space",
+    "removeConfirm": "Remove member",
+    "signInRequired": "Sign in to use Shared Spaces",
+    "signInDescription": "Shared Spaces let you collaborate on financial goals with family or a group.",
+    "pendingInvitations": "Pending Invitations",
+    "expiresOn": "Expires {date}"
   },
   "timeline": {
     "title": "Timeline",
@@ -115,7 +154,8 @@
       "amount": "Amount",
       "date": "Date",
       "category": "Category",
-      "why": "Why"
+      "why": "Why",
+      "visibility": "Sharing"
     },
     "step1": {
       "title": "What's your goal?",

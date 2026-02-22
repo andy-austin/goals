@@ -8,6 +8,21 @@
 // =============================================================================
 
 /**
+ * Visibility of a goal: private (owner only) or shared (all space members)
+ */
+export type GoalVisibility = 'private' | 'shared';
+
+/**
+ * Role within a shared space
+ */
+export type SpaceRole = 'owner' | 'member';
+
+/**
+ * Status of a space invitation
+ */
+export type InvitationStatus = 'pending' | 'accepted' | 'declined' | 'expired';
+
+/**
  * Goal categorization based on the 3 Buckets methodology:
  * - safety: Non-negotiable, urgent goals (Emergency Fund, Health)
  * - growth: Goals that improve standard of living (House, Education)
@@ -70,6 +85,12 @@ export interface Goal {
 
   /** Timestamp when the goal was created */
   createdAt: Date;
+
+  /** Visibility: 'private' (default) or 'shared' (visible to space members) */
+  visibility: GoalVisibility;
+
+  /** ID of the shared space this goal belongs to (null for personal goals) */
+  spaceId: string | null;
 }
 
 /**
@@ -124,6 +145,8 @@ export interface GoalFormInput {
   targetDate: string; // ISO date string for form input
   bucket: Bucket;
   whyItMatters: string;
+  visibility: GoalVisibility;
+  spaceId: string | null;
 }
 
 /**
@@ -300,3 +323,74 @@ export function getCurrencyOptions(locale = 'en-US'): Array<{ code: Currency; na
  * All bucket types as an array
  */
 export const BUCKETS: Bucket[] = ['safety', 'growth', 'dream'];
+
+// =============================================================================
+// Shared Spaces Types (Issue #65)
+// =============================================================================
+
+/**
+ * A shared space where family/group members can collaborate on goals
+ */
+export interface SharedSpace {
+  /** Unique identifier */
+  id: string;
+  /** Display name of the space (e.g., "Smith Family") */
+  name: string;
+  /** Optional description */
+  description: string;
+  /** User ID of the space owner */
+  ownerId: string;
+  /** When the space was created */
+  createdAt: Date;
+}
+
+/**
+ * A membership record linking a user to a shared space
+ */
+export interface SpaceMembership {
+  /** ID of the shared space */
+  spaceId: string;
+  /** ID of the member user */
+  userId: string;
+  /** Display name or email of the member (enriched client-side) */
+  displayName?: string;
+  /** Role within the space */
+  role: SpaceRole;
+  /** When the user joined the space */
+  joinedAt: Date;
+}
+
+/**
+ * An invitation to join a shared space
+ */
+export interface SpaceInvitation {
+  /** Unique identifier */
+  id: string;
+  /** ID of the space being joined */
+  spaceId: string;
+  /** Email address of the invitee */
+  invitedEmail: string;
+  /** User ID of the person who sent the invitation */
+  invitedBy: string;
+  /** Unique token used in the invitation link */
+  token: string;
+  /** Current invitation status */
+  status: InvitationStatus;
+  /** When the invitation was created */
+  createdAt: Date;
+  /** When the invitation expires */
+  expiresAt: Date;
+}
+
+/**
+ * A shared space with its members and goals (enriched view)
+ */
+export interface SharedSpaceWithDetails extends SharedSpace {
+  memberships: SpaceMembership[];
+  goals: Goal[];
+  invitations: SpaceInvitation[];
+  /** Whether the current user is the owner */
+  isOwner: boolean;
+  /** Current user's role in the space */
+  currentUserRole: SpaceRole;
+}

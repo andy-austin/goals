@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { FormWizard, FormStep, StepTitleDescription, StepAmountCurrency, StepTargetDate, StepBucket, StepWhyItMatters, TemplateSelector, Button, Card, CardContent, Tooltip } from '@/components';
+import { FormWizard, FormStep, StepTitleDescription, StepAmountCurrency, StepTargetDate, StepBucket, StepWhyItMatters, StepVisibility, TemplateSelector, Button, Card, CardContent, Tooltip } from '@/components';
 import { useGoals } from '@/context';
 import { validateSMART } from '@/lib';
 import type { GoalFormInput, GoalTemplate, Currency } from '@/types';
@@ -57,6 +57,7 @@ export default function CreateGoalPage() {
     { label: t('steps.date') },
     { label: t('steps.category') },
     { label: t('steps.why') },
+    { label: t('steps.visibility') },
   ];
 
   // Handle template selection
@@ -103,6 +104,8 @@ export default function CreateGoalPage() {
         targetDate: new Date(data.targetDate!),
         bucket: data.bucket!,
         whyItMatters: data.whyItMatters!,
+        visibility: data.visibility ?? 'private',
+        spaceId: data.spaceId ?? null,
       });
 
       setIsSubmitting(false);
@@ -197,6 +200,10 @@ export default function CreateGoalPage() {
 
           <FormStep step={4}>
             <StepWhyItMatters />
+          </FormStep>
+
+          <FormStep step={5}>
+            <StepVisibility />
           </FormStep>
         </FormWizard>
       )}
