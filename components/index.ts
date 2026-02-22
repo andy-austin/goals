@@ -15,3 +15,6 @@ export * from './Dashboard';
 
 // Timeline Components
 export * from './Timeline';
+
+// Spaces Components
+export * from './Spaces';

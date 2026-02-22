@@ -29,7 +29,46 @@
   "nav": {
     "dashboard": "Panel",
     "createGoal": "Crear objetivo",
-    "timeline": "Línea de tiempo"
+    "timeline": "Línea de tiempo",
+    "spaces": "Espacios"
+  },
+  "spaces": {
+    "title": "Espacios compartidos",
+    "subtitle": "Colabora en objetivos financieros con familia o un grupo",
+    "newSpace": "Nuevo espacio",
+    "noSpaces": "Sin espacios todavía",
+    "noSpacesDescription": "Crea un espacio para colaborar en objetivos financieros compartidos.",
+    "createFirst": "Crear tu primer espacio",
+    "owner": "Propietario",
+    "member": "Miembro",
+    "members": "{count, plural, =1 {# miembro} other {# miembros}}",
+    "sharedGoals": "{count, plural, =1 {# objetivo compartido} other {# objetivos compartidos}}",
+    "pending": "Pendiente",
+    "invite": "Invitar",
+    "inviteTitle": "Invitar a {name}",
+    "inviteSubtitle": "Comparte un enlace o envía una invitación por correo",
+    "inviteEmail": "Correo electrónico",
+    "sendInvitation": "Enviar invitación",
+    "inviteCreated": "¡Invitación creada!",
+    "inviteLinkExpiry": "Este enlace expira en 7 días.",
+    "inviteAnother": "Invitar a otro",
+    "joinTitle": "Unirse al espacio",
+    "joinSubtitle": "Colabora en objetivos financieros compartidos",
+    "acceptInvitation": "Aceptar invitación",
+    "inviteSuccess": "¡Te has unido al espacio!",
+    "inviteExpired": "Invitación expirada",
+    "inviteExpiredDescription": "Esta invitación ha expirado. Pide al propietario que envíe una nueva.",
+    "inviteInvalid": "Invitación inválida",
+    "inviteInvalidDescription": "Este enlace de invitación es inválido o ya fue utilizado.",
+    "deleteSpace": "Eliminar espacio",
+    "deleteConfirmTitle": "¿Eliminar espacio?",
+    "deleteConfirmMessage": "Esto eliminará permanentemente este espacio y removerá a todos los miembros.",
+    "leaveSpace": "Salir del espacio",
+    "removeConfirm": "Remover miembro",
+    "signInRequired": "Inicia sesión para usar Espacios compartidos",
+    "signInDescription": "Los Espacios compartidos te permiten colaborar en objetivos financieros con familia o un grupo.",
+    "pendingInvitations": "Invitaciones pendientes",
+    "expiresOn": "Expira el {date}"
   },
   "timeline": {
     "title": "Línea de tiempo",
@@ -115,7 +154,8 @@
       "amount": "Monto",
       "date": "Fecha",
       "category": "Categoría",
-      "why": "Por qué"
+      "why": "Por qué",
+      "visibility": "Compartir"
     },
     "step1": {
       "title": "¿Cuál es tu objetivo?",

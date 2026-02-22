@@ -44,6 +44,7 @@ export function Header() {
     { href: '/dashboard', label: t('dashboard') },
     { href: '/create', label: t('createGoal') },
     { href: '/timeline', label: t('timeline') },
+    { href: '/spaces', label: t('spaces') },
   ];
 
   const handleSignOut = async () => {
