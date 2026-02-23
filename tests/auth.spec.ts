@@ -26,6 +26,13 @@ async function goToSignup(page: import('@playwright/test').Page) {
   await page.context().addCookies([
     { name: 'locale', value: 'en', domain: 'localhost', path: '/' },
   ]);
+  // Pre-set consent so the cookie banner never appears and blocks interactions
+  await page.addInitScript(() => {
+    localStorage.setItem(
+      'fingoal_consent',
+      JSON.stringify({ given: true, timestamp: '2025-01-01T00:00:00.000Z', policyVersion: '1.0.0', analyticsConsent: false })
+    );
+  });
   await page.goto('/auth/signup');
 }
 
@@ -132,7 +139,7 @@ test.describe('Sign-up page', () => {
 
   test('renders email, password, and confirm-password fields', async ({ page }) => {
     await expect(page.getByLabel('Email')).toBeVisible();
-    await expect(page.getByLabel('Password')).toBeVisible();
+    await expect(page.getByLabel('Password', { exact: true })).toBeVisible();
     await expect(page.getByLabel('Confirm password')).toBeVisible();
   });
 
@@ -167,7 +174,7 @@ test.describe('Sign-up page form validation', () => {
 
   test('shows "Passwords do not match" when passwords differ', async ({ page }) => {
     await page.getByLabel('Email').fill('user@example.com');
-    await page.getByLabel('Password').fill('password1');
+    await page.getByLabel('Password', { exact: true }).fill('password1');
     await page.getByLabel('Confirm password').fill('password2');
     await page.getByRole('button', { name: 'Create Account' }).click();
 
@@ -175,7 +182,7 @@ test.describe('Sign-up page form validation', () => {
   });
 
   test('each password field requires a minimum of 6 characters', async ({ page }) => {
-    await expect(page.getByLabel('Password')).toHaveAttribute('minlength', '6');
+    await expect(page.getByLabel('Password', { exact: true })).toHaveAttribute('minlength', '6');
     await expect(page.getByLabel('Confirm password')).toHaveAttribute('minlength', '6');
   });
 });

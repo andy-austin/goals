@@ -62,12 +62,17 @@ test.describe('Timeline Visualization', () => {
     await page.context().addCookies([
       { name: 'locale', value: 'en', domain: 'localhost', path: '/' }
     ]);
-    // Set up test goals via localStorage
+    // Set up test goals via localStorage; also pre-set consent so the cookie
+    // banner never appears and blocks interactions
     const testGoals = createTestGoals();
     await page.addInitScript((goals) => {
       localStorage.setItem(
         'investment-goals-v1',
         JSON.stringify({ version: 1, goals })
+      );
+      localStorage.setItem(
+        'fingoal_consent',
+        JSON.stringify({ given: true, timestamp: '2025-01-01T00:00:00.000Z', policyVersion: '1.0.0', analyticsConsent: false })
       );
     }, testGoals);
     await page.goto('/timeline');
@@ -79,7 +84,7 @@ test.describe('Timeline Visualization', () => {
   });
 
   test('shows zoom controls', async ({ page }) => {
-    await expect(page.getByRole('button', { name: 'All' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'All', exact: true })).toBeVisible();
     await expect(page.getByRole('button', { name: '1 Year' })).toBeVisible();
     await expect(page.getByRole('button', { name: '5 Years' })).toBeVisible();
     await expect(page.getByRole('button', { name: '10+ Years' })).toBeVisible();
@@ -103,7 +108,7 @@ test.describe('Timeline Visualization', () => {
 
   test('zoom controls change active state', async ({ page }) => {
     // Default should be All
-    const allBtn = page.getByRole('button', { name: 'All' });
+    const allBtn = page.getByRole('button', { name: 'All', exact: true });
     await expect(allBtn).toHaveAttribute('aria-pressed', 'true');
 
     // Click 1 Year
@@ -195,6 +200,11 @@ test.describe('Timeline - Responsive', () => {
         'investment-goals-v1',
         JSON.stringify({ version: 1, goals })
       );
+      // Pre-set consent so the cookie banner never appears and blocks interactions
+      localStorage.setItem(
+        'fingoal_consent',
+        JSON.stringify({ given: true, timestamp: '2025-01-01T00:00:00.000Z', policyVersion: '1.0.0', analyticsConsent: false })
+      );
     }, testGoals);
   });
 
@@ -204,7 +214,7 @@ test.describe('Timeline - Responsive', () => {
 
     // Timeline should still be visible
     await expect(page.getByRole('heading', { name: 'Timeline' })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'All' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'All', exact: true })).toBeVisible();
   });
 });
 

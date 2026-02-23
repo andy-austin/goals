@@ -6,9 +6,14 @@ test.describe('Dashboard', () => {
     await page.context().addCookies([
       { name: 'locale', value: 'en', domain: 'localhost', path: '/' }
     ]);
-    // Clear localStorage before each test
+    // Clear localStorage before each test, then restore consent so the cookie
+    // banner never appears and blocks interactions
     await page.addInitScript(() => {
       localStorage.clear();
+      localStorage.setItem(
+        'fingoal_consent',
+        JSON.stringify({ given: true, timestamp: '2025-01-01T00:00:00.000Z', policyVersion: '1.0.0', analyticsConsent: false })
+      );
     });
     await page.goto('/dashboard');
   });
@@ -30,7 +35,7 @@ test.describe('Dashboard', () => {
     // Note: desktop nav is hidden on mobile, use first() for reliability
     await expect(page.getByRole('link', { name: /dashboard/i }).first()).toBeVisible();
     await expect(page.getByRole('link', { name: /create goal/i }).first()).toBeVisible();
-    await expect(page.getByRole('link', { name: /timeline/i }).first()).toBeVisible();
+    // Timeline is in the user dropdown (requires sign-in); not a top-level nav link
   });
 
   test('can navigate to create page', async ({ page }) => {

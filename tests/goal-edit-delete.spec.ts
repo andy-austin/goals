@@ -37,7 +37,18 @@ const secondGoal = {
 function seedStorage(goals: object[]) {
   return (page: import('@playwright/test').Page) =>
     page.addInitScript((g) => {
-      localStorage.setItem('investment-goals-v1', JSON.stringify({ version: 1, goals: g }));
+      // Only seed goals when not already present so that page.reload() inside a
+      // test doesn't overwrite changes the test just saved to localStorage.
+      if (!localStorage.getItem('investment-goals-v1')) {
+        localStorage.setItem('investment-goals-v1', JSON.stringify({ version: 1, goals: g }));
+      }
+      // Always ensure consent is set so the cookie banner never blocks interactions
+      if (!localStorage.getItem('fingoal_consent')) {
+        localStorage.setItem(
+          'fingoal_consent',
+          JSON.stringify({ given: true, timestamp: '2025-01-01T00:00:00.000Z', policyVersion: '1.0.0', analyticsConsent: false })
+        );
+      }
     }, goals);
 }
 
@@ -149,7 +160,8 @@ test.describe('Edit goal', () => {
     await titleInput.clear();
     await titleInput.fill('Changed Title');
 
-    await page.getByRole('button', { name: /cancel/i }).click();
+    // Use getByText to target the "Cancel" text button, not the X icon (aria-label="Cancel")
+    await page.getByText('Cancel', { exact: true }).click();
 
     // Original title should still be shown
     await expect(page.getByRole('heading', { name: 'Emergency Fund' })).toBeVisible();
@@ -163,8 +175,8 @@ test.describe('Edit goal', () => {
     await titleInput.clear();
     await titleInput.fill('Will Be Discarded');
 
-    // Click the close (×) button in the modal header
-    await page.getByRole('dialog').getByRole('button', { name: /close/i }).click();
+    // Click the close (×) button in the modal header; it has aria-label="Cancel"
+    await page.getByLabel('Cancel').click();
 
     await expect(page.getByRole('heading', { name: 'Emergency Fund' })).toBeVisible();
   });
@@ -179,7 +191,8 @@ test.describe('Edit goal', () => {
     await page.getByRole('button', { name: /save/i }).click();
 
     await expect(page.getByRole('heading', { name: 'Updated Emergency Fund' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Emergency Fund' })).not.toBeVisible();
+    // exact: true prevents "Emergency Fund" from matching "Updated Emergency Fund"
+    await expect(page.getByRole('heading', { name: 'Emergency Fund', exact: true })).not.toBeVisible();
   });
 
   test('shows a success toast after saving edits', async ({ page }) => {
