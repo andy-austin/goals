@@ -11,7 +11,6 @@ import { useTranslations } from 'next-intl';
 import { useAuth } from '@/context';
 import { useSpaces } from '@/context';
 import { Button } from '@/components/ui/Button';
-import { fetchInvitationByToken } from '@/lib/supabase/spaces';
 import type { SpaceInvitation } from '@/types';
 
 interface PageParams {
@@ -51,37 +50,51 @@ export default function JoinSpacePage({ params }: { params: Promise<PageParams> 
   const [joinedSpaceId, setJoinedSpaceId] = useState<string | null>(null);
   const [joining, setJoining] = useState(false);
 
-  // Fetch invitation details to show a preview
+  // Fetch invitation details via server API route (bypasses RLS so both
+  // authenticated and unauthenticated users can see the preview).
   useEffect(() => {
     let cancelled = false;
 
     async function fetchDetails() {
-      const inv = await fetchInvitationByToken(token);
+      try {
+        const res = await fetch(`/api/invitations/${encodeURIComponent(token)}`);
+        if (!res.ok) {
+          if (!cancelled) setPageState('error');
+          return;
+        }
 
-      if (cancelled) return;
+        const data = await res.json();
+        if (cancelled) return;
 
-      if (!inv) {
-        // If the user isn't logged in, RLS may have blocked the lookup.
-        // Prompt them to sign in first rather than showing a generic error.
-        setPageState(user ? 'error' : 'login-required');
-        return;
-      }
+        const inv: SpaceInvitation = {
+          id: data.id,
+          spaceId: data.spaceId,
+          invitedEmail: data.invitedEmail,
+          invitedBy: data.invitedBy,
+          token: data.token,
+          status: data.status,
+          createdAt: new Date(data.createdAt),
+          expiresAt: new Date(data.expiresAt),
+        };
 
-      if (inv.status === 'expired' || new Date() > inv.expiresAt) {
+        if (inv.status === 'expired' || new Date() > inv.expiresAt) {
+          setInvitation(inv);
+          setPageState('expired');
+          return;
+        }
+
+        if (inv.status === 'accepted') {
+          setInvitation(inv);
+          setPageState('success');
+          setJoinedSpaceId(inv.spaceId);
+          return;
+        }
+
         setInvitation(inv);
-        setPageState('expired');
-        return;
+        setPageState(user ? 'preview' : 'login-required');
+      } catch {
+        if (!cancelled) setPageState('error');
       }
-
-      if (inv.status === 'accepted') {
-        setInvitation(inv);
-        setPageState('success');
-        setJoinedSpaceId(inv.spaceId);
-        return;
-      }
-
-      setInvitation(inv);
-      setPageState(user ? 'preview' : 'login-required');
     }
 
     fetchDetails();
@@ -90,7 +103,7 @@ export default function JoinSpacePage({ params }: { params: Promise<PageParams> 
 
   async function handleAccept() {
     if (!user) {
-      router.push(`/auth/login?redirect=/spaces/join/${token}`);
+      router.push(`/auth/login?redirectTo=/spaces/join/${token}`);
       return;
     }
 
@@ -126,12 +139,12 @@ export default function JoinSpacePage({ params }: { params: Promise<PageParams> 
           {t('joinInvitedDescription')}
         </p>
         <div className="flex flex-col gap-3">
-          <Button onClick={() => router.push(`/auth/login?redirect=/spaces/join/${token}`)}>
+          <Button onClick={() => router.push(`/auth/login?redirectTo=/spaces/join/${token}`)}>
             {tAuth('login')}
           </Button>
           <Button
             variant="secondary"
-            onClick={() => router.push(`/auth/signup?redirect=/spaces/join/${token}`)}
+            onClick={() => router.push(`/auth/signup?redirectTo=/spaces/join/${token}`)}
           >
             {tAuth('createAccount')}
           </Button>
