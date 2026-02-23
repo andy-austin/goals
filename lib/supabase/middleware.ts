@@ -60,10 +60,11 @@ export async function updateSession(request: NextRequest) {
   // Redirect logged-in users away from auth pages
   const authPaths = ['/auth/login', '/auth/signup'];
   if (user && authPaths.some((p) => pathname.startsWith(p))) {
-    const dashboardUrl = request.nextUrl.clone();
-    dashboardUrl.pathname = '/dashboard';
-    dashboardUrl.search = '';
-    return NextResponse.redirect(dashboardUrl);
+    const redirectTo = request.nextUrl.searchParams.get('redirectTo');
+    const destUrl = request.nextUrl.clone();
+    destUrl.pathname = redirectTo || '/dashboard';
+    destUrl.search = '';
+    return NextResponse.redirect(destUrl);
   }
 
   return supabaseResponse;
