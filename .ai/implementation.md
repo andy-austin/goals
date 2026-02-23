@@ -2,6 +2,34 @@
 
 ## Recently Completed
 
+### Test Coverage Improvements (analyze-test-coverage)
+Introduced Vitest for unit/integration testing and added E2E coverage for previously untested flows.
+
+**New files created:**
+- `vitest.config.ts` — Vitest configuration (jsdom environment, `@vitejs/plugin-react`, path aliases via `vite-tsconfig-paths`)
+- `vitest.setup.ts` — Global test setup (`@testing-library/jest-dom` matchers)
+- `lib/validation.unit.test.ts` — 23 unit tests for `validateSMART()` covering all SMART fields, boundary conditions, and missing inputs
+- `context/GoalsContext.unit.test.ts` — 20 unit tests for `goalsReducer` and `getNextPriorityForBucket()` covering all 6 action types
+- `lib/storage.unit.test.ts` — 24 unit tests for `loadGoals`, `saveGoals`, `clearGoals`, cache ops, and `isStorageAvailable`
+- `types/goal.unit.test.ts` — 25 unit tests for `formatCurrency`, `getCurrencySymbol`, `formatDate`, `getCurrencyName`, `getCurrencyOptions`, `BUCKETS`, `BUCKET_CONFIG`
+- `app/api/ai/suggest/route.unit.test.ts` — 15 integration tests for the AI suggestion route covering 503/400/401/429/500 responses and all 5 response-parsing types (description, amount, bucket, whyItMatters, convert)
+- `tests/goal-edit-delete.spec.ts` — 13 E2E tests for delete confirmation flow and edit modal (pre-population, validation, persistence)
+- `tests/auth.spec.ts` — 20 E2E tests for login/signup page structure, form validation, navigation, and auth guard behaviour
+
+**Modified files:**
+- `package.json` — Added `test` and `test:watch` scripts; added devDependencies: `vitest`, `@vitejs/plugin-react`, `@testing-library/react`, `@testing-library/jest-dom`, `@testing-library/user-event`, `jsdom`, `vite-tsconfig-paths`
+- `context/GoalsContext.tsx` — Exported `goalsReducer` and `getNextPriorityForBucket` for direct unit testing
+
+**Test counts (unit, run via `npm test`):**
+- 5 test files, 107 tests, all passing
+
+**Architecture notes:**
+- Unit tests use `.unit.test.ts` / `.unit.test.tsx` filename convention (excluded from Playwright, included by Vitest)
+- E2E tests remain in `tests/` and run via `npx playwright test`
+- AI route tests use `vi.resetModules()` + `vi.doMock()` + dynamic import to isolate module-level env-var initialisation
+
+---
+
 ### Spaces Global Layout (follow-up to #65)
 All `/spaces/*` routes now render under the global layout with the navbar visible, matching the dashboard/create/timeline feel.
 
