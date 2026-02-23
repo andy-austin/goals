@@ -32,7 +32,8 @@ export async function GET(
   }
 
   // Return only the fields the join page needs — no sensitive data
-  const spaceName = (data.shared_spaces as { name: string } | null)?.name ?? null;
+  const spaces = data.shared_spaces as { name: string }[] | { name: string } | null;
+  const spaceName = Array.isArray(spaces) ? spaces[0]?.name ?? null : spaces?.name ?? null;
 
   return NextResponse.json({
     id: data.id,
