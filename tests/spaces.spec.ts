@@ -278,9 +278,10 @@ test.describe('Dashboard share button', () => {
   test('share modal has a sign in link', async ({ page }) => {
     await page.getByRole('button', { name: /share/i }).first().click();
 
-    // The sign-in link text is "Sign In →" (translation + arrow)
+    // The modal's sign-in link includes an arrow: "Sign In →"
+    // Use exact name to distinguish from the header nav "Sign In" link
     await expect(
-      page.locator('a[href="/auth/login"]')
+      page.getByRole('link', { name: 'Sign In →' })
     ).toBeVisible();
   });
 
