@@ -167,18 +167,31 @@ test.describe('Join invitation page (unauthenticated)', () => {
     await page.goto('/spaces/join/fake-token-12345');
   });
 
-  test('shows login-required state for unauthenticated users', async ({ page }) => {
-    // When not logged in, the page should prompt the user to sign in
-    // (either "You've been invited" prompt or "Invalid Invitation" if RLS blocks lookup)
-    const hasInvitedPrompt = await page.getByText(/you've been invited/i).isVisible().catch(() => false);
-    const hasLoginButton = await page.getByRole('button', { name: /sign in|log in/i }).first().isVisible().catch(() => false);
-    const hasInvalidState = await page.getByText(/invalid invitation/i).isVisible().catch(() => false);
+  test('shows login-required or error state for unauthenticated users', async ({ page }) => {
+    // The page starts in 'loading' state, then resolves to either 'login-required'
+    // (shows "You've been invited!") or 'error' (shows "Invalid Invitation").
+    // Wait for the loading state to pass by waiting for the loading indicator to disappear.
+    await page.waitForFunction(() => {
+      // Wait until the loading placeholder is gone (page transitioned from loading state)
+      return !document.querySelector('.animate-pulse');
+    }, { timeout: 15000 });
 
-    // One of these should be true — either the login prompt or error state
-    expect(hasInvitedPrompt || hasLoginButton || hasInvalidState).toBeTruthy();
+    // After loading, expect one of: login-required state or error state
+    const invitedHeading = page.getByRole('heading', { name: /you've been invited/i });
+    const invalidHeading = page.getByRole('heading', { name: /invalid invitation/i });
+
+    const hasInvited = await invitedHeading.isVisible().catch(() => false);
+    const hasInvalid = await invalidHeading.isVisible().catch(() => false);
+
+    expect(hasInvited || hasInvalid).toBeTruthy();
   });
 
   test('page loads without crashing', async ({ page }) => {
+    // Wait for page to finish loading
+    await page.waitForFunction(() => {
+      return !document.querySelector('.animate-pulse');
+    }, { timeout: 15000 });
+
     // The page should render something even with a fake token
     await expect(page.locator('body')).toBeVisible();
     // Should not show a Next.js error page
@@ -218,8 +231,8 @@ test.describe('Dashboard shared badge', () => {
     await expect(
       page.getByRole('heading', { name: 'Family Vacation Fund' })
     ).toBeVisible();
-    // Amount should be visible
-    await expect(page.getByText(/5,000/)).toBeVisible();
+    // Amount should be visible (formatCurrency returns "USD 5,000.00")
+    await expect(page.getByText(/5,000/).first()).toBeVisible();
     // Days remaining
     await expect(page.getByText(/\d+ days left/).first()).toBeVisible();
   });
@@ -265,8 +278,9 @@ test.describe('Dashboard share button', () => {
   test('share modal has a sign in link', async ({ page }) => {
     await page.getByRole('button', { name: /share/i }).first().click();
 
+    // The sign-in link text is "Sign In →" (translation + arrow)
     await expect(
-      page.getByRole('link', { name: /sign in/i })
+      page.locator('a[href="/auth/login"]')
     ).toBeVisible();
   });
 
@@ -278,8 +292,8 @@ test.describe('Dashboard share button', () => {
       page.getByRole('heading', { name: /share goal/i })
     ).toBeVisible();
 
-    // Close with the ghost Cancel button
-    await page.getByRole('button', { name: /cancel/i }).click();
+    // Close with the ghost Cancel text button (not the X icon which also has aria-label="Cancel")
+    await page.getByRole('button', { name: 'Cancel', exact: true }).last().click();
 
     // Modal should be gone
     await expect(
