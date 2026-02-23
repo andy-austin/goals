@@ -2,6 +2,26 @@
 
 ## Recently Completed
 
+### Issue #65 Review & E2E Test Coverage
+Reviewed the Family/Group Goal Sharing implementation (#65) and added missing E2E tests. Fixed hardcoded English strings that violated the i18n convention.
+
+**New files created:**
+- `tests/spaces.spec.ts` — 24 E2E tests covering:
+  - Spaces page (unauthenticated): sign-in required message, description, sign-in button, navigation to login
+  - Spaces page layout: global layout with header, route accessibility
+  - Space detail page (unauthenticated): sign-in prompt, sign-in button
+  - Join invitation page (unauthenticated): login-required state, page stability with invalid tokens
+  - Dashboard shared badge: "Shared" badge visibility on shared goals, absence on private goals, standard card elements
+  - Dashboard share button: button presence, modal opening, auth gate for anonymous users, sign-in link, modal close (Cancel and X button)
+  - Goal visibility data integrity: default private visibility on creation, shared visibility persistence in localStorage
+  - Backward compatibility: legacy goals without visibility field render correctly, no "Shared" badge, treated as private
+
+**Modified files:**
+- `components/Dashboard/GoalCard.tsx` — Replaced hardcoded "Shared" string with `tSpaces('shared')` i18n key
+- `components/Spaces/SpaceCard.tsx` — Added `useTranslations('spaces')` hook; replaced hardcoded "Owner", "member"/"members", "shared goal"/"goals" with i18n keys (`t('owner')`, `t('members', { count })`, `t('sharedGoals', { count })`)
+
+---
+
 ### Test Coverage Improvements (analyze-test-coverage)
 Introduced Vitest for unit/integration testing and added E2E coverage for previously untested flows.
 

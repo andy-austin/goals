@@ -5,6 +5,7 @@
  */
 
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import type { SharedSpace } from '@/types';
 import { Card, CardContent } from '@/components/ui';
 
@@ -34,6 +35,7 @@ const ChevronRightIcon = () => (
 );
 
 export function SpaceCard({ space, isOwner, memberCount, goalCount }: SpaceCardProps) {
+  const t = useTranslations('spaces');
   return (
     <Link href={`/spaces/${space.id}`} className="block group">
       <Card className="hover:border-primary/50 transition-colors cursor-pointer">
@@ -49,7 +51,7 @@ export function SpaceCard({ space, isOwner, memberCount, goalCount }: SpaceCardP
               <h3 className="font-semibold text-foreground truncate">{space.name}</h3>
               {isOwner && (
                 <span className="text-xs px-1.5 py-0.5 rounded bg-primary/10 text-primary font-medium flex-shrink-0">
-                  Owner
+                  {t('owner')}
                 </span>
               )}
             </div>
@@ -60,13 +62,13 @@ export function SpaceCard({ space, isOwner, memberCount, goalCount }: SpaceCardP
               {memberCount !== undefined && (
                 <span className="flex items-center gap-1">
                   <UsersIcon />
-                  {memberCount} {memberCount === 1 ? 'member' : 'members'}
+                  {t('members', { count: memberCount })}
                 </span>
               )}
               {goalCount !== undefined && (
                 <span className="flex items-center gap-1">
                   <TargetIcon />
-                  {goalCount} shared {goalCount === 1 ? 'goal' : 'goals'}
+                  {t('sharedGoals', { count: goalCount })}
                 </span>
               )}
             </div>
