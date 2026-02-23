@@ -34,7 +34,6 @@ import {
   fetchInvitations,
   createInvitation as createInvitationRemote,
   revokeInvitation as revokeInvitationRemote,
-  acceptInvitation as acceptInvitationRemote,
 } from '@/lib/supabase/spaces';
 
 // =============================================================================
@@ -195,12 +194,19 @@ export function SpacesProvider({ children }: SpacesProviderProps) {
     token: string
   ): Promise<{ success: boolean; spaceId: string | null }> => {
     if (!user) return { success: false, spaceId: null };
-    const result = await acceptInvitationRemote(token, user.id);
-    if (result.success) {
-      // Refresh spaces list so the new space appears
-      await refreshSpaces();
+    try {
+      const res = await fetch(`/api/invitations/${encodeURIComponent(token)}/accept`, {
+        method: 'POST',
+      });
+      const data = await res.json();
+      if (data.success) {
+        await refreshSpaces();
+        return { success: true, spaceId: data.spaceId };
+      }
+      return { success: false, spaceId: null };
+    } catch {
+      return { success: false, spaceId: null };
     }
-    return result;
   }, [user, refreshSpaces]);
 
   const value: SpacesContextValue = useMemo(() => ({
