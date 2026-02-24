@@ -13,6 +13,7 @@ import {
 import type {
   Goal,
   Bucket,
+  CheckIn,
   CreateGoalInput,
   GoalsByBucket,
 } from '@/types';
@@ -24,6 +25,8 @@ import {
   deleteGoalRemote,
   updateGoalRemote,
   upsertGoals,
+  insertCheckInRemote,
+  deleteCheckInRemote,
 } from '@/lib/supabase/goals';
 
 // =============================================================================
@@ -40,7 +43,9 @@ type GoalsAction =
   | { type: 'UPDATE_GOAL'; payload: { goalId: string; updates: Partial<Omit<Goal, 'id' | 'createdAt'>> } }
   | { type: 'UPDATE_GOAL_PRIORITY'; payload: { goalId: string; newPriority: number } }
   | { type: 'REORDER_GOALS_IN_BUCKET'; payload: { bucket: Bucket; orderedIds: string[] } }
-  | { type: 'DELETE_GOAL'; payload: string };
+  | { type: 'DELETE_GOAL'; payload: string }
+  | { type: 'ADD_CHECK_IN'; payload: { goalId: string; checkIn: CheckIn } }
+  | { type: 'DELETE_CHECK_IN'; payload: { goalId: string; checkInId: string } };
 
 interface GoalsContextValue {
   /** All goals */
@@ -78,6 +83,12 @@ interface GoalsContextValue {
 
   /** Get total amount across all goals */
   totalAmount: number;
+
+  /** Add a check-in to a goal */
+  addCheckIn: (goalId: string, checkIn: CheckIn) => void;
+
+  /** Delete a check-in from a goal */
+  deleteCheckIn: (goalId: string, checkInId: string) => void;
 }
 
 // =============================================================================
@@ -151,6 +162,30 @@ export function goalsReducer(state: GoalsState, action: GoalsAction): GoalsState
         ...state,
         goals: state.goals.filter((goal) => goal.id !== action.payload),
       };
+
+    case 'ADD_CHECK_IN': {
+      const { goalId, checkIn } = action.payload;
+      return {
+        ...state,
+        goals: state.goals.map((goal) =>
+          goal.id === goalId
+            ? { ...goal, checkIns: [...goal.checkIns, checkIn] }
+            : goal
+        ),
+      };
+    }
+
+    case 'DELETE_CHECK_IN': {
+      const { goalId, checkInId } = action.payload;
+      return {
+        ...state,
+        goals: state.goals.map((goal) =>
+          goal.id === goalId
+            ? { ...goal, checkIns: goal.checkIns.filter((c) => c.id !== checkInId) }
+            : goal
+        ),
+      };
+    }
 
     default:
       return state;
@@ -229,6 +264,7 @@ export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProp
       ...input,
       visibility: input.visibility ?? 'private',
       spaceId: input.spaceId ?? null,
+      checkIns: [],
       id: generateId(),
       createdAt: new Date(),
       priority: getNextPriorityForBucket(state.goals, input.bucket),
@@ -294,6 +330,22 @@ export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProp
     return state.goals.find((goal) => goal.id === goalId);
   }, [state.goals]);
 
+  const addCheckIn = useCallback((goalId: string, checkIn: CheckIn): void => {
+    dispatch({ type: 'ADD_CHECK_IN', payload: { goalId, checkIn } });
+
+    if (user) {
+      insertCheckInRemote(goalId, checkIn, user.id);
+    }
+  }, [user]);
+
+  const deleteCheckIn = useCallback((goalId: string, checkInId: string): void => {
+    dispatch({ type: 'DELETE_CHECK_IN', payload: { goalId, checkInId } });
+
+    if (user) {
+      deleteCheckInRemote(checkInId);
+    }
+  }, [user]);
+
   const totalGoals = state.goals.length;
 
   const totalAmount = useMemo(() => {
@@ -313,6 +365,8 @@ export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProp
     getGoalById,
     totalGoals,
     totalAmount,
+    addCheckIn,
+    deleteCheckIn,
   }), [
     state.goals,
     addGoal,
@@ -326,6 +380,8 @@ export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProp
     getGoalById,
     totalGoals,
     totalAmount,
+    addCheckIn,
+    deleteCheckIn,
   ]);
 
   return (

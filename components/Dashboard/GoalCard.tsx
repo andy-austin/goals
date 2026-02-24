@@ -7,6 +7,7 @@ import { useGoals } from '@/context';
 import { useToast, ConfirmationModal } from '@/components/ui';
 import { EditGoalModal } from './EditGoalModal';
 import { ShareGoalModal } from './ShareGoalModal';
+import { TrackingModal } from './TrackingModal';
 
 interface GoalCardProps extends HTMLAttributes<HTMLDivElement> {
   goal: Goal;
@@ -18,6 +19,7 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
   function GoalCard({ goal, dragHandle, isDragging = false, className = '', style, ...props }, ref) {
     const t = useTranslations('dashboard');
     const tSpaces = useTranslations('spaces');
+    const tTracking = useTranslations('dashboard.trackingModal');
     const locale = useLocale();
     const { deleteGoal } = useGoals();
     const { showToast } = useToast();
@@ -25,6 +27,7 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+    const [isTrackingModalOpen, setIsTrackingModalOpen] = useState(false);
 
     // Calculate days remaining (simple version, could move to helper)
     const today = new Date();
@@ -33,6 +36,26 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
     const daysRemaining = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
     const isOverdue = daysRemaining < 0;
+
+    // Fulfillment: latest check-in vs expected linear progress
+    const latestCheckIn =
+      goal.checkIns.length > 0
+        ? [...goal.checkIns].sort((a, b) => b.date.localeCompare(a.date))[0]
+        : null;
+
+    let fulfillmentPct: number | null = null;
+    let isOnTrack = false;
+    if (latestCheckIn && goal.amount > 0) {
+      fulfillmentPct = Math.round((latestCheckIn.currentAmount / goal.amount) * 100);
+      const now = Date.now();
+      const start = goal.createdAt.getTime();
+      const end = target.getTime();
+      const totalMs = end - start;
+      if (totalMs > 0) {
+        const progressRatio = Math.max(0, Math.min(1, (now - start) / totalMs));
+        isOnTrack = latestCheckIn.currentAmount >= progressRatio * goal.amount;
+      }
+    }
 
     const handleDeleteClick = () => {
       setIsDeleteModalOpen(true);
@@ -73,6 +96,19 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
               <span className="flex h-6 w-6 items-center justify-center rounded-full bg-zinc-100 text-xs font-medium text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400 mr-1">
                 #{goal.priority}
               </span>
+
+              {/* Track button */}
+              <button
+                type="button"
+                onClick={() => setIsTrackingModalOpen(true)}
+                className="rounded p-1 text-zinc-400 hover:bg-emerald-50 hover:text-emerald-600 dark:hover:bg-emerald-900/20 dark:hover:text-emerald-400 transition-colors cursor-pointer"
+                aria-label={tTracking('title')}
+                title={tTracking('title')}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                </svg>
+              </button>
 
               {/* Share button */}
               <button
@@ -120,7 +156,25 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
             </div>
           </div>
 
-          <div className="mt-4 flex items-center justify-between border-t border-zinc-100 pt-3 dark:border-zinc-800">
+          {/* Fulfillment progress bar (only when check-ins exist) */}
+          {fulfillmentPct !== null && (
+            <div className="mt-3">
+              <div className="flex items-center justify-between text-xs mb-1">
+                <span className={`font-medium ${isOnTrack ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400'}`}>
+                  {isOnTrack ? tTracking('onTrack') : tTracking('behindSchedule')}
+                </span>
+                <span className="text-zinc-500 dark:text-zinc-400">{fulfillmentPct}%</span>
+              </div>
+              <div className="h-1.5 w-full rounded-full bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
+                <div
+                  className={`h-full rounded-full ${isOnTrack ? 'bg-green-500' : 'bg-red-500'}`}
+                  style={{ width: `${Math.min(fulfillmentPct, 100)}%` }}
+                />
+              </div>
+            </div>
+          )}
+
+          <div className="mt-3 flex items-center justify-between border-t border-zinc-100 pt-3 dark:border-zinc-800">
             <div className="flex items-center gap-2 text-xs">
               <span className={`${isOverdue ? 'text-red-600 dark:text-red-400' : 'text-zinc-500'}`}>
                 {isOverdue
@@ -164,6 +218,12 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
           goal={goal}
           isOpen={isShareModalOpen}
           onClose={() => setIsShareModalOpen(false)}
+        />
+
+        <TrackingModal
+          goal={goal}
+          isOpen={isTrackingModalOpen}
+          onClose={() => setIsTrackingModalOpen(false)}
         />
       </>
     );

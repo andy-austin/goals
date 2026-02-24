@@ -173,8 +173,39 @@ Added edit and share buttons to dashboard goal cards with modal dialogs.
 
 ---
 
+---
+
+### Goal-to-Investment Vehicle Linking with Periodic Tracking (#66)
+Link financial goals to investment vehicles (e.g., a Vanguard index fund) and track actual progress via periodic check-ins with fulfillment measurement.
+
+**New files created:**
+- `supabase/migrations/004_add_investment_tracking.sql` — Adds `investment_vehicle_name/institution/type` + `tracking_cadence` columns to `goals`; creates `goal_check_ins` table with RLS
+- `components/Dashboard/CheckInModal.tsx` — Modal to record a check-in: date, current amount (with live fulfillment preview), optional note
+- `components/Dashboard/TrackingModal.tsx` — Full tracking hub: investment vehicle form, cadence selector, fulfillment summary (on-track/behind-schedule), check-in history with delete
+
+**Modified files:**
+- `types/goal.ts` — Added `TrackingCadence`, `InvestmentVehicle`, `CheckIn` types; extended `Goal` with `investmentVehicle?`, `trackingCadence?`, `checkIns`; updated `CreateGoalInput` to exclude `checkIns`
+- `lib/supabase/goals.ts` — Updated `GoalRow`, `rowToGoal`, `goalToRow` for new columns; added `fetchCheckIns` via parallel fetch+merge in `fetchGoals`; added `insertCheckInRemote`, `deleteCheckInRemote`
+- `lib/storage.ts` — `deserializeGoal` defaults `checkIns: []` for backward compatibility
+- `context/GoalsContext.tsx` — Added `ADD_CHECK_IN` / `DELETE_CHECK_IN` reducer actions; added `addCheckIn` and `deleteCheckIn` callbacks (Supabase-aware); `addGoal` defaults `checkIns: []`
+- `components/Dashboard/GoalCard.tsx` — Added "Track" button (chart icon) opening TrackingModal; fulfillment progress bar with on-track/behind-schedule indicator when check-ins exist
+- `components/Dashboard/index.ts` — Exported `CheckInModal` and `TrackingModal`
+- `messages/en.json` — Added `dashboard.trackingModal.*` and `dashboard.checkInModal.*` keys
+- `messages/es.json` — Same keys in Spanish
+
+**Architecture:**
+- `InvestmentVehicle` is stored as 3 nullable columns on the `goals` table (denormalized for simplicity)
+- `CheckIn` records live in a separate `goal_check_ins` table (one per check-in) with FK to `goals` (ON DELETE CASCADE) and RLS per user
+- `fetchGoals()` fetches check-ins in parallel and merges by `goal_id` — no N+1 queries
+- For localStorage users (anonymous), check-ins are stored as part of the serialized goal object (backward-compatible)
+- Fulfillment % = `latestCheckIn.currentAmount / goal.amount * 100`
+- On-track = `latestAmount >= expectedLinearProgress`, where expected = `(elapsedMs / totalMs) * goal.amount`
+
+**Database setup required:** Run `supabase/migrations/004_add_investment_tracking.sql` in Supabase SQL Editor after migration 003.
+
+---
+
 ## Next Steps
 - #68: Personal Data Privacy Consent (Legal Compliance) — should ship alongside auth
 - #52: Progress Tracking + Savings Calculator
-- #66: Goal-to-Investment Vehicle Linking
 - #67: Currency Exchange Rate Display

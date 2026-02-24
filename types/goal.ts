@@ -13,6 +13,39 @@
 export type GoalVisibility = 'private' | 'shared';
 
 /**
+ * Cadence for reviewing/tracking progress on a goal
+ */
+export type TrackingCadence = 'weekly' | 'monthly' | 'quarterly' | 'annually';
+
+/**
+ * An investment vehicle associated with a goal
+ */
+export interface InvestmentVehicle {
+  /** Name of the investment (e.g., "Vanguard S&P 500 Index Fund") */
+  name: string;
+  /** Financial institution holding the investment (e.g., "Vanguard", "Fidelity") */
+  institution?: string;
+  /** Type of investment (e.g., "Index Fund", "Savings Account", "ETF") */
+  type?: string;
+}
+
+/**
+ * A progress check-in recording the current invested/saved amount at a point in time
+ */
+export interface CheckIn {
+  /** Unique identifier */
+  id: string;
+  /** ISO date string (YYYY-MM-DD) when this check-in was recorded */
+  date: string;
+  /** Current amount saved/invested at time of check-in (in goal's currency) */
+  currentAmount: number;
+  /** Optional note about this check-in */
+  note?: string;
+  /** When this check-in was created */
+  createdAt: string;
+}
+
+/**
  * Role within a shared space
  */
 export type SpaceRole = 'owner' | 'member';
@@ -91,6 +124,15 @@ export interface Goal {
 
   /** ID of the shared space this goal belongs to (null for personal goals) */
   spaceId: string | null;
+
+  /** Optional investment vehicle linked to this goal */
+  investmentVehicle?: InvestmentVehicle;
+
+  /** How often the user wants to review/track progress */
+  trackingCadence?: TrackingCadence;
+
+  /** History of progress check-ins for this goal */
+  checkIns: CheckIn[];
 }
 
 /**
@@ -131,8 +173,9 @@ export interface GoalTemplate {
 
 /**
  * Input type for creating a new goal (excludes auto-generated fields)
+ * checkIns is excluded from input as it starts empty
  */
-export type CreateGoalInput = Omit<Goal, 'id' | 'createdAt' | 'priority'>;
+export type CreateGoalInput = Omit<Goal, 'id' | 'createdAt' | 'priority' | 'checkIns'>;
 
 /**
  * Input type for the goal creation form (dates as strings for form handling)
