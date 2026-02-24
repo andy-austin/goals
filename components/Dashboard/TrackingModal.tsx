@@ -92,6 +92,11 @@ export function TrackingModal({ goal, isOpen, onClose }: TrackingModalProps) {
   }, [isOpen, isCheckInOpen, onClose]);
 
   const handleBackdropClick = (e: React.MouseEvent) => {
+    // Don't close when CheckInModal is open — React synthetic events bubble
+    // through the portal tree, so a click inside CheckInModal (e.g. Save button)
+    // propagates here. The target won't be inside modalRef, so without this guard
+    // the TrackingModal would close unexpectedly.
+    if (isCheckInOpen) return;
     if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
       onClose();
     }
@@ -115,6 +120,7 @@ export function TrackingModal({ goal, isOpen, onClose }: TrackingModalProps) {
 
     showToast(t('savedToast'), 'success');
     setIsSaving(false);
+    onClose();
   };
 
   const handleDeleteCheckIn = (checkIn: CheckIn) => {

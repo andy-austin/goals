@@ -1,10 +1,20 @@
 import { describe, it, expect } from 'vitest';
 import { goalsReducer, getNextPriorityForBucket } from './GoalsContext';
-import type { Goal, Bucket } from '@/types';
+import type { Goal, Bucket, CheckIn } from '@/types';
 
 // ---------------------------------------------------------------------------
 // Fixtures
 // ---------------------------------------------------------------------------
+
+function makeCheckIn(overrides: Partial<CheckIn> = {}): CheckIn {
+  return {
+    id: 'checkin_1',
+    date: '2026-06-01',
+    currentAmount: 500,
+    createdAt: new Date('2026-06-01').toISOString(),
+    ...overrides,
+  };
+}
 
 function makeGoal(overrides: Partial<Goal> = {}): Goal {
   return {
@@ -20,6 +30,7 @@ function makeGoal(overrides: Partial<Goal> = {}): Goal {
     createdAt: new Date('2026-01-01'),
     visibility: 'private',
     spaceId: null,
+    checkIns: [],
     ...overrides,
   };
 }
@@ -165,6 +176,107 @@ describe('goalsReducer', () => {
     it('can delete the only goal, leaving an empty list', () => {
       const next = goalsReducer({ goals: [g1] }, { type: 'DELETE_GOAL', payload: 'g1' });
       expect(next.goals).toHaveLength(0);
+    });
+  });
+
+  describe('ADD_CHECK_IN', () => {
+    it('appends a check-in to the matching goal', () => {
+      const state = { goals: [g1, g2] };
+      const checkIn = makeCheckIn({ id: 'ci_1' });
+      const next = goalsReducer(state, {
+        type: 'ADD_CHECK_IN',
+        payload: { goalId: 'g1', checkIn },
+      });
+      expect(next.goals.find((g) => g.id === 'g1')?.checkIns).toHaveLength(1);
+      expect(next.goals.find((g) => g.id === 'g1')?.checkIns[0]).toEqual(checkIn);
+    });
+
+    it('does not modify other goals', () => {
+      const state = { goals: [g1, g2] };
+      const checkIn = makeCheckIn({ id: 'ci_1' });
+      const next = goalsReducer(state, {
+        type: 'ADD_CHECK_IN',
+        payload: { goalId: 'g1', checkIn },
+      });
+      expect(next.goals.find((g) => g.id === 'g2')?.checkIns).toHaveLength(0);
+    });
+
+    it('accumulates multiple check-ins on the same goal', () => {
+      const ci1 = makeCheckIn({ id: 'ci_1', currentAmount: 200 });
+      const ci2 = makeCheckIn({ id: 'ci_2', currentAmount: 400 });
+      const goalWithOne = makeGoal({ id: 'g1', checkIns: [ci1] });
+      const state = { goals: [goalWithOne] };
+      const next = goalsReducer(state, {
+        type: 'ADD_CHECK_IN',
+        payload: { goalId: 'g1', checkIn: ci2 },
+      });
+      expect(next.goals[0].checkIns).toHaveLength(2);
+    });
+
+    it('does not mutate the original goal checkIns array', () => {
+      const state = { goals: [g1] };
+      const originalCheckIns = g1.checkIns;
+      const checkIn = makeCheckIn();
+      goalsReducer(state, { type: 'ADD_CHECK_IN', payload: { goalId: 'g1', checkIn } });
+      expect(originalCheckIns).toHaveLength(0);
+    });
+
+    it('is a no-op when goalId does not match', () => {
+      const state = { goals: [g1] };
+      const checkIn = makeCheckIn();
+      const next = goalsReducer(state, {
+        type: 'ADD_CHECK_IN',
+        payload: { goalId: 'nonexistent', checkIn },
+      });
+      expect(next.goals[0].checkIns).toHaveLength(0);
+    });
+  });
+
+  describe('DELETE_CHECK_IN', () => {
+    it('removes the matching check-in from the goal', () => {
+      const ci1 = makeCheckIn({ id: 'ci_1' });
+      const ci2 = makeCheckIn({ id: 'ci_2' });
+      const goalWithTwo = makeGoal({ id: 'g1', checkIns: [ci1, ci2] });
+      const state = { goals: [goalWithTwo] };
+      const next = goalsReducer(state, {
+        type: 'DELETE_CHECK_IN',
+        payload: { goalId: 'g1', checkInId: 'ci_1' },
+      });
+      const updatedGoal = next.goals.find((g) => g.id === 'g1');
+      expect(updatedGoal?.checkIns).toHaveLength(1);
+      expect(updatedGoal?.checkIns[0].id).toBe('ci_2');
+    });
+
+    it('is a no-op when checkInId does not exist on the goal', () => {
+      const ci1 = makeCheckIn({ id: 'ci_1' });
+      const goalWithOne = makeGoal({ id: 'g1', checkIns: [ci1] });
+      const state = { goals: [goalWithOne] };
+      const next = goalsReducer(state, {
+        type: 'DELETE_CHECK_IN',
+        payload: { goalId: 'g1', checkInId: 'nonexistent' },
+      });
+      expect(next.goals[0].checkIns).toHaveLength(1);
+    });
+
+    it('does not affect other goals', () => {
+      const ci1 = makeCheckIn({ id: 'ci_1' });
+      const goalWithCheckIn = makeGoal({ id: 'g1', checkIns: [ci1] });
+      const state = { goals: [goalWithCheckIn, g2] };
+      const next = goalsReducer(state, {
+        type: 'DELETE_CHECK_IN',
+        payload: { goalId: 'g1', checkInId: 'ci_1' },
+      });
+      expect(next.goals.find((g) => g.id === 'g2')?.checkIns).toHaveLength(0);
+    });
+
+    it('leaves an empty checkIns array when the last check-in is deleted', () => {
+      const ci1 = makeCheckIn({ id: 'ci_1' });
+      const goalWithOne = makeGoal({ id: 'g1', checkIns: [ci1] });
+      const next = goalsReducer({ goals: [goalWithOne] }, {
+        type: 'DELETE_CHECK_IN',
+        payload: { goalId: 'g1', checkInId: 'ci_1' },
+      });
+      expect(next.goals[0].checkIns).toHaveLength(0);
     });
   });
 });
