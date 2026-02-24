@@ -8,7 +8,6 @@ import { useGoals } from '@/context';
 import { useAuth } from '@/context';
 import { useSpaces } from '@/context';
 import { useToast, Button, Card, CardHeader, CardTitle, CardContent, CardFooter, Select, Label } from '@/components/ui';
-import { VisibilityToggle } from '@/components/Spaces/VisibilityToggle';
 
 interface ShareGoalModalProps {
   goal: Goal;
@@ -26,15 +25,22 @@ export function ShareGoalModal({ goal, isOpen, onClose }: ShareGoalModalProps) {
   const { showToast } = useToast();
   const modalRef = useRef<HTMLDivElement>(null);
 
-  const [visibility, setVisibility] = useState<GoalVisibility>(goal.visibility ?? 'private');
-  const [spaceId, setSpaceId] = useState<string | null>(goal.spaceId ?? null);
+  const [visibility, setVisibility] = useState<GoalVisibility>(() => {
+    // Default to 'shared' when opening the modal (the user opened it to share)
+    return goal.visibility === 'shared' ? 'shared' : 'shared';
+  });
+  const [spaceId, setSpaceId] = useState<string | null>(() => {
+    if (goal.spaceId) return goal.spaceId;
+    return spaces.length > 0 ? spaces[0].id : null;
+  });
   const [isSaving, setIsSaving] = useState(false);
 
   // Reset when goal changes
   useEffect(() => {
-    setVisibility(goal.visibility ?? 'private');
-    setSpaceId(goal.spaceId ?? null);
-  }, [goal]);
+    const defaultShared = 'shared' as GoalVisibility;
+    setVisibility(goal.visibility === 'shared' ? 'shared' : defaultShared);
+    setSpaceId(goal.spaceId ?? (spaces.length > 0 ? spaces[0].id : null));
+  }, [goal, spaces]);
 
   // Close on Escape
   useEffect(() => {
@@ -143,64 +149,68 @@ export function ShareGoalModal({ goal, isOpen, onClose }: ShareGoalModalProps) {
               </div>
             ) : (
               <>
-                {/* Visibility toggle */}
-                <div className="space-y-2">
+                {/* Clickable visibility cards */}
+                <div>
                   <Label>{t('visibilityLabel')}</Label>
-                  <VisibilityToggle value={visibility} onChange={handleVisibilityChange} />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
+                    <button
+                      type="button"
+                      onClick={() => handleVisibilityChange('private')}
+                      className={`rounded-lg border p-3 text-left transition-colors cursor-pointer ${visibility === 'private' ? 'border-primary bg-primary/5 ring-1 ring-primary' : 'border-border bg-background hover:border-zinc-300 dark:hover:border-zinc-600'}`}
+                    >
+                      <div className="flex items-center gap-2 mb-1">
+                        <LockIcon className="w-4 h-4 text-zinc-500" />
+                        <span className="text-xs font-medium text-zinc-900 dark:text-zinc-100">{tSpaces('private')}</span>
+                      </div>
+                      <p className="text-xs text-zinc-500 dark:text-zinc-400">{t('privateDesc')}</p>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleVisibilityChange('shared')}
+                      className={`rounded-lg border p-3 text-left transition-colors cursor-pointer ${visibility === 'shared' ? 'border-primary bg-primary/5 ring-1 ring-primary' : 'border-border bg-background hover:border-zinc-300 dark:hover:border-zinc-600'}`}
+                    >
+                      <div className="flex items-center gap-2 mb-1">
+                        <UsersIcon className="w-4 h-4 text-zinc-500" />
+                        <span className="text-xs font-medium text-zinc-900 dark:text-zinc-100">{tSpaces('shared')}</span>
+                      </div>
+                      <p className="text-xs text-zinc-500 dark:text-zinc-400">{t('sharedDesc')}</p>
+                    </button>
+                  </div>
                 </div>
 
-                {/* Option explanation cards */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div className={`rounded-lg border p-3 transition-colors ${visibility === 'private' ? 'border-primary bg-primary/5' : 'border-border bg-background'}`}>
-                    <div className="flex items-center gap-2 mb-1">
-                      <LockIcon className="w-4 h-4 text-zinc-500" />
-                      <span className="text-xs font-medium text-zinc-900 dark:text-zinc-100">{tSpaces('private')}</span>
+                {/* Space selector (always visible, disabled when private) */}
+                <div>
+                  {spaces.length === 0 ? (
+                    <div className={`rounded-lg border border-dashed border-border bg-zinc-50 dark:bg-zinc-900/50 p-4 text-center transition-opacity ${visibility === 'private' ? 'opacity-40 pointer-events-none' : ''}`}>
+                      <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
+                        {t('noSpaces')}
+                      </p>
+                      <a
+                        href="/spaces"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-sm font-medium text-primary hover:underline"
+                      >
+                        {t('createSpaceLink')}
+                      </a>
                     </div>
-                    <p className="text-xs text-zinc-500 dark:text-zinc-400">{t('privateDesc')}</p>
-                  </div>
-                  <div className={`rounded-lg border p-3 transition-colors ${visibility === 'shared' ? 'border-primary bg-primary/5' : 'border-border bg-background'}`}>
-                    <div className="flex items-center gap-2 mb-1">
-                      <UsersIcon className="w-4 h-4 text-zinc-500" />
-                      <span className="text-xs font-medium text-zinc-900 dark:text-zinc-100">{tSpaces('shared')}</span>
+                  ) : (
+                    <div className={`space-y-1.5 transition-opacity ${visibility === 'private' ? 'opacity-40 pointer-events-none' : ''}`}>
+                      <Label htmlFor="share-space-select">{t('spaceLabel')}</Label>
+                      <Select
+                        id="share-space-select"
+                        value={spaceId ?? ''}
+                        onChange={(e) => setSpaceId(e.target.value || null)}
+                        disabled={visibility === 'private'}
+                      >
+                        <option value="">{t('selectSpace')}</option>
+                        {spaces.map((s) => (
+                          <option key={s.id} value={s.id}>{s.name}</option>
+                        ))}
+                      </Select>
                     </div>
-                    <p className="text-xs text-zinc-500 dark:text-zinc-400">{t('sharedDesc')}</p>
-                  </div>
+                  )}
                 </div>
-
-                {/* Space selector (only when shared) */}
-                {visibility === 'shared' && (
-                  <div>
-                    {spaces.length === 0 ? (
-                      <div className="rounded-lg border border-dashed border-border bg-zinc-50 dark:bg-zinc-900/50 p-4 text-center">
-                        <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
-                          {t('noSpaces')}
-                        </p>
-                        <a
-                          href="/spaces"
-                          target="_blank"
-                          rel="noreferrer"
-                          className="text-sm font-medium text-primary hover:underline"
-                        >
-                          {t('createSpaceLink')}
-                        </a>
-                      </div>
-                    ) : (
-                      <div className="space-y-1.5">
-                        <Label htmlFor="share-space-select">{t('spaceLabel')}</Label>
-                        <Select
-                          id="share-space-select"
-                          value={spaceId ?? ''}
-                          onChange={(e) => setSpaceId(e.target.value || null)}
-                        >
-                          <option value="">{t('selectSpace')}</option>
-                          {spaces.map((s) => (
-                            <option key={s.id} value={s.id}>{s.name}</option>
-                          ))}
-                        </Select>
-                      </div>
-                    )}
-                  </div>
-                )}
               </>
             )}
           </CardContent>

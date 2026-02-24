@@ -29,13 +29,14 @@ export default function CreateGoalPage() {
     const amount = searchParams.get('amount');
     const currency = searchParams.get('currency');
     const date = searchParams.get('date');
+    const spaceIdParam = searchParams.get('spaceId');
 
-    if (amount || currency || date) {
+    if (amount || currency || date || spaceIdParam) {
       const timer = setTimeout(() => {
         setInitialData(prev => {
           // Validate currency param against allowed currencies
-          const validatedCurrency = currency && CURRENCIES.includes(currency as Currency) 
-            ? (currency as Currency) 
+          const validatedCurrency = currency && CURRENCIES.includes(currency as Currency)
+            ? (currency as Currency)
             : undefined;
 
           return {
@@ -43,6 +44,7 @@ export default function CreateGoalPage() {
             amount: amount ? parseFloat(amount) : undefined,
             currency: validatedCurrency,
             targetDate: date || undefined,
+            ...(spaceIdParam ? { visibility: 'shared' as const, spaceId: spaceIdParam } : {}),
           };
         });
         setMode('wizard');
@@ -65,7 +67,8 @@ export default function CreateGoalPage() {
     const targetDate = new Date();
     targetDate.setMonth(targetDate.getMonth() + template.suggestedTimelineMonths);
     
-    setInitialData({
+    setInitialData(prev => ({
+      ...prev,
       title: template.title,
       description: template.description,
       amount: template.suggestedAmountMin,
@@ -73,7 +76,7 @@ export default function CreateGoalPage() {
       targetDate: targetDate.toISOString().split('T')[0],
       bucket: template.bucket,
       whyItMatters: template.sampleWhyItMatters,
-    });
+    }));
     setMode('wizard');
   };
 
@@ -103,8 +106,8 @@ export default function CreateGoalPage() {
         targetDate: new Date(data.targetDate!),
         bucket: data.bucket!,
         whyItMatters: data.whyItMatters!,
-        visibility: 'private',
-        spaceId: null,
+        visibility: data.visibility ?? 'private',
+        spaceId: data.spaceId ?? null,
       });
 
       setIsSubmitting(false);
