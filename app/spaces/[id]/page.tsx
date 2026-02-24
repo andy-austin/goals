@@ -200,7 +200,7 @@ export default function SpaceDetailPage({ params }: { params: Promise<PageParams
                 <p className="text-sm text-muted-foreground mb-3">
                   {t('noSharedGoals')}
                 </p>
-                <Link href="/create">
+                <Link href={`/create?spaceId=${id}`}>
                   <Button size="sm" variant="secondary">{t('createGoal')}</Button>
                 </Link>
               </div>

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { createServiceClient } from '@/lib/supabase/server';
 
 /**
  * GET /api/invitations/[token]
@@ -18,7 +18,7 @@ export async function GET(
     return NextResponse.json({ error: 'Missing token' }, { status: 400 });
   }
 
-  const supabase = await createClient();
+  const supabase = createServiceClient();
 
   // Fetch invitation with the space name via a join
   const { data, error } = await supabase
