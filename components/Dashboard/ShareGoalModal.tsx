@@ -25,9 +25,13 @@ export function ShareGoalModal({ goal, isOpen, onClose }: ShareGoalModalProps) {
   const { showToast } = useToast();
   const modalRef = useRef<HTMLDivElement>(null);
 
+  // Determine if current user is the owner of the goal's space
+  const goalSpace = goal.spaceId ? spaces.find(s => s.id === goal.spaceId) : null;
+  const isSpaceOwner = goalSpace ? goalSpace.ownerId === user?.id : true;
+
   const [visibility, setVisibility] = useState<GoalVisibility>(() => {
     // Default to 'shared' when opening the modal (the user opened it to share)
-    return goal.visibility === 'shared' ? 'shared' : 'shared';
+    return 'shared';
   });
   const [spaceId, setSpaceId] = useState<string | null>(() => {
     if (goal.spaceId) return goal.spaceId;
@@ -37,8 +41,7 @@ export function ShareGoalModal({ goal, isOpen, onClose }: ShareGoalModalProps) {
 
   // Reset when goal changes
   useEffect(() => {
-    const defaultShared = 'shared' as GoalVisibility;
-    setVisibility(goal.visibility === 'shared' ? 'shared' : defaultShared);
+    setVisibility(goal.visibility === 'shared' ? 'shared' : 'shared');
     setSpaceId(goal.spaceId ?? (spaces.length > 0 ? spaces[0].id : null));
   }, [goal, spaces]);
 
@@ -155,8 +158,13 @@ export function ShareGoalModal({ goal, isOpen, onClose }: ShareGoalModalProps) {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
                     <button
                       type="button"
-                      onClick={() => handleVisibilityChange('private')}
-                      className={`rounded-lg border p-3 text-left transition-colors cursor-pointer ${visibility === 'private' ? 'border-primary bg-primary/5 ring-1 ring-primary' : 'border-border bg-background hover:border-zinc-300 dark:hover:border-zinc-600'}`}
+                      onClick={() => isSpaceOwner && handleVisibilityChange('private')}
+                      disabled={!isSpaceOwner}
+                      className={`rounded-lg border p-3 text-left transition-colors ${
+                        !isSpaceOwner
+                          ? 'opacity-40 cursor-not-allowed'
+                          : 'cursor-pointer hover:border-zinc-300 dark:hover:border-zinc-600'
+                      } ${visibility === 'private' ? 'border-primary bg-primary/5 ring-1 ring-primary' : 'border-border bg-background'}`}
                     >
                       <div className="flex items-center gap-2 mb-1">
                         <LockIcon className="w-4 h-4 text-zinc-500" />
@@ -167,7 +175,7 @@ export function ShareGoalModal({ goal, isOpen, onClose }: ShareGoalModalProps) {
                     <button
                       type="button"
                       onClick={() => handleVisibilityChange('shared')}
-                      className={`rounded-lg border p-3 text-left transition-colors cursor-pointer ${visibility === 'shared' ? 'border-primary bg-primary/5 ring-1 ring-primary' : 'border-border bg-background hover:border-zinc-300 dark:hover:border-zinc-600'}`}
+                      className={`rounded-lg border p-3 text-left transition-colors cursor-pointer hover:border-zinc-300 dark:hover:border-zinc-600 ${visibility === 'shared' ? 'border-primary bg-primary/5 ring-1 ring-primary' : 'border-border bg-background'}`}
                     >
                       <div className="flex items-center gap-2 mb-1">
                         <UsersIcon className="w-4 h-4 text-zinc-500" />
@@ -178,7 +186,7 @@ export function ShareGoalModal({ goal, isOpen, onClose }: ShareGoalModalProps) {
                   </div>
                 </div>
 
-                {/* Space selector (always visible, disabled when private) */}
+                {/* Space selector (always visible, disabled when private or non-owner) */}
                 <div>
                   {spaces.length === 0 ? (
                     <div className={`rounded-lg border border-dashed border-border bg-zinc-50 dark:bg-zinc-900/50 p-4 text-center transition-opacity ${visibility === 'private' ? 'opacity-40 pointer-events-none' : ''}`}>
@@ -195,13 +203,13 @@ export function ShareGoalModal({ goal, isOpen, onClose }: ShareGoalModalProps) {
                       </a>
                     </div>
                   ) : (
-                    <div className={`space-y-1.5 transition-opacity ${visibility === 'private' ? 'opacity-40 pointer-events-none' : ''}`}>
+                    <div className={`space-y-1.5 transition-opacity ${visibility === 'private' || !isSpaceOwner ? 'opacity-40 pointer-events-none' : ''}`}>
                       <Label htmlFor="share-space-select">{t('spaceLabel')}</Label>
                       <Select
                         id="share-space-select"
                         value={spaceId ?? ''}
                         onChange={(e) => setSpaceId(e.target.value || null)}
-                        disabled={visibility === 'private'}
+                        disabled={visibility === 'private' || !isSpaceOwner}
                       >
                         <option value="">{t('selectSpace')}</option>
                         {spaces.map((s) => (
