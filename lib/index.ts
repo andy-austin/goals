@@ -3,3 +3,4 @@ export * from './validation';
 export * from './templates';
 export * from './utils';
 export * from './consent';
+export * from './tracking';

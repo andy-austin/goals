@@ -25,7 +25,11 @@ function toLocalDateString(date: Date): string {
   return `${y}-${m}-${d}`;
 }
 
-export function CheckInModal({ goal, isOpen, onClose }: CheckInModalProps) {
+/**
+ * Inner form component that mounts fresh each time the modal opens,
+ * so state naturally resets without needing a useEffect.
+ */
+function CheckInForm({ goal, onClose }: { goal: Goal; onClose: () => void }) {
   const t = useTranslations('dashboard.checkInModal');
   const tCommon = useTranslations('common');
   const locale = useLocale();
@@ -38,29 +42,18 @@ export function CheckInModal({ goal, isOpen, onClose }: CheckInModalProps) {
   const [note, setNote] = useState('');
   const [isSaving, setIsSaving] = useState(false);
 
-  // Reset on open
-  useEffect(() => {
-    if (isOpen) {
-      setDate(toLocalDateString(new Date()));
-      setAmount('');
-      setNote('');
-    }
-  }, [isOpen]);
-
   // Escape to close
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
-    if (isOpen) {
-      document.addEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'hidden';
-    }
+    document.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = '';
     };
-  }, [isOpen, onClose]);
+  }, [onClose]);
 
   const parsedAmount = parseFloat(amount);
   const amountError = amount !== '' && (isNaN(parsedAmount) || parsedAmount < 0);
@@ -95,8 +88,6 @@ export function CheckInModal({ goal, isOpen, onClose }: CheckInModalProps) {
     setIsSaving(false);
     onClose();
   };
-
-  if (!isOpen) return null;
 
   return createPortal(
     <div
@@ -209,4 +200,13 @@ export function CheckInModal({ goal, isOpen, onClose }: CheckInModalProps) {
     </div>,
     document.body
   );
+}
+
+/**
+ * CheckInModal wrapper — renders inner form only when open,
+ * so form state resets naturally on each open.
+ */
+export function CheckInModal({ goal, isOpen, onClose }: CheckInModalProps) {
+  if (!isOpen) return null;
+  return <CheckInForm goal={goal} onClose={onClose} />;
 }

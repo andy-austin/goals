@@ -28,6 +28,7 @@ function makeGoal(overrides: Partial<Goal> = {}): Goal {
     createdAt: new Date('2026-01-01'),
     visibility: 'private',
     spaceId: null,
+    checkIns: [],
     ...overrides,
   };
 }
