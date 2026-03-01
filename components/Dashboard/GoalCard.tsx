@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { Goal, formatCurrency, formatDate } from '@/types';
 import { useGoals } from '@/context';
 import { useToast, ConfirmationModal } from '@/components/ui';
+import { computeFulfillment } from '@/lib/tracking';
 import { EditGoalModal } from './EditGoalModal';
 import { ShareGoalModal } from './ShareGoalModal';
 import { TrackingModal } from './TrackingModal';
@@ -38,24 +39,9 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
     const isOverdue = daysRemaining < 0;
 
     // Fulfillment: latest check-in vs expected linear progress
-    const latestCheckIn =
-      goal.checkIns.length > 0
-        ? [...goal.checkIns].sort((a, b) => b.date.localeCompare(a.date))[0]
-        : null;
-
-    let fulfillmentPct: number | null = null;
-    let isOnTrack = false;
-    if (latestCheckIn && goal.amount > 0) {
-      fulfillmentPct = Math.round((latestCheckIn.currentAmount / goal.amount) * 100);
-      const now = Date.now();
-      const start = goal.createdAt.getTime();
-      const end = target.getTime();
-      const totalMs = end - start;
-      if (totalMs > 0) {
-        const progressRatio = Math.max(0, Math.min(1, (now - start) / totalMs));
-        isOnTrack = latestCheckIn.currentAmount >= progressRatio * goal.amount;
-      }
-    }
+    const fulfillment = computeFulfillment(goal);
+    const fulfillmentPct = fulfillment?.fulfillmentPct ?? null;
+    const isOnTrack = fulfillment?.isOnTrack ?? false;
 
     const handleDeleteClick = () => {
       setIsDeleteModalOpen(true);

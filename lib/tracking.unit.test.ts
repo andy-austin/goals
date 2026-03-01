@@ -2,7 +2,7 @@
  * Unit tests for investment vehicle tracking logic (Issue #66)
  *
  * Tests:
- * 1. computeFulfillment helper extracted inline
+ * 1. computeFulfillment shared utility
  * 2. localStorage serialization round-trips for goals with checkIns
  * 3. deserializeGoal backward compatibility (legacy goals without checkIns)
  */
@@ -10,6 +10,7 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import type { Goal, CheckIn, InvestmentVehicle } from '@/types';
 import { loadGoals, saveGoals, clearGoals } from '@/lib/storage';
+import { computeFulfillment } from '@/lib/tracking';
 
 // ---------------------------------------------------------------------------
 // Fixtures
@@ -42,34 +43,6 @@ function makeGoal(overrides: Partial<Goal> = {}): Goal {
     checkIns: [],
     ...overrides,
   };
-}
-
-// ---------------------------------------------------------------------------
-// computeFulfillment — inline copy of the pure logic from TrackingModal
-// (kept here to avoid importing a React component into a unit test)
-// ---------------------------------------------------------------------------
-
-interface FulfillmentResult {
-  latestAmount: number;
-  expectedAmount: number;
-  fulfillmentPct: number;
-  isOnTrack: boolean;
-}
-
-function computeFulfillment(goal: Goal, now = Date.now()): FulfillmentResult | null {
-  if (goal.checkIns.length === 0) return null;
-  const sorted = [...goal.checkIns].sort((a, b) => a.date.localeCompare(b.date));
-  const latest = sorted[sorted.length - 1];
-  const latestAmount = latest.currentAmount;
-  const start = goal.createdAt.getTime();
-  const end = goal.targetDate.getTime();
-  const totalMs = end - start;
-  if (totalMs <= 0) return null;
-  const progressRatio = Math.max(0, Math.min(1, (now - start) / totalMs));
-  const expectedAmount = progressRatio * goal.amount;
-  const fulfillmentPct = goal.amount > 0 ? Math.round((latestAmount / goal.amount) * 100) : 0;
-  const isOnTrack = latestAmount >= expectedAmount;
-  return { latestAmount, expectedAmount, fulfillmentPct, isOnTrack };
 }
 
 // ---------------------------------------------------------------------------

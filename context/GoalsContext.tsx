@@ -334,7 +334,9 @@ export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProp
     dispatch({ type: 'ADD_CHECK_IN', payload: { goalId, checkIn } });
 
     if (user) {
-      insertCheckInRemote(goalId, checkIn, user.id);
+      insertCheckInRemote(goalId, checkIn, user.id).catch((err) => {
+        console.error('[GoalsContext] Failed to sync check-in to Supabase:', err);
+      });
     }
   }, [user]);
 
@@ -342,7 +344,9 @@ export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProp
     dispatch({ type: 'DELETE_CHECK_IN', payload: { goalId, checkInId } });
 
     if (user) {
-      deleteCheckInRemote(checkInId);
+      deleteCheckInRemote(checkInId).catch((err) => {
+        console.error('[GoalsContext] Failed to delete check-in from Supabase:', err);
+      });
     }
   }, [user]);
 

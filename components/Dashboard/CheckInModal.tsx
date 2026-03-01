@@ -25,7 +25,11 @@ function toLocalDateString(date: Date): string {
   return `${y}-${m}-${d}`;
 }
 
-export function CheckInModal({ goal, isOpen, onClose }: CheckInModalProps) {
+/**
+ * Inner form component that mounts fresh each time the modal opens,
+ * so state naturally resets without needing a useEffect.
+ */
+function CheckInForm({ goal, onClose }: { goal: Goal; onClose: () => void }) {
   const t = useTranslations('dashboard.checkInModal');
   const tCommon = useTranslations('common');
   const locale = useLocale();
@@ -38,29 +42,18 @@ export function CheckInModal({ goal, isOpen, onClose }: CheckInModalProps) {
   const [note, setNote] = useState('');
   const [isSaving, setIsSaving] = useState(false);
 
-  // Reset on open
-  useEffect(() => {
-    if (isOpen) {
-      setDate(toLocalDateString(new Date()));
-      setAmount('');
-      setNote('');
-    }
-  }, [isOpen]);
-
   // Escape to close
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
-    if (isOpen) {
-      document.addEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'hidden';
-    }
+    document.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = '';
     };
-  }, [isOpen, onClose]);
+  }, [onClose]);
 
   const parsedAmount = parseFloat(amount);
   const amountError = amount !== '' && (isNaN(parsedAmount) || parsedAmount < 0);
@@ -96,8 +89,6 @@ export function CheckInModal({ goal, isOpen, onClose }: CheckInModalProps) {
     onClose();
   };
 
-  if (!isOpen) return null;
-
   return createPortal(
     <div
       className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in duration-200"
@@ -119,7 +110,7 @@ export function CheckInModal({ goal, isOpen, onClose }: CheckInModalProps) {
                 type="button"
                 onClick={onClose}
                 className="rounded p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-300 transition-colors"
-                aria-label={tCommon('cancel')}
+                aria-label={tCommon('close')}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
@@ -209,4 +200,13 @@ export function CheckInModal({ goal, isOpen, onClose }: CheckInModalProps) {
     </div>,
     document.body
   );
+}
+
+/**
+ * CheckInModal wrapper — renders inner form only when open,
+ * so form state resets naturally on each open.
+ */
+export function CheckInModal({ goal, isOpen, onClose }: CheckInModalProps) {
+  if (!isOpen) return null;
+  return <CheckInForm goal={goal} onClose={onClose} />;
 }

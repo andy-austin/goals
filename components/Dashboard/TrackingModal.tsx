@@ -7,6 +7,7 @@ import { Goal, InvestmentVehicle, TrackingCadence, CheckIn, formatCurrency } fro
 import { useGoals } from '@/context';
 import { useToast } from '@/components/ui';
 import { Button, Input, Label, Select, Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui';
+import { computeFulfillment } from '@/lib/tracking';
 import { CheckInModal } from './CheckInModal';
 
 interface TrackingModalProps {
@@ -24,35 +25,10 @@ const CADENCE_OPTIONS: Array<{ value: TrackingCadence | ''; labelKey: string }> 
 ];
 
 /**
- * Calculate on-track fulfillment vs expected progress
- * Expected = (elapsed days / total days) * target amount
+ * Inner form that mounts fresh each time the modal opens,
+ * so vehicle/cadence state initializes from the goal prop without useEffect.
  */
-function computeFulfillment(
-  goal: Goal
-): { latestAmount: number; expectedAmount: number; fulfillmentPct: number; isOnTrack: boolean } | null {
-  if (goal.checkIns.length === 0) return null;
-
-  const sorted = [...goal.checkIns].sort((a, b) => a.date.localeCompare(b.date));
-  const latest = sorted[sorted.length - 1];
-  const latestAmount = latest.currentAmount;
-
-  const now = Date.now();
-  const start = goal.createdAt.getTime();
-  const end = goal.targetDate.getTime();
-  const totalMs = end - start;
-  const elapsedMs = now - start;
-
-  if (totalMs <= 0) return null;
-
-  const progressRatio = Math.max(0, Math.min(1, elapsedMs / totalMs));
-  const expectedAmount = progressRatio * goal.amount;
-  const fulfillmentPct = goal.amount > 0 ? Math.round((latestAmount / goal.amount) * 100) : 0;
-  const isOnTrack = latestAmount >= expectedAmount;
-
-  return { latestAmount, expectedAmount, fulfillmentPct, isOnTrack };
-}
-
-export function TrackingModal({ goal, isOpen, onClose }: TrackingModalProps) {
+function TrackingForm({ goal, onClose }: { goal: Goal; onClose: () => void }) {
   const t = useTranslations('dashboard.trackingModal');
   const tCommon = useTranslations('common');
   const locale = useLocale();
@@ -61,35 +37,25 @@ export function TrackingModal({ goal, isOpen, onClose }: TrackingModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const [isCheckInOpen, setIsCheckInOpen] = useState(false);
 
-  // Vehicle form state
+  // Vehicle form state — initialized from goal prop on mount
   const [vehicleName, setVehicleName] = useState(goal.investmentVehicle?.name ?? '');
   const [institution, setInstitution] = useState(goal.investmentVehicle?.institution ?? '');
   const [vehicleType, setVehicleType] = useState(goal.investmentVehicle?.type ?? '');
   const [cadence, setCadence] = useState<TrackingCadence | ''>(goal.trackingCadence ?? '');
   const [isSaving, setIsSaving] = useState(false);
 
-  // Sync with goal when it changes (e.g., after save)
-  useEffect(() => {
-    setVehicleName(goal.investmentVehicle?.name ?? '');
-    setInstitution(goal.investmentVehicle?.institution ?? '');
-    setVehicleType(goal.investmentVehicle?.type ?? '');
-    setCadence(goal.trackingCadence ?? '');
-  }, [goal]);
-
   // Escape to close
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && !isCheckInOpen) onClose();
     };
-    if (isOpen) {
-      document.addEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'hidden';
-    }
+    document.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = '';
     };
-  }, [isOpen, isCheckInOpen, onClose]);
+  }, [isCheckInOpen, onClose]);
 
   const handleBackdropClick = (e: React.MouseEvent) => {
     // Don't close when CheckInModal is open — React synthetic events bubble
@@ -130,8 +96,6 @@ export function TrackingModal({ goal, isOpen, onClose }: TrackingModalProps) {
   const fulfillment = computeFulfillment(goal);
   const sortedCheckIns = [...goal.checkIns].sort((a, b) => b.date.localeCompare(a.date));
 
-  if (!isOpen) return null;
-
   return createPortal(
     <>
       <div
@@ -157,7 +121,7 @@ export function TrackingModal({ goal, isOpen, onClose }: TrackingModalProps) {
                   type="button"
                   onClick={onClose}
                   className="rounded p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-300 transition-colors"
-                  aria-label={tCommon('cancel')}
+                  aria-label={tCommon('close')}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
@@ -368,4 +332,13 @@ export function TrackingModal({ goal, isOpen, onClose }: TrackingModalProps) {
     </>,
     document.body
   );
+}
+
+/**
+ * TrackingModal wrapper — renders inner form only when open,
+ * so form state resets naturally on each open.
+ */
+export function TrackingModal({ goal, isOpen, onClose }: TrackingModalProps) {
+  if (!isOpen) return null;
+  return <TrackingForm goal={goal} onClose={onClose} />;
 }
