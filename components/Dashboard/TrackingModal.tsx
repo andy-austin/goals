@@ -121,7 +121,7 @@ function TrackingForm({ goal, onClose }: { goal: Goal; onClose: () => void }) {
                   type="button"
                   onClick={onClose}
                   className="rounded p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-300 transition-colors"
-                  aria-label={tCommon('cancel')}
+                  aria-label={tCommon('close')}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M18 6 6 18"/><path d="m6 6 12 12"/>

@@ -89,7 +89,7 @@ test.describe('Tracking modal – open and close', () => {
   test('clicking X button closes the modal', async ({ page }) => {
     await page.getByRole('button', { name: /track progress/i }).first().click();
     await expect(page.getByRole('dialog')).toBeVisible();
-    await page.getByRole('dialog').getByRole('button', { name: /cancel/i }).click();
+    await page.getByRole('dialog').getByRole('button', { name: /close/i }).click();
     await expect(page.getByRole('dialog')).not.toBeVisible();
   });
 
@@ -235,7 +235,9 @@ test.describe('CheckIn modal – open and close', () => {
   });
 
   test('CheckIn modal shows the goal title and target', async ({ page }) => {
-    await expect(page.getByText(/house down payment/i)).toBeVisible();
+    await expect(
+      page.getByRole('dialog', { name: /record check-in/i }).getByText(/house down payment/i)
+    ).toBeVisible();
   });
 
   test('date field defaults to today', async ({ page }) => {
@@ -344,7 +346,9 @@ test.describe('Tracking modal – with existing check-ins', () => {
 
   test('shows fulfillment percentage in the modal', async ({ page }) => {
     // 12500/50000 = 25%
-    await expect(page.getByText('25%')).toBeVisible();
+    await expect(
+      page.getByRole('dialog', { name: /track progress/i }).getByText('25%')
+    ).toBeVisible();
   });
 
   test('shows existing check-in amount in history', async ({ page }) => {
