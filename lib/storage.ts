@@ -54,6 +54,7 @@ function deserializeGoal(serialized: SerializedGoal): Goal {
     ...serialized,
     visibility: serialized.visibility ?? 'private',
     spaceId: serialized.spaceId ?? null,
+    checkIns: serialized.checkIns ?? [],
     targetDate: new Date(serialized.targetDate),
     createdAt: new Date(serialized.createdAt),
   };

@@ -2,6 +2,8 @@ export * from './BucketSection';
 export * from './GoalCard';
 export * from './EditGoalModal';
 export * from './ShareGoalModal';
+export * from './CheckInModal';
+export * from './TrackingModal';
 export * from './SortableGoalCard';
 export * from './SummaryStats';
 export * from './ExportMenu';
