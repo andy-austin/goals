@@ -1,130 +1,132 @@
-# Investment Goals
+# FinGoal
 
-A guided goal-creation tool that helps beginner investors transform vague savings intentions into well-defined, SMART financial goals.
+A guided tool that helps beginner investors turn vague intentions like "save money" into concrete, SMART financial goals using the **3 Buckets methodology** (Safety, Growth, Dream).
 
-## Overview
+**Live:** [investment-goals.vercel.app](https://investment-goals.vercel.app/)
 
-People starting their investment journey often struggle to define proper financial goals. This tool provides:
+## What it does
 
-- **SMART Framework** - Goals must be Specific, Measurable, Achievable, Relevant, and Time-bound
-- **3 Buckets Methodology** - Categorize goals into Safety, Growth, and Dream buckets
-- **AI-Powered Suggestions** - Get help refining vague goals into actionable targets
-- **Visual Prioritization** - Drag-and-drop ranking and timeline visualization
-
-## Features
-
-### Implemented
-- Dashboard with goals overview by bucket
-- Responsive navigation (mobile-first)
-- Design system with bucket-specific colors (Safety=Green, Growth=Blue, Dream=Purple)
-- Dark mode support
-- UI component library (Button, Card, Input, Badge)
-- State management for goals
-
-### Coming Soon
-- Multi-step goal creation wizard
-- AI-powered goal refinement suggestions
-- Goal templates and examples
-- Drag-and-drop prioritization
-- Timeline visualization
-- Export to PDF/print
+- **SMART Goal Creation** — Multi-step wizard that walks you through defining Specific, Measurable, Achievable, Relevant, and Time-bound financial goals
+- **3 Buckets Classification** — Categorize goals into Safety (emergency fund, health), Growth (house, education), and Dream (travel, business)
+- **AI Suggestions** — Get help refining goal descriptions, amounts, and motivation statements powered by Claude or Gemini
+- **Dashboard** — View all goals grouped by bucket with drag-and-drop prioritization
+- **Progress Tracking** — Log deposits, track fulfillment percentage, and see monthly savings needed
+- **Timeline** — Gantt chart visualization of all goals over time
+- **Shared Spaces** — Invite family or friends to collaborate on shared financial goals
+- **Goal Completion** — Mark goals complete, archive them, or reactivate
+- **Calendar Reminders** — Export .ics files with recurring savings reminders
+- **Investment Education** — Browse instruments by bucket with risk levels, pros/cons
+- **Savings Strategies** — Curated playbooks (3-bucket, snowball, automate, and more)
+- **Currency Support** — Multiple currencies with live exchange rates
+- **Bilingual** — Full English and Spanish support
 
 ## Tech Stack
 
 | Layer | Technology |
 |-------|------------|
-| Framework | Next.js 16.1.1 (App Router) |
-| UI | React 19 + TypeScript |
+| Framework | Next.js 16 (App Router) |
+| UI | React 19, TypeScript 5.9 |
 | Styling | Tailwind CSS 4 |
-| State | React Context + useReducer |
-| Fonts | Geist (sans & mono) |
+| Backend | Supabase (Auth + PostgreSQL with RLS) |
+| AI | Anthropic Claude / Google Gemini (switchable) |
+| i18n | next-intl (EN / ES) |
+| Testing | Playwright (E2E), Vitest (unit) |
+| Hosting | Vercel |
 
 ## Getting Started
 
 ### Prerequisites
-- Node.js 18+
-- npm or yarn
 
-### Installation
+- Node.js 18+
+- A [Supabase](https://supabase.com) project (free tier works)
+- An [Anthropic](https://console.anthropic.com) or [Google AI](https://aistudio.google.com) API key
+
+### Setup
 
 ```bash
-# Clone the repository
 git clone https://github.com/andy-austin/goals.git
 cd goals
-
-# Install dependencies
 npm install
+```
 
-# Start development server
+Create a `.env.local` file:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+ANTHROPIC_API_KEY=your_anthropic_key       # optional if using Gemini
+GOOGLE_GEMINI_API_KEY=your_gemini_key      # optional if using Claude
+AI_PROVIDER=anthropic                       # or 'gemini'
+```
+
+Run the database migrations in your Supabase SQL Editor (in order):
+
+1. `supabase/migrations/001_create_goals_table.sql`
+2. `supabase/migrations/002_create_shared_spaces.sql`
+3. `supabase/migrations/003_fix_space_memberships_rls.sql`
+4. `supabase/migrations/004_add_investment_tracking.sql`
+5. `supabase/migrations/005_add_goal_completion.sql`
+
+Start the dev server:
+
+```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the app.
-
-### Available Scripts
+### Scripts
 
 ```bash
-npm run dev      # Start development server
-npm run build    # Build for production
-npm start        # Start production server
-npm run lint     # Run ESLint
+npm run dev        # Development server
+npm run build      # Production build
+npm run lint       # ESLint
+npm test           # Unit tests (Vitest)
+npx playwright test  # E2E tests
 ```
 
 ## Project Structure
 
 ```
-goals/
-├── app/                    # Next.js App Router
-│   ├── create/            # Goal creation page
-│   ├── timeline/          # Timeline visualization
-│   ├── globals.css        # Design tokens & theme
-│   ├── layout.tsx         # Root layout
-│   └── page.tsx           # Dashboard
-├── components/
-│   ├── ui/                # Reusable UI components
-│   │   ├── Badge.tsx      # Badge & BucketBadge
-│   │   ├── Button.tsx     # Button variants
-│   │   ├── Card.tsx       # Card components
-│   │   └── Input.tsx      # Form inputs
-│   └── Header.tsx         # App header & navigation
-├── context/               # React Context providers
-│   └── GoalsContext.tsx   # Goals state management
-├── types/                 # TypeScript definitions
-│   └── goal.ts            # Goal types & utilities
-└── .ai/                   # AI development docs
-    ├── prd.md             # Product requirements
-    └── implementation.md  # Implementation status
+app/
+  dashboard/       # Goal list, grouped by bucket
+  create/          # Multi-step goal creation wizard
+  timeline/        # Gantt chart visualization
+  spaces/          # Shared spaces & invitations
+  auth/            # Login, signup, password reset
+  api/             # AI suggestions, exchange rates, invitations
+components/
+  ui/              # Button, Card, Input, Badge, Toast, Tooltip
+  Dashboard/       # GoalCard, BucketSection, EditGoalModal, TrackingModal
+  FormWizard/      # Multi-step form framework
+  GoalForm/        # Goal creation steps
+  Timeline/        # Gantt chart components
+  Spaces/          # Shared spaces UI
+  Recommendations/ # Affiliate product cards
+  Education/       # Investment instrument guides
+  Strategies/      # Savings strategy playbooks
+  landing/         # Marketing page sections
+context/           # AuthContext, GoalsContext, SpacesContext
+lib/               # Validation, storage, tracking, calendar, exchange rates
+types/             # TypeScript type definitions
+messages/          # i18n translation files (en.json, es.json)
+supabase/          # Database migrations
+tests/             # Playwright E2E tests
 ```
 
-## Goal Data Model
+## How it was built
 
-```typescript
-interface Goal {
-  id: string;
-  title: string;
-  description: string;
-  amount: number;
-  currency: Currency;
-  targetDate: Date;
-  bucket: 'safety' | 'growth' | 'dream';
-  whyItMatters: string;
-  priority: number;
-  createdAt: Date;
-}
-```
+This project was planned and built entirely with AI-assisted development using [Claude Code](https://claude.ai/code) — from the PRD and architecture through implementation, testing, and documentation. 45+ issues shipped across 8 phases.
 
-## Bucket Categories
-
-| Bucket | Color | Description |
-|--------|-------|-------------|
-| **Safety** | Green | Non-negotiable, urgent goals (Emergency Fund, Health) |
-| **Growth** | Blue | Goals that improve standard of living (House, Education) |
-| **Dream** | Purple | Aspirational goals you can afford to risk (Travel, Business) |
+See [docs/roadmap.md](docs/roadmap.md) for the full development timeline.
 
 ## Contributing
 
-See [.ai/implementation.md](.ai/implementation.md) for current development status and next steps.
+Contributions are welcome. Feel free to open an issue or submit a PR.
+
+1. Fork the repo
+2. Create a branch (`git checkout -b my-feature`)
+3. Commit your changes
+4. Push and open a Pull Request
 
 ## License
 
-MIT
+MIT — see [LICENSE](LICENSE) for details.
