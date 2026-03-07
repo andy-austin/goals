@@ -168,7 +168,8 @@
     "empty": {
       "title": "No goals yet",
       "description": "Get started by creating your first investment goal.",
-      "cta": "Create Goal"
+      "cta": "Create Goal",
+      "startFromScratch": "Or start from scratch"
     },
     "goalsCount": "{count, plural, =1 {# goal} other {# goals}}",
     "noBucketGoals": "No {bucket} goals yet",
@@ -428,7 +429,12 @@
     "newPassword": "New password",
     "resetPassword": "Reset password",
     "resettingPassword": "Resetting...",
-    "passwordResetSuccess": "Your password has been reset successfully"
+    "passwordResetSuccess": "Your password has been reset successfully",
+    "brandingTitle": "Invest with intention, not emotion",
+    "brandingDescription": "Define, prioritize, and track your financial goals using the SMART framework and the 3 Buckets methodology.",
+    "brandingFeature1": "Unlimited goals with progress tracking",
+    "brandingFeature2": "Multi-currency support",
+    "brandingFeature3": "Shared spaces for family goals"
   },
   "export": {
     "print": "Print"

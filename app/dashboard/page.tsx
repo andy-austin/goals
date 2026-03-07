@@ -8,10 +8,12 @@ import { Button, Card, BucketSection, SummaryStats, RecommendationsWidget } from
 import { SummaryStatsSkeleton } from '@/components/Dashboard/SummaryStatsSkeleton';
 import { GoalCardSkeleton } from '@/components/Dashboard/GoalCardSkeleton';
 import { GoalCard } from '@/components/Dashboard/GoalCard';
-import { BUCKETS, formatDate } from '@/types';
+import { BUCKETS, BUCKET_CONFIG, formatDate } from '@/types';
+import { GOAL_TEMPLATES } from '@/lib/templates';
 
 export default function DashboardPage() {
   const t = useTranslations('dashboard');
+  const tTemplates = useTranslations('templates');
   const locale = useLocale();
   const { goals, totalGoals, totalAmount, getAllGoalsByBucket, isLoading, deleteGoal } = useGoals();
   const [showCompleted, setShowCompleted] = useState(true);
@@ -91,28 +93,48 @@ export default function DashboardPage() {
           ))}
         </div>
       ) : totalGoals === 0 ? (
-        <Card className="p-8 text-center">
-          <svg
-            className="mx-auto h-12 w-12 text-muted-foreground"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={1.5}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-            />
-          </svg>
-          <h3 className="mt-4 text-lg font-medium text-foreground">{t('empty.title')}</h3>
-          <p className="mt-2 text-muted-foreground">
-            {t('empty.description')}
-          </p>
-          <Link href="/create" className="mt-4 inline-block">
-            <Button>{t('empty.cta')}</Button>
-          </Link>
-        </Card>
+        <div className="space-y-6">
+          <div className="text-center">
+            <h3 className="text-lg font-semibold text-foreground">{t('empty.title')}</h3>
+            <p className="mt-1 text-muted-foreground">{t('empty.description')}</p>
+          </div>
+
+          <div className="grid sm:grid-cols-3 gap-4">
+            {(['safety', 'growth', 'dream'] as const).map((bucket) => {
+              const template = GOAL_TEMPLATES.find((tmpl) => tmpl.bucket === bucket)!;
+              const config = BUCKET_CONFIG[bucket];
+              return (
+                <Link
+                  key={bucket}
+                  href={`/create?template=${template.id}`}
+                  className="group rounded-xl border border-border bg-card p-5 shadow-sm hover:shadow-md hover:border-primary/30 transition-all"
+                >
+                  <div
+                    className="w-10 h-10 rounded-lg flex items-center justify-center mb-3"
+                    style={{ backgroundColor: config.bgColorVar, color: config.colorVar }}
+                  >
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      {bucket === 'safety' && <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />}
+                      {bucket === 'growth' && <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />}
+                      {bucket === 'dream' && <path strokeLinecap="round" strokeLinejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />}
+                    </svg>
+                  </div>
+                  <h4 className="font-semibold text-foreground mb-1">{tTemplates(`${template.id}.title`)}</h4>
+                  <p className="text-xs text-muted-foreground mb-3 line-clamp-2">{tTemplates(`${template.id}.description`)}</p>
+                  <span className="text-xs font-medium text-primary group-hover:underline">
+                    {t('empty.cta')} &rarr;
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className="text-center">
+            <Link href="/create">
+              <Button variant="secondary">{t('empty.startFromScratch')}</Button>
+            </Link>
+          </div>
+        </div>
       ) : (
         <div className="space-y-6">
           {BUCKETS.map((bucket) => (

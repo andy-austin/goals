@@ -171,7 +171,7 @@ export function GoalCalculator() {
             </div>
 
             {/* Results card */}
-            <div className="bg-gradient-hero rounded-2xl shadow-xl p-6 lg:p-8">
+            <div className="bg-gradient-hero rounded-2xl shadow-xl p-6 lg:p-8 sticky top-4 lg:static">
               <h3 className="text-xl font-semibold mb-6 flex items-center gap-2 text-white">
                 <Calculator className="w-5 h-5" />
                 {t('results.title')}

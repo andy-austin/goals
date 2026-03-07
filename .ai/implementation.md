@@ -288,6 +288,41 @@ Complete feature set: savings calculator, goal completion/archiving, calendar ex
 
 ---
 
+### Phase 4: UX Polish (#91, #92, #93, #95, #96, #97, #98)
+Design and interaction improvements across the application.
+
+**New files created:**
+- `components/auth/AuthLayout.tsx` — Split-screen auth layout with branding panel (left) and form (right); responsive
+- `components/auth/index.ts` — Barrel export for auth components
+- `components/landing/GoalFrameworkSection.tsx` — Merged section combining SMART pillars (from MethodologySection) and 3 Buckets method (from PriorityFeature)
+
+**Modified files:**
+- `components/Dashboard/GoalCard.tsx` — (#93) All 8 action buttons now use `min-w-[44px] min-h-[44px]` with flex centering for 44px tap targets; action container uses `flex-wrap` for overflow
+- `components/Dashboard/SortableGoalCard.tsx` — (#93) Drag handle now `min-h-[44px]` with design tokens instead of hardcoded zinc colors
+- `components/LanguageSwitcher.tsx` — (#96) Added native text labels ("English"/"Espanol"), better active state with primary color ring, `aria-pressed` for accessibility
+- `components/landing/GoalCalculator.tsx` — (#97) Results card uses `sticky top-4 lg:static` to stay visible on mobile while editing inputs
+- `app/dashboard/page.tsx` — (#92) Empty state replaced with template-driven onboarding grid showing 3 templates (one per bucket) + "start from scratch" button
+- `app/auth/login/page.tsx` — (#91) Refactored to use AuthLayout with split-screen branding; removed old Header import
+- `app/auth/signup/page.tsx` — (#91) Same refactor as login
+- `app/auth/forgot-password/page.tsx` — (#91) Same refactor
+- `app/auth/reset-password/page.tsx` — (#91) Same refactor
+- `app/page.tsx` — (#98) Replaced MethodologySection + WhyDocumentSection + PriorityFeature with single GoalFrameworkSection
+- `components/landing/index.ts` — Added GoalFrameworkSection export
+- `messages/en.json` — Added: `dashboard.empty.startFromScratch`, `auth.brandingTitle/Description/Feature1-3`
+- `messages/es.json` — Same keys in Spanish
+- `tests/dashboard.spec.ts` — Updated empty state test for template-driven layout
+- `tests/goal-edit-delete.spec.ts` — Updated delete test to check for empty state heading instead of removed goal heading
+- `tests/user-journey.spec.ts` — Updated empty state navigation test for template links
+- `docs/roadmap.md` — Checked off all Phase 4 issues
+
+**Architecture:**
+- `AuthLayout` is a shared wrapper for all 4 auth pages: split-screen on `lg+` (branding panel left, form right), single-column on mobile with compact logo header
+- `GoalFrameworkSection` combines the 6 SMART pillars grid (top) with the 3 Buckets drag mockup + descriptions (bottom) in a single cohesive section
+- Empty dashboard shows 3 template cards (Emergency Fund / House Down Payment / Luxury Vacation) linking to `/create?template={id}`, plus a secondary "start from scratch" button
+- #95 (consent banner) was already a non-blocking bottom bar — no changes needed
+
+---
+
 ## Next Steps
 - #68: Personal Data Privacy Consent (Legal Compliance) — should ship alongside auth
 - #67: Currency Exchange Rate Display

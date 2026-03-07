@@ -168,7 +168,8 @@
     "empty": {
       "title": "Sin objetivos todavía",
       "description": "Comienza creando tu primer objetivo de inversión.",
-      "cta": "Crear objetivo"
+      "cta": "Crear objetivo",
+      "startFromScratch": "O empieza desde cero"
     },
     "goalsCount": "{count, plural, =1 {# objetivo} other {# objetivos}}",
     "noBucketGoals": "Sin objetivos de {bucket} todavía",
@@ -428,7 +429,12 @@
     "newPassword": "Nueva contraseña",
     "resetPassword": "Restablecer contraseña",
     "resettingPassword": "Restableciendo...",
-    "passwordResetSuccess": "Tu contraseña ha sido restablecida exitosamente"
+    "passwordResetSuccess": "Tu contraseña ha sido restablecida exitosamente",
+    "brandingTitle": "Invierte con intención, no con emoción",
+    "brandingDescription": "Define, prioriza y rastrea tus objetivos financieros usando el marco SMART y la metodología de los 3 Cubos.",
+    "brandingFeature1": "Objetivos ilimitados con seguimiento de progreso",
+    "brandingFeature2": "Soporte multi-moneda",
+    "brandingFeature3": "Espacios compartidos para objetivos familiares"
   },
   "export": {
     "print": "Imprimir"

@@ -1,10 +1,8 @@
 import {
   LandingHeader,
   HeroSection,
-  MethodologySection,
+  GoalFrameworkSection,
   GoalCalculator,
-  WhyDocumentSection,
-  PriorityFeature,
   CTASection,
   Footer,
 } from '@/components/landing';
@@ -15,10 +13,8 @@ export default function HomePage() {
       <LandingHeader />
       <main>
         <HeroSection />
-        <MethodologySection />
+        <GoalFrameworkSection />
         <GoalCalculator />
-        <WhyDocumentSection />
-        <PriorityFeature />
         <CTASection />
       </main>
       <Footer />

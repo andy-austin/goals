@@ -23,8 +23,8 @@ test.describe('Dashboard', () => {
     await expect(page.getByRole('heading', { name: 'No goals yet' })).toBeVisible();
     await expect(page.getByText('Get started by creating your first investment goal.')).toBeVisible();
 
-    // Should have a create link (styled as button) - use the one in the empty state card
-    await expect(page.getByRole('link', { name: 'Create Goal', exact: true })).toBeVisible();
+    // Should have template cards linking to /create
+    await expect(page.getByRole('link', { name: /Create Goal/i }).first()).toBeVisible();
   });
 
   test('has navigation header with links', async ({ page }) => {

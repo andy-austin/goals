@@ -4,11 +4,15 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useTransition } from 'react';
 import { locales, type Locale } from '@/i18n';
 import { setLocale } from '@/app/actions/locale';
-import { Tooltip } from '@/components/ui';
 
 const FLAGS: Record<Locale, string> = {
   en: '🇺🇸',
   es: '🇪🇸',
+};
+
+const NATIVE_NAMES: Record<Locale, string> = {
+  en: 'English',
+  es: 'Español',
 };
 
 export function LanguageSwitcher() {
@@ -18,7 +22,7 @@ export function LanguageSwitcher() {
 
   const handleLocaleChange = (newLocale: Locale) => {
     if (newLocale === currentLocale || isPending) return;
-    
+
     startTransition(() => {
       setLocale(newLocale);
     });
@@ -29,19 +33,21 @@ export function LanguageSwitcher() {
       {locales.map((locale) => {
         const isActive = currentLocale === locale;
         return (
-          <Tooltip key={locale} content={t(locale)} side="bottom">
-            <button
-              onClick={() => handleLocaleChange(locale)}
-              disabled={isPending}
-              className={`flex h-8 w-8 cursor-pointer items-center justify-center rounded-md text-xl transition-all hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-50 dark:hover:bg-zinc-800 ${
-                isActive 
-                  ? 'bg-zinc-100 ring-1 ring-zinc-300 dark:bg-zinc-800 dark:ring-zinc-700' 
-                  : 'opacity-60 hover:opacity-100'
-              }`}
-            >
-              <span className="leading-none">{FLAGS[locale]}</span>
-            </button>
-          </Tooltip>
+          <button
+            key={locale}
+            onClick={() => handleLocaleChange(locale)}
+            disabled={isPending}
+            aria-label={t(locale)}
+            aria-pressed={isActive}
+            className={`flex items-center gap-1.5 cursor-pointer rounded-md px-2.5 py-1.5 text-sm transition-all disabled:cursor-not-allowed disabled:opacity-50 ${
+              isActive
+                ? 'bg-primary/10 text-primary font-semibold ring-1 ring-primary/30'
+                : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+            }`}
+          >
+            <span className="text-base leading-none">{FLAGS[locale]}</span>
+            <span className="hidden sm:inline">{NATIVE_NAMES[locale]}</span>
+          </button>
         );
       })}
     </div>
