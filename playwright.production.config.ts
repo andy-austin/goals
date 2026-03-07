@@ -10,8 +10,8 @@ const authFile = path.join(__dirname, 'tests/setup/.auth/user.json');
  *   npx playwright test --config=playwright.production.config.ts
  *
  * Credentials (set via env vars or defaults to the shared test account):
- *   TEST_USER_EMAIL    (default: yan4talk@gmail.com)
- *   TEST_USER_PASSWORD (default: jlf8821r)
+ *   TEST_USER_EMAIL    (default: test@goals.com)
+ *   TEST_USER_PASSWORD (default: Test123)
  */
 export default defineConfig({
   testDir: './tests',
