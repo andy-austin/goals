@@ -73,7 +73,7 @@ export default function DashboardPage() {
       {!isLoading && activeCount > 0 && <RecommendationsWidget goals={activeGoals} />}
 
       {/* Savings Strategies Panel (#57) */}
-      {!isLoading && activeCount > 0 && <StrategiesPanel />}
+      {!isLoading && activeCount > 0 && <div className="mb-8"><StrategiesPanel /></div>}
 
       {/* Goals by Bucket */}
       {isLoading ? (
