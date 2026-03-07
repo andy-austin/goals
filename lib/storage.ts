@@ -25,9 +25,10 @@ interface StorageData {
 /**
  * Goal with dates serialized as ISO strings for JSON storage
  */
-interface SerializedGoal extends Omit<Goal, 'targetDate' | 'createdAt'> {
+interface SerializedGoal extends Omit<Goal, 'targetDate' | 'createdAt' | 'completedAt'> {
   targetDate: string;
   createdAt: string;
+  completedAt?: string;
 }
 
 // =============================================================================
@@ -42,6 +43,7 @@ function serializeGoal(goal: Goal): SerializedGoal {
     ...goal,
     targetDate: goal.targetDate.toISOString(),
     createdAt: goal.createdAt.toISOString(),
+    completedAt: goal.completedAt?.toISOString(),
   };
 }
 
@@ -55,6 +57,8 @@ function deserializeGoal(serialized: SerializedGoal): Goal {
     visibility: serialized.visibility ?? 'private',
     spaceId: serialized.spaceId ?? null,
     checkIns: serialized.checkIns ?? [],
+    status: serialized.status ?? 'active',
+    completedAt: serialized.completedAt ? new Date(serialized.completedAt as unknown as string) : undefined,
     targetDate: new Date(serialized.targetDate),
     createdAt: new Date(serialized.createdAt),
   };

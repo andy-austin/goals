@@ -221,6 +221,30 @@
       "deleteCheckInConfirm": "¿Eliminar este registro?",
       "expectedByNow": "Esperado a la fecha"
     },
+    "logDeposit": "Registrar deposito",
+    "monthlySavingsNeeded": "Para estar al dia: Ahorra {amount}/mes",
+    "markComplete": "Marcar como completado",
+    "reactivate": "Reactivar",
+    "completedToast": "{title} marcado como completado!",
+    "restoredToast": "{title} restaurado a activo",
+    "completedOn": "Completado el {date}",
+    "completedSection": {
+      "title": "Objetivos completados",
+      "count": "{count, plural, =1 {# objetivo completado} other {# objetivos completados}}"
+    },
+    "calendarModal": {
+      "title": "Agregar recordatorio",
+      "subtitle": "Agrega un recordatorio recurrente para \"{title}\" a tu calendario",
+      "frequencyLabel": "Recordarme",
+      "frequency": {
+        "weekly": "Semanal",
+        "biweekly": "Quincenal",
+        "monthly": "Mensual"
+      },
+      "monthlySavingsLabel": "Ahorro mensual necesario",
+      "download": "Descargar .ics",
+      "exportedToast": "Recordatorio exportado al calendario"
+    },
     "checkInModal": {
       "title": "Registrar avance",
       "dateLabel": "Fecha",

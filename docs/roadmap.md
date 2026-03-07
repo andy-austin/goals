@@ -43,16 +43,16 @@ Revenue-generating features. Ship compliance (#61) before or alongside recommend
 
 Core features that round out the product.
 
-- [ ] **#52** — [Progress Tracking + Savings Calculator](https://github.com/andy-austin/goals/issues/52) `high`
-  - Track savings progress over time with visual indicators
-- [ ] **#53** — [Edit Goals](https://github.com/andy-austin/goals/issues/53) `high`
-  - Already implemented via EditGoalModal — verify and close if done
-- [ ] **#54** — [Goal Completion & Archiving](https://github.com/andy-austin/goals/issues/54) `medium`
-  - Mark goals as completed, archive them out of the active dashboard
-- [ ] **#55** — [Calendar Reminder Export (.ics)](https://github.com/andy-austin/goals/issues/55) `medium`
-  - Export goal milestones as calendar events
-- [ ] **#66** — [Goal-to-Investment Vehicle Linking](https://github.com/andy-austin/goals/issues/66) `medium`
-  - Link goals to specific investment vehicles with periodic tracking
+- [x] **#52** — [Progress Tracking + Savings Calculator](https://github.com/andy-austin/goals/issues/52) `high` — *Done (phase-3/feature-completeness branch)*
+  - Monthly savings calculator on goal cards, current vs target display, direct Log Deposit button
+- [x] **#53** — [Edit Goals](https://github.com/andy-austin/goals/issues/53) `high` — *Done (previously implemented via EditGoalModal)*
+  - Full inline edit modal with all goal fields, Supabase sync, i18n
+- [x] **#54** — [Goal Completion & Archiving](https://github.com/andy-austin/goals/issues/54) `medium` — *Done (phase-3/feature-completeness branch)*
+  - Mark goals complete, collapsible completed section, reactivate/delete, status field + DB migration
+- [x] **#55** — [Calendar Reminder Export (.ics)](https://github.com/andy-austin/goals/issues/55) `medium` — *Done (phase-3/feature-completeness branch)*
+  - CalendarExportModal with weekly/biweekly/monthly frequency, .ics download, i18n
+- [x] **#66** — [Goal-to-Investment Vehicle Linking](https://github.com/andy-austin/goals/issues/66) `medium` — *Done (previously implemented)*
+  - Investment vehicle linking, check-in tracking, fulfillment calculation, TrackingModal + CheckInModal
 
 ---
 
@@ -96,6 +96,6 @@ Low-priority enhancements for future sprints.
 ## Notes
 
 - **Phase 1** is complete on `phase-1/bug-fixes-core-ux` branch (all 5 issues done).
-- **#53 (Edit Goals)** may already be complete — EditGoalModal exists and is functional. Verify and close.
 - **#94** is implemented but not yet merged to master.
 - **Phase 2** is complete on `phase-2/monetization-foundation` branch (all 5 issues done).
+- **Phase 3** is complete on `phase-3/feature-completeness` branch (all 5 issues done). #53 and #66 were previously implemented; #52, #54, #55 implemented in this branch.

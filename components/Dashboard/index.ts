@@ -7,3 +7,4 @@ export * from './TrackingModal';
 export * from './SortableGoalCard';
 export * from './SummaryStats';
 export * from './ExportMenu';
+export * from './CalendarExportModal';

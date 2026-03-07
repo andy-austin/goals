@@ -5,3 +5,4 @@ export * from './utils';
 export * from './consent';
 export * from './tracking';
 export * from './recommendations';
+export * from './calendar';

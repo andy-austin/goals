@@ -93,6 +93,12 @@ interface GoalsContextValue {
 
   /** Delete a check-in from a goal */
   deleteCheckIn: (goalId: string, checkInId: string) => void;
+
+  /** Mark a goal as completed */
+  completeGoal: (goalId: string) => void;
+
+  /** Restore a completed goal to active */
+  restoreGoal: (goalId: string) => void;
 }
 
 // =============================================================================
@@ -271,6 +277,7 @@ export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProp
       visibility: input.visibility ?? 'private',
       spaceId: input.spaceId ?? null,
       checkIns: [],
+      status: 'active',
       id: generateId(),
       createdAt: new Date(),
       priority: getNextPriorityForBucket(state.goals, input.bucket),
@@ -356,6 +363,29 @@ export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProp
     }
   }, [user]);
 
+  const completeGoal = useCallback((goalId: string): void => {
+    const completedAt = new Date();
+    dispatch({ type: 'UPDATE_GOAL', payload: { goalId, updates: { status: 'completed', completedAt } } });
+
+    if (user) {
+      const current = state.goals.find((g) => g.id === goalId);
+      if (current) {
+        updateGoalRemote({ ...current, status: 'completed', completedAt }, user.id);
+      }
+    }
+  }, [state.goals, user]);
+
+  const restoreGoal = useCallback((goalId: string): void => {
+    dispatch({ type: 'UPDATE_GOAL', payload: { goalId, updates: { status: 'active', completedAt: undefined } } });
+
+    if (user) {
+      const current = state.goals.find((g) => g.id === goalId);
+      if (current) {
+        updateGoalRemote({ ...current, status: 'active', completedAt: undefined }, user.id);
+      }
+    }
+  }, [state.goals, user]);
+
   const totalGoals = state.goals.length;
 
   const totalAmount = useMemo(() => {
@@ -378,6 +408,8 @@ export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProp
     isLoading,
     addCheckIn,
     deleteCheckIn,
+    completeGoal,
+    restoreGoal,
   }), [
     state.goals,
     addGoal,
@@ -394,6 +426,8 @@ export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProp
     isLoading,
     addCheckIn,
     deleteCheckIn,
+    completeGoal,
+    restoreGoal,
   ]);
 
   return (
