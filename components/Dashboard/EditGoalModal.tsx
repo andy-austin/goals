@@ -110,9 +110,9 @@ export function EditGoalModal({ goal, isOpen, onClose }: EditGoalModalProps) {
   if (!isOpen) return null;
 
   const bucketColors: Record<Bucket, string> = {
-    safety: 'border-green-500 bg-green-50 dark:bg-green-950/30',
-    growth: 'border-blue-500 bg-blue-50 dark:bg-blue-950/30',
-    dream: 'border-purple-500 bg-purple-50 dark:bg-purple-950/30',
+    safety: 'border-bucket-safety bg-bucket-safety-light',
+    growth: 'border-bucket-growth bg-bucket-growth-light',
+    dream: 'border-bucket-dream bg-bucket-dream-light',
   };
 
   return createPortal(
@@ -135,7 +135,7 @@ export function EditGoalModal({ goal, isOpen, onClose }: EditGoalModalProps) {
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-300 transition-colors"
+                className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
                 aria-label={tCommon('cancel')}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -158,7 +158,7 @@ export function EditGoalModal({ goal, isOpen, onClose }: EditGoalModalProps) {
                 maxLength={100}
                 placeholder={tGoalForm('step1.titlePlaceholder')}
               />
-              {titleError && <p className="text-xs text-red-600">{tGoalForm('step1.titleError')}</p>}
+              {titleError && <p className="text-xs text-error">{tGoalForm('step1.titleError')}</p>}
             </div>
 
             {/* Description */}
@@ -173,7 +173,7 @@ export function EditGoalModal({ goal, isOpen, onClose }: EditGoalModalProps) {
                 maxLength={500}
                 placeholder={tGoalForm('step1.descriptionPlaceholder')}
               />
-              {descriptionError && <p className="text-xs text-red-600">{tGoalForm('step1.descriptionError')}</p>}
+              {descriptionError && <p className="text-xs text-error">{tGoalForm('step1.descriptionError')}</p>}
             </div>
 
             {/* Amount + Currency */}
@@ -190,7 +190,7 @@ export function EditGoalModal({ goal, isOpen, onClose }: EditGoalModalProps) {
                   error={amountError}
                   placeholder="0.00"
                 />
-                {amountError && <p className="text-xs text-red-600">{tGoalForm('step2.amountError')}</p>}
+                {amountError && <p className="text-xs text-error">{tGoalForm('step2.amountError')}</p>}
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="edit-currency">{tGoalForm('step2.currencyLabel')}</Label>
@@ -216,7 +216,7 @@ export function EditGoalModal({ goal, isOpen, onClose }: EditGoalModalProps) {
                 onChange={(e) => setTargetDate(e.target.value)}
                 error={dateError}
               />
-              {dateError && <p className="text-xs text-red-600">{tGoalForm('step3.dateError')}</p>}
+              {dateError && <p className="text-xs text-error">{tGoalForm('step3.dateError')}</p>}
             </div>
 
             {/* Bucket */}
@@ -231,7 +231,7 @@ export function EditGoalModal({ goal, isOpen, onClose }: EditGoalModalProps) {
                     className={`rounded-lg border-2 p-2 text-center text-xs font-medium transition-all cursor-pointer ${
                       bucket === b
                         ? bucketColors[b]
-                        : 'border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 hover:border-zinc-300 dark:hover:border-zinc-600'
+                        : 'border-border bg-muted hover:border-muted-foreground/30'
                     }`}
                   >
                     {tBuckets(`${b}.name`)}
@@ -252,7 +252,7 @@ export function EditGoalModal({ goal, isOpen, onClose }: EditGoalModalProps) {
                 maxLength={500}
                 placeholder={tGoalForm('step5.whyPlaceholder')}
               />
-              {whyError && <p className="text-xs text-red-600">{tGoalForm('step5.whyError')}</p>}
+              {whyError && <p className="text-xs text-error">{tGoalForm('step5.whyError')}</p>}
             </div>
           </CardContent>
 

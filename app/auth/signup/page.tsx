@@ -67,13 +67,13 @@ export default function SignUpPage() {
           </div>
 
           {error && (
-            <div className="rounded-md bg-red-50 p-3 text-sm text-red-700 dark:bg-red-900/20 dark:text-red-400">
+            <div className="rounded-md bg-error/10 p-3 text-sm text-error">
               {error}
             </div>
           )}
 
           {success && (
-            <div className="rounded-md bg-green-50 p-3 text-sm text-green-700 dark:bg-green-900/20 dark:text-green-400">
+            <div className="rounded-md bg-success/10 p-3 text-sm text-success">
               {success}
             </div>
           )}
@@ -89,7 +89,7 @@ export default function SignUpPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="mt-1 block w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm text-foreground shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-900"
+                className="mt-1 block w-full rounded-md border border-border bg-card px-3 py-2 text-sm text-foreground shadow-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
                 placeholder={t('emailPlaceholder')}
               />
             </div>
@@ -105,7 +105,7 @@ export default function SignUpPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={6}
-                className="mt-1 block w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm text-foreground shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-900"
+                className="mt-1 block w-full rounded-md border border-border bg-card px-3 py-2 text-sm text-foreground shadow-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
                 placeholder={t('passwordPlaceholder')}
               />
             </div>
@@ -121,7 +121,7 @@ export default function SignUpPage() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
                 minLength={6}
-                className="mt-1 block w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm text-foreground shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-900"
+                className="mt-1 block w-full rounded-md border border-border bg-card px-3 py-2 text-sm text-foreground shadow-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
                 placeholder={t('confirmPasswordPlaceholder')}
               />
             </div>
@@ -135,10 +135,10 @@ export default function SignUpPage() {
             <>
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-zinc-300 dark:border-zinc-700" />
+                  <div className="w-full border-t border-border" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="bg-white px-2 text-muted-foreground dark:bg-zinc-950">
+                  <span className="bg-background px-2 text-muted-foreground">
                     {t('orContinueWith')}
                   </span>
                 </div>
@@ -147,7 +147,7 @@ export default function SignUpPage() {
               <button
                 type="button"
                 onClick={handleGoogleSignIn}
-                className="flex w-full items-center justify-center gap-2 rounded-md border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-foreground shadow-sm hover:bg-zinc-50 cursor-pointer dark:border-zinc-700 dark:bg-zinc-900 dark:hover:bg-zinc-800"
+                className="flex w-full items-center justify-center gap-2 rounded-md border border-border bg-card px-4 py-2 text-sm font-medium text-foreground shadow-sm hover:bg-muted cursor-pointer"
               >
                 <svg className="h-5 w-5" viewBox="0 0 24 24">
                   <path
@@ -174,7 +174,7 @@ export default function SignUpPage() {
 
           <p className="text-center text-sm text-muted-foreground">
             {t('hasAccount')}{' '}
-            <Link href={redirectTo !== '/dashboard' ? `/auth/login?redirectTo=${encodeURIComponent(redirectTo)}` : '/auth/login'} className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400">
+            <Link href={redirectTo !== '/dashboard' ? `/auth/login?redirectTo=${encodeURIComponent(redirectTo)}` : '/auth/login'} className="font-medium text-primary hover:underline">
               {t('login')}
             </Link>
           </p>

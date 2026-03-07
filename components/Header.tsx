@@ -56,7 +56,7 @@ export function Header() {
   };
 
   return (
-    <header className="print:hidden sticky top-0 z-50 border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
+    <header className="print:hidden sticky top-0 z-50 border-b border-border bg-background">
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6">
         {/* Logo/Title */}
         <Link href="/dashboard" className="flex items-center gap-2">
@@ -79,8 +79,8 @@ export function Header() {
                 href={item.href}
                 className={`inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
                   isActive
-                    ? 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
-                    : 'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800/50 dark:hover:text-zinc-100'
+                    ? 'bg-muted text-foreground'
+                    : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
                 }`}
               >
                 <Icon className="h-4 w-4" />
@@ -88,39 +88,39 @@ export function Header() {
               </Link>
             );
           })}
-          <div className="ml-2 border-l border-zinc-200 pl-2 dark:border-zinc-700">
+          <div className="ml-2 border-l border-border pl-2">
             <LanguageSwitcher />
           </div>
           {/* Auth UI */}
-          <div className="ml-2 border-l border-zinc-200 pl-2 dark:border-zinc-700">
+          <div className="ml-2 border-l border-border pl-2">
             {!loading && (
               user ? (
                 <div className="relative" ref={userMenuRef}>
                   <button
                     type="button"
                     onClick={() => setUserMenuOpen(!userMenuOpen)}
-                    className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm font-medium text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 cursor-pointer dark:text-zinc-400 dark:hover:bg-zinc-800/50 dark:hover:text-zinc-100"
+                    className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm font-medium text-muted-foreground hover:bg-muted/50 hover:text-foreground cursor-pointer"
                   >
-                    <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900 overflow-hidden">
+                    <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 overflow-hidden">
                       {avatarUrl ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img src={avatarUrl} alt={displayName} className="h-full w-full object-cover" />
                       ) : (
-                        <span className="text-xs font-semibold text-blue-700 dark:text-blue-300">{initials}</span>
+                        <span className="text-xs font-semibold text-primary">{initials}</span>
                       )}
                     </div>
                     <span className="max-w-[120px] truncate">{displayName}</span>
                   </button>
                   {userMenuOpen && (
-                    <div className="absolute right-0 mt-1 w-64 rounded-md border border-zinc-200 bg-white py-1 shadow-lg dark:border-zinc-700 dark:bg-zinc-900">
-                      <div className="border-b border-zinc-200 px-4 py-3 dark:border-zinc-700">
+                    <div className="absolute right-0 mt-1 w-64 rounded-md border border-border bg-card py-1 shadow-lg">
+                      <div className="border-b border-border px-4 py-3">
                         <div className="flex items-center gap-3">
-                          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900 overflow-hidden">
+                          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 overflow-hidden">
                             {avatarUrl ? (
                               // eslint-disable-next-line @next/next/no-img-element
                               <img src={avatarUrl} alt={displayName} className="h-full w-full object-cover" />
                             ) : (
-                              <span className="text-sm font-semibold text-blue-700 dark:text-blue-300">{initials}</span>
+                              <span className="text-sm font-semibold text-primary">{initials}</span>
                             )}
                           </div>
                           <div className="min-w-0">
@@ -131,11 +131,11 @@ export function Header() {
                           </div>
                         </div>
                       </div>
-                      <div className="border-t border-zinc-200 dark:border-zinc-700">
+                      <div className="border-t border-border">
                         <button
                           type="button"
                           onClick={handleSignOut}
-                          className="flex w-full items-center gap-2 px-4 py-2 text-sm text-zinc-600 hover:bg-zinc-50 cursor-pointer dark:text-zinc-400 dark:hover:bg-zinc-800"
+                          className="flex w-full items-center gap-2 px-4 py-2 text-sm text-muted-foreground hover:bg-muted/50 cursor-pointer"
                         >
                           <LogOut className="h-4 w-4" />
                           {tAuth('signOut')}
@@ -147,7 +147,7 @@ export function Header() {
               ) : (
                 <Link
                   href="/auth/login"
-                  className="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
+                  className="rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground hover:bg-primary-hover transition-colors"
                 >
                   {tAuth('login')}
                 </Link>
@@ -169,22 +169,22 @@ export function Header() {
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? (
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-muted text-muted-foreground">
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </div>
             ) : !loading && user ? (
-              <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900 overflow-hidden ring-2 ring-offset-1 ring-blue-200 dark:ring-blue-700">
+              <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 overflow-hidden ring-2 ring-offset-1 ring-primary/30">
                 {avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={avatarUrl} alt={displayName} className="h-full w-full object-cover" />
                 ) : (
-                  <span className="text-sm font-semibold text-blue-700 dark:text-blue-300">{initials}</span>
+                  <span className="text-sm font-semibold text-primary">{initials}</span>
                 )}
               </div>
             ) : (
-              <div className="flex h-9 w-9 items-center justify-center text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100 rounded-md">
+              <div className="flex h-9 w-9 items-center justify-center text-muted-foreground hover:bg-muted hover:text-foreground rounded-md">
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
@@ -196,16 +196,16 @@ export function Header() {
 
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <nav className="border-t border-zinc-200 px-4 py-2 sm:hidden dark:border-zinc-800">
+        <nav className="border-t border-border px-4 py-2 sm:hidden">
           {/* User info at the top */}
           {!loading && user && (
             <div className="mb-2 flex items-center gap-3 px-3 py-3">
-              <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900 overflow-hidden ring-2 ring-offset-1 ring-blue-200 dark:ring-blue-700">
+              <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 overflow-hidden ring-2 ring-offset-1 ring-primary/30">
                 {avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={avatarUrl} alt={displayName} className="h-full w-full object-cover" />
                 ) : (
-                  <span className="text-base font-semibold text-blue-700 dark:text-blue-300">{initials}</span>
+                  <span className="text-base font-semibold text-primary">{initials}</span>
                 )}
               </div>
               <div className="min-w-0">
@@ -218,7 +218,7 @@ export function Header() {
           )}
 
           {/* Nav items */}
-          <div className={`${!loading && user ? 'border-t border-zinc-200 dark:border-zinc-700' : ''} pt-2 space-y-1`}>
+          <div className={`${!loading && user ? 'border-t border-border' : ''} pt-2 space-y-1`}>
             {navItems.map((item) => {
               const isActive = pathname === item.href;
               const Icon = item.icon;
@@ -229,8 +229,8 @@ export function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   className={`flex items-center gap-2 rounded-md px-3 py-2 text-base font-medium transition-colors ${
                     isActive
-                      ? 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
-                      : 'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800/50 dark:hover:text-zinc-100'
+                      ? 'bg-muted text-foreground'
+                      : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
                   }`}
                 >
                   <Icon className="h-4 w-4" />
@@ -243,11 +243,11 @@ export function Header() {
             {!loading && (
               user ? (
                 <>
-                  <div className="border-t border-zinc-200 pt-1 mt-1 dark:border-zinc-700">
+                  <div className="border-t border-border pt-1 mt-1">
                     <button
                       type="button"
                       onClick={() => { setMobileMenuOpen(false); handleSignOut(); }}
-                      className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-base font-medium text-zinc-600 hover:bg-zinc-50 cursor-pointer dark:text-zinc-400 dark:hover:bg-zinc-800/50"
+                      className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-base font-medium text-muted-foreground hover:bg-muted/50 cursor-pointer"
                     >
                       <LogOut className="h-4 w-4" />
                       {tAuth('signOut')}
@@ -259,7 +259,7 @@ export function Header() {
                   <Link
                     href="/auth/login"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2.5 text-base font-medium text-white hover:bg-blue-700 transition-colors dark:bg-blue-600 dark:hover:bg-blue-500"
+                    className="flex items-center justify-center gap-2 rounded-md bg-primary px-4 py-2.5 text-base font-medium text-primary-foreground hover:bg-primary-hover transition-colors"
                   >
                     {tAuth('login')}
                   </Link>

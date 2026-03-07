@@ -75,9 +75,15 @@ function ToastItem({ toast, onRemove }: ToastItemProps) {
   }, [toast.id, onRemove]);
 
   const bgColor = {
-    success: 'bg-green-600',
-    error: 'bg-red-600',
-    info: 'bg-blue-600',
+    success: 'bg-success',
+    error: 'bg-error',
+    info: 'bg-info',
+  }[toast.type];
+
+  const textColor = {
+    success: 'text-success-foreground',
+    error: 'text-error-foreground',
+    info: 'text-info-foreground',
   }[toast.type];
 
   const icon = {
@@ -100,7 +106,7 @@ function ToastItem({ toast, onRemove }: ToastItemProps) {
 
   return (
     <div
-      className={`${bgColor} text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-3 animate-slide-in min-w-[250px]`}
+      className={`${bgColor} ${textColor} px-4 py-3 rounded-lg shadow-lg flex items-center gap-3 animate-slide-in min-w-[250px]`}
       role="alert"
     >
       {icon}

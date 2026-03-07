@@ -109,7 +109,7 @@ function CheckInForm({ goal, onClose }: { goal: Goal; onClose: () => void }) {
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-300 transition-colors"
+                className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
                 aria-label={tCommon('close')}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -117,7 +117,7 @@ function CheckInForm({ goal, onClose }: { goal: Goal; onClose: () => void }) {
                 </svg>
               </button>
             </div>
-            <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-0.5">
+            <p className="text-sm text-muted-foreground mt-0.5">
               {goal.title} · {formatCurrency(goal.amount, goal.currency, locale)} target
             </p>
           </CardHeader>
@@ -149,22 +149,22 @@ function CheckInForm({ goal, onClose }: { goal: Goal; onClose: () => void }) {
                 placeholder={t('amountPlaceholder')}
               />
               {amountError && (
-                <p className="text-xs text-red-600">{t('amountError')}</p>
+                <p className="text-xs text-error">{t('amountError')}</p>
               )}
             </div>
 
             {/* Fulfillment preview */}
             {fulfillmentPercent !== null && (
-              <div className="rounded-lg border border-zinc-200 dark:border-zinc-700 p-3 bg-zinc-50 dark:bg-zinc-800/50">
+              <div className="rounded-lg border border-border p-3 bg-muted">
                 <div className="flex items-center justify-between text-sm mb-2">
-                  <span className="text-zinc-600 dark:text-zinc-400">
+                  <span className="text-muted-foreground">
                     {t('fulfillmentPreview', { percent: fulfillmentPercent })}
                   </span>
-                  <span className={`font-semibold ${fulfillmentPercent >= 100 ? 'text-green-600 dark:text-green-400' : 'text-zinc-700 dark:text-zinc-300'}`}>
+                  <span className={`font-semibold ${fulfillmentPercent >= 100 ? 'text-success' : 'text-foreground'}`}>
                     {fulfillmentPercent}%
                   </span>
                 </div>
-                <div className="h-2 w-full rounded-full bg-zinc-200 dark:bg-zinc-700 overflow-hidden">
+                <div className="h-2 w-full rounded-full bg-muted overflow-hidden">
                   <div
                     className="h-full rounded-full bg-primary transition-all"
                     style={{ width: `${Math.min(fulfillmentPercent, 100)}%` }}

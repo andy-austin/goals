@@ -37,8 +37,7 @@ export function ConsentBanner() {
       className="fixed bottom-0 left-0 right-0 z-50 p-4 print:hidden"
     >
       <div
-        className="max-w-3xl mx-auto rounded-xl border border-[var(--border,#e5e7eb)] bg-[var(--card,#ffffff)] shadow-[var(--shadow-xl)] p-5"
-        style={{ backgroundColor: 'var(--card)', color: 'var(--card-foreground)' }}
+        className="max-w-3xl mx-auto rounded-xl border border-border bg-card shadow-xl p-5 text-card-foreground"
       >
         <div className="flex flex-col sm:flex-row sm:items-center gap-4">
           <div className="flex-1 min-w-0">

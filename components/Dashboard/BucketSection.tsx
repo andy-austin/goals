@@ -65,11 +65,11 @@ export function BucketSection({ bucket, goals }: BucketSectionProps) {
   });
 
   return (
-    <div className="rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-950 overflow-hidden">
+    <div className="rounded-xl border border-border bg-card shadow-sm overflow-hidden">
       {/* Header */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="flex w-full items-center justify-between px-6 py-4 transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-900 cursor-pointer"
+        className="flex w-full items-center justify-between px-6 py-4 transition-colors hover:bg-muted/50 cursor-pointer"
         style={{ borderLeft: `4px solid ${config.colorVar}` }}
       >
         <div className="flex items-center gap-4">
@@ -80,10 +80,10 @@ export function BucketSection({ bucket, goals }: BucketSectionProps) {
             {Icon('h-6 w-6')}
           </div>
           <div className="text-left">
-            <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
+            <h2 className="text-lg font-bold text-foreground">
               {tBuckets(`${bucket}.name`)}
             </h2>
-            <p className="text-sm text-zinc-500 dark:text-zinc-400">
+            <p className="text-sm text-muted-foreground">
               {tDashboard('goalsCount', { count: goals.length })}
             </p>
           </div>
@@ -92,7 +92,7 @@ export function BucketSection({ bucket, goals }: BucketSectionProps) {
         <div className="flex items-center gap-4">
            {/* Chevron Icon */}
            <svg
-              className={`h-5 w-5 text-zinc-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+              className={`h-5 w-5 text-muted-foreground transition-transform ${isExpanded ? 'rotate-180' : ''}`}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -104,13 +104,13 @@ export function BucketSection({ bucket, goals }: BucketSectionProps) {
 
       {/* Content */}
       {isExpanded && (
-        <div className="border-t border-zinc-100 px-6 py-6 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/20">
+        <div className="border-t border-border px-6 py-6 bg-muted/50">
           {goals.length === 0 ? (
-            <div className="text-center py-4 text-zinc-500 text-sm">
+            <div className="text-center py-4 text-muted-foreground text-sm">
               <p>{tDashboard('noBucketGoals', { bucket: tBuckets(`${bucket}.name`).toLowerCase() })}</p>
               <Link
                 href="/create"
-                className="inline-flex items-center gap-1 mt-2 text-sm font-medium text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"
+                className="inline-flex items-center gap-1 mt-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
               >
                 <PlusCircle className="h-4 w-4" />
                 {tDashboard('actions.addGoal')}

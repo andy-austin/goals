@@ -47,7 +47,7 @@ export async function updateSession(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  const protectedPaths = ['/dashboard', '/create', '/timeline'];
+  const protectedPaths = ['/timeline'];
   const isProtected = protectedPaths.some((p) => pathname === p || pathname.startsWith(`${p}/`));
 
   if (!user && isProtected) {

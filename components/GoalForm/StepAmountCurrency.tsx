@@ -99,10 +99,10 @@ export function StepAmountCurrency() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+        <h2 className="text-lg font-semibold text-foreground">
           {t('title')}
         </h2>
-        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="mt-1 text-sm text-muted-foreground">
           {t('subtitle')}
         </p>
       </div>
@@ -161,7 +161,7 @@ export function StepAmountCurrency() {
           </div>
           <div className="relative">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <span className="text-zinc-500 sm:text-sm">
+              <span className="text-muted-foreground sm:text-sm">
                 {getCurrencySymbol(currency)}
               </span>
             </div>
@@ -220,11 +220,11 @@ export function StepAmountCurrency() {
       )}
 
       {/* SMART Tip */}
-      <div className="rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-900 dark:bg-blue-950">
+      <div className="rounded-lg border border-info/30 bg-info/10 p-4">
         <div className="flex gap-3">
           <div className="flex-shrink-0">
             <svg
-              className="h-5 w-5 text-blue-600 dark:text-blue-400"
+              className="h-5 w-5 text-info"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -238,10 +238,10 @@ export function StepAmountCurrency() {
             </svg>
           </div>
           <div>
-            <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200">
+            <h3 className="text-sm font-medium text-info">
               {t('smartTip')}
             </h3>
-            <p className="mt-1 text-sm text-blue-700 dark:text-blue-300">
+            <p className="mt-1 text-sm text-info/80">
               {t('smartTipText')}
             </p>
           </div>

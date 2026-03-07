@@ -55,7 +55,7 @@ export function SMARTValidationSummary() {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-sm font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+      <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
         {t('summaryTitle')}
       </h3>
 
@@ -81,10 +81,10 @@ export function SMARTValidationSummary() {
               )}
             </div>
             <div>
-              <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
+              <p className="text-sm font-medium text-foreground">
                 {item.label}
               </p>
-              <p className="text-xs text-zinc-600 dark:text-zinc-400">
+              <p className="text-xs text-muted-foreground">
                 {item.description}
               </p>
             </div>
@@ -94,9 +94,9 @@ export function SMARTValidationSummary() {
 
       {/* Goal Summary Card */}
       {data.bucket && (
-        <div className="mt-6 rounded-xl border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-900/50">
+        <div className="mt-6 rounded-xl border border-border bg-muted p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-medium text-zinc-500 uppercase">{t('goalPreview')}</span>
+            <span className="text-xs font-medium text-muted-foreground uppercase">{t('goalPreview')}</span>
             <span
               className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full"
               style={{
@@ -107,18 +107,18 @@ export function SMARTValidationSummary() {
               {tBuckets(`${data.bucket}.name`)}
             </span>
           </div>
-          <h4 className="text-base font-bold text-zinc-900 dark:text-zinc-100">{data.title || t('untitledGoal')}</h4>
-          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2">{data.description}</p>
-          <div className="mt-4 flex items-center justify-between border-t border-zinc-200 dark:border-zinc-800 pt-3">
+          <h4 className="text-base font-bold text-foreground">{data.title || t('untitledGoal')}</h4>
+          <p className="mt-1 text-sm text-muted-foreground line-clamp-2">{data.description}</p>
+          <div className="mt-4 flex items-center justify-between border-t border-border pt-3">
              <div className="text-sm">
-                <span className="text-zinc-500">{t('target')}:</span>{' '}
-                <span className="font-semibold text-zinc-900 dark:text-zinc-100">
+                <span className="text-muted-foreground">{t('target')}:</span>{' '}
+                <span className="font-semibold text-foreground">
                   {data.amount && data.currency ? formatCurrency(data.amount, data.currency, locale) : '—'}
                 </span>
              </div>
              <div className="text-sm">
-                <span className="text-zinc-500">{t('by')}:</span>{' '}
-                <span className="font-semibold text-zinc-900 dark:text-zinc-100">
+                <span className="text-muted-foreground">{t('by')}:</span>{' '}
+                <span className="font-semibold text-foreground">
                   {formatDate(data.targetDate, locale)}
                 </span>
              </div>

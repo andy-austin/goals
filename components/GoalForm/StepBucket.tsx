@@ -131,7 +131,7 @@ export function StepBucket() {
       {/* Header */}
       <div>
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+          <h2 className="text-lg font-semibold text-foreground">
             {t('title')}
           </h2>
           {canRequestSuggestion && !suggestion && !isAILoading && !selectedBucket && (
@@ -145,7 +145,7 @@ export function StepBucket() {
             </button>
           )}
         </div>
-        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="mt-1 text-sm text-muted-foreground">
           {t('subtitle')}
         </p>
       </div>
@@ -184,7 +184,7 @@ export function StepBucket() {
               className={`relative flex items-start gap-4 rounded-xl border p-4 text-left transition-all cursor-pointer ${
                 isSelected
                   ? 'border-[var(--bucket-color)] bg-[var(--bucket-bg)] ring-1 ring-[var(--bucket-color)]'
-                  : 'border-zinc-200 bg-white hover:border-zinc-300 hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700 dark:hover:bg-zinc-800'
+                  : 'border-border bg-card hover:border-border hover:bg-muted/50'
               }`}
               style={
                 isSelected
@@ -198,8 +198,8 @@ export function StepBucket() {
               <div
                 className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg ${
                   isSelected
-                    ? 'bg-white text-[var(--bucket-color)] dark:bg-black'
-                    : 'bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400'
+                    ? 'bg-background text-[var(--bucket-color)]'
+                    : 'bg-muted text-muted-foreground'
                 }`}
               >
                 {Icon('h-6 w-6')}
@@ -208,8 +208,8 @@ export function StepBucket() {
                 <h3
                   className={`font-semibold ${
                     isSelected
-                      ? 'text-zinc-900 dark:text-zinc-100'
-                      : 'text-zinc-900 dark:text-zinc-100'
+                      ? 'text-foreground'
+                      : 'text-foreground'
                   }`}
                 >
                   {tBuckets(`${bucket}.name`)}
@@ -217,8 +217,8 @@ export function StepBucket() {
                 <p
                   className={`mt-1 text-sm ${
                     isSelected
-                      ? 'text-zinc-700 dark:text-zinc-300'
-                      : 'text-zinc-600 dark:text-zinc-400'
+                      ? 'text-muted-foreground'
+                      : 'text-muted-foreground'
                   }`}
                 >
                   {tBuckets(`${bucket}.description`)}
@@ -239,11 +239,11 @@ export function StepBucket() {
       </div>
 
       {/* SMART Tip / Methodology Tip */}
-      <div className="rounded-lg border border-purple-200 bg-purple-50 p-4 dark:border-purple-900 dark:bg-purple-950">
+      <div className="rounded-lg border border-info/30 bg-info/10 p-4">
         <div className="flex gap-3">
           <div className="flex-shrink-0">
             <svg
-              className="h-5 w-5 text-purple-600 dark:text-purple-400"
+              className="h-5 w-5 text-info"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -257,10 +257,10 @@ export function StepBucket() {
             </svg>
           </div>
           <div>
-            <h3 className="text-sm font-medium text-purple-800 dark:text-purple-200">
+            <h3 className="text-sm font-medium text-info">
               {t('smartTip')}
             </h3>
-            <p className="mt-1 text-sm text-purple-700 dark:text-purple-300">
+            <p className="mt-1 text-sm text-info/80">
               {t('smartTipText')}
             </p>
           </div>

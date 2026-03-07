@@ -19,6 +19,12 @@ async function goToLogin(page: import('@playwright/test').Page) {
   await page.context().addCookies([
     { name: 'locale', value: 'en', domain: 'localhost', path: '/' },
   ]);
+  await page.addInitScript(() => {
+    localStorage.setItem(
+      'fingoal_consent',
+      JSON.stringify({ given: true, timestamp: '2025-01-01T00:00:00.000Z', policyVersion: '1.0.0', analyticsConsent: false })
+    );
+  });
   await page.goto('/auth/login');
 }
 
@@ -118,7 +124,7 @@ test.describe('Login page form validation', () => {
     await page.getByRole('button', { name: 'Sign In' }).click();
 
     // An error banner should appear (content varies based on Supabase response)
-    await expect(page.locator('div.text-red-700, div.text-red-400')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('div.text-error')).toBeVisible({ timeout: 10000 });
   });
 });
 
@@ -160,7 +166,7 @@ test.describe('Sign-up page navigation', () => {
   test.beforeEach(async ({ page }) => goToSignup(page));
 
   test('clicking Sign In link navigates to the login page', async ({ page }) => {
-    await page.getByRole('link', { name: 'Sign In' }).click();
+    await page.getByRole('main').getByRole('link', { name: 'Sign In' }).click();
     await expect(page).toHaveURL('/auth/login');
   });
 });

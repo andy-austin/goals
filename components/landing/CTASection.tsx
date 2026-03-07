@@ -40,7 +40,7 @@ export function CTASection() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/create"
-                className="inline-flex items-center justify-center gap-2 h-12 px-8 text-base font-semibold rounded-xl bg-white text-gray-900 shadow-lg hover:bg-gray-100 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+                className="inline-flex items-center justify-center gap-2 h-12 px-8 text-base font-semibold rounded-xl bg-background text-foreground shadow-lg hover:bg-muted hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
               >
                 {t('button')}
                 <ArrowRight className="w-4 h-4" />

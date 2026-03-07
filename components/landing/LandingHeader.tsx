@@ -10,7 +10,7 @@ export function LandingHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const t = useTranslations('landing.header');
   const tCommon = useTranslations('common');
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
 
   const handleLogoClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -41,23 +41,12 @@ export function LandingHeader() {
           </nav>
 
           <div className="flex items-center gap-3">
-            {!loading && (
-              user ? (
-                <Link
-                  href="/dashboard"
-                  className="inline-flex items-center justify-center h-9 px-4 text-sm font-medium rounded-lg bg-gradient-growth text-growth-foreground shadow-lg hover:shadow-glow hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
-                >
-                  {t('dashboard')}
-                </Link>
-              ) : (
-                <Link
-                  href="/create"
-                  className="inline-flex items-center justify-center h-9 px-4 text-sm font-medium rounded-lg bg-gradient-growth text-growth-foreground shadow-lg hover:shadow-glow hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
-                >
-                  {t('getStarted')}
-                </Link>
-              )
-            )}
+            <Link
+              href={user ? '/dashboard' : '/create'}
+              className="inline-flex items-center justify-center h-9 px-4 text-sm font-medium rounded-lg bg-gradient-growth text-growth-foreground shadow-lg hover:shadow-glow hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+            >
+              {user ? t('dashboard') : t('getStarted')}
+            </Link>
 
             {/* Mobile menu button */}
             <button
@@ -101,25 +90,13 @@ export function LandingHeader() {
               >
                 {t('features')}
               </a>
-              {!loading && (
-                user ? (
-                  <Link
-                    href="/dashboard"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
-                  >
-                    {t('dashboard')}
-                  </Link>
-                ) : (
-                  <Link
-                    href="/create"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
-                  >
-                    {t('getStarted')}
-                  </Link>
-                )
-              )}
+              <Link
+                href={user ? '/dashboard' : '/create'}
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
+              >
+                {user ? t('dashboard') : t('getStarted')}
+              </Link>
             </div>
           </nav>
         )}

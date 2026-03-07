@@ -80,10 +80,10 @@ export function StepWhyItMatters() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+        <h2 className="text-lg font-semibold text-foreground">
           {t('title')}
         </h2>
-        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="mt-1 text-sm text-muted-foreground">
           {t('subtitle')}
         </p>
       </div>
@@ -126,7 +126,7 @@ export function StepWhyItMatters() {
             className={`text-xs ${
               whyItMatters.length >= MIN_LENGTH
                 ? 'text-success'
-                : 'text-zinc-500 dark:text-zinc-400'
+                : 'text-muted-foreground'
             }`}
           >
             {whyItMatters.length}/300
@@ -150,11 +150,11 @@ export function StepWhyItMatters() {
       {!isValid && (
         <>
           {/* SMART Tip */}
-          <div className="rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-900 dark:bg-blue-950">
+          <div className="rounded-lg border border-info/30 bg-info/10 p-4">
             <div className="flex gap-3">
               <div className="flex-shrink-0">
                 <svg
-                  className="h-5 w-5 text-blue-600 dark:text-blue-400"
+                  className="h-5 w-5 text-info"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -168,10 +168,10 @@ export function StepWhyItMatters() {
                 </svg>
               </div>
               <div>
-                <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200">
+                <h3 className="text-sm font-medium text-info">
                   {t('smartTip')}
                 </h3>
-                <p className="mt-1 text-sm text-blue-700 dark:text-blue-300">
+                <p className="mt-1 text-sm text-info/80">
                   {t('smartTipText')}
                 </p>
               </div>
@@ -180,7 +180,7 @@ export function StepWhyItMatters() {
 
           {/* Quick Select Examples */}
           <div className="space-y-2">
-            <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
               {t('examples')}
             </p>
             <div className="flex flex-col gap-2">
@@ -194,7 +194,7 @@ export function StepWhyItMatters() {
                   key={example}
                   type="button"
                   onClick={() => updateData({ whyItMatters: example })}
-                  className="text-left text-sm text-zinc-600 hover:text-primary dark:text-zinc-400 dark:hover:text-primary transition-colors cursor-pointer"
+                  className="text-left text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer"
                 >
                   &quot;{example}&quot;
                 </button>
