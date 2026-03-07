@@ -33,19 +33,37 @@ export default function TimelinePage() {
 
       {/* Timeline or Empty State */}
       {isLoading ? (
-        <div className="space-y-4">
-          {/* Header skeleton */}
-          <div className="h-9 w-48 animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800" />
-          {/* Gantt rows skeleton */}
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="flex items-center gap-4">
-              <div className="h-8 w-32 animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800" />
-              <div
-                className="h-8 animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800"
-                style={{ width: `${30 + i * 20}%`, marginLeft: `${i * 5}%` }}
-              />
-            </div>
-          ))}
+        <div className="space-y-6">
+          {/* Zoom controls skeleton */}
+          <div className="flex gap-2">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="h-9 w-16 animate-pulse rounded-md bg-muted" />
+            ))}
+          </div>
+          {/* Timeline dot skeleton */}
+          <div className="relative rounded-xl border border-border bg-card p-6">
+            <div className="h-1 w-full rounded bg-muted mb-6" />
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="mb-4 flex items-center gap-4">
+                <div className="h-4 w-4 animate-pulse rounded-full bg-muted" />
+                <div className="h-4 w-28 animate-pulse rounded bg-muted" />
+                <div className="h-4 w-20 animate-pulse rounded bg-muted" />
+              </div>
+            ))}
+          </div>
+          {/* Gantt chart skeleton */}
+          <div className="rounded-xl border border-border bg-card p-6">
+            <div className="h-6 w-32 animate-pulse rounded bg-muted mb-4" />
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="flex items-center gap-4 mb-3">
+                <div className="h-8 w-32 animate-pulse rounded bg-muted" />
+                <div
+                  className="h-8 animate-pulse rounded bg-muted"
+                  style={{ width: `${30 + i * 15}%` }}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       ) : goals.length === 0 ? (
         <Card className="p-8 text-center">

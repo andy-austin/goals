@@ -233,6 +233,7 @@
       "title": "Objetivos completados",
       "count": "{count, plural, =1 {# objetivo completado} other {# objetivos completados}}"
     },
+    "dragTooltip": "Arrastra para reordenar tus objetivos por prioridad",
     "calendarModal": {
       "title": "Agregar recordatorio",
       "subtitle": "Agrega un recordatorio recurrente para \"{title}\" a tu calendario",
@@ -721,6 +722,138 @@
       }
     }
   },
+  "strategies": {
+    "panelTitle": "Estrategias de ahorro",
+    "readGuide": "Ver guia",
+    "hideGuide": "Ocultar guia",
+    "dismiss": "Descartar",
+    "threeBucket": {
+      "title": "El plan de ejecucion de 3 cubetas",
+      "subtitle": "Distribuye tus ingresos entre las cubetas de Seguridad, Crecimiento y Sueno para un progreso equilibrado.",
+      "bestFor": "Ideal para: Ahorradores equilibrados",
+      "step1": {
+        "title": "Calcula tu capacidad de ahorro mensual",
+        "description": "Revisa tus ingresos y gastos para determinar cuanto puedes apartar cada mes."
+      },
+      "step2": {
+        "title": "Financia Seguridad primero",
+        "description": "Destina al menos el 50% de tus ahorros a objetivos de la cubeta de Seguridad hasta que esten completamente financiados."
+      },
+      "step3": {
+        "title": "Divide el resto entre Crecimiento y Sueno",
+        "description": "Asigna los ahorros restantes: aproximadamente 30% a objetivos de Crecimiento y 20% a objetivos de Sueno."
+      },
+      "step4": {
+        "title": "Rebalancea trimestralmente",
+        "description": "Cada 3 meses, revisa tu asignacion y redirige fondos segun se completen objetivos o cambien prioridades."
+      }
+    },
+    "snowball": {
+      "title": "Metodo bola de nieve",
+      "subtitle": "Enfocate en tu objetivo mas pequeno primero, luego redirige los ahorros al siguiente para ganar impulso.",
+      "bestFor": "Ideal para: Buscadores de motivacion",
+      "step1": {
+        "title": "Lista todos los objetivos por monto (menor primero)",
+        "description": "Ordena tus objetivos del monto objetivo mas pequeno al mas grande."
+      },
+      "step2": {
+        "title": "Destina todos los ahorros extra al objetivo mas pequeno",
+        "description": "Haz contribuciones minimas a otros objetivos, pero dirige todo lo extra al mas pequeno."
+      },
+      "step3": {
+        "title": "Completa y celebra",
+        "description": "Cuando alcances el objetivo mas pequeno, marcalo como completado y celebra el logro."
+      },
+      "step4": {
+        "title": "Redirige al siguiente objetivo",
+        "description": "Toma el monto completo que estabas ahorrando y agregalo al siguiente objetivo mas pequeno. Repite."
+      }
+    },
+    "avalanche": {
+      "title": "Metodo avalancha",
+      "subtitle": "Prioriza los objetivos de mayor importancia primero para maximizar el impacto.",
+      "bestFor": "Ideal para: Planificadores estrategicos",
+      "step1": {
+        "title": "Clasifica objetivos por importancia y urgencia",
+        "description": "Ordena tus objetivos por cuales importan mas o tienen las fechas limite mas cercanas."
+      },
+      "step2": {
+        "title": "Asigna el maximo de ahorros al objetivo principal",
+        "description": "Dirige la mayor parte de tus ahorros al objetivo de mayor prioridad mientras mantienes minimos en los demas."
+      },
+      "step3": {
+        "title": "Monitorea las fechas limite de cerca",
+        "description": "Rastrea el progreso contra las fechas objetivo y ajusta las contribuciones si te retrasas."
+      },
+      "step4": {
+        "title": "Redirige ahorros hacia abajo",
+        "description": "Una vez financiado el objetivo principal, redirige todos los ahorros al siguiente de mayor prioridad."
+      }
+    },
+    "automate": {
+      "title": "Automatiza tus ahorros",
+      "subtitle": "Pagate a ti mismo primero con transferencias automaticas para que ahorrar sea sin esfuerzo.",
+      "bestFor": "Ideal para: Profesionales ocupados",
+      "step1": {
+        "title": "Abre cuentas dedicadas para cada objetivo",
+        "description": "Crea cuentas de ahorro o inversion separadas para tus principales objetivos y evita mezclar fondos."
+      },
+      "step2": {
+        "title": "Configura transferencias automaticas el dia de pago",
+        "description": "Programa transferencias recurrentes desde tu cuenta corriente el mismo dia que recibes tu sueldo."
+      },
+      "step3": {
+        "title": "Empieza pequeno, luego incrementa",
+        "description": "Comienza con un monto que te resulte comodo, luego aumentalo 1-2% cada mes."
+      },
+      "step4": {
+        "title": "Revisa y ajusta anualmente",
+        "description": "Una vez al ano, revisa tus transferencias automaticas y aumentalas de acuerdo con los cambios en tus ingresos."
+      }
+    },
+    "setbacks": {
+      "title": "Manejando contratiempos",
+      "subtitle": "Que hacer cuando te saltas un mes o enfrentas un gasto inesperado.",
+      "bestFor": "Ideal para: Todos",
+      "step1": {
+        "title": "No entres en panico ni abandones el objetivo",
+        "description": "Saltarse un mes es normal. Una contribucion omitida no descarrilara un plan a largo plazo."
+      },
+      "step2": {
+        "title": "Recalcula tu meta mensual",
+        "description": "Distribuye el monto faltante entre los meses restantes en lugar de intentar compensarlo de una vez."
+      },
+      "step3": {
+        "title": "Reduce gastos no esenciales temporalmente",
+        "description": "Busca recortes a corto plazo (comer fuera, suscripciones) para volver al camino mas rapido."
+      },
+      "step4": {
+        "title": "Ajusta el plazo si es necesario",
+        "description": "Si ponerte al dia no es realista, extiende tu fecha objetivo en lugar de aumentar el estres."
+      }
+    },
+    "monthlyReview": {
+      "title": "Reunion mensual de dinero",
+      "subtitle": "Una revision mensual de 30 minutos para mantenerte al dia con todos tus objetivos.",
+      "bestFor": "Ideal para: Progreso constante",
+      "step1": {
+        "title": "Inicia sesion en tu panel",
+        "description": "Abre FinGoal y revisa el progreso de cada objetivo activo contra su meta."
+      },
+      "step2": {
+        "title": "Registra avances de cada objetivo",
+        "description": "Actualiza el monto ahorrado actual de cada objetivo para mantener tu grafico de progreso preciso."
+      },
+      "step3": {
+        "title": "Revisa las fechas proximas",
+        "description": "Consulta la vista de linea de tiempo para objetivos que se acercan a su fecha y evalua si vas en camino."
+      },
+      "step4": {
+        "title": "Define las acciones del proximo mes",
+        "description": "Decide si alguna contribucion necesita ajuste y anota gastos grandes proximos que puedan afectar tus ahorros."
+      }
+    }
+  },
   "consent": {
     "banner": {
       "title": "Valoramos tu privacidad",
@@ -729,6 +862,205 @@
       "decline": "Rechazar",
       "privacyPolicy": "Política de Privacidad",
       "terms": "Términos de Servicio"
+    }
+  },
+  "education": {
+    "commonInstruments": "Instrumentos de inversión comunes",
+    "learnMore": "Saber más",
+    "showLess": "Mostrar menos",
+    "pros": "Ventajas",
+    "cons": "Desventajas",
+    "typicalReturn": "Rendimiento típico",
+    "dismiss": "Descartar",
+    "disclaimer": "Este contenido es solo educativo y no constituye asesoramiento financiero. El rendimiento pasado no garantiza resultados futuros. Siempre consulta a un asesor financiero calificado antes de tomar decisiones de inversión.",
+    "riskLevel": {
+      "low": "Riesgo bajo",
+      "medium": "Riesgo medio",
+      "high": "Riesgo alto"
+    },
+    "instruments": {
+      "hysa": {
+        "name": "Cuenta de ahorro de alto rendimiento",
+        "description": "Una cuenta de ahorro que ofrece tasas de interés superiores al promedio, ideal para metas a corto plazo.",
+        "pros": {
+          "fdic": "Asegurada por la FDIC hasta $250,000",
+          "liquid": "Totalmente líquida — retira en cualquier momento",
+          "noMinimum": "Generalmente sin saldo mínimo requerido"
+        },
+        "cons": {
+          "lowReturn": "Los rendimientos pueden no superar la inflación",
+          "variableRate": "La tasa de interés puede cambiar en cualquier momento"
+        }
+      },
+      "moneyMarket": {
+        "name": "Fondos de mercado monetario",
+        "description": "Fondos mutuos que invierten en títulos de deuda a corto plazo y alta calidad.",
+        "pros": {
+          "stable": "Valor extremadamente estable",
+          "liquid": "Fácil de comprar y vender",
+          "diversified": "Diversificado en muchos instrumentos a corto plazo"
+        },
+        "cons": {
+          "lowReturn": "Bajos rendimientos en entornos de tasas de interés bajas",
+          "fees": "Las comisiones reducen los rendimientos"
+        }
+      },
+      "shortTermCd": {
+        "name": "CDs a corto plazo",
+        "description": "Certificados de depósito con plazos de 3 a 24 meses, ofreciendo rendimientos garantizados.",
+        "pros": {
+          "guaranteed": "Tasa de interés fija garantizada",
+          "fdic": "Asegurado por la FDIC hasta $250,000",
+          "predictable": "Sabes exactamente cuánto ganarás"
+        },
+        "cons": {
+          "locked": "El dinero queda bloqueado durante el plazo",
+          "penalty": "Penalización por retiro anticipado"
+        }
+      },
+      "treasuryBills": {
+        "name": "Letras del Tesoro (T-Bills)",
+        "description": "Títulos gubernamentales a corto plazo con vencimiento de 4 a 52 semanas.",
+        "pros": {
+          "government": "Respaldadas por el gobierno de EE.UU.",
+          "taxAdvantage": "Exentas de impuestos estatales y locales",
+          "shortTerm": "Vencimientos de 4 semanas a 1 año"
+        },
+        "cons": {
+          "lowReturn": "Rendimientos menores que inversiones más riesgosas",
+          "minimumPurchase": "Se compran en incrementos de $100"
+        }
+      },
+      "iBonds": {
+        "name": "Bonos de ahorro Serie I",
+        "description": "Bonos del gobierno con tasas de interés que se ajustan por inflación.",
+        "pros": {
+          "inflationProtected": "La tasa se ajusta con la inflación cada 6 meses",
+          "government": "Respaldados por el gobierno de EE.UU.",
+          "taxDeferred": "Los impuestos federales se pueden diferir hasta el rescate"
+        },
+        "cons": {
+          "holdingPeriod": "Deben mantenerse al menos 1 año; penalización si se rescatan antes de 5 años",
+          "purchaseLimit": "Limitado a $10,000 por persona al año"
+        }
+      },
+      "cdLadder": {
+        "name": "Escalera de CDs",
+        "description": "Estrategia de escalonar múltiples CDs con diferentes fechas de vencimiento para acceso regular a fondos.",
+        "pros": {
+          "guaranteed": "Cada CD ofrece una tasa garantizada",
+          "staggeredAccess": "Acceso regular a porciones de tu dinero",
+          "fdic": "Cada CD está asegurado por la FDIC"
+        },
+        "cons": {
+          "complexity": "Requiere administrar múltiples CDs",
+          "lowerReturn": "Rendimientos generalmente menores que el mercado de valores"
+        }
+      },
+      "bondFunds": {
+        "name": "Fondos de bonos / ETFs de bonos",
+        "description": "Fondos que invierten en un portafolio diversificado de bonos gubernamentales y corporativos.",
+        "pros": {
+          "diversified": "Diversificación instantánea en muchos bonos",
+          "income": "Ingresos regulares por pagos de intereses",
+          "liquid": "Se pueden comprar o vender cualquier día hábil"
+        },
+        "cons": {
+          "interestRateRisk": "El valor baja cuando las tasas de interés suben",
+          "fees": "Las comisiones de administración reducen los rendimientos"
+        }
+      },
+      "balancedFunds": {
+        "name": "Fondos balanceados",
+        "description": "Fondos que mantienen una mezcla de acciones y bonos, típicamente 60/40 o similar.",
+        "pros": {
+          "diversified": "Diversificación integrada de acciones y bonos",
+          "autoRebalanced": "Rebalanceado automáticamente por el administrador del fondo",
+          "moderate": "Perfil de riesgo moderado adecuado para metas a mediano plazo"
+        },
+        "cons": {
+          "fees": "Comisiones más altas que los fondos índice puros",
+          "lessControl": "Sin control sobre la proporción acciones/bonos"
+        }
+      },
+      "conservativeIndex": {
+        "name": "Fondos índice conservadores",
+        "description": "Fondos índice de bajo costo que siguen índices amplios del mercado como el S&P 500.",
+        "pros": {
+          "lowFees": "Comisiones muy bajas (frecuentemente menos del 0.1%)",
+          "diversified": "Cientos o miles de acciones en un solo fondo",
+          "passive": "No se necesitan decisiones de gestión activa"
+        },
+        "cons": {
+          "marketRisk": "El valor fluctúa con el mercado general",
+          "noGuarantee": "Sin rendimientos garantizados"
+        }
+      },
+      "targetDate": {
+        "name": "Fondos con fecha objetivo",
+        "description": "Fondos que cambian automáticamente de acciones a bonos a medida que se acerca tu fecha objetivo.",
+        "pros": {
+          "handsFree": "Inversión completamente sin intervención",
+          "autoAdjust": "La asignación de activos se ajusta automáticamente con el tiempo",
+          "diversified": "Diversificado entre acciones, bonos y otros activos"
+        },
+        "cons": {
+          "fees": "Comisiones más altas que fondos índice básicos",
+          "oneSize": "Enfoque genérico que puede no ajustarse a tus necesidades"
+        }
+      },
+      "stockIndex": {
+        "name": "Fondos índice de acciones",
+        "description": "Fondos que siguen los principales índices bursátiles para crecimiento a largo plazo.",
+        "pros": {
+          "highReturn": "Rendimientos históricamente fuertes a largo plazo",
+          "lowFees": "Comisiones muy bajas",
+          "diversified": "Exposición amplia al mercado en un solo fondo"
+        },
+        "cons": {
+          "volatility": "Fluctuaciones significativas de precio a corto plazo",
+          "patience": "Requiere paciencia durante caídas del mercado"
+        }
+      },
+      "growthEtf": {
+        "name": "ETFs de crecimiento",
+        "description": "Fondos cotizados enfocados en empresas con potencial de crecimiento superior al promedio.",
+        "pros": {
+          "highGrowth": "Potencial de rendimientos superiores al mercado",
+          "liquid": "Se negocian durante todo el día como acciones",
+          "taxEfficient": "Generalmente más eficientes fiscalmente que los fondos mutuos"
+        },
+        "cons": {
+          "highVolatility": "Pueden experimentar caídas pronunciadas",
+          "concentration": "Frecuentemente concentrados en tecnología o sectores específicos"
+        }
+      },
+      "internationalStocks": {
+        "name": "Fondos de acciones internacionales",
+        "description": "Fondos que invierten en empresas fuera de tu país para diversificación global.",
+        "pros": {
+          "globalDiversification": "Exposición al crecimiento económico global",
+          "emergingMarkets": "Acceso a economías emergentes de rápido crecimiento",
+          "currencyDiversification": "Cobertura natural contra la debilidad de la moneda local"
+        },
+        "cons": {
+          "currencyRisk": "Las fluctuaciones cambiarias pueden reducir los rendimientos",
+          "politicalRisk": "Sujeto a riesgos políticos y regulatorios extranjeros"
+        }
+      },
+      "reits": {
+        "name": "REITs (Fideicomisos de inversión inmobiliaria)",
+        "description": "Fondos que poseen bienes raíces generadores de ingresos, ofreciendo exposición al mercado inmobiliario sin comprar propiedades.",
+        "pros": {
+          "realEstate": "Exposición inmobiliaria sin propiedad directa",
+          "dividends": "Obligados a distribuir el 90% de sus ingresos como dividendos",
+          "liquid": "Cotizan en bolsa — compra y vende como acciones"
+        },
+        "cons": {
+          "interestSensitive": "Sensibles a cambios en las tasas de interés",
+          "taxInefficient": "Los dividendos típicamente se gravan como ingreso ordinario"
+        }
+      }
     }
   },
   "privacy": {

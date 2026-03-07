@@ -10,6 +10,7 @@ import { GoalCardSkeleton } from '@/components/Dashboard/GoalCardSkeleton';
 import { GoalCard } from '@/components/Dashboard/GoalCard';
 import { BUCKETS, BUCKET_CONFIG, formatDate } from '@/types';
 import { GOAL_TEMPLATES } from '@/lib/templates';
+import { StrategiesPanel } from '@/components/Strategies';
 
 export default function DashboardPage() {
   const t = useTranslations('dashboard');
@@ -49,8 +50,8 @@ export default function DashboardPage() {
           </div>
           {isLoading ? (
             <div className="flex w-full sm:w-auto gap-2 sm:gap-3">
-              <div className="h-9 w-24 animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800" />
-              <div className="h-9 w-32 animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800" />
+              <div className="h-9 w-24 animate-pulse rounded-md bg-muted" />
+              <div className="h-9 w-32 animate-pulse rounded-md bg-muted" />
             </div>
           ) : totalGoals > 0 ? (
             <div className="flex w-full sm:w-auto gap-2 sm:gap-3">
@@ -71,22 +72,25 @@ export default function DashboardPage() {
       {/* Recommendations Widget */}
       {!isLoading && activeCount > 0 && <RecommendationsWidget goals={activeGoals} />}
 
+      {/* Savings Strategies Panel (#57) */}
+      {!isLoading && activeCount > 0 && <StrategiesPanel />}
+
       {/* Goals by Bucket */}
       {isLoading ? (
         <div className="space-y-6">
           {BUCKETS.map((bucket) => (
-            <div key={bucket} className="rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-950 overflow-hidden">
+            <div key={bucket} className="rounded-xl border border-border bg-card shadow-sm overflow-hidden">
               <div className="flex items-center justify-between px-6 py-4">
                 <div className="flex items-center gap-4">
-                  <div className="h-10 w-10 animate-pulse rounded-lg bg-zinc-200 dark:bg-zinc-800" />
+                  <div className="h-10 w-10 animate-pulse rounded-lg bg-muted" />
                   <div className="space-y-2">
-                    <div className="h-5 w-24 animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800" />
-                    <div className="h-3 w-16 animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800" />
+                    <div className="h-5 w-24 animate-pulse rounded-md bg-muted" />
+                    <div className="h-3 w-16 animate-pulse rounded-md bg-muted" />
                   </div>
                 </div>
-                <div className="h-5 w-5 animate-pulse rounded bg-zinc-200 dark:bg-zinc-800" />
+                <div className="h-5 w-5 animate-pulse rounded bg-muted" />
               </div>
-              <div className="border-t border-zinc-100 px-6 py-6 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/20">
+              <div className="border-t border-border px-6 py-6 bg-muted/50">
                 <GoalCardSkeleton />
               </div>
             </div>

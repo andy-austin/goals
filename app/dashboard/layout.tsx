@@ -1,4 +1,5 @@
 import { Header } from "@/components";
+import { Footer } from "@/components/landing";
 
 export default function DashboardLayout({
   children,
@@ -11,6 +12,7 @@ export default function DashboardLayout({
       <main className="flex-1">
         {children}
       </main>
+      <Footer />
     </div>
   );
 }

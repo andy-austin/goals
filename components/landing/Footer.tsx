@@ -1,12 +1,19 @@
+'use client';
+
 import Link from 'next/link';
 import { TrendingUp } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { usePathname } from 'next/navigation';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
   const t = useTranslations('landing.footer');
   const tHeader = useTranslations('landing.header');
+  const tNav = useTranslations('nav');
   const tCommon = useTranslations('common');
+  const pathname = usePathname();
+
+  const isLanding = pathname === '/';
 
   return (
     <footer className="py-12 bg-primary text-primary-foreground">
@@ -20,10 +27,20 @@ export function Footer() {
           </Link>
 
           <nav className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-6">
-            <Link href="/dashboard" className="opacity-80 hover:opacity-100 transition-opacity">{tHeader('dashboard')}</Link>
-            <Link href="#methodology" className="opacity-80 hover:opacity-100 transition-opacity">{tHeader('methodology')}</Link>
-            <Link href="#calculator" className="opacity-80 hover:opacity-100 transition-opacity">{tHeader('calculator')}</Link>
-            <Link href="#features" className="opacity-80 hover:opacity-100 transition-opacity">{tHeader('features')}</Link>
+            {isLanding ? (
+              <>
+                <Link href="/dashboard" className="opacity-80 hover:opacity-100 transition-opacity">{tHeader('dashboard')}</Link>
+                <Link href="#methodology" className="opacity-80 hover:opacity-100 transition-opacity">{tHeader('methodology')}</Link>
+                <Link href="#calculator" className="opacity-80 hover:opacity-100 transition-opacity">{tHeader('calculator')}</Link>
+                <Link href="#features" className="opacity-80 hover:opacity-100 transition-opacity">{tHeader('features')}</Link>
+              </>
+            ) : (
+              <>
+                <Link href="/dashboard" className="opacity-80 hover:opacity-100 transition-opacity">{tNav('dashboard')}</Link>
+                <Link href="/create" className="opacity-80 hover:opacity-100 transition-opacity">{tNav('createGoal')}</Link>
+                <Link href="/timeline" className="opacity-80 hover:opacity-100 transition-opacity">{tNav('timeline')}</Link>
+              </>
+            )}
             <Link href="/privacy" className="opacity-80 hover:opacity-100 transition-opacity">{t('privacy')}</Link>
             <Link href="/terms" className="opacity-80 hover:opacity-100 transition-opacity">{t('terms')}</Link>
             <Link href="/disclosure" className="opacity-80 hover:opacity-100 transition-opacity">{t('disclosure')}</Link>
