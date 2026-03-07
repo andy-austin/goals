@@ -85,13 +85,13 @@ describe('computeFulfillment', () => {
     expect(result?.fulfillmentPct).toBe(120);
   });
 
-  it('uses the latest check-in (by date) when multiple exist', () => {
+  it('sums all check-in amounts when multiple exist', () => {
     const goal = makeGoal({ amount: 1000 });
     const early = makeCheckIn({ id: 'ci_early', date: '2026-03-01', currentAmount: 100 });
     const late = makeCheckIn({ id: 'ci_late', date: '2026-09-01', currentAmount: 700 });
-    const result = computeFulfillment({ ...goal, checkIns: [late, early] }); // order shouldn't matter
-    expect(result?.latestAmount).toBe(700);
-    expect(result?.fulfillmentPct).toBe(70);
+    const result = computeFulfillment({ ...goal, checkIns: [late, early] });
+    expect(result?.latestAmount).toBe(800); // 100 + 700
+    expect(result?.fulfillmentPct).toBe(80);
   });
 
   describe('on-track calculation', () => {
