@@ -13,7 +13,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
   const tAuth = useTranslations('auth');
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-dvh">
       {/* Branding panel — hidden on mobile */}
       <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary via-primary to-primary-hover relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
