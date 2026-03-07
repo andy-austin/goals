@@ -15,7 +15,7 @@ interface CheckInModalProps {
 }
 
 function generateCheckInId(): string {
-  return `checkin_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+  return crypto.randomUUID();
 }
 
 function toLocalDateString(date: Date): string {
