@@ -628,7 +628,67 @@
     "footer": {
       "rights": "© {year} FinGoal. Todos los derechos reservados.",
       "privacy": "Política de Privacidad",
-      "terms": "Términos de Servicio"
+      "terms": "Términos de Servicio",
+      "disclosure": "Divulgación de Afiliados"
+    }
+  },
+  "recommendations": {
+    "recommended": "Recomendado",
+    "goalCreated": "Objetivo creado: {title}",
+    "whereToSave": "Dónde ahorrar para este objetivo:",
+    "otherOptions": "Otras opciones:",
+    "skipForNow": "Omitir por ahora",
+    "goToDashboard": "Ir al panel",
+    "openAccount": "Abrir cuenta →",
+    "earnEstimate": "Gana ~{amount}/año",
+    "widgetTitle": "Cuentas recomendadas para tus objetivos",
+    "widgetSubtitle": "Basado en tus objetivos, aquí puedes depositar tus ahorros:",
+    "hide": "Ocultar recomendaciones",
+    "reasonSafety": "Lugar seguro para guardar tus ahorros con interés competitivo",
+    "reasonGrowth": "Haz crecer tu dinero con inversión automatizada para objetivos a mediano plazo",
+    "reasonDream": "Maximiza el crecimiento a largo plazo con un portafolio diversificado",
+    "features": {
+      "fdic": "Asegurado FDIC",
+      "noFees": "Sin comisiones",
+      "noMinimum": "Sin mínimo",
+      "autoRebalancing": "Rebalanceo automático",
+      "taxLossHarvesting": "Cosecha de pérdidas fiscales",
+      "lowMinimum": "Mínimo bajo",
+      "financialPlanning": "Planificación financiera",
+      "fractionalShares": "Acciones fraccionadas",
+      "autoInvest": "Inversión automática",
+      "noCommissions": "Sin comisiones",
+      "research": "Herramientas de investigación",
+      "lowCostFunds": "Fondos de bajo costo",
+      "retirementPlanning": "Planificación de jubilación"
+    }
+  },
+  "disclosure": {
+    "inline": "Podemos ganar una comisión cuando abres una cuenta a través de nuestros enlaces.",
+    "banner": "Podemos ganar una comisión cuando abres una cuenta a través de nuestros enlaces. Esto no afecta nuestras recomendaciones ni el precio que pagas.",
+    "learnMore": "Divulgación de afiliados",
+    "pageTitle": "Divulgación de Afiliados",
+    "lastUpdated": "Última actualización: 7 de marzo de 2026",
+    "sections": {
+      "howWeMakeMoney": {
+        "title": "Cómo generamos ingresos",
+        "body": "FinGoal es una herramienta gratuita. Podemos ganar una comisión cuando abres una cuenta a través de los enlaces en nuestro sitio. Esto nos ayuda a mantener el servicio gratuito."
+      },
+      "commitment": {
+        "title": "Nuestro compromiso",
+        "item1": "Las comisiones no afectan nuestras recomendaciones",
+        "item2": "Solo recomendamos productos que creemos son buenos para nuestros usuarios",
+        "item3": "Etiquetamos claramente los enlaces de afiliados",
+        "item4": "El precio que pagas es el mismo uses o no nuestro enlace"
+      },
+      "whichLinks": {
+        "title": "¿Cuáles enlaces son de afiliados?",
+        "body": "Los enlaces a productos financieros (cuentas de ahorro, casas de bolsa, plataformas de inversión) pueden ser enlaces de afiliados. Están marcados con botones de \"Abrir cuenta\"."
+      },
+      "contact": {
+        "title": "¿Preguntas?",
+        "body": "Para preguntas sobre nuestras relaciones de afiliados, por favor abre un issue en nuestro repositorio de GitHub."
+      }
     }
   },
   "consent": {

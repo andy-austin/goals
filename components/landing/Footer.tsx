@@ -26,6 +26,7 @@ export function Footer() {
             <Link href="#features" className="opacity-80 hover:opacity-100 transition-opacity">{tHeader('features')}</Link>
             <Link href="/privacy" className="opacity-80 hover:opacity-100 transition-opacity">{t('privacy')}</Link>
             <Link href="/terms" className="opacity-80 hover:opacity-100 transition-opacity">{t('terms')}</Link>
+            <Link href="/disclosure" className="opacity-80 hover:opacity-100 transition-opacity">{t('disclosure')}</Link>
           </nav>
 
           <p className="text-sm opacity-70">

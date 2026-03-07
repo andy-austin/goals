@@ -41,3 +41,4 @@ export {
   useToast,
 } from './Toast';
 export { Skeleton } from './Skeleton';
+export { AffiliateDisclosure } from './AffiliateDisclosure';

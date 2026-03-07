@@ -628,7 +628,67 @@
     "footer": {
       "rights": "© {year} FinGoal. All rights reserved.",
       "privacy": "Privacy Policy",
-      "terms": "Terms of Service"
+      "terms": "Terms of Service",
+      "disclosure": "Affiliate Disclosure"
+    }
+  },
+  "recommendations": {
+    "recommended": "Recommended",
+    "goalCreated": "Goal Created: {title}",
+    "whereToSave": "Where to save for this goal:",
+    "otherOptions": "Other options:",
+    "skipForNow": "Skip for now",
+    "goToDashboard": "Go to Dashboard",
+    "openAccount": "Open Account →",
+    "earnEstimate": "Earn ~{amount}/year",
+    "widgetTitle": "Recommended Accounts for Your Goals",
+    "widgetSubtitle": "Based on your goals, here's where to put your savings:",
+    "hide": "Hide recommendations",
+    "reasonSafety": "Safe place to park your savings with competitive interest",
+    "reasonGrowth": "Grow your money with automated investing for medium-term goals",
+    "reasonDream": "Maximize long-term growth with a diversified portfolio",
+    "features": {
+      "fdic": "FDIC Insured",
+      "noFees": "No fees",
+      "noMinimum": "No minimum",
+      "autoRebalancing": "Auto-rebalancing",
+      "taxLossHarvesting": "Tax-loss harvesting",
+      "lowMinimum": "Low minimum",
+      "financialPlanning": "Financial planning",
+      "fractionalShares": "Fractional shares",
+      "autoInvest": "Auto-invest",
+      "noCommissions": "No commissions",
+      "research": "Research tools",
+      "lowCostFunds": "Low-cost funds",
+      "retirementPlanning": "Retirement planning"
+    }
+  },
+  "disclosure": {
+    "inline": "We may earn a commission when you open an account through our links.",
+    "banner": "We may earn a commission when you open an account through our links. This doesn't affect our recommendations or the price you pay.",
+    "learnMore": "Affiliate Disclosure",
+    "pageTitle": "Affiliate Disclosure",
+    "lastUpdated": "Last updated: March 7, 2026",
+    "sections": {
+      "howWeMakeMoney": {
+        "title": "How We Make Money",
+        "body": "FinGoal is a free tool. We may earn a commission when you open an account through links on our site. This helps us keep the service free."
+      },
+      "commitment": {
+        "title": "Our Commitment",
+        "item1": "Commissions do not affect our recommendations",
+        "item2": "We only recommend products we believe are good for our users",
+        "item3": "We clearly label affiliate links",
+        "item4": "The price you pay is the same whether you use our link or not"
+      },
+      "whichLinks": {
+        "title": "Which Links Are Affiliate Links?",
+        "body": "Links to financial products (savings accounts, brokerages, investment platforms) may be affiliate links. These are marked with \"Open Account\" buttons."
+      },
+      "contact": {
+        "title": "Questions?",
+        "body": "For questions about our affiliate relationships, please open an issue on our GitHub repository."
+      }
     }
   },
   "consent": {

@@ -369,7 +369,9 @@ test.describe('Goal visibility data integrity', () => {
       .fill('Testing default visibility');
     await page.getByRole('button', { name: 'Create', exact: true }).click();
 
-    // Should redirect to dashboard
+    // Recommendation screen — go to dashboard
+    await expect(page.getByText(/goal created/i)).toBeVisible();
+    await page.getByRole('button', { name: /go to dashboard/i }).click();
     await expect(page).toHaveURL('/dashboard');
 
     // Verify the created goal doesn't have a "Shared" badge (it's private by default)
