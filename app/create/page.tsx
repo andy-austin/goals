@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { FormWizard, FormStep, StepTitleDescription, StepAmountCurrency, StepTargetDate, StepBucket, StepWhyItMatters, TemplateSelector, Button, Card, CardContent, Tooltip, RecommendationScreen } from '@/components';
+import { FormWizard, FormStep, StepTitleDescription, StepAmountCurrency, StepTargetDate, StepBucket, StepWhyItMatters, TemplateSelector, Tooltip, RecommendationScreen } from '@/components';
 import { useGoals } from '@/context';
 import { useToast } from '@/components/ui/Toast';
 import { validateSMART } from '@/lib';
@@ -143,18 +143,17 @@ export default function CreateGoalPage() {
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-          {mode === 'wizard' ? t('createTitle') : t('createTitle')}
-          {/* Note: Could have different titles for selection screen */}
+        <h1 className="text-2xl font-bold text-foreground">
+          {t('createTitle')}
         </h1>
-        <p className="mt-2 text-zinc-600 dark:text-zinc-400">
+        <p className="mt-2 text-muted-foreground">
           {t('createSubtitle')}
           <Tooltip content={t('learnMoreSmart')} className="ml-1.5 align-middle -translate-y-px">
             <a
               href="https://en.wikipedia.org/wiki/SMART_criteria"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-zinc-200 text-[10px] font-bold text-zinc-600 transition-colors hover:bg-primary hover:text-white dark:bg-zinc-800 dark:text-zinc-400"
+              className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-muted text-[10px] font-bold text-muted-foreground transition-colors hover:bg-primary hover:text-primary-foreground"
               aria-label={t('learnMoreSmart')}
             >
               ?
@@ -167,31 +166,29 @@ export default function CreateGoalPage() {
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
           {/* Start Custom Goal Section */}
           <section>
-            <Card className="border-dashed border-2 hover:border-primary/50 transition-colors cursor-pointer" onClick={handleStartCustom}>
-              <CardContent className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-6 gap-4">
-                <div>
-                  <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-                    {t('selection.title')}
-                  </h3>
-                  <p className="text-zinc-600 dark:text-zinc-400">
-                    {t('selection.description')}
-                  </p>
-                </div>
-                <Button 
-                  onClick={(e) => { e.stopPropagation(); handleStartCustom(); }}
-                >
-                  {t('selection.cta')}
-                </Button>
-              </CardContent>
-            </Card>
+            <button
+              type="button"
+              onClick={handleStartCustom}
+              className="w-full rounded-xl border-2 border-dashed border-border p-6 text-left hover:border-primary/40 hover:bg-muted/50 transition-all cursor-pointer"
+            >
+              <h3 className="text-lg font-semibold text-foreground">
+                {t('selection.title')}
+              </h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {t('selection.description')}
+              </p>
+              <span className="mt-3 inline-flex items-center text-sm font-medium text-primary">
+                {t('selection.cta')} &rarr;
+              </span>
+            </button>
           </section>
 
           <div className="relative">
             <div className="absolute inset-0 flex items-center" aria-hidden="true">
-              <div className="w-full border-t border-zinc-200 dark:border-zinc-800" />
+              <div className="w-full border-t border-border" />
             </div>
             <div className="relative flex justify-center">
-              <span className="bg-zinc-50 dark:bg-zinc-950 px-2 text-sm text-zinc-500">
+              <span className="bg-background px-2 text-sm text-muted-foreground">
                 {t('selection.divider')}
               </span>
             </div>

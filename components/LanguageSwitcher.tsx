@@ -39,10 +39,10 @@ export function LanguageSwitcher() {
             disabled={isPending}
             aria-label={t(locale)}
             aria-pressed={isActive}
-            className={`flex items-center gap-1.5 cursor-pointer rounded-md px-2.5 py-1.5 text-sm transition-all disabled:cursor-not-allowed disabled:opacity-50 ${
+            className={`flex items-center gap-1.5 cursor-pointer rounded-md px-2 py-1.5 text-sm transition-all disabled:cursor-not-allowed disabled:opacity-50 ${
               isActive
-                ? 'bg-primary/10 text-primary font-semibold ring-1 ring-primary/30'
-                : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                ? 'text-foreground font-medium'
+                : 'text-muted-foreground hover:text-foreground'
             }`}
           >
             <span className="text-base leading-none">{FLAGS[locale]}</span>

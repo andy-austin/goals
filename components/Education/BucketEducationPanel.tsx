@@ -39,7 +39,7 @@ export function BucketEducationPanel({ bucket }: BucketEducationPanelProps) {
   return (
     <div
       className={cn(
-        'rounded-lg border border-border bg-secondary/30 p-4'
+        'rounded-lg border border-border bg-secondary/30 p-4 mt-2'
       )}
     >
       <div className="flex items-center justify-between">

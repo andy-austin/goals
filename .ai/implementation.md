@@ -2,6 +2,35 @@
 
 ## Recently Completed
 
+### Phase 8: Design Polish (#116, #117, #118, #119, #120, #121, #122)
+Branch: `phase-8/design-polish`
+
+**#116 — Reduce language switcher visual weight**
+- `components/LanguageSwitcher.tsx` — Removed ring, background highlight, and font-semibold from active state; now uses `text-foreground font-medium`
+
+**#117 — Alternate section backgrounds on landing page**
+- `components/landing/GoalFrameworkSection.tsx` — Changed `bg-background` → `bg-muted/40`
+- `components/landing/GoalCalculator.tsx` — Changed `bg-muted/40` → `bg-background`
+- `components/landing/CTASection.tsx` — Changed `bg-background` → `bg-muted/40`
+
+**#118 — Add branded header to auth pages on mobile**
+- `components/auth/AuthLayout.tsx` — Added `bg-gradient-hero` mobile banner (`lg:hidden`) with logo + description; desktop header now `hidden lg:flex`
+
+**#119 — Improve "start from scratch" button on empty dashboard**
+- `app/dashboard/page.tsx` — Replaced `Button variant="secondary"` with dashed-border card link matching template card style
+
+**#120 — Improve "start from scratch" card on create page**
+- `app/create/page.tsx` — Replaced Card+Button combo with single dashed-border button; fixed 6 hardcoded `zinc-*` classes to design tokens (`text-foreground`, `text-muted-foreground`, `border-border`, `bg-background`); removed unused Card/CardContent/Button imports
+
+**#121 — Simplify bottom CTA section on landing page**
+- `components/landing/CTASection.tsx` — Removed decorative blobs, feature badge pills, gradient card wrapper; replaced with clean centered heading + description + gradient button
+- `tests/landing.spec.ts` — Updated CTA test to not assert feature badges
+
+**#122 — Fix form wizard step indicator spacing on desktop**
+- `components/FormWizard/StepIndicator.tsx` — Rewrote desktop stepper: replaced absolute-positioned connector lines with inline flexbox layout; each step is `flex items-center` with connector `div` between circles; added `whitespace-nowrap` to labels
+
+---
+
 ### Phase 7: Code Quality & Refactors (#37, #39, #41, #43, #47, #48)
 Branch: `phase-7/code-quality-refactors`
 
@@ -424,5 +453,4 @@ Timeline accessibility, touch support, and mobile layout fixes.
 
 ## Next Steps
 - #68: Personal Data Privacy Consent (Legal Compliance) — should ship alongside auth
-- All roadmap phases (1-6) are now complete
-- Phase 7 covers technical debt: refactors, i18n cleanup, architecture improvements
+- All roadmap phases (1-8) are now complete

@@ -73,7 +73,7 @@ export default function DashboardPage() {
       {!isLoading && activeCount > 0 && <RecommendationsWidget goals={activeGoals} />}
 
       {/* Savings Strategies Panel (#57) */}
-      {!isLoading && activeCount > 0 && <StrategiesPanel />}
+      {!isLoading && activeCount > 0 && <div className="mb-8"><StrategiesPanel /></div>}
 
       {/* Goals by Bucket */}
       {isLoading ? (
@@ -132,11 +132,12 @@ export default function DashboardPage() {
             })}
           </div>
 
-          <div className="text-center">
-            <Link href="/create">
-              <Button variant="secondary">{t('empty.startFromScratch')}</Button>
-            </Link>
-          </div>
+          <Link
+            href="/create"
+            className="block rounded-xl border-2 border-dashed border-border p-5 text-center hover:border-primary/40 hover:bg-muted/50 transition-all"
+          >
+            <span className="text-sm font-medium text-muted-foreground">{t('empty.startFromScratch')}</span>
+          </Link>
         </div>
       ) : (
         <div className="space-y-6">

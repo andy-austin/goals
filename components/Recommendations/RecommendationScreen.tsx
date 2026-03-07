@@ -104,8 +104,8 @@ export function RecommendationScreen({ goal, recommendation, onSkip }: Recommend
         </div>
       )}
 
-      {/* Disclosure */}
-      <AffiliateDisclosure variant="inline" className="mt-4" />
+      {/* TODO: re-enable when affiliate program is live */}
+      {/* <AffiliateDisclosure variant="inline" className="mt-4" /> */}
 
       {/* Actions */}
       <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-between">

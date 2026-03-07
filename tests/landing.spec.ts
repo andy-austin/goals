@@ -131,16 +131,12 @@ test.describe('Landing Page', () => {
   });
 
   test.describe('CTA Section', () => {
-    test('displays final CTA with feature list', async ({ page }) => {
+    test('displays final CTA heading and description', async ({ page }) => {
       await expect(page.getByRole('heading', { name: /start investing with intention/i })).toBeVisible();
-      // Feature items are inside the CTA gradient section
       const ctaSection = page.locator('section').filter({
         has: page.getByRole('heading', { name: /start investing with intention/i })
       });
-      await expect(ctaSection.getByText('Unlimited goals')).toBeVisible();
-      await expect(ctaSection.getByText('Multi-currency support')).toBeVisible();
-      await expect(ctaSection.getByText('Progress tracking')).toBeVisible();
-      await expect(ctaSection.getByText('Priority management')).toBeVisible();
+      await expect(ctaSection).toBeVisible();
     });
 
     test('CTA button links to /create', async ({ page }) => {

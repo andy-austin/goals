@@ -78,7 +78,7 @@ export function GoalCalculator() {
   }, [targetAmount, currency, calculations.isoTargetDate]);
 
   return (
-    <section id="calculator" className="py-16 lg:py-20 bg-muted/40">
+    <section id="calculator" className="py-16 lg:py-20 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-10">
           <span className="inline-block px-4 py-2 rounded-full bg-growth-light text-growth text-sm font-semibold mb-4 border border-growth/20">

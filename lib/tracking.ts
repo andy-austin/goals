@@ -20,9 +20,7 @@ export function computeFulfillment(
 ): FulfillmentResult | null {
   if (goal.checkIns.length === 0) return null;
 
-  const sorted = [...goal.checkIns].sort((a, b) => a.date.localeCompare(b.date));
-  const latest = sorted[sorted.length - 1];
-  const latestAmount = latest.currentAmount;
+  const latestAmount = goal.checkIns.reduce((sum, ci) => sum + ci.currentAmount, 0);
 
   const start = goal.createdAt.getTime();
   const end = goal.targetDate.getTime();
@@ -54,10 +52,8 @@ export function calculateMonthlySavings(
   const remainingMonths = remainingMs / (1000 * 60 * 60 * 24 * 30.44);
   if (remainingMonths < 0.5) return null;
 
-  // Use latest check-in amount if available, otherwise 0
-  const currentAmount = goal.checkIns.length > 0
-    ? [...goal.checkIns].sort((a, b) => a.date.localeCompare(b.date))[goal.checkIns.length - 1].currentAmount
-    : 0;
+  // Sum all check-in deposits
+  const currentAmount = goal.checkIns.reduce((sum, ci) => sum + ci.currentAmount, 0);
 
   const remaining = goal.amount - currentAmount;
   if (remaining <= 0) return 0;

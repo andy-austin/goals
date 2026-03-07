@@ -118,7 +118,8 @@ export function RecommendationsWidget({ goals }: RecommendationsWidgetProps) {
         })}
       </div>
 
-      <AffiliateDisclosure variant="inline" className="mt-3" />
+      {/* TODO: re-enable when affiliate program is live */}
+      {/* <AffiliateDisclosure variant="inline" className="mt-3" /> */}
     </div>
   );
 }

@@ -143,13 +143,20 @@ Technical debt cleanup and architecture improvements.
 
 Visual refinements and UX improvements identified during design review.
 
-- [ ] **#116** — [Reduce language switcher visual weight in header](https://github.com/andy-austin/goals/issues/116) `design` `medium`
-- [ ] **#117** — [Alternate section backgrounds on landing page to reduce visual fatigue](https://github.com/andy-austin/goals/issues/117) `design` `medium`
-- [ ] **#118** — [Add branded header to auth pages on mobile](https://github.com/andy-austin/goals/issues/118) `design` `mobile`
-- [ ] **#119** — [Improve "start from scratch" button styling on empty dashboard](https://github.com/andy-austin/goals/issues/119) `design` `low`
-- [ ] **#120** — [Improve "start from scratch" card layout on create page](https://github.com/andy-austin/goals/issues/120) `design` `low`
-- [ ] **#121** — [Simplify bottom CTA section on landing page](https://github.com/andy-austin/goals/issues/121) `design` `low`
-- [ ] **#122** — [Fix form wizard step indicator spacing on desktop](https://github.com/andy-austin/goals/issues/122) `design` `low`
+- [x] **#116** — [Reduce language switcher visual weight in header](https://github.com/andy-austin/goals/issues/116) `design` `medium` — *Done (phase-8/design-polish branch)*
+  - Removed ring, background, and bold styling from active state; now uses subtle text-foreground + font-medium
+- [x] **#117** — [Alternate section backgrounds on landing page to reduce visual fatigue](https://github.com/andy-austin/goals/issues/117) `design` `medium` — *Done (phase-8/design-polish branch)*
+  - Alternating pattern: Hero (gradient) → Framework (muted) → Calculator (background) → CTA (muted)
+- [x] **#118** — [Add branded header to auth pages on mobile](https://github.com/andy-austin/goals/issues/118) `design` `mobile` — *Done (phase-8/design-polish branch)*
+  - Added gradient banner with logo + description on mobile; desktop retains split-screen layout
+- [x] **#119** — [Improve "start from scratch" button styling on empty dashboard](https://github.com/andy-austin/goals/issues/119) `design` `low` — *Done (phase-8/design-polish branch)*
+  - Replaced secondary button with dashed-border card matching template card pattern
+- [x] **#120** — [Improve "start from scratch" card layout on create page](https://github.com/andy-austin/goals/issues/120) `design` `low` — *Done (phase-8/design-polish branch)*
+  - Simplified to a single dashed-border button with inline arrow CTA; fixed hardcoded zinc colors to design tokens
+- [x] **#121** — [Simplify bottom CTA section on landing page](https://github.com/andy-austin/goals/issues/121) `design` `low` — *Done (phase-8/design-polish branch)*
+  - Removed decorative blobs, feature badges, and gradient card; now a clean centered text + button layout
+- [x] **#122** — [Fix form wizard step indicator spacing on desktop](https://github.com/andy-austin/goals/issues/122) `design` `low` — *Done (phase-8/design-polish branch)*
+  - Rewrote desktop layout: connector lines now flow between step circles using flexbox instead of absolute positioning
 
 ---
 
@@ -163,3 +170,4 @@ Visual refinements and UX improvements identified during design review.
 - **Phase 5** is complete on `phase-5/nice-to-have` branch (all 8 issues done).
 - **Phase 6** is complete on `phase-6/accessibility-mobile-ux` branch (all 6 issues done).
 - **Phase 7** is complete on `phase-7/code-quality-refactors` branch (all 6 issues done).
+- **Phase 8** is complete on `phase-8/design-polish` branch (all 7 issues done).
