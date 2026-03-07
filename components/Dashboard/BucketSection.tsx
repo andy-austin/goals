@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { PlusCircle } from 'lucide-react';
@@ -9,6 +9,7 @@ import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { restrictToVerticalAxis, restrictToParentElement } from '@dnd-kit/modifiers';
 import { BUCKET_CONFIG, Bucket, Goal } from '@/types';
 import { SortableGoalCard } from './SortableGoalCard';
+import { BucketEducationPanel } from '../Education/BucketEducationPanel';
 import { useGoals } from '@/context';
 import { useSortableList } from '@/hooks';
 
@@ -47,10 +48,46 @@ const Icons = {
 export function BucketSection({ bucket, goals }: BucketSectionProps) {
   const tBuckets = useTranslations('buckets');
   const tDashboard = useTranslations('dashboard');
-  const [isExpanded, setIsExpanded] = useState(true);
+  const storageKey = `fingoal_bucket_expanded_${bucket}`;
+  const [isExpanded, setIsExpanded] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    const stored = localStorage.getItem(storageKey);
+    return stored === null ? true : stored === 'true';
+  });
+
+  useEffect(() => {
+    localStorage.setItem(storageKey, String(isExpanded));
+  }, [isExpanded, storageKey]);
   const { reorderGoalsInBucket } = useGoals();
   const config = BUCKET_CONFIG[bucket];
   const Icon = Icons[bucket];
+
+  // Drag onboarding tooltip (#103)
+  const DRAG_TOOLTIP_KEY = 'fingoal_drag_tooltip_seen';
+  const [showDragTooltip, setShowDragTooltip] = useState(false);
+  const tooltipTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (goals.length >= 2 && isExpanded) {
+      const seen = localStorage.getItem(DRAG_TOOLTIP_KEY);
+      if (!seen) {
+        setShowDragTooltip(true);
+        tooltipTimerRef.current = setTimeout(() => {
+          setShowDragTooltip(false);
+          localStorage.setItem(DRAG_TOOLTIP_KEY, 'true');
+        }, 5000);
+      }
+    }
+    return () => {
+      if (tooltipTimerRef.current) clearTimeout(tooltipTimerRef.current);
+    };
+  }, [goals.length, isExpanded]);
+
+  const dismissDragTooltip = useCallback(() => {
+    setShowDragTooltip(false);
+    localStorage.setItem(DRAG_TOOLTIP_KEY, 'true');
+    if (tooltipTimerRef.current) clearTimeout(tooltipTimerRef.current);
+  }, []);
 
   // Memoize the reorder callback to maintain referential equality
   const handleReorder = useCallback(
@@ -128,6 +165,19 @@ export function BucketSection({ bucket, goals }: BucketSectionProps) {
                 strategy={verticalListSortingStrategy}
               >
                 <div className="space-y-3">
+                  {/* Drag onboarding tooltip (#103) */}
+                  {showDragTooltip && (
+                    <button
+                      type="button"
+                      onClick={dismissDragTooltip}
+                      className="flex w-full items-center gap-2 rounded-lg border border-info/30 bg-info/10 px-3 py-2 text-sm text-foreground animate-fade-in cursor-pointer"
+                    >
+                      <svg className="h-4 w-4 shrink-0 text-info" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                      </svg>
+                      <span>{tDashboard('dragTooltip')}</span>
+                    </button>
+                  )}
                   {goals.map((goal) => (
                     <SortableGoalCard key={goal.id} goal={goal} />
                   ))}
@@ -135,6 +185,8 @@ export function BucketSection({ bucket, goals }: BucketSectionProps) {
               </SortableContext>
             </DndContext>
           )}
+          {/* Educational instruments panel (#56) */}
+          <BucketEducationPanel bucket={bucket} />
         </div>
       )}
     </div>

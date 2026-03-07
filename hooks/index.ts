@@ -8,3 +8,8 @@ export {
 } from './useAISuggestion';
 
 export { useSortableList } from './useSortableList';
+
+export {
+  useExchangeRates,
+  type UseExchangeRatesReturn,
+} from './useExchangeRates';

@@ -21,3 +21,6 @@ export * from './Spaces';
 
 // Recommendations Components
 export * from './Recommendations';
+
+// Education Components
+export * from './Education';

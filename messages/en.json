@@ -233,6 +233,7 @@
       "title": "Completed Goals",
       "count": "{count, plural, =1 {# goal completed} other {# goals completed}}"
     },
+    "dragTooltip": "Drag to reorder your goals by priority",
     "calendarModal": {
       "title": "Set Reminder",
       "subtitle": "Add a recurring reminder for \"{title}\" to your calendar",
@@ -721,6 +722,138 @@
       }
     }
   },
+  "strategies": {
+    "panelTitle": "Savings Strategies",
+    "readGuide": "Read guide",
+    "hideGuide": "Hide guide",
+    "dismiss": "Dismiss",
+    "threeBucket": {
+      "title": "The 3-Bucket Execution Playbook",
+      "subtitle": "Allocate your income across Safety, Growth, and Dream buckets for balanced progress.",
+      "bestFor": "Best for: Balanced savers",
+      "step1": {
+        "title": "Calculate your monthly savings capacity",
+        "description": "Review your income and expenses to determine how much you can set aside each month."
+      },
+      "step2": {
+        "title": "Fund Safety first",
+        "description": "Direct at least 50% of your savings toward Safety bucket goals until they are fully funded."
+      },
+      "step3": {
+        "title": "Split the rest between Growth and Dream",
+        "description": "Allocate remaining savings: roughly 30% to Growth goals and 20% to Dream goals."
+      },
+      "step4": {
+        "title": "Rebalance quarterly",
+        "description": "Every 3 months, review your allocation and shift funds as goals are completed or priorities change."
+      }
+    },
+    "snowball": {
+      "title": "Snowball Method",
+      "subtitle": "Focus on your smallest goal first, then roll savings into the next one for momentum.",
+      "bestFor": "Best for: Motivation seekers",
+      "step1": {
+        "title": "List all goals by amount (smallest first)",
+        "description": "Sort your goals from the smallest target amount to the largest."
+      },
+      "step2": {
+        "title": "Put all extra savings into the smallest goal",
+        "description": "Make minimum contributions to other goals, but throw everything extra at the smallest one."
+      },
+      "step3": {
+        "title": "Complete and celebrate",
+        "description": "When the smallest goal is reached, mark it complete and celebrate the win."
+      },
+      "step4": {
+        "title": "Roll forward to the next goal",
+        "description": "Take the full amount you were saving and add it to the next smallest goal. Repeat."
+      }
+    },
+    "avalanche": {
+      "title": "Avalanche Method",
+      "subtitle": "Prioritize the highest-importance goals first to maximize impact.",
+      "bestFor": "Best for: Strategic planners",
+      "step1": {
+        "title": "Rank goals by importance and urgency",
+        "description": "Order your goals by which ones matter most or have the nearest deadlines."
+      },
+      "step2": {
+        "title": "Allocate maximum savings to the top goal",
+        "description": "Direct the bulk of your savings to the highest-priority goal while maintaining minimums elsewhere."
+      },
+      "step3": {
+        "title": "Monitor deadlines closely",
+        "description": "Track progress against target dates and adjust contributions if you fall behind."
+      },
+      "step4": {
+        "title": "Cascade savings downward",
+        "description": "Once the top goal is funded, redirect all savings to the next highest-priority goal."
+      }
+    },
+    "automate": {
+      "title": "Automate Your Savings",
+      "subtitle": "Pay yourself first with automatic transfers so saving happens without thinking.",
+      "bestFor": "Best for: Busy professionals",
+      "step1": {
+        "title": "Open dedicated accounts for each goal",
+        "description": "Create separate savings or investment accounts for your top goals to avoid mixing funds."
+      },
+      "step2": {
+        "title": "Set up automatic transfers on payday",
+        "description": "Schedule recurring transfers from your checking account the same day you get paid."
+      },
+      "step3": {
+        "title": "Start small, then increase",
+        "description": "Begin with an amount that feels comfortable, then raise it by 1-2% each month."
+      },
+      "step4": {
+        "title": "Review and adjust annually",
+        "description": "Once a year, review your automatic transfers and increase them in line with income changes."
+      }
+    },
+    "setbacks": {
+      "title": "Handling Setbacks",
+      "subtitle": "What to do when you miss a month or face an unexpected expense.",
+      "bestFor": "Best for: Everyone",
+      "step1": {
+        "title": "Don't panic or abandon the goal",
+        "description": "Missing a month is normal. One skipped contribution won't derail a long-term plan."
+      },
+      "step2": {
+        "title": "Recalculate your monthly target",
+        "description": "Spread the missed amount across remaining months instead of trying to make it up at once."
+      },
+      "step3": {
+        "title": "Trim non-essential spending temporarily",
+        "description": "Look for short-term cuts (eating out, subscriptions) to get back on track faster."
+      },
+      "step4": {
+        "title": "Adjust the timeline if needed",
+        "description": "If catching up isn't realistic, extend your target date rather than increasing stress."
+      }
+    },
+    "monthlyReview": {
+      "title": "Monthly Money Meeting",
+      "subtitle": "A 30-minute monthly review to stay on top of all your goals.",
+      "bestFor": "Best for: Consistent progress",
+      "step1": {
+        "title": "Log into your dashboard",
+        "description": "Open FinGoal and review the progress of each active goal against its target."
+      },
+      "step2": {
+        "title": "Record check-ins for each goal",
+        "description": "Update the current saved amount for every goal to keep your progress chart accurate."
+      },
+      "step3": {
+        "title": "Review upcoming deadlines",
+        "description": "Check the timeline view for any goals approaching their target date and assess if you are on track."
+      },
+      "step4": {
+        "title": "Set next month's action items",
+        "description": "Decide if any contributions need adjusting and note any upcoming large expenses that could impact savings."
+      }
+    }
+  },
   "consent": {
     "banner": {
       "title": "We value your privacy",
@@ -729,6 +862,205 @@
       "decline": "Decline",
       "privacyPolicy": "Privacy Policy",
       "terms": "Terms of Service"
+    }
+  },
+  "education": {
+    "commonInstruments": "Common investment instruments",
+    "learnMore": "Learn more",
+    "showLess": "Show less",
+    "pros": "Advantages",
+    "cons": "Disadvantages",
+    "typicalReturn": "Typical return",
+    "dismiss": "Dismiss",
+    "disclaimer": "This is educational content only and does not constitute financial advice. Past performance does not guarantee future results. Always consult a qualified financial advisor before making investment decisions.",
+    "riskLevel": {
+      "low": "Low risk",
+      "medium": "Medium risk",
+      "high": "High risk"
+    },
+    "instruments": {
+      "hysa": {
+        "name": "High-Yield Savings Account",
+        "description": "A savings account offering above-average interest rates, ideal for short-term goals.",
+        "pros": {
+          "fdic": "FDIC insured up to $250,000",
+          "liquid": "Fully liquid — withdraw anytime",
+          "noMinimum": "Often no minimum balance required"
+        },
+        "cons": {
+          "lowReturn": "Returns may not keep pace with inflation",
+          "variableRate": "Interest rate can change at any time"
+        }
+      },
+      "moneyMarket": {
+        "name": "Money Market Funds",
+        "description": "Mutual funds that invest in short-term, high-quality debt securities.",
+        "pros": {
+          "stable": "Extremely stable value",
+          "liquid": "Easy to buy and sell",
+          "diversified": "Spread across many short-term instruments"
+        },
+        "cons": {
+          "lowReturn": "Low yields in low-interest-rate environments",
+          "fees": "Expense ratios reduce returns"
+        }
+      },
+      "shortTermCd": {
+        "name": "Short-term CDs",
+        "description": "Certificates of deposit with terms from 3 to 24 months, offering guaranteed returns.",
+        "pros": {
+          "guaranteed": "Guaranteed fixed interest rate",
+          "fdic": "FDIC insured up to $250,000",
+          "predictable": "Know exactly what you will earn"
+        },
+        "cons": {
+          "locked": "Money is locked for the term",
+          "penalty": "Early withdrawal penalty applies"
+        }
+      },
+      "treasuryBills": {
+        "name": "Treasury Bills (T-Bills)",
+        "description": "Short-term government securities maturing in 4 to 52 weeks.",
+        "pros": {
+          "government": "Backed by the full faith of the U.S. government",
+          "taxAdvantage": "Exempt from state and local taxes",
+          "shortTerm": "Maturities from 4 weeks to 1 year"
+        },
+        "cons": {
+          "lowReturn": "Lower returns than riskier investments",
+          "minimumPurchase": "Purchased in $100 increments"
+        }
+      },
+      "iBonds": {
+        "name": "Series I Savings Bonds",
+        "description": "Government bonds with interest rates that adjust for inflation.",
+        "pros": {
+          "inflationProtected": "Rate adjusts with inflation every 6 months",
+          "government": "Backed by the U.S. government",
+          "taxDeferred": "Federal tax can be deferred until redemption"
+        },
+        "cons": {
+          "holdingPeriod": "Must hold for at least 1 year; penalty if redeemed before 5 years",
+          "purchaseLimit": "Limited to $10,000 per person per year"
+        }
+      },
+      "cdLadder": {
+        "name": "CD Ladders",
+        "description": "A strategy of staggering multiple CDs with different maturity dates for regular access to funds.",
+        "pros": {
+          "guaranteed": "Each CD offers a guaranteed rate",
+          "staggeredAccess": "Regular access to portions of your money",
+          "fdic": "Each CD is FDIC insured"
+        },
+        "cons": {
+          "complexity": "Requires managing multiple CDs",
+          "lowerReturn": "Returns generally lower than stock market"
+        }
+      },
+      "bondFunds": {
+        "name": "Bond Funds / Bond ETFs",
+        "description": "Funds that invest in a diversified portfolio of government and corporate bonds.",
+        "pros": {
+          "diversified": "Instant diversification across many bonds",
+          "income": "Regular income through interest payments",
+          "liquid": "Can be bought or sold on any business day"
+        },
+        "cons": {
+          "interestRateRisk": "Value drops when interest rates rise",
+          "fees": "Management fees reduce overall returns"
+        }
+      },
+      "balancedFunds": {
+        "name": "Balanced Funds",
+        "description": "Funds that hold a mix of stocks and bonds, typically 60/40 or similar allocation.",
+        "pros": {
+          "diversified": "Built-in stock and bond diversification",
+          "autoRebalanced": "Automatically rebalanced by fund manager",
+          "moderate": "Moderate risk profile suitable for medium-term goals"
+        },
+        "cons": {
+          "fees": "Higher expense ratios than pure index funds",
+          "lessControl": "No control over the stock/bond ratio"
+        }
+      },
+      "conservativeIndex": {
+        "name": "Conservative Index Funds",
+        "description": "Low-cost index funds tracking broad market indexes like the S&P 500.",
+        "pros": {
+          "lowFees": "Very low expense ratios (often under 0.1%)",
+          "diversified": "Hundreds or thousands of stocks in one fund",
+          "passive": "No active management decisions needed"
+        },
+        "cons": {
+          "marketRisk": "Value fluctuates with the overall market",
+          "noGuarantee": "No guaranteed returns"
+        }
+      },
+      "targetDate": {
+        "name": "Target Date Funds",
+        "description": "Funds that automatically shift from stocks to bonds as your target date approaches.",
+        "pros": {
+          "handsFree": "Completely hands-free investing",
+          "autoAdjust": "Asset allocation adjusts automatically over time",
+          "diversified": "Diversified across stocks, bonds, and other assets"
+        },
+        "cons": {
+          "fees": "Higher fees than basic index funds",
+          "oneSize": "One-size-fits-all approach may not match your needs"
+        }
+      },
+      "stockIndex": {
+        "name": "Stock Index Funds",
+        "description": "Funds that track major stock market indexes for long-term growth potential.",
+        "pros": {
+          "highReturn": "Historically strong long-term returns",
+          "lowFees": "Very low expense ratios",
+          "diversified": "Broad market exposure in a single fund"
+        },
+        "cons": {
+          "volatility": "Significant short-term price swings",
+          "patience": "Requires patience through market downturns"
+        }
+      },
+      "growthEtf": {
+        "name": "Growth ETFs",
+        "description": "Exchange-traded funds focused on companies with above-average growth potential.",
+        "pros": {
+          "highGrowth": "Potential for above-market returns",
+          "liquid": "Trade throughout the day like stocks",
+          "taxEfficient": "Generally more tax-efficient than mutual funds"
+        },
+        "cons": {
+          "highVolatility": "Can experience sharp declines",
+          "concentration": "Often concentrated in technology or specific sectors"
+        }
+      },
+      "internationalStocks": {
+        "name": "International Stock Funds",
+        "description": "Funds investing in companies outside your home country for global diversification.",
+        "pros": {
+          "globalDiversification": "Exposure to global economic growth",
+          "emergingMarkets": "Access to fast-growing emerging economies",
+          "currencyDiversification": "Natural hedge against domestic currency weakness"
+        },
+        "cons": {
+          "currencyRisk": "Currency fluctuations can reduce returns",
+          "politicalRisk": "Subject to foreign political and regulatory risks"
+        }
+      },
+      "reits": {
+        "name": "REITs (Real Estate Investment Trusts)",
+        "description": "Funds that own income-producing real estate, offering exposure to property markets without buying buildings.",
+        "pros": {
+          "realEstate": "Real estate exposure without direct ownership",
+          "dividends": "Required to distribute 90% of income as dividends",
+          "liquid": "Publicly traded — buy and sell like stocks"
+        },
+        "cons": {
+          "interestSensitive": "Sensitive to interest rate changes",
+          "taxInefficient": "Dividends typically taxed as ordinary income"
+        }
+      }
     }
   },
   "privacy": {

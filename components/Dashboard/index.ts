@@ -8,3 +8,4 @@ export * from './SortableGoalCard';
 export * from './SummaryStats';
 export * from './ExportMenu';
 export * from './CalendarExportModal';
+export * from './CurrencyDisplay';

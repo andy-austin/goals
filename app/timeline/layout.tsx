@@ -1,4 +1,5 @@
 import { Header } from "@/components";
+import { Footer } from "@/components/landing";
 
 export default function TimelineLayout({
   children,
@@ -11,6 +12,7 @@ export default function TimelineLayout({
       <main className="flex-1">
         {children}
       </main>
+      <Footer />
     </div>
   );
 }

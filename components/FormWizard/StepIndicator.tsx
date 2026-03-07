@@ -41,14 +41,56 @@ export function StepIndicator({ steps, className = '' }: StepIndicatorProps) {
         {t('stepOf', { current: currentStep + 1, total: totalSteps })}: {steps[currentStep]?.label}
       </div>
 
-      {/* Mobile: Simple text indicator */}
-      <div className="flex items-center justify-between sm:hidden">
-        <span className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
-          {t('stepOf', { current: currentStep + 1, total: totalSteps })}
-        </span>
-        <span className="text-sm text-zinc-600 dark:text-zinc-400">
-          {steps[currentStep]?.label}
-        </span>
+      {/* Mobile: Compact step bar with previous/current/next labels */}
+      <div className="flex items-center justify-center gap-1 sm:hidden">
+        {steps.map((step, index) => {
+          const isCompleted = index < currentStep;
+          const isCurrent = index === currentStep;
+          const isAdjacent = Math.abs(index - currentStep) === 1;
+
+          return (
+            <div key={step.label} className="flex items-center">
+              {/* Connector before (skip first) */}
+              {index > 0 && (
+                <div
+                  className={`h-0.5 w-3 ${isCompleted || isCurrent ? 'bg-primary' : 'bg-border'}`}
+                  aria-hidden="true"
+                />
+              )}
+              {/* Step dot + optional label */}
+              <div className="flex flex-col items-center">
+                <div
+                  className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-medium ${
+                    isCompleted
+                      ? 'bg-primary text-primary-foreground'
+                      : isCurrent
+                        ? 'border-2 border-primary bg-background text-primary'
+                        : 'border border-border bg-background text-muted-foreground'
+                  }`}
+                  aria-current={isCurrent ? 'step' : undefined}
+                >
+                  {isCompleted ? (
+                    <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  ) : (
+                    <span aria-hidden="true">{index + 1}</span>
+                  )}
+                </div>
+                {(isCurrent || isAdjacent) && (
+                  <span
+                    className={`mt-1 text-[10px] leading-tight max-w-[48px] truncate text-center ${
+                      isCurrent ? 'font-semibold text-primary' : 'text-muted-foreground'
+                    }`}
+                    aria-hidden="true"
+                  >
+                    {step.label}
+                  </span>
+                )}
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       {/* Desktop: Step dots with labels */}
@@ -76,7 +118,7 @@ export function StepIndicator({ steps, className = '' }: StepIndicatorProps) {
                   {index < steps.length - 1 && (
                     <div
                       className={`absolute left-1/2 top-4 h-0.5 w-full ${
-                        isCompleted ? 'bg-primary' : 'bg-zinc-200 dark:bg-zinc-700'
+                        isCompleted ? 'bg-primary' : 'bg-border'
                       }`}
                       aria-hidden="true"
                     />
@@ -89,7 +131,7 @@ export function StepIndicator({ steps, className = '' }: StepIndicatorProps) {
                         ? 'border-primary bg-primary text-primary-foreground'
                         : isCurrent
                           ? 'border-primary bg-background text-primary'
-                          : 'border-zinc-300 bg-background text-zinc-500 dark:border-zinc-600 dark:text-zinc-400'
+                          : 'border-border bg-background text-muted-foreground'
                     }`}
                     aria-current={isCurrent ? 'step' : undefined}
                   >
@@ -120,8 +162,8 @@ export function StepIndicator({ steps, className = '' }: StepIndicatorProps) {
                       isCurrent
                         ? 'text-primary'
                         : isCompleted
-                          ? 'text-zinc-900 dark:text-zinc-100'
-                          : 'text-zinc-500 dark:text-zinc-400'
+                          ? 'text-foreground'
+                          : 'text-muted-foreground'
                     }`}
                     aria-hidden="true"
                   >
