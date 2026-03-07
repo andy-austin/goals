@@ -115,12 +115,12 @@ function TrackingForm({ goal, onClose }: { goal: Goal; onClose: () => void }) {
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle id="tracking-modal-title">{t('title')}</CardTitle>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-0.5">{goal.title}</p>
+                  <p className="text-sm text-muted-foreground mt-0.5">{goal.title}</p>
                 </div>
                 <button
                   type="button"
                   onClick={onClose}
-                  className="rounded p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-300 transition-colors"
+                  className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
                   aria-label={tCommon('close')}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -134,7 +134,7 @@ function TrackingForm({ goal, onClose }: { goal: Goal; onClose: () => void }) {
             <CardContent className="overflow-y-auto flex-1 space-y-6">
               {/* Investment Vehicle */}
               <section>
-                <h3 className="text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-3 flex items-center gap-1.5">
+                <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-1.5">
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
                     <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
                     <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
@@ -179,7 +179,7 @@ function TrackingForm({ goal, onClose }: { goal: Goal; onClose: () => void }) {
 
               {/* Tracking Cadence */}
               <section>
-                <h3 className="text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-3 flex items-center gap-1.5">
+                <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-1.5">
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
                     <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
                     <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
@@ -206,35 +206,35 @@ function TrackingForm({ goal, onClose }: { goal: Goal; onClose: () => void }) {
               {/* Fulfillment Summary */}
               {fulfillment && (
                 <section>
-                  <div className="rounded-lg border border-zinc-200 dark:border-zinc-700 p-4 bg-zinc-50 dark:bg-zinc-800/50">
+                  <div className="rounded-lg border border-border p-4 bg-muted">
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+                      <span className="text-sm font-medium text-foreground">
                         {t('fulfillmentLabel')}
                       </span>
                       <div className="flex items-center gap-2">
-                        <span className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
+                        <span className="text-lg font-bold text-foreground">
                           {fulfillment.fulfillmentPct}%
                         </span>
                         <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
                           fulfillment.isOnTrack
-                            ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-                            : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+                            ? 'bg-success/15 text-success'
+                            : 'bg-error/15 text-error'
                         }`}>
                           {fulfillment.isOnTrack ? t('onTrack') : t('behindSchedule')}
                         </span>
                       </div>
                     </div>
-                    <div className="h-2.5 w-full rounded-full bg-zinc-200 dark:bg-zinc-700 overflow-hidden">
+                    <div className="h-2.5 w-full rounded-full bg-muted overflow-hidden">
                       <div
                         className={`h-full rounded-full transition-all ${
                           fulfillment.isOnTrack
-                            ? 'bg-green-500 dark:bg-green-400'
-                            : 'bg-red-500 dark:bg-red-400'
+                            ? 'bg-success'
+                            : 'bg-error'
                         }`}
                         style={{ width: `${Math.min(fulfillment.fulfillmentPct, 100)}%` }}
                       />
                     </div>
-                    <div className="mt-2 flex justify-between text-xs text-zinc-500 dark:text-zinc-400">
+                    <div className="mt-2 flex justify-between text-xs text-muted-foreground">
                       <span>
                         {formatCurrency(fulfillment.latestAmount, goal.currency, locale)}
                       </span>
@@ -249,7 +249,7 @@ function TrackingForm({ goal, onClose }: { goal: Goal; onClose: () => void }) {
               {/* Progress History */}
               <section>
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-sm font-semibold text-zinc-700 dark:text-zinc-300 flex items-center gap-1.5">
+                  <h3 className="text-sm font-semibold text-foreground flex items-center gap-1.5">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
                       <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
                     </svg>
@@ -265,7 +265,7 @@ function TrackingForm({ goal, onClose }: { goal: Goal; onClose: () => void }) {
                 </div>
 
                 {sortedCheckIns.length === 0 ? (
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400 text-center py-6 border border-dashed border-zinc-200 dark:border-zinc-700 rounded-lg">
+                  <p className="text-sm text-muted-foreground text-center py-6 border border-dashed border-border rounded-lg">
                     {t('noCheckIns')}
                   </p>
                 ) : (
@@ -273,21 +273,21 @@ function TrackingForm({ goal, onClose }: { goal: Goal; onClose: () => void }) {
                     {sortedCheckIns.map((checkIn) => (
                       <li
                         key={checkIn.id}
-                        className="flex items-start justify-between rounded-lg border border-zinc-200 dark:border-zinc-700 p-3 bg-white dark:bg-zinc-900"
+                        className="flex items-start justify-between rounded-lg border border-border p-3 bg-card"
                       >
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
-                            <span className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">
+                            <span className="font-semibold text-sm text-foreground">
                               {formatCurrency(checkIn.currentAmount, goal.currency, locale)}
                             </span>
-                            <span className="text-xs text-zinc-400">
+                            <span className="text-xs text-muted-foreground">
                               {new Date(checkIn.date + 'T00:00:00').toLocaleDateString(locale, {
                                 year: 'numeric', month: 'short', day: 'numeric'
                               })}
                             </span>
                           </div>
                           {checkIn.note && (
-                            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5 truncate">
+                            <p className="text-xs text-muted-foreground mt-0.5 truncate">
                               {checkIn.note}
                             </p>
                           )}
@@ -295,7 +295,7 @@ function TrackingForm({ goal, onClose }: { goal: Goal; onClose: () => void }) {
                         <button
                           type="button"
                           onClick={() => handleDeleteCheckIn(checkIn)}
-                          className="ml-2 flex-shrink-0 rounded p-1 text-zinc-400 hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/20 dark:hover:text-red-400 transition-colors"
+                          className="ml-2 flex-shrink-0 rounded p-1 text-muted-foreground hover:bg-error/15 hover:text-error transition-colors"
                           aria-label={t('deleteCheckInConfirm')}
                           title={t('deleteCheckInConfirm')}
                         >

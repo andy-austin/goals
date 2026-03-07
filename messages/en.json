@@ -164,6 +164,7 @@
     },
     "daysLeft": "{count} days left",
     "overdueBy": "Overdue by {count} days",
+    "timeElapsed": "Time elapsed",
     "empty": {
       "title": "No goals yet",
       "description": "Get started by creating your first investment goal.",
@@ -390,7 +391,20 @@
     "noAccount": "Don't have an account?",
     "hasAccount": "Already have an account?",
     "passwordMismatch": "Passwords do not match",
-    "checkEmail": "Check your email to confirm your account"
+    "checkEmail": "Check your email to confirm your account",
+    "forgotPassword": "Forgot password?",
+    "forgotPasswordTitle": "Reset your password",
+    "forgotPasswordSubtitle": "Enter your email and we'll send you a reset link",
+    "sendResetLink": "Send reset link",
+    "sendingResetLink": "Sending...",
+    "resetLinkSent": "A password reset link has been sent to {email}",
+    "backToLogin": "Back to sign in",
+    "resetPasswordTitle": "Create new password",
+    "resetPasswordSubtitle": "Enter your new password below",
+    "newPassword": "New password",
+    "resetPassword": "Reset password",
+    "resettingPassword": "Resetting...",
+    "passwordResetSuccess": "Your password has been reset successfully"
   },
   "export": {
     "print": "Print"

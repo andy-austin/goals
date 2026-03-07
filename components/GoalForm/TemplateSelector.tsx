@@ -50,7 +50,7 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
   return (
     <div className="space-y-6">
       {/* Bucket Tabs */}
-      <div className="flex p-1 space-x-1 bg-zinc-100 dark:bg-zinc-800 rounded-xl">
+      <div className="flex p-1 space-x-1 bg-muted rounded-xl">
         {BUCKETS.map((bucket) => {
           const isActive = activeBucket === bucket;
           const config = BUCKET_CONFIG[bucket];
@@ -61,8 +61,8 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
               onClick={() => setActiveBucket(bucket)}
               className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-medium rounded-lg transition-all cursor-pointer ${
                 isActive
-                  ? 'bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 shadow-sm'
-                  : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300'
+                  ? 'bg-card text-foreground shadow-sm'
+                  : 'text-muted-foreground hover:text-foreground'
               }`}
             >
               <div className={isActive ? `text-[${config.colorVar}]` : ''} style={isActive ? { color: config.colorVar } : undefined}>
@@ -85,22 +85,22 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
               description: tTemplates(`${template.id}.description`),
               sampleWhyItMatters: tTemplates(`${template.id}.whyItMatters`),
             })}
-            className="text-left group relative flex flex-col gap-3 rounded-xl border border-zinc-200 bg-white p-4 transition-all hover:border-[var(--bucket-color)] hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900 cursor-pointer"
+            className="text-left group relative flex flex-col gap-3 rounded-xl border border-border bg-card p-4 transition-all hover:border-[var(--bucket-color)] hover:shadow-md cursor-pointer"
             style={{
               '--bucket-color': BUCKET_CONFIG[template.bucket].colorVar,
             } as React.CSSProperties}
           >
             <div className="flex items-start justify-between w-full">
-              <h3 className="font-semibold text-zinc-900 dark:text-zinc-100 group-hover:text-[var(--bucket-color)]">
+              <h3 className="font-semibold text-foreground group-hover:text-[var(--bucket-color)]">
                 {tTemplates(`${template.id}.title`)}
               </h3>
             </div>
 
-            <p className="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2">
+            <p className="text-sm text-muted-foreground line-clamp-2">
               {tTemplates(`${template.id}.description`)}
             </p>
 
-            <div className="mt-auto pt-2 flex items-center gap-2 text-xs font-medium text-zinc-500 dark:text-zinc-500">
+            <div className="mt-auto pt-2 flex items-center gap-2 text-xs font-medium text-muted-foreground">
                <span>{template.suggestedTimelineMonths} {tTemplates('months')}</span>
                <span>•</span>
                <span>${template.suggestedAmountMin.toLocaleString()} - ${template.suggestedAmountMax.toLocaleString()}</span>

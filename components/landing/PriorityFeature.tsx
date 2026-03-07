@@ -37,21 +37,21 @@ const mockGoalsConfig = [
 ];
 
 const bucketColors = {
-  safety: "border-l-green-500 bg-green-50 dark:bg-green-950/20",
-  growth: "border-l-blue-500 bg-blue-50 dark:bg-blue-950/20",
-  dream: "border-l-purple-500 bg-purple-50 dark:bg-purple-950/20",
+  safety: "border-l-bucket-safety bg-bucket-safety-light",
+  growth: "border-l-bucket-growth bg-bucket-growth-light",
+  dream: "border-l-bucket-dream bg-bucket-dream-light",
 };
 
 const bucketBadges = {
-  safety: "bg-green-100 text-green-700 dark:bg-green-950/50 dark:text-green-400",
-  growth: "bg-blue-100 text-blue-700 dark:bg-blue-950/50 dark:text-blue-400",
-  dream: "bg-purple-100 text-purple-700 dark:bg-purple-950/50 dark:text-purple-400",
+  safety: "bg-bucket-safety-light text-bucket-safety",
+  growth: "bg-bucket-growth-light text-bucket-growth",
+  dream: "bg-bucket-dream-light text-bucket-dream",
 };
 
 const bucketDots = {
-  safety: "bg-green-500",
-  growth: "bg-blue-500",
-  dream: "bg-purple-500",
+  safety: "bg-bucket-safety",
+  growth: "bg-bucket-growth",
+  dream: "bg-bucket-dream",
 };
 
 export function PriorityFeature() {
@@ -131,8 +131,8 @@ export function PriorityFeature() {
 
             <div className="space-y-4">
               <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-lg bg-green-100 dark:bg-green-950/50 flex items-center justify-center flex-shrink-0">
-                  <Shield className="w-4 h-4 text-green-600 dark:text-green-400" />
+                <div className="w-8 h-8 rounded-lg bg-bucket-safety-light flex items-center justify-center flex-shrink-0">
+                  <Shield className="w-4 h-4 text-bucket-safety" />
                 </div>
                 <div>
                   <h4 className="font-medium text-foreground">{t('buckets.safety.title')}</h4>
@@ -140,8 +140,8 @@ export function PriorityFeature() {
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-950/50 flex items-center justify-center flex-shrink-0">
-                  <TrendingUp className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                <div className="w-8 h-8 rounded-lg bg-bucket-growth-light flex items-center justify-center flex-shrink-0">
+                  <TrendingUp className="w-4 h-4 text-bucket-growth" />
                 </div>
                 <div>
                   <h4 className="font-medium text-foreground">{t('buckets.growth.title')}</h4>
@@ -149,8 +149,8 @@ export function PriorityFeature() {
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-950/50 flex items-center justify-center flex-shrink-0">
-                  <Star className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                <div className="w-8 h-8 rounded-lg bg-bucket-dream-light flex items-center justify-center flex-shrink-0">
+                  <Star className="w-4 h-4 text-bucket-dream" />
                 </div>
                 <div>
                   <h4 className="font-medium text-foreground">{t('buckets.dream.title')}</h4>

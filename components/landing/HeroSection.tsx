@@ -8,7 +8,7 @@ import { useAuth } from '@/context/AuthContext';
 export function HeroSection() {
   const t = useTranslations('landing.hero');
   const tHeader = useTranslations('landing.header');
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
 
   return (
     <section className="relative pt-20 pb-12 lg:pt-28 lg:pb-16 overflow-hidden">
@@ -37,25 +37,13 @@ export function HeroSection() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start animate-fade-in">
-              {!loading && (
-                user ? (
-                  <Link
-                    href="/dashboard"
-                    className="inline-flex items-center justify-center gap-2 h-12 px-6 text-base font-semibold rounded-xl bg-gradient-growth text-growth-foreground shadow-lg hover:shadow-glow hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 whitespace-nowrap"
-                  >
-                    {tHeader('dashboard')}
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                ) : (
-                  <Link
-                    href="/create"
-                    className="inline-flex items-center justify-center gap-2 h-12 px-6 text-base font-semibold rounded-xl bg-gradient-growth text-growth-foreground shadow-lg hover:shadow-glow hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 whitespace-nowrap"
-                  >
-                    {t('startGoal')}
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                )
-              )}
+              <Link
+                href={user ? '/dashboard' : '/create'}
+                className="inline-flex items-center justify-center gap-2 h-12 px-6 text-base font-semibold rounded-xl bg-gradient-growth text-growth-foreground shadow-lg hover:shadow-glow hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 whitespace-nowrap"
+              >
+                {user ? tHeader('dashboard') : t('startGoal')}
+                <ArrowRight className="w-4 h-4" />
+              </Link>
               <Link
                 href="#methodology"
                 className="inline-flex items-center justify-center gap-2 h-12 px-6 text-base font-semibold rounded-xl border-2 border-border bg-card/50 text-foreground hover:bg-card hover:border-growth/50 transition-all duration-200 whitespace-nowrap"
@@ -103,15 +91,15 @@ function GoalPreviewCard() {
     <div className="bg-card rounded-2xl shadow-2xl border border-border/30 p-6 max-w-md mx-auto animate-float ring-1 ring-black/5">
       <div className="flex items-start justify-between mb-5">
         <div>
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-950/50 dark:text-blue-400 text-xs font-semibold mb-2">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-bucket-growth-light text-bucket-growth-dark text-xs font-semibold mb-2">
             <TrendingUp className="w-3 h-3" />
             Growth
           </span>
           <h3 className="text-xl font-bold text-foreground">{t('title')}</h3>
           <p className="text-sm text-muted-foreground mt-0.5">{t('targetDate')}</p>
         </div>
-        <div className="w-14 h-14 rounded-xl bg-blue-100 dark:bg-blue-950/50 flex items-center justify-center shadow-sm border border-blue-200 dark:border-blue-800">
-          <Home className="w-7 h-7 text-blue-600 dark:text-blue-400" />
+        <div className="w-14 h-14 rounded-xl bg-bucket-growth-light flex items-center justify-center shadow-sm border border-bucket-growth/20">
+          <Home className="w-7 h-7 text-bucket-growth" />
         </div>
       </div>
 

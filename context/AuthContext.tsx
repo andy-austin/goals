@@ -19,6 +19,8 @@ interface AuthContextValue {
   signUp: (email: string, password: string) => Promise<{ error: AuthError | null; session: Session | null }>;
   signIn: (email: string, password: string) => Promise<{ error: AuthError | null }>;
   signInWithGoogle: (redirectTo?: string) => Promise<{ error: AuthError | null }>;
+  resetPassword: (email: string) => Promise<{ error: AuthError | null }>;
+  updatePassword: (password: string) => Promise<{ error: AuthError | null }>;
   signOut: () => Promise<void>;
 }
 
@@ -105,6 +107,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
     return { error };
   }, []);
 
+  const resetPassword = useCallback(async (email: string) => {
+    const supabase = createClient();
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${siteUrl}/auth/callback?next=${encodeURIComponent('/auth/reset-password')}`,
+    });
+    return { error };
+  }, []);
+
+  const updatePassword = useCallback(async (password: string) => {
+    const supabase = createClient();
+    const { error } = await supabase.auth.updateUser({ password });
+    return { error };
+  }, []);
+
   const signOut = useCallback(async () => {
     const supabase = createClient();
     await supabase.auth.signOut();
@@ -118,9 +135,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
       signUp,
       signIn,
       signInWithGoogle,
+      resetPassword,
+      updatePassword,
       signOut,
     }),
-    [user, session, loading, signUp, signIn, signInWithGoogle, signOut]
+    [user, session, loading, signUp, signIn, signInWithGoogle, resetPassword, updatePassword, signOut]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

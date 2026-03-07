@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/Skeleton';
 
 export function GoalCardSkeleton() {
   return (
-    <div className="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+    <div className="rounded-lg border border-border bg-card p-4 shadow-sm">
       <div className="flex items-start justify-between">
         <div className="flex items-start gap-3 flex-1">
           {/* drag handle placeholder */}
@@ -20,7 +20,7 @@ export function GoalCardSkeleton() {
           ))}
         </div>
       </div>
-      <div className="mt-3 flex items-center justify-between border-t border-zinc-100 pt-3 dark:border-zinc-800">
+      <div className="mt-3 flex items-center justify-between border-t border-border pt-3">
         <Skeleton className="h-3 w-20" />
         <Skeleton className="h-3 w-24" />
       </div>

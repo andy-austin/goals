@@ -115,7 +115,7 @@ export function ShareGoalModal({ goal, isOpen, onClose }: ShareGoalModalProps) {
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-300 transition-colors"
+                className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
                 aria-label={tCommon('cancel')}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -127,19 +127,19 @@ export function ShareGoalModal({ goal, isOpen, onClose }: ShareGoalModalProps) {
 
           <CardContent className="space-y-5">
             {/* Goal name */}
-            <p className="text-sm text-zinc-500 dark:text-zinc-400">
+            <p className="text-sm text-muted-foreground">
               {t('subtitle', { title: goal.title })}
             </p>
 
             {/* Auth gate */}
             {!user ? (
-              <div className="rounded-lg border border-border bg-zinc-50 dark:bg-zinc-900 p-4 flex items-start gap-3">
-                <LockIcon className="w-5 h-5 text-zinc-400 flex-shrink-0 mt-0.5" />
+              <div className="rounded-lg border border-border bg-muted p-4 flex items-start gap-3">
+                <LockIcon className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
+                  <p className="text-sm font-medium text-foreground">
                     {tSpaces('signInRequired')}
                   </p>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-0.5">
+                  <p className="text-sm text-muted-foreground mt-0.5">
                     {tSpaces('signInDescription')}
                   </p>
                   <a
@@ -163,25 +163,25 @@ export function ShareGoalModal({ goal, isOpen, onClose }: ShareGoalModalProps) {
                       className={`rounded-lg border p-3 text-left transition-colors ${
                         !isSpaceOwner
                           ? 'opacity-40 cursor-not-allowed'
-                          : 'cursor-pointer hover:border-zinc-300 dark:hover:border-zinc-600'
+                          : 'cursor-pointer hover:border-border'
                       } ${visibility === 'private' ? 'border-primary bg-primary/5 ring-1 ring-primary' : 'border-border bg-background'}`}
                     >
                       <div className="flex items-center gap-2 mb-1">
-                        <LockIcon className="w-4 h-4 text-zinc-500" />
-                        <span className="text-xs font-medium text-zinc-900 dark:text-zinc-100">{tSpaces('private')}</span>
+                        <LockIcon className="w-4 h-4 text-muted-foreground" />
+                        <span className="text-xs font-medium text-foreground">{tSpaces('private')}</span>
                       </div>
-                      <p className="text-xs text-zinc-500 dark:text-zinc-400">{t('privateDesc')}</p>
+                      <p className="text-xs text-muted-foreground">{t('privateDesc')}</p>
                     </button>
                     <button
                       type="button"
                       onClick={() => handleVisibilityChange('shared')}
-                      className={`rounded-lg border p-3 text-left transition-colors cursor-pointer hover:border-zinc-300 dark:hover:border-zinc-600 ${visibility === 'shared' ? 'border-primary bg-primary/5 ring-1 ring-primary' : 'border-border bg-background'}`}
+                      className={`rounded-lg border p-3 text-left transition-colors cursor-pointer hover:border-border ${visibility === 'shared' ? 'border-primary bg-primary/5 ring-1 ring-primary' : 'border-border bg-background'}`}
                     >
                       <div className="flex items-center gap-2 mb-1">
-                        <UsersIcon className="w-4 h-4 text-zinc-500" />
-                        <span className="text-xs font-medium text-zinc-900 dark:text-zinc-100">{tSpaces('shared')}</span>
+                        <UsersIcon className="w-4 h-4 text-muted-foreground" />
+                        <span className="text-xs font-medium text-foreground">{tSpaces('shared')}</span>
                       </div>
-                      <p className="text-xs text-zinc-500 dark:text-zinc-400">{t('sharedDesc')}</p>
+                      <p className="text-xs text-muted-foreground">{t('sharedDesc')}</p>
                     </button>
                   </div>
                 </div>
@@ -189,8 +189,8 @@ export function ShareGoalModal({ goal, isOpen, onClose }: ShareGoalModalProps) {
                 {/* Space selector (always visible, disabled when private or non-owner) */}
                 <div>
                   {spaces.length === 0 ? (
-                    <div className={`rounded-lg border border-dashed border-border bg-zinc-50 dark:bg-zinc-900/50 p-4 text-center transition-opacity ${visibility === 'private' ? 'opacity-40 pointer-events-none' : ''}`}>
-                      <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
+                    <div className={`rounded-lg border border-dashed border-border bg-muted p-4 text-center transition-opacity ${visibility === 'private' ? 'opacity-40 pointer-events-none' : ''}`}>
+                      <p className="text-sm text-muted-foreground mb-2">
                         {t('noSpaces')}
                       </p>
                       <a

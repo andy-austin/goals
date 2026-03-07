@@ -187,7 +187,7 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
                         <span className="hidden sm:inline">{formatCurrency(goal.amount, goal.currency, locale)}</span>
                         <span className="sm:hidden">{formatCurrency(goal.amount, goal.currency, locale).replace('.00', '')}</span>
                         <span className="text-muted-foreground/50">·</span>
-                        <span className={isOverdue ? 'text-red-500' : ''}>
+                        <span className={isOverdue ? 'text-error' : ''}>
                           {isOverdue 
                             ? `${Math.abs(daysRemaining)}${tGantt('days')} ${tGantt('overdue')}` 
                             : `${daysRemaining}${tGantt('days')}`}
@@ -311,7 +311,7 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
                                   transform: 'translateY(-50%)',
                                 }}
                               >
-                                <div className="bg-white dark:bg-zinc-900 border border-border rounded-lg px-3 py-2 shadow-lg text-sm">
+                                <div className="bg-card border border-border rounded-lg px-3 py-2 shadow-lg text-sm">
                                   <div className="font-medium text-foreground">{goal.title}</div>
                                   <div className="text-muted-foreground">
                                     {formatDate(targetDate, locale)}
@@ -319,7 +319,7 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
                                 </div>
                                 {/* Arrow pointing left */}
                                 <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1">
-                                  <div className="h-2 w-2 rotate-45 bg-white dark:bg-zinc-900 border-l border-b border-border" />
+                                  <div className="h-2 w-2 rotate-45 bg-card border-l border-b border-border" />
                                 </div>
                               </div>
                             ) : (
@@ -332,7 +332,7 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
                                   marginBottom: '8px',
                                 }}
                               >
-                                <div className="bg-white dark:bg-zinc-900 border border-border rounded-lg px-3 py-2 shadow-lg text-sm">
+                                <div className="bg-card border border-border rounded-lg px-3 py-2 shadow-lg text-sm">
                                   <div className="font-medium text-foreground">{goal.title}</div>
                                   <div className="text-muted-foreground">
                                     {formatDate(targetDate, locale)}
@@ -340,7 +340,7 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
                                 </div>
                                 {/* Arrow pointing down */}
                                 <div className="absolute left-1/2 -translate-x-1/2 -bottom-1">
-                                  <div className="h-2 w-2 rotate-45 bg-white dark:bg-zinc-900 border-b border-r border-border" />
+                                  <div className="h-2 w-2 rotate-45 bg-card border-b border-r border-border" />
                                 </div>
                               </div>
                             )

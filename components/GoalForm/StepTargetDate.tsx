@@ -82,10 +82,10 @@ export function StepTargetDate() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+        <h2 className="text-lg font-semibold text-foreground">
           {t('title')}
         </h2>
-        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="mt-1 text-sm text-muted-foreground">
           {t('subtitle')}
         </p>
       </div>
@@ -117,7 +117,7 @@ export function StepTargetDate() {
 
       {/* Quick Select Buttons */}
       <div className="space-y-2">
-        <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">
+        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
           {t('quickSelect.label')}
         </p>
         <div className="flex flex-wrap gap-2">
@@ -126,7 +126,7 @@ export function StepTargetDate() {
               key={years}
               type="button"
               onClick={() => setQuickDate(years)}
-              className="rounded-full border border-zinc-200 px-3 py-1 text-sm text-zinc-600 transition-colors hover:border-primary hover:text-primary dark:border-zinc-800 dark:text-zinc-400 dark:hover:border-primary dark:hover:text-primary cursor-pointer"
+              className="rounded-full border border-border px-3 py-1 text-sm text-muted-foreground transition-colors hover:border-primary hover:text-primary cursor-pointer"
             >
               {t(`quickSelect.${years}year${years > 1 ? 's' : ''}`)}
             </button>
@@ -135,11 +135,11 @@ export function StepTargetDate() {
       </div>
 
       {/* SMART Tip */}
-      <div className="rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-900 dark:bg-blue-950">
+      <div className="rounded-lg border border-info/30 bg-info/10 p-4">
         <div className="flex gap-3">
           <div className="flex-shrink-0">
             <svg
-              className="h-5 w-5 text-blue-600 dark:text-blue-400"
+              className="h-5 w-5 text-info"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -153,10 +153,10 @@ export function StepTargetDate() {
             </svg>
           </div>
           <div>
-            <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200">
+            <h3 className="text-sm font-medium text-info">
               {t('smartTip')}
             </h3>
-            <p className="mt-1 text-sm text-blue-700 dark:text-blue-300">
+            <p className="mt-1 text-sm text-info/80">
               {t('smartTipText')}
             </p>
           </div>
