@@ -219,10 +219,10 @@ test.describe('Dashboard shared badge', () => {
 
   test('does not show "Shared" badge on private goals', async ({ page }) => {
     // The private goal (Emergency Fund) is in the Safety bucket
-    // Find the goal card for Emergency Fund and verify it doesn't have "Shared"
-    const emergencyCard = page.locator('div').filter({
+    // Use the goal card boundary (group class) to avoid matching parent containers
+    const emergencyCard = page.locator('.group').filter({
       has: page.getByRole('heading', { name: 'Emergency Fund' }),
-    });
+    }).first();
     await expect(emergencyCard.getByText('Shared')).not.toBeVisible();
   });
 
