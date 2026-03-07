@@ -406,3 +406,104 @@ test.describe('Goal card – fulfillment indicator', () => {
     await expect(page.getByText('On track', { exact: true })).toBeVisible();
   });
 });
+
+// ---------------------------------------------------------------------------
+// Shared goal — cumulative deposits from multiple users
+// ---------------------------------------------------------------------------
+
+test.describe('Shared goal – cumulative progress from all deposits', () => {
+  // Simulates a shared goal where multiple users have logged deposits.
+  // In production, RLS allows space members to see each other's check-ins.
+  // Here we seed the goal with check-ins that represent deposits from
+  // different users to verify the UI sums them all.
+
+  const sharedGoal = {
+    ...testGoal,
+    id: 'goal_shared_tracking',
+    title: 'Family Vacation Fund',
+    amount: 10000,
+    visibility: 'shared',
+    spaceId: 'space_family',
+    checkIns: [
+      {
+        id: 'ci_user_a_1',
+        date: '2026-01-10',
+        currentAmount: 2000,
+        note: 'User A - first deposit',
+        createdAt: new Date('2026-01-10T10:00:00Z').toISOString(),
+      },
+      {
+        id: 'ci_user_b_1',
+        date: '2026-02-05',
+        currentAmount: 3000,
+        note: 'User B - deposit',
+        createdAt: new Date('2026-02-05T10:00:00Z').toISOString(),
+      },
+      {
+        id: 'ci_user_a_2',
+        date: '2026-03-01',
+        currentAmount: 1500,
+        note: 'User A - second deposit',
+        createdAt: new Date('2026-03-01T10:00:00Z').toISOString(),
+      },
+    ],
+  };
+
+  test.beforeEach(async ({ page }) => {
+    await page.context().addCookies([
+      { name: 'locale', value: 'en', domain: 'localhost', path: '/' },
+    ]);
+    await seedStorage([sharedGoal])(page);
+    await page.goto('/dashboard');
+  });
+
+  test('goal card shows cumulative amount from all deposits', async ({ page }) => {
+    // 2000 + 3000 + 1500 = 6500 out of 10000 = 65%
+    await expect(page.getByText('65%').first()).toBeVisible();
+  });
+
+  test('goal card shows summed current vs target amount', async ({ page }) => {
+    // Should display "$6,500.00 / $10,000.00"
+    await expect(page.getByText(/6,500/)).toBeVisible();
+    await expect(page.getByText(/10,000/).first()).toBeVisible();
+  });
+
+  test('tracking modal shows cumulative fulfillment from all deposits', async ({ page }) => {
+    await page.getByRole('button', { name: /track progress/i }).first().click();
+    const dialog = page.getByRole('dialog', { name: /track progress/i });
+    await expect(dialog.getByText('65%')).toBeVisible();
+  });
+
+  test('tracking modal lists all deposits in progress history', async ({ page }) => {
+    await page.getByRole('button', { name: /track progress/i }).first().click();
+    await expect(page.getByText(/user a - first deposit/i)).toBeVisible();
+    await expect(page.getByText(/user b - deposit/i)).toBeVisible();
+    await expect(page.getByText(/user a - second deposit/i)).toBeVisible();
+  });
+
+  test('adding a new deposit updates cumulative progress', async ({ page }) => {
+    // Current: 6500/10000 = 65%
+    await expect(page.getByText('65%').first()).toBeVisible();
+
+    // Open check-in modal via the + button
+    await page.getByRole('button', { name: /log deposit/i }).first().click();
+    await page.getByLabel(/current amount/i).fill('1000');
+    await page.getByRole('button', { name: /^save$/i }).click();
+
+    // New total: 6500 + 1000 = 7500/10000 = 75%
+    await expect(page.getByText('75%')).toBeVisible();
+  });
+
+  test('deleting a deposit reduces cumulative progress', async ({ page }) => {
+    // Open tracking modal
+    await page.getByRole('button', { name: /track progress/i }).first().click();
+    await expect(page.getByRole('dialog').getByText('65%')).toBeVisible();
+
+    // Delete the 3000 deposit (User B)
+    const userBRow = page.locator('li').filter({ hasText: /user b - deposit/i });
+    await userBRow.getByTitle(/delete this check-in/i).click();
+
+    // New total: 2000 + 1500 = 3500/10000 = 35%
+    await expect(page.getByRole('dialog').getByText('35%')).toBeVisible();
+  });
+});
