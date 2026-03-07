@@ -112,12 +112,12 @@ test.describe('Authenticated Dashboard', () => {
 
   test('user menu button shows display name', async ({ page }) => {
     // The avatar/name button opens the dropdown
-    await expect(page.getByRole('button', { name: /yander rojas/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /test/i })).toBeVisible();
   });
 
   test('user dropdown shows email and Sign Out', async ({ page }) => {
-    await page.getByRole('button', { name: /yander rojas/i }).click();
-    await expect(page.getByText('yan4talk@gmail.com')).toBeVisible();
+    await page.getByRole('button', { name: /test/i }).click();
+    await expect(page.getByText('test@goals.com')).toBeVisible();
     await expect(page.getByRole('button', { name: /sign out/i })).toBeVisible();
   });
 

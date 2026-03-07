@@ -29,10 +29,10 @@ setup('authenticate as test user', async ({ page }) => {
 
   // Use type-based selectors so they work regardless of locale
   await page.locator('input[type="email"]').fill(
-    process.env.TEST_USER_EMAIL ?? 'yan4talk@gmail.com'
+    process.env.TEST_USER_EMAIL ?? 'test@goals.com'
   );
   await page.locator('input[type="password"]').fill(
-    process.env.TEST_USER_PASSWORD ?? 'jlf8821r'
+    process.env.TEST_USER_PASSWORD ?? 'Test123'
   );
 
   await page.getByRole('button', { name: /sign in|iniciar sesión/i }).click();
