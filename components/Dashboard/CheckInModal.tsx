@@ -59,10 +59,11 @@ function CheckInForm({ goal, onClose }: { goal: Goal; onClose: () => void }) {
   const amountError = amount !== '' && (isNaN(parsedAmount) || parsedAmount < 0);
   const isValid = date !== '' && amount !== '' && !amountError;
 
-  // Fulfillment preview
+  // Fulfillment preview (existing deposits + this new one)
+  const existingTotal = goal.checkIns.reduce((sum, ci) => sum + ci.currentAmount, 0);
   const fulfillmentPercent =
     isValid && goal.amount > 0
-      ? Math.round((parsedAmount / goal.amount) * 100)
+      ? Math.round(((existingTotal + parsedAmount) / goal.amount) * 100)
       : null;
 
   const handleBackdropClick = (e: React.MouseEvent) => {
