@@ -73,11 +73,10 @@ export const GanttRow = forwardRef<HTMLDivElement, GanttRowProps>(
         >
           {/* Bar container */}
           <div
-            className="absolute top-1/2 -translate-y-1/2 h-6 rounded cursor-pointer transition-all"
+            className={`absolute top-1/2 -translate-y-1/2 h-6 rounded cursor-pointer transition-all ${bucketConfig.classes.bg}`}
             style={{
               left: barStartX,
               width: Math.max(barWidth, 20), // Minimum 20px width
-              backgroundColor: bucketConfig.colorVar,
               opacity: isHovered ? 1 : 0.85,
               transform: `translateY(-50%) ${isHovered ? 'scale(1.02)' : 'scale(1)'}`,
             }}
@@ -95,8 +94,7 @@ export const GanttRow = forwardRef<HTMLDivElement, GanttRowProps>(
           >
             {/* Target date marker at the end */}
             <div
-              className="absolute right-0 top-0 bottom-0 w-1 rounded-r"
-              style={{ backgroundColor: bucketConfig.colorVar, filter: 'brightness(0.8)' }}
+              className={`absolute right-0 top-0 bottom-0 w-1 rounded-r ${bucketConfig.classes.bg} brightness-80`}
             />
 
             {/* Hover tooltip */}

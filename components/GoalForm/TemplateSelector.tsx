@@ -65,7 +65,7 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
                   : 'text-muted-foreground hover:text-foreground'
               }`}
             >
-              <div className={isActive ? `text-[${config.colorVar}]` : ''} style={isActive ? { color: config.colorVar } : undefined}>
+              <div className={isActive ? config.classes.text : ''}>
                 {Icons[bucket]('w-4 h-4')}
               </div>
               {tBuckets(`${bucket}.name`)}

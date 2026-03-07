@@ -177,8 +177,7 @@ export function SummaryStats({ goals }: SummaryStatsProps) {
           {(['safety', 'growth', 'dream'] as Bucket[]).map((bucket) => (
             <div
               key={bucket}
-              className="flex items-center gap-1.5"
-              style={{ color: BUCKET_CONFIG[bucket].colorVar }}
+              className={`flex items-center gap-1.5 ${BUCKET_CONFIG[bucket].classes.text}`}
             >
               {BucketIcons[bucket]}
               <span className="text-sm font-medium whitespace-nowrap">
@@ -196,10 +195,9 @@ export function SummaryStats({ goals }: SummaryStatsProps) {
               <div className="flex items-center gap-2">
                 <span className="font-medium text-foreground">{nextGoal.title}</span>
                 <span
-                  className="px-2 py-0.5 rounded-full text-xs font-medium text-nowrap"
+                  className={`px-2 py-0.5 rounded-full text-xs font-medium text-nowrap ${BUCKET_CONFIG[nextGoal.bucket].classes.text}`}
                   style={{
                     backgroundColor: `color-mix(in srgb, ${BUCKET_CONFIG[nextGoal.bucket].colorVar} 15%, transparent)`,
-                    color: BUCKET_CONFIG[nextGoal.bucket].colorVar
                   }}
                 >
                   {daysUntilNext} {t('stats.days')}

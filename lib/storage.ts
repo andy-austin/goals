@@ -69,6 +69,14 @@ function deserializeGoal(serialized: SerializedGoal): Goal {
 // =============================================================================
 
 /**
+ * Load goals from localStorage (async wrapper for future IndexedDB migration)
+ * Returns empty array if no data exists or on error
+ */
+export async function loadGoalsAsync(): Promise<Goal[]> {
+  return loadGoals();
+}
+
+/**
  * Load goals from localStorage
  * Returns empty array if no data exists or on error
  */
@@ -122,6 +130,14 @@ export function loadGoals(): Goal[] {
     console.error('[storage] Failed to load goals from localStorage:', e);
     return [];
   }
+}
+
+/**
+ * Save goals to localStorage (async wrapper for future IndexedDB migration)
+ * Returns true on success, false on error
+ */
+export async function saveGoalsAsync(goals: Goal[]): Promise<boolean> {
+  return saveGoals(goals);
 }
 
 /**

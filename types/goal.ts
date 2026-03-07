@@ -258,32 +258,49 @@ export interface GoalsByBucket {
  * Colors use CSS variable references for theme consistency
  */
 export const BUCKET_CONFIG: Record<Bucket, {
-  label: string;
   colorVar: string;
   bgColorVar: string;
   icon: string;
-  description: string;
+  /** Tailwind utility classes for bucket-specific styling */
+  classes: {
+    text: string;
+    bg: string;
+    bgLight: string;
+    border: string;
+  };
 }> = {
   safety: {
-    label: 'Safety',
     colorVar: 'var(--bucket-safety)',
     bgColorVar: 'var(--bucket-safety-light)',
     icon: 'shield',
-    description: 'Non-negotiable, urgent goals like emergency funds',
+    classes: {
+      text: 'text-bucket-safety',
+      bg: 'bg-bucket-safety',
+      bgLight: 'bg-bucket-safety-light',
+      border: 'border-bucket-safety',
+    },
   },
   growth: {
-    label: 'Growth',
     colorVar: 'var(--bucket-growth)',
     bgColorVar: 'var(--bucket-growth-light)',
     icon: 'trending-up',
-    description: 'Goals that improve your standard of living',
+    classes: {
+      text: 'text-bucket-growth',
+      bg: 'bg-bucket-growth',
+      bgLight: 'bg-bucket-growth-light',
+      border: 'border-bucket-growth',
+    },
   },
   dream: {
-    label: 'Dream',
     colorVar: 'var(--bucket-dream)',
     bgColorVar: 'var(--bucket-dream-light)',
     icon: 'star',
-    description: 'Aspirational goals you can afford to risk',
+    classes: {
+      text: 'text-bucket-dream',
+      bg: 'bg-bucket-dream',
+      bgLight: 'bg-bucket-dream-light',
+      border: 'border-bucket-dream',
+    },
   },
 };
 

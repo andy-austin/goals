@@ -124,12 +124,18 @@ Timeline accessibility, touch support, and mobile layout fixes.
 
 Technical debt cleanup and architecture improvements.
 
-- [ ] **#37** — [Centralize hardcoded validation constants](https://github.com/andy-austin/goals/issues/37) `refactor`
-- [ ] **#39** — [Remove hardcoded strings from BUCKET_CONFIG](https://github.com/andy-austin/goals/issues/39) `i18n` `refactor`
-- [ ] **#41** — [Extract goalsReducer from GoalsContext](https://github.com/andy-austin/goals/issues/41) `refactor`
-- [ ] **#43** — [Transition Goals state to Async Storage pattern](https://github.com/andy-austin/goals/issues/43) `refactor`
-- [ ] **#47** — [Standardize dynamic bucket styling to Tailwind utilities](https://github.com/andy-austin/goals/issues/47) `refactor`
-- [ ] **#48** — [Externalize AI Model Configuration](https://github.com/andy-austin/goals/issues/48) `maintenance`
+- [x] **#37** — [Centralize hardcoded validation constants](https://github.com/andy-austin/goals/issues/37) `refactor` — *Done (phase-7/code-quality-refactors branch)*
+  - Exported MIN_TITLE_LENGTH, MIN_DESCRIPTION_LENGTH, MIN_WHY_IT_MATTERS_LENGTH, MIN_PASSWORD_LENGTH from lib/validation.ts; updated all consumers
+- [x] **#39** — [Remove hardcoded strings from BUCKET_CONFIG](https://github.com/andy-austin/goals/issues/39) `i18n` `refactor` — *Done (phase-7/code-quality-refactors branch)*
+  - Removed unused `label` and `description` fields from BUCKET_CONFIG; consumers already use useTranslations('buckets')
+- [x] **#41** — [Extract goalsReducer from GoalsContext](https://github.com/andy-austin/goals/issues/41) `refactor` — *Done (phase-7/code-quality-refactors branch)*
+  - Extracted goalsReducer, GoalsState, GoalsAction, getNextPriorityForBucket to context/goalsReducer.ts; re-exported from GoalsContext
+- [x] **#43** — [Transition Goals state to Async Storage pattern](https://github.com/andy-austin/goals/issues/43) `refactor` — *Done (phase-7/code-quality-refactors branch)*
+  - Added loadGoalsAsync/saveGoalsAsync wrappers in lib/storage.ts; GoalsContext now uses saveGoalsAsync for persistence
+- [x] **#47** — [Standardize dynamic bucket styling to Tailwind utilities](https://github.com/andy-austin/goals/issues/47) `refactor` — *Done (phase-7/code-quality-refactors branch)*
+  - Added `classes` property to BUCKET_CONFIG with text/bg/bgLight/border Tailwind utilities; replaced inline styles across 10+ components
+- [x] **#48** — [Externalize AI Model Configuration](https://github.com/andy-austin/goals/issues/48) `maintenance` — *Done (phase-7/code-quality-refactors branch)*
+  - AI model names now read from ANTHROPIC_MODEL and GEMINI_MODEL env vars with sensible defaults
 
 ---
 
@@ -142,4 +148,4 @@ Technical debt cleanup and architecture improvements.
 - **Phase 4** is complete on `phase-4/ux-polish` branch (all 8 issues done). #95 was already implemented; #91, #92, #93, #96, #97, #98 implemented in this branch.
 - **Phase 5** is complete on `phase-5/nice-to-have` branch (all 8 issues done).
 - **Phase 6** is complete on `phase-6/accessibility-mobile-ux` branch (all 6 issues done).
-- **Phase 7** covers technical debt — refactors, i18n cleanup, and architecture improvements.
+- **Phase 7** is complete on `phase-7/code-quality-refactors` branch (all 6 issues done).

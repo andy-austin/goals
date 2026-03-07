@@ -106,13 +106,11 @@ export function BucketSection({ bucket, goals }: BucketSectionProps) {
       {/* Header */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="flex w-full items-center justify-between px-6 py-4 transition-colors hover:bg-muted/50 cursor-pointer"
-        style={{ borderLeft: `4px solid ${config.colorVar}` }}
+        className={`flex w-full items-center justify-between px-6 py-4 transition-colors hover:bg-muted/50 cursor-pointer border-l-4 ${config.classes.border}`}
       >
         <div className="flex items-center gap-4">
-          <div 
-            className="flex h-10 w-10 items-center justify-center rounded-lg"
-            style={{ backgroundColor: config.bgColorVar, color: config.colorVar }}
+          <div
+            className={`flex h-10 w-10 items-center justify-center rounded-lg ${config.classes.bgLight} ${config.classes.text}`}
           >
             {Icon('h-6 w-6')}
           </div>

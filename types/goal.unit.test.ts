@@ -168,8 +168,9 @@ describe('BUCKET_CONFIG', () => {
   it('has a config entry for every bucket', () => {
     for (const bucket of BUCKETS) {
       expect(BUCKET_CONFIG[bucket]).toBeDefined();
-      expect(BUCKET_CONFIG[bucket].label.length).toBeGreaterThan(0);
       expect(BUCKET_CONFIG[bucket].icon.length).toBeGreaterThan(0);
+      expect(BUCKET_CONFIG[bucket].colorVar).toBeDefined();
+      expect(BUCKET_CONFIG[bucket].bgColorVar).toBeDefined();
     }
   });
 });

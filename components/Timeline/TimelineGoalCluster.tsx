@@ -78,8 +78,7 @@ export const TimelineGoalCluster = forwardRef<HTMLDivElement, ClusterProps>(
                   >
                     <div className="flex items-center gap-2 min-w-0">
                       <div
-                        className="h-2 w-2 shrink-0 rounded-full"
-                        style={{ backgroundColor: config.colorVar }}
+                        className={`h-2 w-2 shrink-0 rounded-full ${config.classes.bg}`}
                       />
                       <span className="text-sm font-medium text-foreground truncate">
                         {goal.title}
@@ -97,8 +96,7 @@ export const TimelineGoalCluster = forwardRef<HTMLDivElement, ClusterProps>(
 
         {/* Connector line */}
         <div
-          className="h-4 w-0.5"
-          style={{ backgroundColor: primaryConfig.colorVar }}
+          className={`h-4 w-0.5 ${primaryConfig.classes.bg}`}
         />
 
         {/* Cluster button */}
@@ -118,11 +116,8 @@ export const TimelineGoalCluster = forwardRef<HTMLDivElement, ClusterProps>(
             cursor-pointer transition-all
             hover:scale-105 hover:shadow-md
             focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
+            ${primaryConfig.classes.bgLight} ${primaryConfig.classes.border}
           `}
-          style={{
-            backgroundColor: primaryConfig.bgColorVar,
-            borderColor: primaryConfig.colorVar,
-          }}
           aria-label={t('goalsCount', { count: cluster.goals.length })}
           aria-expanded={isExpanded}
           aria-haspopup="menu"
@@ -134,18 +129,14 @@ export const TimelineGoalCluster = forwardRef<HTMLDivElement, ClusterProps>(
               .map(([bucket], index) => (
                 <div
                   key={bucket}
-                  className="h-3 w-3 rounded-full border border-white"
-                  style={{
-                    backgroundColor: BUCKET_CONFIG[bucket as keyof typeof BUCKET_CONFIG].colorVar,
-                    zIndex: 3 - index,
-                  }}
+                  className={`h-3 w-3 rounded-full border border-white ${BUCKET_CONFIG[bucket as keyof typeof BUCKET_CONFIG].classes.bg}`}
+                  style={{ zIndex: 3 - index }}
                 />
               ))}
           </div>
           {/* Count */}
           <span
-            className="text-sm font-bold"
-            style={{ color: primaryConfig.colorVar }}
+            className={`text-sm font-bold ${primaryConfig.classes.text}`}
           >
             {cluster.goals.length}
           </span>

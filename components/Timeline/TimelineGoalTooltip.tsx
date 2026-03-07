@@ -51,11 +51,7 @@ export const TimelineGoalTooltip = forwardRef<HTMLDivElement, TooltipProps>(
               {goal.title}
             </h4>
             <span
-              className="shrink-0 rounded-full px-2 py-0.5 text-xs font-medium"
-              style={{
-                backgroundColor: bucketConfig.bgColorVar,
-                color: bucketConfig.colorVar,
-              }}
+              className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ${bucketConfig.classes.bgLight} ${bucketConfig.classes.text}`}
             >
               {tBuckets(`${goal.bucket}.name`)}
             </span>

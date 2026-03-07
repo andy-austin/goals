@@ -159,7 +159,7 @@ async function callAnthropic(prompt: string): Promise<string> {
   }
 
   const message = await anthropic.messages.create({
-    model: 'claude-sonnet-4-20250514',
+    model: process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-20250514',
     max_tokens: 300,
     messages: [
       {
@@ -177,7 +177,7 @@ async function callGemini(prompt: string): Promise<string> {
     throw new Error('Gemini client not initialized');
   }
 
-  const model = gemini.getGenerativeModel({ model: 'gemini-3-flash-preview' });
+  const model = gemini.getGenerativeModel({ model: process.env.GEMINI_MODEL || 'gemini-2.0-flash' });
   const result = await model.generateContent(prompt);
   const response = result.response;
   return response.text();

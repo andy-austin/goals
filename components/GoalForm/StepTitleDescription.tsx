@@ -5,14 +5,8 @@ import { useTranslations } from 'next-intl';
 import { Input, Textarea, Label, AISuggestionChip } from '@/components/ui';
 import { useFormWizard } from '@/components/FormWizard';
 import { useAISuggestion } from '@/hooks';
+import { MIN_TITLE_LENGTH, MIN_DESCRIPTION_LENGTH } from '@/lib/validation';
 import type { GoalFormInput } from '@/types';
-
-// =============================================================================
-// Constants
-// =============================================================================
-
-const MIN_TITLE_LENGTH = 3;
-const MIN_DESCRIPTION_LENGTH = 20;
 
 // =============================================================================
 // Component
