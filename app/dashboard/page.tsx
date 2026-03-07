@@ -29,7 +29,12 @@ export default function DashboardPage() {
               {t('subtitle')}
             </p>
           </div>
-          {totalGoals > 0 && (
+          {isLoading ? (
+            <div className="flex w-full sm:w-auto gap-2 sm:gap-3">
+              <div className="h-9 w-24 animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800" />
+              <div className="h-9 w-32 animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800" />
+            </div>
+          ) : totalGoals > 0 ? (
             <div className="flex w-full sm:w-auto gap-2 sm:gap-3">
               <Link href="/create" className="flex-1 sm:flex-initial">
                 <Button size="sm" className="w-full sm:w-auto">{t('actions.addGoal')}</Button>
@@ -38,7 +43,7 @@ export default function DashboardPage() {
                 <Button size="sm" variant="secondary" className="w-full sm:w-auto">{t('actions.viewTimeline')}</Button>
               </Link>
             </div>
-          )}
+          ) : null}
         </div>
       </div>
 
@@ -49,9 +54,22 @@ export default function DashboardPage() {
       {isLoading ? (
         <div className="space-y-6">
           {BUCKETS.map((bucket) => (
-            <div key={bucket} className="space-y-3">
-              <div className="h-5 w-24 animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800" />
-              <GoalCardSkeleton />
+            <div key={bucket} className="rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-950 overflow-hidden">
+              {/* Header skeleton matching BucketSection */}
+              <div className="flex items-center justify-between px-6 py-4">
+                <div className="flex items-center gap-4">
+                  <div className="h-10 w-10 animate-pulse rounded-lg bg-zinc-200 dark:bg-zinc-800" />
+                  <div className="space-y-2">
+                    <div className="h-5 w-24 animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800" />
+                    <div className="h-3 w-16 animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800" />
+                  </div>
+                </div>
+                <div className="h-5 w-5 animate-pulse rounded bg-zinc-200 dark:bg-zinc-800" />
+              </div>
+              {/* Content skeleton */}
+              <div className="border-t border-zinc-100 px-6 py-6 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/20">
+                <GoalCardSkeleton />
+              </div>
             </div>
           ))}
         </div>
