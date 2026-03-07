@@ -19,7 +19,7 @@ export function Footer() {
             <span className="text-xl font-bold">{tCommon('logo')}</span>
           </Link>
 
-          <nav className="flex flex-wrap items-center justify-center gap-6 text-sm">
+          <nav className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-6">
             <Link href="/dashboard" className="opacity-80 hover:opacity-100 transition-opacity">{tHeader('dashboard')}</Link>
             <Link href="#methodology" className="opacity-80 hover:opacity-100 transition-opacity">{tHeader('methodology')}</Link>
             <Link href="#calculator" className="opacity-80 hover:opacity-100 transition-opacity">{tHeader('calculator')}</Link>

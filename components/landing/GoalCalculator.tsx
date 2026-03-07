@@ -180,7 +180,7 @@ export function GoalCalculator() {
               <div className="space-y-6">
                 <div className="p-5 rounded-xl bg-white/15 backdrop-blur">
                   <p className="text-sm text-white/90 mb-1">{t('results.monthlySavings')}</p>
-                  <p className="text-4xl lg:text-5xl font-bold text-white">
+                  <p className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white break-all">
                     {formatCurrency(calculations.monthlySavings)}
                   </p>
                 </div>

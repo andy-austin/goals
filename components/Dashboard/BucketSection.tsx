@@ -1,7 +1,9 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import Link from 'next/link';
 import { useTranslations } from 'next-intl';
+import { PlusCircle } from 'lucide-react';
 import { DndContext, closestCenter } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { restrictToVerticalAxis, restrictToParentElement } from '@dnd-kit/modifiers';
@@ -105,7 +107,14 @@ export function BucketSection({ bucket, goals }: BucketSectionProps) {
         <div className="border-t border-zinc-100 px-6 py-6 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/20">
           {goals.length === 0 ? (
             <div className="text-center py-4 text-zinc-500 text-sm">
-              {tDashboard('noBucketGoals', { bucket: tBuckets(`${bucket}.name`).toLowerCase() })}
+              <p>{tDashboard('noBucketGoals', { bucket: tBuckets(`${bucket}.name`).toLowerCase() })}</p>
+              <Link
+                href="/create"
+                className="inline-flex items-center gap-1 mt-2 text-sm font-medium text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"
+              >
+                <PlusCircle className="h-4 w-4" />
+                {tDashboard('actions.addGoal')}
+              </Link>
             </div>
           ) : (
             <DndContext

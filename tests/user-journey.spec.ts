@@ -135,7 +135,7 @@ test.describe('Full User Journey: Landing → Create → Dashboard → Timeline'
     await expect(page).toHaveURL('/dashboard');
 
     // Create second goal: Dream
-    await page.getByRole('link', { name: /add goal/i }).click();
+    await page.getByRole('button', { name: /add goal/i }).click();
     await expect(page).toHaveURL('/create');
     await page.getByRole('button', { name: /create goal/i }).first().click();
     await page.getByRole('textbox', { name: /goal title/i }).fill('Japan Trip');
@@ -239,12 +239,16 @@ test.describe('Dashboard Actions', () => {
   });
 
   test('Add Goal button navigates to create page', async ({ page }) => {
-    await page.getByRole('link', { name: /add goal/i }).click();
+    // Wait for goals to load (skeleton to disappear)
+    await page.getByRole('heading', { name: /emergency fund/i }).waitFor();
+    await page.getByRole('button', { name: /add goal/i }).click();
     await expect(page).toHaveURL('/create');
   });
 
   test('View Timeline button navigates to timeline', async ({ page }) => {
-    await page.getByRole('link', { name: /view timeline/i }).click();
+    // Wait for goals to load (skeleton to disappear)
+    await page.getByRole('heading', { name: /emergency fund/i }).waitFor();
+    await page.getByRole('button', { name: /view timeline/i }).click();
     await expect(page).toHaveURL('/timeline');
   });
 

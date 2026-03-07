@@ -115,23 +115,24 @@ test.describe('Authenticated Dashboard', () => {
     await expect(page.getByRole('button', { name: /yander rojas/i })).toBeVisible();
   });
 
-  test('user dropdown shows email, Timeline, Spaces, and Sign Out', async ({ page }) => {
+  test('user dropdown shows email and Sign Out', async ({ page }) => {
     await page.getByRole('button', { name: /yander rojas/i }).click();
     await expect(page.getByText('yan4talk@gmail.com')).toBeVisible();
-    await expect(page.getByRole('link', { name: /timeline/i })).toBeVisible();
-    await expect(page.getByRole('link', { name: /spaces/i })).toBeVisible();
     await expect(page.getByRole('button', { name: /sign out/i })).toBeVisible();
   });
 
-  test('Timeline link from user menu navigates to /timeline', async ({ page }) => {
-    await page.getByRole('button', { name: /yander rojas/i }).click();
-    await page.getByRole('link', { name: /timeline/i }).click();
+  test('Timeline and Spaces links are visible in the top nav', async ({ page }) => {
+    await expect(page.locator('nav').getByRole('link', { name: /timeline/i })).toBeVisible();
+    await expect(page.locator('nav').getByRole('link', { name: /spaces/i })).toBeVisible();
+  });
+
+  test('Timeline link in top nav navigates to /timeline', async ({ page }) => {
+    await page.locator('nav').getByRole('link', { name: /timeline/i }).first().click();
     await expect(page).toHaveURL(/\/timeline/);
   });
 
-  test('Spaces link from user menu navigates to /spaces', async ({ page }) => {
-    await page.getByRole('button', { name: /yander rojas/i }).click();
-    await page.getByRole('link', { name: /spaces/i }).click();
+  test('Spaces link in top nav navigates to /spaces', async ({ page }) => {
+    await page.locator('nav').getByRole('link', { name: /spaces/i }).first().click();
     await expect(page).toHaveURL(/\/spaces/);
   });
 });
@@ -173,8 +174,8 @@ test.describe('Authenticated Goal Creation', () => {
       motivation: 'Testing action button visibility',
     });
 
-    await expect(page.getByRole('link', { name: /add goal/i })).toBeVisible();
-    await expect(page.getByRole('link', { name: /view timeline/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /add goal/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /view timeline/i })).toBeVisible();
   });
 
   test('created goal is visible on the timeline', async ({ page }) => {
@@ -186,8 +187,8 @@ test.describe('Authenticated Goal Creation', () => {
       motivation: 'See my goal on the timeline',
     });
 
-    // Use the "View timeline" link from the dashboard header (visible after goal exists)
-    await page.getByRole('link', { name: /view timeline/i }).click();
+    // Use the "View timeline" button from the dashboard header (visible after goal exists)
+    await page.getByRole('button', { name: /view timeline/i }).click();
     await expect(page).toHaveURL(/\/timeline/);
     await expect(page.getByText(testTitle).first()).toBeVisible({ timeout: 10000 });
   });

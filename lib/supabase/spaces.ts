@@ -29,6 +29,7 @@ interface SpaceMembershipRow {
   user_id: string;
   role: string;
   joined_at: string;
+  email?: string;
 }
 
 interface SpaceInvitationRow {
@@ -62,6 +63,7 @@ function rowToMembership(row: SpaceMembershipRow): SpaceMembership {
     userId: row.user_id,
     role: row.role as SpaceRole,
     joinedAt: new Date(row.joined_at),
+    displayName: row.email ?? undefined,
   };
 }
 
@@ -341,10 +343,10 @@ export async function acceptInvitation(
     return { success: false, spaceId: null };
   }
 
-  // 2. Add user as member
+  // 2. Add user as member (store the invited email for display)
   const { error: memberError } = await supabase
     .from('space_memberships')
-    .insert({ space_id: invitation.spaceId, user_id: userId, role: 'member' });
+    .insert({ space_id: invitation.spaceId, user_id: userId, role: 'member', email: invitation.invitedEmail });
 
   if (memberError && memberError.code !== '23505') {
     // 23505 = unique_violation (already a member)
