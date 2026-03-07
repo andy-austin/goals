@@ -14,8 +14,11 @@ export function AuthLayout({ children }: AuthLayoutProps) {
 
   return (
     <div className="flex min-h-dvh">
-      {/* Branding panel — hidden on mobile */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary via-primary to-primary-hover relative overflow-hidden">
+      {/* Branding panel — hidden on mobile, always dark navy regardless of color scheme */}
+      <div
+        className="hidden lg:flex lg:w-1/2 relative overflow-hidden"
+        style={{ background: 'linear-gradient(to bottom right, hsl(222 47% 18%), hsl(222 47% 12%))' }}
+      >
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-white/20 blur-3xl" />
           <div className="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-white/10 blur-3xl" />
