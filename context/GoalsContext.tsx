@@ -8,6 +8,7 @@ import {
   useMemo,
   useEffect,
   useRef,
+  useState,
   type ReactNode,
 } from 'react';
 import type {
@@ -83,6 +84,9 @@ interface GoalsContextValue {
 
   /** Get total amount across all goals */
   totalAmount: number;
+
+  /** True while goals are being loaded from storage/Supabase */
+  isLoading: boolean;
 
   /** Add a check-in to a goal */
   addCheckIn: (goalId: string, checkIn: CheckIn) => void;
@@ -210,6 +214,7 @@ interface GoalsProviderProps {
 export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProps) {
   const [state, dispatch] = useReducer(goalsReducer, { goals: initialGoals });
   const isHydrated = useRef(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { user } = useAuth();
 
   // Load goals: from Supabase if authenticated, from localStorage if not
@@ -243,6 +248,7 @@ export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProp
         dispatch({ type: 'SET_GOALS', payload: storedGoals });
       }
       isHydrated.current = true;
+      setIsLoading(false);
     }
 
     loadData();
@@ -369,6 +375,7 @@ export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProp
     getGoalById,
     totalGoals,
     totalAmount,
+    isLoading,
     addCheckIn,
     deleteCheckIn,
   }), [
@@ -384,6 +391,7 @@ export function GoalsProvider({ children, initialGoals = [] }: GoalsProviderProp
     getGoalById,
     totalGoals,
     totalAmount,
+    isLoading,
     addCheckIn,
     deleteCheckIn,
   ]);

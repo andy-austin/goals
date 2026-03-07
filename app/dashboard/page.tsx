@@ -5,11 +5,13 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useGoals } from '@/context';
 import { Button, Card, BucketSection, SummaryStats } from '@/components';
+import { SummaryStatsSkeleton } from '@/components/Dashboard/SummaryStatsSkeleton';
+import { GoalCardSkeleton } from '@/components/Dashboard/GoalCardSkeleton';
 import { BUCKETS } from '@/types';
 
 export default function DashboardPage() {
   const t = useTranslations('dashboard');
-  const { goals, totalGoals, totalAmount, getAllGoalsByBucket } = useGoals();
+  const { goals, totalGoals, totalAmount, getAllGoalsByBucket, isLoading } = useGoals();
 
   // Memoize to avoid recomputing on every render
   const goalsByBucket = useMemo(() => getAllGoalsByBucket(), [getAllGoalsByBucket]);
@@ -41,10 +43,19 @@ export default function DashboardPage() {
       </div>
 
       {/* Summary Stats */}
-      <SummaryStats goals={goals} totalAmount={totalAmount} />
+      {isLoading ? <SummaryStatsSkeleton /> : <SummaryStats goals={goals} totalAmount={totalAmount} />}
 
       {/* Goals by Bucket */}
-      {totalGoals === 0 ? (
+      {isLoading ? (
+        <div className="space-y-6">
+          {BUCKETS.map((bucket) => (
+            <div key={bucket} className="space-y-3">
+              <div className="h-5 w-24 animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800" />
+              <GoalCardSkeleton />
+            </div>
+          ))}
+        </div>
+      ) : totalGoals === 0 ? (
         <Card className="p-8 text-center">
           <svg
             className="mx-auto h-12 w-12 text-muted-foreground"

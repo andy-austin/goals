@@ -40,3 +40,4 @@ export {
   ToastProvider,
   useToast,
 } from './Toast';
+export { Skeleton } from './Skeleton';
