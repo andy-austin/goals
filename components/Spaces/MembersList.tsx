@@ -53,7 +53,7 @@ function MemberRow({ membership, isSelf, canRemove, onRemove, removing }: Member
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1.5">
           <span className="text-sm font-medium text-foreground truncate">
-            {membership.displayName ?? `User ${membership.userId.slice(0, 8)}`}
+            {membership.displayName ?? membership.userId.slice(0, 8)}
           </span>
           {isSelf && <span className="text-xs text-muted-foreground">(you)</span>}
         </div>

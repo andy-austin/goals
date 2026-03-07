@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef, useRef, useEffect, type HTMLAttributes } from 'react';
+import { forwardRef, useRef, useEffect, useState, type HTMLAttributes } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Goal } from '@/types';
 import { TimelineAxis } from './TimelineAxis';
@@ -27,6 +27,7 @@ export interface Props
 export const Timeline = forwardRef<HTMLDivElement, Props>(
   ({ goals, zoomLevel, onZoomChange, onGoalSelect, className = '', ...props }, ref) => {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const [showScrollHint, setShowScrollHint] = useState(false);
     const t = useTranslations('timeline');
     const tBuckets = useTranslations('buckets');
     const { config, clusters, axisMarks, todayPosition } = useTimelineCalculations(
@@ -34,18 +35,46 @@ export const Timeline = forwardRef<HTMLDivElement, Props>(
       zoomLevel
     );
 
-    // Scroll to show "today" marker on initial load and zoom change
+    // Scroll to show goals or "today" marker on initial load and zoom change
     useEffect(() => {
       if (scrollContainerRef.current) {
-        // Center the "today" marker in view (with some offset to show content ahead)
         const containerWidth = scrollContainerRef.current.clientWidth;
-        const scrollPosition = Math.max(0, todayPosition - containerWidth * 0.15);
+
+        // If goals exist, find the nearest goal position and ensure it's visible
+        let scrollTarget = todayPosition;
+        if (clusters.length > 0) {
+          const firstClusterX = clusters[0].xPosition;
+          // On mobile (narrow containers), center on the first goal if it would be off-screen
+          if (firstClusterX > containerWidth * 0.8) {
+            scrollTarget = firstClusterX;
+          }
+        }
+
+        const scrollPosition = Math.max(0, scrollTarget - containerWidth * 0.25);
         scrollContainerRef.current.scrollTo({
           left: scrollPosition,
           behavior: 'smooth',
         });
       }
-    }, [todayPosition, zoomLevel]);
+    }, [todayPosition, zoomLevel, clusters]);
+
+    // Detect if content overflows to show scroll hint
+    useEffect(() => {
+      const container = scrollContainerRef.current;
+      if (!container) return;
+
+      const checkOverflow = () => {
+        setShowScrollHint(container.scrollWidth > container.clientWidth + 10);
+      };
+      checkOverflow();
+
+      const handleScroll = () => {
+        const atEnd = container.scrollLeft + container.clientWidth >= container.scrollWidth - 10;
+        setShowScrollHint(!atEnd && container.scrollWidth > container.clientWidth + 10);
+      };
+      container.addEventListener('scroll', handleScroll);
+      return () => container.removeEventListener('scroll', handleScroll);
+    }, [config.totalWidth]);
 
     const handleGoalClick = (goal: Goal) => {
       onGoalSelect?.(goal);
@@ -79,6 +108,7 @@ export const Timeline = forwardRef<HTMLDivElement, Props>(
           "
         >
           {/* Scrollable area */}
+          <div className="relative">
           <div
             ref={scrollContainerRef}
             className="
@@ -135,6 +165,11 @@ export const Timeline = forwardRef<HTMLDivElement, Props>(
                 </div>
               )}
             </div>
+          </div>
+          {/* Scroll hint fade on right edge */}
+          {showScrollHint && (
+            <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-background to-transparent" />
+          )}
           </div>
         </div>
 

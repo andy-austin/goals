@@ -43,6 +43,10 @@ export function Header() {
   const navItems = [
     { href: '/dashboard', label: t('dashboard'), icon: LayoutDashboard },
     { href: '/create', label: t('createGoal'), icon: PlusCircle },
+    ...(user ? [
+      { href: '/timeline', label: t('timeline'), icon: Clock },
+      { href: '/spaces', label: t('spaces'), icon: Users },
+    ] : []),
   ];
 
   const handleSignOut = async () => {
@@ -126,24 +130,6 @@ export function Header() {
                             <p className="truncate text-xs text-muted-foreground">{user.email}</p>
                           </div>
                         </div>
-                      </div>
-                      <div className="py-1">
-                        <Link
-                          href="/timeline"
-                          onClick={() => setUserMenuOpen(false)}
-                          className="flex w-full items-center gap-2 px-4 py-2 text-sm text-zinc-600 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:bg-zinc-800"
-                        >
-                          <Clock className="h-4 w-4" />
-                          {t('timeline')}
-                        </Link>
-                        <Link
-                          href="/spaces"
-                          onClick={() => setUserMenuOpen(false)}
-                          className="flex w-full items-center gap-2 px-4 py-2 text-sm text-zinc-600 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:bg-zinc-800"
-                        >
-                          <Users className="h-4 w-4" />
-                          {t('spaces')}
-                        </Link>
                       </div>
                       <div className="border-t border-zinc-200 dark:border-zinc-700">
                         <button
@@ -257,22 +243,6 @@ export function Header() {
             {!loading && (
               user ? (
                 <>
-                  <Link
-                    href="/timeline"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-base font-medium text-zinc-600 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:bg-zinc-800/50"
-                  >
-                    <Clock className="h-4 w-4" />
-                    {t('timeline')}
-                  </Link>
-                  <Link
-                    href="/spaces"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-base font-medium text-zinc-600 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:bg-zinc-800/50"
-                  >
-                    <Users className="h-4 w-4" />
-                    {t('spaces')}
-                  </Link>
                   <div className="border-t border-zinc-200 pt-1 mt-1 dark:border-zinc-700">
                     <button
                       type="button"
