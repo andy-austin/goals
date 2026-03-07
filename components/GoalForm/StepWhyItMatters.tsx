@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { Label, Textarea, AISuggestionChip } from '@/components/ui';
 import { useFormWizard } from '@/components/FormWizard';
 import { useAISuggestion } from '@/hooks';
+import { validateSMART } from '@/lib';
 import { SMARTValidationSummary } from './SMARTValidationSummary';
 import type { GoalFormInput } from '@/types';
 
@@ -39,10 +40,10 @@ export function StepWhyItMatters() {
     retry,
   } = useAISuggestion('whyItMatters');
 
-  // Validation
-  const isValid = useMemo(() => {
-    return whyItMatters.length >= MIN_LENGTH;
-  }, [whyItMatters]);
+  // Validation — on the final step, check overall SMART validation
+  const smartValidation = useMemo(() => validateSMART(data), [data]);
+  const isFieldValid = whyItMatters.length >= MIN_LENGTH;
+  const isValid = isFieldValid && smartValidation.isComplete;
 
   // Update step validation state
   useEffect(() => {
@@ -204,11 +205,9 @@ export function StepWhyItMatters() {
         </>
       )}
 
-      {isValid && (
-        <div className="pt-2 animate-in fade-in slide-in-from-bottom-4 duration-500">
-          <SMARTValidationSummary />
-        </div>
-      )}
+      <div className="pt-2 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <SMARTValidationSummary />
+      </div>
     </div>
   );
 }
