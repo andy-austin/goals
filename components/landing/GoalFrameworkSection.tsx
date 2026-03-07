@@ -34,7 +34,7 @@ export function GoalFrameworkSection() {
   const tPriority = useTranslations('landing.priority');
 
   return (
-    <section id="methodology" className="py-16 lg:py-20 bg-background">
+    <section id="methodology" className="py-16 lg:py-20 bg-muted/40">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* SMART Pillars */}
         <div className="text-center max-w-3xl mx-auto mb-12">

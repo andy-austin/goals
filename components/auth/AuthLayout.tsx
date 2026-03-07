@@ -53,8 +53,16 @@ export function AuthLayout({ children }: AuthLayoutProps) {
 
       {/* Form panel */}
       <div className="flex w-full lg:w-1/2 flex-col">
-        {/* Header */}
-        <header role="banner" className="flex items-center justify-between p-4 lg:p-6">
+        {/* Mobile branded header — visible only on mobile */}
+        <div className="lg:hidden bg-gradient-hero px-4 py-6 text-center">
+          <Link href="/" className="text-xl font-bold text-white">
+            {t('logo')}
+          </Link>
+          <p className="mt-1 text-sm text-white/70">{tAuth('brandingDescription')}</p>
+        </div>
+
+        {/* Desktop header */}
+        <header role="banner" className="hidden lg:flex items-center justify-between p-4 lg:p-6">
           <Link href="/" className="text-lg font-bold text-foreground">
             {t('logo')}
           </Link>
