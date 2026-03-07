@@ -46,11 +46,13 @@ test.describe('Drag and Drop Goal Reordering', () => {
       { name: 'locale', value: 'en', domain: 'localhost', path: '/' }
     ]);
     // Set up test data in localStorage BEFORE the page loads
+    // Also dismiss the drag onboarding tooltip so it doesn't interfere with drag handle selectors
     await page.addInitScript((goals) => {
       localStorage.setItem(
         'investment-goals-v1',
         JSON.stringify({ version: 1, goals })
       );
+      localStorage.setItem('fingoal_drag_tooltip_seen', 'true');
     }, testGoals);
     await page.goto('/dashboard');
   });

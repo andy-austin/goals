@@ -5,15 +5,9 @@ import { useTranslations } from 'next-intl';
 import { Label, Textarea, AISuggestionChip } from '@/components/ui';
 import { useFormWizard } from '@/components/FormWizard';
 import { useAISuggestion } from '@/hooks';
-import { validateSMART } from '@/lib';
+import { validateSMART, MIN_WHY_IT_MATTERS_LENGTH } from '@/lib';
 import { SMARTValidationSummary } from './SMARTValidationSummary';
 import type { GoalFormInput } from '@/types';
-
-// =============================================================================
-// Constants
-// =============================================================================
-
-const MIN_LENGTH = 10;
 
 // =============================================================================
 // Component
@@ -42,7 +36,7 @@ export function StepWhyItMatters() {
 
   // Validation — on the final step, check overall SMART validation
   const smartValidation = useMemo(() => validateSMART(data), [data]);
-  const isFieldValid = whyItMatters.length >= MIN_LENGTH;
+  const isFieldValid = whyItMatters.length >= MIN_WHY_IT_MATTERS_LENGTH;
   const isValid = isFieldValid && smartValidation.isComplete;
 
   // Update step validation state
@@ -113,11 +107,11 @@ export function StepWhyItMatters() {
           onChange={handleChange}
           rows={3}
           maxLength={300}
-          error={whyItMatters.length > 0 && whyItMatters.length < MIN_LENGTH}
+          error={whyItMatters.length > 0 && whyItMatters.length < MIN_WHY_IT_MATTERS_LENGTH}
         />
         <div className="flex items-center justify-between">
           <div>
-            {whyItMatters.length > 0 && whyItMatters.length < MIN_LENGTH && (
+            {whyItMatters.length > 0 && whyItMatters.length < MIN_WHY_IT_MATTERS_LENGTH && (
               <p className="text-sm text-error">
                 {t('whyError')}
               </p>
@@ -125,7 +119,7 @@ export function StepWhyItMatters() {
           </div>
           <span
             className={`text-xs ${
-              whyItMatters.length >= MIN_LENGTH
+              whyItMatters.length >= MIN_WHY_IT_MATTERS_LENGTH
                 ? 'text-success'
                 : 'text-muted-foreground'
             }`}

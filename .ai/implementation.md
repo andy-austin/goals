@@ -2,6 +2,32 @@
 
 ## Recently Completed
 
+### Phase 7: Code Quality & Refactors (#37, #39, #41, #43, #47, #48)
+Branch: `phase-7/code-quality-refactors`
+
+**#37 — Centralize validation constants**
+- `lib/validation.ts` — Added `MIN_TITLE_LENGTH`, `MIN_DESCRIPTION_LENGTH`, `MIN_WHY_IT_MATTERS_LENGTH`, `MIN_PASSWORD_LENGTH`
+- Updated consumers: `components/GoalForm/StepTitleDescription.tsx`, `components/GoalForm/StepWhyItMatters.tsx`, `components/Dashboard/EditGoalModal.tsx`
+
+**#39 — Remove hardcoded English from BUCKET_CONFIG**
+- `types/goal.ts` — Removed unused `label` and `description` fields from `BUCKET_CONFIG`
+- `types/goal.unit.test.ts` — Updated test assertions
+
+**#41 — Extract goalsReducer**
+- Created `context/goalsReducer.ts` — Contains `goalsReducer`, `GoalsState`, `GoalsAction`, `getNextPriorityForBucket`
+- `context/GoalsContext.tsx` — Imports from new file; re-exports for backward compat
+
+**#43 — Async storage pattern**
+- `lib/storage.ts` — Added `loadGoalsAsync()` and `saveGoalsAsync()` async wrappers
+- `context/GoalsContext.tsx` — Uses `saveGoalsAsync` for localStorage persistence
+
+**#47 — Standardize bucket styling with Tailwind utilities**
+- `types/goal.ts` — Added `classes` property to `BUCKET_CONFIG` with `text`, `bg`, `bgLight`, `border` Tailwind class strings
+- Replaced inline `style` props with Tailwind classes in: `app/dashboard/page.tsx`, `components/Dashboard/BucketSection.tsx`, `components/Dashboard/SummaryStats.tsx`, `components/GoalForm/TemplateSelector.tsx`, `components/GoalForm/SMARTValidationSummary.tsx`, `components/GoalForm/StepBucket.tsx`, `components/Timeline/GanttChart.tsx`, `components/Timeline/GanttRow.tsx`, `components/Timeline/TimelineGoalMarker.tsx`, `components/Timeline/TimelineGoalCluster.tsx`, `components/Timeline/TimelineGoalTooltip.tsx`
+
+**#48 — Externalize AI model configuration**
+- `app/api/ai/suggest/route.ts` — Model names read from `ANTHROPIC_MODEL` and `GEMINI_MODEL` env vars
+
 ### Issue #65 Review & E2E Test Coverage
 Reviewed the Family/Group Goal Sharing implementation (#65) and added missing E2E tests. Fixed hardcoded English strings that violated the i18n convention.
 

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslations } from 'next-intl';
 import { Goal, Bucket, Currency, CURRENCIES, BUCKETS } from '@/types';
+import { MIN_TITLE_LENGTH, MIN_DESCRIPTION_LENGTH, MIN_WHY_IT_MATTERS_LENGTH } from '@/lib/validation';
 import { useGoals } from '@/context';
 import { useToast } from '@/components/ui';
 import { Button, Input, Textarea, Label, Select, Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui';
@@ -68,19 +69,19 @@ export function EditGoalModal({ goal, isOpen, onClose }: EditGoalModalProps) {
   }, [isOpen, onClose]);
 
   // Validation
-  const titleError = title.length > 0 && title.length < 3;
-  const descriptionError = description.length > 0 && description.length < 20;
+  const titleError = title.length > 0 && title.length < MIN_TITLE_LENGTH;
+  const descriptionError = description.length > 0 && description.length < MIN_DESCRIPTION_LENGTH;
   const amountError = amount !== '' && (isNaN(Number(amount)) || Number(amount) <= 0);
   const dateError = targetDate !== '' && new Date(targetDate) <= new Date(new Date().toDateString());
-  const whyError = whyItMatters.length > 0 && whyItMatters.length < 10;
+  const whyError = whyItMatters.length > 0 && whyItMatters.length < MIN_WHY_IT_MATTERS_LENGTH;
 
   const isValid =
-    title.length >= 3 &&
-    description.length >= 20 &&
+    title.length >= MIN_TITLE_LENGTH &&
+    description.length >= MIN_DESCRIPTION_LENGTH &&
     Number(amount) > 0 &&
     targetDate !== '' &&
     new Date(targetDate) > new Date(new Date().toDateString()) &&
-    whyItMatters.length >= 10;
+    whyItMatters.length >= MIN_WHY_IT_MATTERS_LENGTH;
 
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(e.target as Node)) {

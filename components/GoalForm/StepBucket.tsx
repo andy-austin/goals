@@ -183,22 +183,14 @@ export function StepBucket() {
               onClick={() => handleSelect(bucket)}
               className={`relative flex items-start gap-4 rounded-xl border p-4 text-left transition-all cursor-pointer ${
                 isSelected
-                  ? 'border-[var(--bucket-color)] bg-[var(--bucket-bg)] ring-1 ring-[var(--bucket-color)]'
+                  ? `${config.classes.border} ${config.classes.bgLight} ring-1 ${config.classes.border}`
                   : 'border-border bg-card hover:border-border hover:bg-muted/50'
               }`}
-              style={
-                isSelected
-                  ? ({
-                      '--bucket-color': config.colorVar,
-                      '--bucket-bg': config.bgColorVar,
-                    } as React.CSSProperties)
-                  : undefined
-              }
             >
               <div
                 className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg ${
                   isSelected
-                    ? 'bg-background text-[var(--bucket-color)]'
+                    ? `bg-background ${config.classes.text}`
                     : 'bg-muted text-muted-foreground'
                 }`}
               >

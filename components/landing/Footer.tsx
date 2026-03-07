@@ -15,38 +15,82 @@ export function Footer() {
 
   const isLanding = pathname === '/';
 
+  const navLinks = isLanding
+    ? [
+        { href: '/dashboard', label: tHeader('dashboard') },
+        { href: '#methodology', label: tHeader('methodology') },
+        { href: '#calculator', label: tHeader('calculator') },
+        { href: '#features', label: tHeader('features') },
+      ]
+    : [
+        { href: '/dashboard', label: tNav('dashboard') },
+        { href: '/create', label: tNav('createGoal') },
+        { href: '/timeline', label: tNav('timeline') },
+      ];
+
+  const legalLinks = [
+    { href: '/privacy', label: t('privacy') },
+    { href: '/terms', label: t('terms') },
+    { href: '/disclosure', label: t('disclosure') },
+  ];
+
   return (
-    <footer className="py-12 bg-primary text-primary-foreground">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-lg bg-primary-foreground/10 flex items-center justify-center">
-              <TrendingUp className="w-5 h-5" />
+    <footer className="border-t border-border bg-muted/30">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        {/* Top: Logo + Link Columns */}
+        <div className="flex flex-col gap-8 sm:flex-row sm:justify-between">
+          {/* Brand */}
+          <div className="flex flex-col gap-3">
+            <Link href="/" className="flex items-center gap-2 text-foreground">
+              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+                <TrendingUp className="w-4 h-4 text-primary-foreground" />
+              </div>
+              <span className="text-lg font-bold">{tCommon('logo')}</span>
+            </Link>
+            <p className="text-sm text-muted-foreground max-w-[200px]">
+              {t('tagline')}
+            </p>
+          </div>
+
+          {/* Link Columns */}
+          <div className="flex gap-16 sm:gap-20">
+            {/* Product */}
+            <div className="flex flex-col gap-3">
+              <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                {t('product')}
+              </h3>
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
-            <span className="text-xl font-bold">{tCommon('logo')}</span>
-          </Link>
 
-          <nav className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-6">
-            {isLanding ? (
-              <>
-                <Link href="/dashboard" className="opacity-80 hover:opacity-100 transition-opacity">{tHeader('dashboard')}</Link>
-                <Link href="#methodology" className="opacity-80 hover:opacity-100 transition-opacity">{tHeader('methodology')}</Link>
-                <Link href="#calculator" className="opacity-80 hover:opacity-100 transition-opacity">{tHeader('calculator')}</Link>
-                <Link href="#features" className="opacity-80 hover:opacity-100 transition-opacity">{tHeader('features')}</Link>
-              </>
-            ) : (
-              <>
-                <Link href="/dashboard" className="opacity-80 hover:opacity-100 transition-opacity">{tNav('dashboard')}</Link>
-                <Link href="/create" className="opacity-80 hover:opacity-100 transition-opacity">{tNav('createGoal')}</Link>
-                <Link href="/timeline" className="opacity-80 hover:opacity-100 transition-opacity">{tNav('timeline')}</Link>
-              </>
-            )}
-            <Link href="/privacy" className="opacity-80 hover:opacity-100 transition-opacity">{t('privacy')}</Link>
-            <Link href="/terms" className="opacity-80 hover:opacity-100 transition-opacity">{t('terms')}</Link>
-            <Link href="/disclosure" className="opacity-80 hover:opacity-100 transition-opacity">{t('disclosure')}</Link>
-          </nav>
+            {/* Legal */}
+            <div className="flex flex-col gap-3">
+              <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                {t('legal')}
+              </h3>
+              {legalLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
 
-          <p className="text-sm opacity-70">
+        {/* Bottom: Copyright */}
+        <div className="mt-8 pt-6 border-t border-border">
+          <p className="text-xs text-muted-foreground">
             {t('rights', { year: currentYear })}
           </p>
         </div>

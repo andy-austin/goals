@@ -33,8 +33,7 @@ export const TimelineGoalMarker = forwardRef<HTMLDivElement, GoalMarkerProps>(
       >
         {/* Connector line */}
         <div
-          className="h-4 w-0.5"
-          style={{ backgroundColor: bucketConfig.colorVar }}
+          className={`h-4 w-0.5 ${bucketConfig.classes.bg}`}
         />
 
         {/* Goal marker button with tooltip */}
@@ -55,18 +54,14 @@ export const TimelineGoalMarker = forwardRef<HTMLDivElement, GoalMarkerProps>(
               cursor-pointer transition-all
               hover:scale-105 hover:shadow-md
               focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
+              ${bucketConfig.classes.bgLight} ${bucketConfig.classes.border}
             `}
-            style={{
-              backgroundColor: bucketConfig.bgColorVar,
-              borderColor: bucketConfig.colorVar,
-            }}
             aria-label={`Goal: ${goal.title}`}
             aria-describedby={showTooltip ? tooltipId : undefined}
           >
             {/* Goal title (truncated) */}
             <span
-              className="text-xs font-medium max-w-[100px] truncate"
-              style={{ color: bucketConfig.colorVar }}
+              className={`text-xs font-medium max-w-[100px] truncate ${bucketConfig.classes.text}`}
             >
               {goal.title}
             </span>

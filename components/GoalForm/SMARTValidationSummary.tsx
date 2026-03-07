@@ -98,11 +98,7 @@ export function SMARTValidationSummary() {
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-medium text-muted-foreground uppercase">{t('goalPreview')}</span>
             <span
-              className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full"
-              style={{
-                backgroundColor: BUCKET_CONFIG[data.bucket].bgColorVar,
-                color: BUCKET_CONFIG[data.bucket].colorVar
-              }}
+              className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${BUCKET_CONFIG[data.bucket].classes.bgLight} ${BUCKET_CONFIG[data.bucket].classes.text}`}
             >
               {tBuckets(`${data.bucket}.name`)}
             </span>

@@ -1,19 +1,28 @@
 import { GoalFormInput, SMARTValidation } from '@/types';
 
+// =============================================================================
+// Validation Constants (single source of truth)
+// =============================================================================
+
+export const MIN_TITLE_LENGTH = 3;
+export const MIN_DESCRIPTION_LENGTH = 20;
+export const MIN_WHY_IT_MATTERS_LENGTH = 10;
+export const MIN_PASSWORD_LENGTH = 6;
+
 /**
  * Validates a goal against SMART criteria
- * 
- * Specific: Title > 3 chars, Description > 20 chars
+ *
+ * Specific: Title >= MIN_TITLE_LENGTH, Description >= MIN_DESCRIPTION_LENGTH
  * Measurable: Amount > 0
  * Achievable: (Placeholder) Always true for now
- * Relevant: Why it matters > 10 chars
+ * Relevant: Why it matters >= MIN_WHY_IT_MATTERS_LENGTH
  * Time-bound: Date in the future
  */
 export function validateSMART(data: Partial<GoalFormInput>): SMARTValidation {
   const { title, description, amount, targetDate, whyItMatters } = data;
 
   const specific = {
-    isValid: (title?.length || 0) >= 3 && (description?.length || 0) >= 20,
+    isValid: (title?.length || 0) >= MIN_TITLE_LENGTH && (description?.length || 0) >= MIN_DESCRIPTION_LENGTH,
     message: 'Title (3+) and description (20+) required',
   };
 
@@ -28,7 +37,7 @@ export function validateSMART(data: Partial<GoalFormInput>): SMARTValidation {
   };
 
   const relevant = {
-    isValid: (whyItMatters?.length || 0) >= 10,
+    isValid: (whyItMatters?.length || 0) >= MIN_WHY_IT_MATTERS_LENGTH,
     message: 'Motivation statement (10+) required',
   };
 

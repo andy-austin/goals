@@ -298,13 +298,12 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
 
                         {/* Bar - vertically centered with flex */}
                         <div
-                          className="absolute h-5 sm:h-6 rounded cursor-pointer transition-all"
+                          className={`absolute h-5 sm:h-6 rounded cursor-pointer transition-all ${bucketConfig.classes.bg}`}
                           style={{
                             left: barStartX,
                             width: barWidth,
                             top: '50%',
                             transform: `translateY(-50%) ${isActive ? 'scaleY(1.15)' : 'scaleY(1)'}`,
-                            backgroundColor: bucketConfig.colorVar,
                             opacity: isActive ? 1 : 0.85,
                           }}
                           onClick={(e) => {
