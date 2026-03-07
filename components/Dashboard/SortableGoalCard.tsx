@@ -20,7 +20,7 @@ function DragHandle({ listeners, attributes }: DragHandleProps) {
   return (
     <button
       type="button"
-      className="flex h-8 w-6 cursor-grab items-center justify-center rounded text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-primary/50 active:cursor-grabbing dark:hover:bg-zinc-800 dark:hover:text-zinc-300"
+      className="flex min-h-[44px] w-8 cursor-grab items-center justify-center rounded text-muted-foreground hover:bg-muted hover:text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 active:cursor-grabbing"
       aria-label="Drag to reorder"
       {...attributes}
       {...listeners}

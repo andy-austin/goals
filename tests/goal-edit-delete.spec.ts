@@ -86,7 +86,8 @@ test.describe('Delete goal', () => {
     const confirmBtn = page.getByRole('button', { name: /delete/i }).last();
     await confirmBtn.click();
 
-    await expect(page.getByRole('heading', { name: 'Emergency Fund' })).not.toBeVisible();
+    // After deleting the only goal, the empty state template view should appear
+    await expect(page.getByRole('heading', { name: /no goals yet/i })).toBeVisible();
   });
 
   test('shows a success toast after deletion', async ({ page }) => {

@@ -110,7 +110,7 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
             </div>
 
             {/* Priority Badge and Actions */}
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-0.5 flex-wrap justify-end">
               <span className="flex h-6 w-6 items-center justify-center rounded-full bg-muted text-xs font-medium text-muted-foreground mr-1">
                 #{goal.priority}
               </span>
@@ -122,7 +122,7 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
                     <button
                       type="button"
                       onClick={() => setIsCheckInModalOpen(true)}
-                      className="rounded p-1 text-muted-foreground hover:bg-success/10 hover:text-success transition-colors cursor-pointer"
+                      className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded p-2 text-muted-foreground hover:bg-success/10 hover:text-success transition-colors cursor-pointer"
                       aria-label={t('logDeposit')}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -136,7 +136,7 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
                     <button
                       type="button"
                       onClick={() => setIsTrackingModalOpen(true)}
-                      className="rounded p-1 text-muted-foreground hover:bg-success/10 hover:text-success transition-colors cursor-pointer"
+                      className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded p-2 text-muted-foreground hover:bg-success/10 hover:text-success transition-colors cursor-pointer"
                       aria-label={tTracking('title')}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -150,7 +150,7 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
                     <button
                       type="button"
                       onClick={() => setIsCalendarModalOpen(true)}
-                      className="rounded p-1 text-muted-foreground hover:bg-warning/10 hover:text-warning transition-colors cursor-pointer"
+                      className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded p-2 text-muted-foreground hover:bg-warning/10 hover:text-warning transition-colors cursor-pointer"
                       aria-label={tCalendar('title')}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -164,7 +164,7 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
                     <button
                       type="button"
                       onClick={() => setIsShareModalOpen(true)}
-                      className="rounded p-1 text-muted-foreground hover:bg-info/10 hover:text-info transition-colors cursor-pointer"
+                      className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded p-2 text-muted-foreground hover:bg-info/10 hover:text-info transition-colors cursor-pointer"
                       aria-label={commonT('share')}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -180,7 +180,7 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
                     <button
                       type="button"
                       onClick={() => setIsEditModalOpen(true)}
-                      className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors cursor-pointer"
+                      className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors cursor-pointer"
                       aria-label={commonT('edit')}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -195,7 +195,7 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
                     <button
                       type="button"
                       onClick={handleComplete}
-                      className="rounded p-1 text-muted-foreground hover:bg-success/10 hover:text-success transition-colors cursor-pointer"
+                      className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded p-2 text-muted-foreground hover:bg-success/10 hover:text-success transition-colors cursor-pointer"
                       aria-label={t('markComplete')}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -211,7 +211,7 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
                   <button
                     type="button"
                     onClick={handleRestore}
-                    className="rounded p-1 text-muted-foreground hover:bg-info/10 hover:text-info transition-colors cursor-pointer"
+                    className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded p-2 text-muted-foreground hover:bg-info/10 hover:text-info transition-colors cursor-pointer"
                     aria-label={t('reactivate')}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -227,7 +227,7 @@ export const GoalCard = forwardRef<HTMLDivElement, GoalCardProps>(
                 <button
                   type="button"
                   onClick={handleDeleteClick}
-                  className="rounded p-1 text-muted-foreground hover:bg-error/10 hover:text-error transition-colors cursor-pointer"
+                  className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded p-2 text-muted-foreground hover:bg-error/10 hover:text-error transition-colors cursor-pointer"
                   aria-label={commonT('delete')}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

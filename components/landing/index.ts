@@ -4,5 +4,6 @@ export { MethodologySection } from './MethodologySection';
 export { GoalCalculator } from './GoalCalculator';
 export { WhyDocumentSection } from './WhyDocumentSection';
 export { PriorityFeature } from './PriorityFeature';
+export { GoalFrameworkSection } from './GoalFrameworkSection';
 export { CTASection } from './CTASection';
 export { Footer } from './Footer';

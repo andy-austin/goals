@@ -342,9 +342,9 @@ test.describe('Cross-Page Navigation Flow', () => {
     await page.goto('/dashboard');
 
     await expect(page.getByRole('heading', { name: /no goals yet/i })).toBeVisible();
-    // Use the CTA link in the empty state (not the nav link)
-    await page.getByRole('main').getByRole('link', { name: /create goal/i }).click();
-    await expect(page).toHaveURL('/create');
+    // Use a template card in the empty state (links to /create with template param)
+    await page.getByRole('main').getByRole('link', { name: /create goal/i }).first().click();
+    await expect(page).toHaveURL(/\/create/);
   });
 
   test('timeline empty state leads to create page', async ({ page }) => {
@@ -357,8 +357,8 @@ test.describe('Cross-Page Navigation Flow', () => {
     await page.goto('/timeline');
 
     await expect(page.getByRole('heading', { name: /no goals yet/i })).toBeVisible();
-    // Use the CTA link in the empty state (not the nav link)
-    await page.getByRole('main').getByRole('link', { name: /create goal/i }).click();
-    await expect(page).toHaveURL('/create');
+    // Use a template card in the empty state (links to /create with template param)
+    await page.getByRole('main').getByRole('link', { name: /create goal/i }).first().click();
+    await expect(page).toHaveURL(/\/create/);
   });
 });

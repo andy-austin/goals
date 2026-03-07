@@ -61,20 +61,20 @@ Core features that round out the product.
 Design and interaction improvements.
 
 - [x] **#94** — [Promote Timeline and Spaces to top-level navigation](https://github.com/andy-austin/goals/issues/94) `medium` — *Done (create-service-client branch)*
-- [ ] **#93** — [Increase GoalCard action button touch targets for mobile](https://github.com/andy-austin/goals/issues/93) `bug` `medium`
-  - Action buttons are too small on mobile (below 44px tap target)
-- [ ] **#92** — [Redesign empty dashboard state with goal templates](https://github.com/andy-austin/goals/issues/92) `medium` `design`
-  - Replace plain empty state with template-driven onboarding
-- [ ] **#91** — [Redesign auth pages with split layout and branding](https://github.com/andy-austin/goals/issues/91) `medium` `design`
-  - Modern split-screen login/signup with branding panel
-- [ ] **#95** — [Convert cookie consent to non-blocking bottom banner](https://github.com/andy-austin/goals/issues/95) `medium`
-  - Current modal blocks interaction; switch to a passive bottom bar
-- [ ] **#96** — [Improve language switcher with text labels and active state](https://github.com/andy-austin/goals/issues/96) `medium` `design`
-  - Add labels ("English" / "Espanol") instead of flag-only buttons
-- [ ] **#97** — [Make calculator result sticky on mobile](https://github.com/andy-austin/goals/issues/97) `medium`
-  - Results card scrolls out of view on mobile while editing inputs
-- [ ] **#98** — [Shorten landing page — consolidate sections](https://github.com/andy-austin/goals/issues/98) `medium` `design`
-  - Landing page is too long; merge or remove redundant sections
+- [x] **#93** — [Increase GoalCard action button touch targets for mobile](https://github.com/andy-austin/goals/issues/93) `bug` `medium` — *Done (phase-4/ux-polish branch)*
+  - All 8 action buttons + drag handle now meet 44px minimum tap target standard
+- [x] **#92** — [Redesign empty dashboard state with goal templates](https://github.com/andy-austin/goals/issues/92) `medium` `design` — *Done (phase-4/ux-polish branch)*
+  - Template-driven onboarding grid with 3 templates (one per bucket) + "start from scratch" option
+- [x] **#91** — [Redesign auth pages with split layout and branding](https://github.com/andy-austin/goals/issues/91) `medium` `design` — *Done (phase-4/ux-polish branch)*
+  - Split-screen layout: branding panel (left) + form (right); responsive (stacked on mobile)
+- [x] **#95** — [Convert cookie consent to non-blocking bottom banner](https://github.com/andy-austin/goals/issues/95) `medium` — *Already done*
+  - Was already implemented as a non-blocking fixed bottom bar; no changes needed
+- [x] **#96** — [Improve language switcher with text labels and active state](https://github.com/andy-austin/goals/issues/96) `medium` `design` — *Done (phase-4/ux-polish branch)*
+  - Text labels ("English" / "Espanol") with active state highlight using primary color
+- [x] **#97** — [Make calculator result sticky on mobile](https://github.com/andy-austin/goals/issues/97) `medium` — *Done (phase-4/ux-polish branch)*
+  - Results card uses `sticky top-4` on mobile, `static` on desktop
+- [x] **#98** — [Shorten landing page — consolidate sections](https://github.com/andy-austin/goals/issues/98) `medium` `design` — *Done (phase-4/ux-polish branch)*
+  - Merged MethodologySection + PriorityFeature into GoalFrameworkSection; removed WhyDocumentSection
 
 ---
 
@@ -99,3 +99,4 @@ Low-priority enhancements for future sprints.
 - **#94** is implemented but not yet merged to master.
 - **Phase 2** is complete on `phase-2/monetization-foundation` branch (all 5 issues done).
 - **Phase 3** is complete on `phase-3/feature-completeness` branch (all 5 issues done). #53 and #66 were previously implemented; #52, #54, #55 implemented in this branch.
+- **Phase 4** is complete on `phase-4/ux-polish` branch (all 8 issues done). #95 was already implemented; #91, #92, #93, #96, #97, #98 implemented in this branch.
