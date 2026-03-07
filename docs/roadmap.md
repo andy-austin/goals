@@ -139,6 +139,20 @@ Technical debt cleanup and architecture improvements.
 
 ---
 
+## Phase 8: Design Polish
+
+Visual refinements and UX improvements identified during design review.
+
+- [ ] **#116** — [Reduce language switcher visual weight in header](https://github.com/andy-austin/goals/issues/116) `design` `medium`
+- [ ] **#117** — [Alternate section backgrounds on landing page to reduce visual fatigue](https://github.com/andy-austin/goals/issues/117) `design` `medium`
+- [ ] **#118** — [Add branded header to auth pages on mobile](https://github.com/andy-austin/goals/issues/118) `design` `mobile`
+- [ ] **#119** — [Improve "start from scratch" button styling on empty dashboard](https://github.com/andy-austin/goals/issues/119) `design` `low`
+- [ ] **#120** — [Improve "start from scratch" card layout on create page](https://github.com/andy-austin/goals/issues/120) `design` `low`
+- [ ] **#121** — [Simplify bottom CTA section on landing page](https://github.com/andy-austin/goals/issues/121) `design` `low`
+- [ ] **#122** — [Fix form wizard step indicator spacing on desktop](https://github.com/andy-austin/goals/issues/122) `design` `low`
+
+---
+
 ## Notes
 
 - **Phase 1** is complete on `phase-1/bug-fixes-core-ux` branch (all 5 issues done).
