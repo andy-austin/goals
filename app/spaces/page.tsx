@@ -12,6 +12,7 @@ import { useAuth } from '@/context';
 import { Button } from '@/components/ui/Button';
 import { SpaceCard } from '@/components/Spaces/SpaceCard';
 import { CreateSpaceModal } from '@/components/Spaces/CreateSpaceModal';
+import { SpaceCardSkeleton } from '@/components/Spaces/SpaceCardSkeleton';
 
 const PlusIcon = () => (
   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -70,8 +71,8 @@ export default function SpacesPage() {
       {/* Spaces list */}
       {loading ? (
         <div className="space-y-3">
-          {[1, 2].map((i) => (
-            <div key={i} className="h-20 rounded-lg bg-secondary animate-pulse" />
+          {[1, 2, 3].map((i) => (
+            <SpaceCardSkeleton key={i} />
           ))}
         </div>
       ) : spaces.length === 0 ? (

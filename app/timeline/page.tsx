@@ -10,7 +10,7 @@ import type { Goal } from '@/types';
 import { formatCurrency, formatDate } from '@/types';
 
 export default function TimelinePage() {
-  const { goals } = useGoals();
+  const { goals, isLoading } = useGoals();
   const [zoomLevel, setZoomLevel] = useState<ZoomLevel>('all');
   const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null);
   const t = useTranslations('timeline');
@@ -32,7 +32,22 @@ export default function TimelinePage() {
       </div>
 
       {/* Timeline or Empty State */}
-      {goals.length === 0 ? (
+      {isLoading ? (
+        <div className="space-y-4">
+          {/* Header skeleton */}
+          <div className="h-9 w-48 animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800" />
+          {/* Gantt rows skeleton */}
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="flex items-center gap-4">
+              <div className="h-8 w-32 animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800" />
+              <div
+                className="h-8 animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800"
+                style={{ width: `${30 + i * 20}%`, marginLeft: `${i * 5}%` }}
+              />
+            </div>
+          ))}
+        </div>
+      ) : goals.length === 0 ? (
         <Card className="p-8 text-center">
           <div className="mx-auto max-w-sm">
             <div className="mb-4 text-4xl">📅</div>
