@@ -323,6 +323,55 @@ Design and interaction improvements across the application.
 
 ---
 
+### Phase 5: Nice to Have (#99, #100, #101, #102, #103, #56, #57, #67)
+Low-priority enhancements: skeleton loaders, mobile step indicator, bucket persistence, footer nav, drag tooltip, educational content, savings strategies, currency exchange.
+
+**New files created:**
+- `lib/education/types.ts` — `InvestmentInstrument` and `RiskLevel` types
+- `lib/education/instruments.ts` — 14-instrument catalog across 3 buckets with `getInstrumentsForBucket()`
+- `lib/education/index.ts` — Barrel export
+- `lib/strategies/types.ts` — `SavingsStrategy` and `StrategyStep` types
+- `lib/strategies/catalog.ts` — 6 strategy playbooks with `STRATEGIES_CATALOG` and `getStrategyById()`
+- `lib/strategies/index.ts` — Barrel export
+- `lib/exchange/types.ts` — `ExchangeRates` and `ExchangeRateState` types
+- `lib/exchange/index.ts` — Barrel export
+- `app/api/exchange/route.ts` — Frankfurter API proxy with 12h revalidation
+- `hooks/useExchangeRates.ts` — Exchange rate hook with localStorage caching and `convert()` function
+- `components/Education/InstrumentCard.tsx` — Expandable instrument card with risk badge and pros/cons
+- `components/Education/BucketEducationPanel.tsx` — Dismissible per-bucket education panel
+- `components/Education/index.ts` — Barrel export
+- `components/Strategies/StrategyCard.tsx` — Expandable strategy card with numbered steps
+- `components/Strategies/StrategiesPanel.tsx` — Dismissible strategies panel for dashboard
+- `components/Strategies/index.ts` — Barrel export
+- `components/Dashboard/CurrencyDisplay.tsx` — Converted amount display component
+
+**Modified files:**
+- `components/Dashboard/BucketSection.tsx` — (#101) localStorage persistence for collapse state; (#103) one-time drag tooltip with auto-dismiss; (#56) BucketEducationPanel integration
+- `components/Dashboard/SortableGoalCard.tsx` — (#103) hover:scale-110 animation on drag handle
+- `components/FormWizard/StepIndicator.tsx` — (#100) Compact mobile step bar with dots/connectors/labels; replaced hardcoded zinc colors with design tokens
+- `components/landing/Footer.tsx` — (#102) Context-aware: shows app nav on non-landing pages; uses `usePathname()` to detect route
+- `app/dashboard/page.tsx` — (#99) Skeleton with design tokens; (#57) StrategiesPanel integration
+- `app/dashboard/layout.tsx` — (#102) Added Footer
+- `app/create/layout.tsx` — (#102) Added Footer
+- `app/timeline/layout.tsx` — (#102) Added Footer
+- `app/timeline/page.tsx` — (#99) Improved timeline skeleton with zoom controls and gantt structure
+- `components/Dashboard/index.ts` — Added CurrencyDisplay export
+- `components/index.ts` — Added Education barrel export
+- `hooks/index.ts` — Added useExchangeRates export
+- `lib/index.ts` — Added exchange module export
+- `messages/en.json` — Added dragTooltip, education, strategies i18n keys
+- `messages/es.json` — Same keys in Spanish
+- `docs/roadmap.md` — Phase 5 marked complete
+
+**Architecture:**
+- Education system: Static instrument catalog in `lib/education/instruments.ts` with i18n keys; per-bucket dismissible panels in BucketSection
+- Strategies system: Static catalog of 6 playbooks in `lib/strategies/catalog.ts`; collapsible dashboard panel
+- Exchange rates: Frankfurter API (free, no key) proxied through `/api/exchange` with Next.js 12h revalidation; client-side caching in localStorage with 12h TTL; `convert()` converts through USD base rate
+- Footer: Now context-aware — detects landing page via `usePathname()` and shows marketing anchors vs app nav links
+- Drag tooltip: Single `fingoal_drag_tooltip_seen` localStorage key; shows once on first bucket with 2+ goals; auto-dismisses after 5s
+
+---
+
 ## Next Steps
 - #68: Personal Data Privacy Consent (Legal Compliance) — should ship alongside auth
-- #67: Currency Exchange Rate Display
+- All roadmap phases (1-5) are now complete

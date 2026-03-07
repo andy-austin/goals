@@ -82,14 +82,22 @@ Design and interaction improvements.
 
 Low-priority enhancements for future sprints.
 
-- [ ] **#99** — [Add skeleton loaders for page transitions](https://github.com/andy-austin/goals/issues/99) `low`
-- [ ] **#100** — [Improve mobile form wizard step indicator](https://github.com/andy-austin/goals/issues/100) `low`
-- [ ] **#101** — [Persist bucket section collapse state](https://github.com/andy-austin/goals/issues/101) `low`
-- [ ] **#102** — [Context-aware footer navigation links](https://github.com/andy-austin/goals/issues/102) `low`
-- [ ] **#103** — [Add drag-to-reorder onboarding tooltip](https://github.com/andy-austin/goals/issues/103) `low`
-- [ ] **#56** — [Investment Instrument Suggestions (Educational)](https://github.com/andy-austin/goals/issues/56) `low`
-- [ ] **#57** — [Savings Strategies & Playbooks](https://github.com/andy-austin/goals/issues/57) `low`
-- [ ] **#67** — [Currency Exchange Rate Display](https://github.com/andy-austin/goals/issues/67) `low`
+- [x] **#99** — [Add skeleton loaders for page transitions](https://github.com/andy-austin/goals/issues/99) `low` — *Done (phase-5/nice-to-have branch)*
+  - Improved dashboard/timeline skeletons with design tokens instead of hardcoded colors
+- [x] **#100** — [Improve mobile form wizard step indicator](https://github.com/andy-austin/goals/issues/100) `low` — *Done (phase-5/nice-to-have branch)*
+  - Compact mobile step bar with numbered dots, connectors, and adjacent step labels
+- [x] **#101** — [Persist bucket section collapse state](https://github.com/andy-austin/goals/issues/101) `low` — *Done (phase-5/nice-to-have branch)*
+  - Collapse state persisted in localStorage per bucket key
+- [x] **#102** — [Context-aware footer navigation links](https://github.com/andy-austin/goals/issues/102) `low` — *Done (phase-5/nice-to-have branch)*
+  - Footer shows app nav links on non-landing pages; added to dashboard, create, timeline layouts
+- [x] **#103** — [Add drag-to-reorder onboarding tooltip](https://github.com/andy-austin/goals/issues/103) `low` — *Done (phase-5/nice-to-have branch)*
+  - One-time tooltip on first bucket with 2+ goals; auto-dismiss after 5s; hover animation on drag handle
+- [x] **#56** — [Investment Instrument Suggestions (Educational)](https://github.com/andy-austin/goals/issues/56) `low` — *Done (phase-5/nice-to-have branch)*
+  - 14 instruments across 3 buckets with risk levels, pros/cons, educational disclaimer; dismissible per-bucket panel
+- [x] **#57** — [Savings Strategies & Playbooks](https://github.com/andy-austin/goals/issues/57) `low` — *Done (phase-5/nice-to-have branch)*
+  - 6 strategy playbooks (3-bucket, snowball, avalanche, automate, setbacks, monthly review); collapsible dashboard panel
+- [x] **#67** — [Currency Exchange Rate Display](https://github.com/andy-austin/goals/issues/67) `low` — *Done (phase-5/nice-to-have branch)*
+  - Frankfurter API integration with 12h caching; useExchangeRates hook; CurrencyDisplay component
 
 ---
 
@@ -100,3 +108,4 @@ Low-priority enhancements for future sprints.
 - **Phase 2** is complete on `phase-2/monetization-foundation` branch (all 5 issues done).
 - **Phase 3** is complete on `phase-3/feature-completeness` branch (all 5 issues done). #53 and #66 were previously implemented; #52, #54, #55 implemented in this branch.
 - **Phase 4** is complete on `phase-4/ux-polish` branch (all 8 issues done). #95 was already implemented; #91, #92, #93, #96, #97, #98 implemented in this branch.
+- **Phase 5** is complete on `phase-5/nice-to-have` branch (all 8 issues done).
