@@ -211,6 +211,48 @@ Link financial goals to investment vehicles (e.g., a Vanguard index fund) and tr
 
 ---
 
+### Phase 2: Monetization Foundation (#58, #59, #60, #61, #62)
+Complete affiliate monetization infrastructure: recommendation engine, post-goal recommendation screen, dashboard widget, compliance disclosure, and analytics tracking.
+
+**New files created:**
+- `lib/recommendations/types.ts` — `FinancialProduct`, `Recommendation`, `TrackingContext` types
+- `lib/recommendations/products.ts` — Product catalog with 10 financial products across Safety/Growth/Dream buckets
+- `lib/recommendations/engine.ts` — `getRecommendations(goal)` algorithm (bucket+timeline filtering, payout sorting), `estimateInterest()` utility
+- `lib/recommendations/tracking.ts` — `buildAffiliateUrl()` (UTM params), `trackRecommendationEvent()` (Vercel Analytics integration)
+- `lib/recommendations/index.ts` — Barrel export
+- `hooks/useRecommendations.ts` — `useRecommendations(goal)` and `useRecommendationsForGoals(goals)` hooks
+- `components/ui/AffiliateDisclosure.tsx` — FTC disclosure component with `inline` and `banner` variants
+- `components/Recommendations/ProductCard.tsx` — Reusable product card with features, APY badge, interest estimate, tracked affiliate link
+- `components/Recommendations/RecommendationScreen.tsx` — Full post-goal-creation screen with primary recommendation + alternatives
+- `components/Recommendations/RecommendationsWidget.tsx` — Collapsible dashboard widget showing recommended account per goal (up to 3)
+- `components/Recommendations/index.ts` — Barrel export
+- `app/disclosure/page.tsx` — Dedicated FTC affiliate disclosure page
+- `app/disclosure/layout.tsx` — Disclosure page layout with Header
+
+**Modified files:**
+- `app/create/page.tsx` — After goal creation, shows `RecommendationScreen` instead of immediate redirect to dashboard
+- `app/dashboard/page.tsx` — Added `RecommendationsWidget` between SummaryStats and BucketSections
+- `components/landing/Footer.tsx` — Added "Affiliate Disclosure" link to `/disclosure`
+- `components/index.ts` — Added Recommendations barrel export
+- `components/ui/index.ts` — Added `AffiliateDisclosure` export
+- `lib/index.ts` — Added recommendations barrel export
+- `messages/en.json` — Added `recommendations.*` and `disclosure.*` i18n keys; added `landing.footer.disclosure`
+- `messages/es.json` — Same keys in Spanish
+- `tests/goal-creation.spec.ts` — Updated to handle recommendation screen after goal creation
+- `tests/user-journey.spec.ts` — Updated 4 tests to click through recommendation screen before asserting dashboard URL
+- `tests/spaces.spec.ts` — Updated visibility test to handle recommendation screen
+
+**Architecture:**
+- **Recommendation engine** is a pure function (`getRecommendations`): filters products by bucket, then by timeline (months until target date), sorts by estimated payout, returns top 3
+- **Product catalog** is a static array in `products.ts` — easy to add/remove products
+- **Affiliate URLs** include UTM parameters: `utm_source=fingoal`, `utm_medium=affiliate`, `utm_campaign={bucket}_bucket`, `utm_content={placement}_{position}`
+- **Tracking events** use Vercel Analytics `va()` if available; silently fail if not
+- **Disclosure** is FTC-compliant: inline near all affiliate links, banner variant for larger contexts, dedicated `/disclosure` page, footer link on landing page
+- **Dashboard widget** is dismissible; dismissal persists in `localStorage` (`fingoal_recommendations_dismissed`)
+- **Post-goal screen** shows after every successful goal creation; users can skip or go to dashboard
+
+---
+
 ## Next Steps
 - #68: Personal Data Privacy Consent (Legal Compliance) — should ship alongside auth
 - #52: Progress Tracking + Savings Calculator

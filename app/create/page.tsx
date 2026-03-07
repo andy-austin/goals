@@ -3,11 +3,13 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { FormWizard, FormStep, StepTitleDescription, StepAmountCurrency, StepTargetDate, StepBucket, StepWhyItMatters, TemplateSelector, Button, Card, CardContent, Tooltip } from '@/components';
+import { FormWizard, FormStep, StepTitleDescription, StepAmountCurrency, StepTargetDate, StepBucket, StepWhyItMatters, TemplateSelector, Button, Card, CardContent, Tooltip, RecommendationScreen } from '@/components';
 import { useGoals } from '@/context';
 import { validateSMART } from '@/lib';
-import type { GoalFormInput, GoalTemplate, Currency } from '@/types';
+import { getRecommendations } from '@/lib/recommendations/engine';
+import type { GoalFormInput, GoalTemplate, Currency, Goal } from '@/types';
 import { CURRENCIES } from '@/types';
+import type { Recommendation } from '@/lib/recommendations/types';
 
 // =============================================================================
 // Main Page Component
@@ -20,9 +22,11 @@ export default function CreateGoalPage() {
   const { addGoal } = useGoals();
   
   // State for wizard mode and initial data
-  const [mode, setMode] = useState<'selection' | 'wizard'>('selection');
+  const [mode, setMode] = useState<'selection' | 'wizard' | 'recommendation'>('selection');
   const [initialData, setInitialData] = useState<Partial<GoalFormInput>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [createdGoal, setCreatedGoal] = useState<Goal | null>(null);
+  const [recommendation, setRecommendation] = useState<Recommendation | null>(null);
 
   // Initialize from URL params if present
   useEffect(() => {
@@ -98,7 +102,7 @@ export default function CreateGoalPage() {
 
     // Simulate a delay for UX feedback
     setTimeout(() => {
-      addGoal({
+      const newGoal = addGoal({
         title: data.title!,
         description: data.description!,
         amount: data.amount!,
@@ -111,15 +115,34 @@ export default function CreateGoalPage() {
       });
 
       setIsSubmitting(false);
-      router.push('/dashboard');
+
+      // Try to show recommendation screen
+      const rec = getRecommendations(newGoal);
+      if (rec) {
+        setCreatedGoal(newGoal);
+        setRecommendation(rec);
+        setMode('recommendation');
+      } else {
+        router.push('/dashboard');
+      }
     }, 800);
   };
+
+  if (mode === 'recommendation' && createdGoal && recommendation) {
+    return (
+      <RecommendationScreen
+        goal={createdGoal}
+        recommendation={recommendation}
+        onSkip={() => router.push('/dashboard')}
+      />
+    );
+  }
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-          {mode === 'wizard' ? t('createTitle') : t('createTitle')} 
+          {mode === 'wizard' ? t('createTitle') : t('createTitle')}
           {/* Note: Could have different titles for selection screen */}
         </h1>
         <p className="mt-2 text-zinc-600 dark:text-zinc-400">

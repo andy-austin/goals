@@ -18,3 +18,6 @@ export * from './Timeline';
 
 // Spaces Components
 export * from './Spaces';
+
+// Recommendations Components
+export * from './Recommendations';

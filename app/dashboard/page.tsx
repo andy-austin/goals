@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useGoals } from '@/context';
-import { Button, Card, BucketSection, SummaryStats } from '@/components';
+import { Button, Card, BucketSection, SummaryStats, RecommendationsWidget } from '@/components';
 import { SummaryStatsSkeleton } from '@/components/Dashboard/SummaryStatsSkeleton';
 import { GoalCardSkeleton } from '@/components/Dashboard/GoalCardSkeleton';
 import { BUCKETS } from '@/types';
@@ -49,6 +49,9 @@ export default function DashboardPage() {
 
       {/* Summary Stats */}
       {isLoading ? <SummaryStatsSkeleton /> : <SummaryStats goals={goals} totalAmount={totalAmount} />}
+
+      {/* Recommendations Widget */}
+      {!isLoading && totalGoals > 0 && <RecommendationsWidget goals={goals} />}
 
       {/* Goals by Bucket */}
       {isLoading ? (

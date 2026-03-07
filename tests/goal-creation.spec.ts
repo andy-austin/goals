@@ -193,7 +193,10 @@ test.describe('Goal Creation - Complete Flow', () => {
     // Complete the goal (button text is just "Create" on the final step)
     await page.getByRole('button', { name: 'Create', exact: true }).click();
 
-    // Should redirect to dashboard
+    // Recommendation screen appears after goal creation — skip to dashboard
+    await expect(page.getByText(/goal created/i)).toBeVisible();
+    await page.getByRole('button', { name: /go to dashboard/i }).click();
+
     await expect(page).toHaveURL('/dashboard');
 
     // Goal should appear on dashboard (use heading role to be specific)

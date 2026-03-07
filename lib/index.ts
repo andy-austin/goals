@@ -4,3 +4,4 @@ export * from './templates';
 export * from './utils';
 export * from './consent';
 export * from './tracking';
+export * from './recommendations';

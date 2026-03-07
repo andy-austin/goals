@@ -26,16 +26,16 @@ Critical bugs and UX gaps affecting every user session.
 
 Revenue-generating features. Ship compliance (#61) before or alongside recommendations.
 
-- [ ] **#58** — [Recommendation Engine: Financial Products by Bucket](https://github.com/andy-austin/goals/issues/58) `high` `monetization`
-  - Core engine that maps bucket types to relevant financial products
-- [ ] **#59** — [Post-Goal Creation Recommendation Screen](https://github.com/andy-austin/goals/issues/59) `high` `monetization`
-  - Show relevant product recommendations after a user creates a goal
-- [ ] **#61** — [Affiliate Disclosure & Compliance](https://github.com/andy-austin/goals/issues/61) `high` `compliance`
-  - Legal disclosures required before showing any affiliate content
-- [ ] **#60** — [Dashboard Recommendations Widget](https://github.com/andy-austin/goals/issues/60) `medium` `monetization`
-  - Persistent recommendations section on the dashboard
-- [ ] **#62** — [Affiliate Link Tracking & Analytics](https://github.com/andy-austin/goals/issues/62) `medium` `monetization`
-  - Track clicks, conversions, and revenue from affiliate links
+- [x] **#58** — [Recommendation Engine: Financial Products by Bucket](https://github.com/andy-austin/goals/issues/58) `high` `monetization` — *Done (phase-2/monetization-foundation branch)*
+  - Product catalog with 10 products across all buckets; recommendation engine with bucket+timeline filtering
+- [x] **#59** — [Post-Goal Creation Recommendation Screen](https://github.com/andy-austin/goals/issues/59) `high` `monetization` — *Done (phase-2/monetization-foundation branch)*
+  - Full recommendation screen after goal creation with primary + alternative products, interest estimates
+- [x] **#61** — [Affiliate Disclosure & Compliance](https://github.com/andy-austin/goals/issues/61) `high` `compliance` — *Done (phase-2/monetization-foundation branch)*
+  - AffiliateDisclosure component (inline/banner), /disclosure page, footer link, FTC compliant
+- [x] **#60** — [Dashboard Recommendations Widget](https://github.com/andy-austin/goals/issues/60) `medium` `monetization` — *Done (phase-2/monetization-foundation branch)*
+  - Collapsible widget showing recommended account per goal, dismissible with localStorage persistence
+- [x] **#62** — [Affiliate Link Tracking & Analytics](https://github.com/andy-austin/goals/issues/62) `medium` `monetization` — *Done (phase-2/monetization-foundation branch)*
+  - UTM parameter builder, event tracking (shown/clicked/skipped/dismissed), Vercel Analytics integration
 
 ---
 
@@ -98,4 +98,4 @@ Low-priority enhancements for future sprints.
 - **Phase 1** is complete on `phase-1/bug-fixes-core-ux` branch (all 5 issues done).
 - **#53 (Edit Goals)** may already be complete — EditGoalModal exists and is functional. Verify and close.
 - **#94** is implemented but not yet merged to master.
-- Phase 2 (monetization) issues should be tackled as a batch since they depend on each other.
+- **Phase 2** is complete on `phase-2/monetization-foundation` branch (all 5 issues done).

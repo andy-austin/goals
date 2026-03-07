@@ -53,7 +53,9 @@ test.describe('Full User Journey: Landing → Create → Dashboard → Timeline'
     await page.getByRole('textbox', { name: /your motivation/i }).fill('Peace of mind knowing I can handle emergencies');
     await page.getByRole('button', { name: 'Create', exact: true }).click();
 
-    // 9. Redirected to dashboard with goal visible
+    // 9. Recommendation screen appears — go to dashboard
+    await expect(page.getByText(/goal created/i)).toBeVisible();
+    await page.getByRole('button', { name: /go to dashboard/i }).click();
     await expect(page).toHaveURL('/dashboard');
     await expect(page.getByRole('heading', { name: 'Emergency Fund' })).toBeVisible();
   });
@@ -104,7 +106,9 @@ test.describe('Full User Journey: Landing → Create → Dashboard → Timeline'
     await page.getByRole('textbox', { name: /your motivation/i }).fill('To build equity and have a place to call our own');
     await page.getByRole('button', { name: 'Create', exact: true }).click();
 
-    // 10. On dashboard
+    // 10. Recommendation screen — go to dashboard
+    await expect(page.getByText(/goal created/i)).toBeVisible();
+    await page.getByRole('button', { name: /go to dashboard/i }).click();
     await expect(page).toHaveURL('/dashboard');
     await expect(page.getByRole('heading', { name: 'Dream House Fund' })).toBeVisible();
 
@@ -132,6 +136,10 @@ test.describe('Full User Journey: Landing → Create → Dashboard → Timeline'
     await page.getByRole('button', { name: 'Next', exact: true }).click();
     await page.getByRole('textbox', { name: /your motivation/i }).fill('Financial security for my family');
     await page.getByRole('button', { name: 'Create', exact: true }).click();
+
+    // Recommendation screen — go to dashboard
+    await expect(page.getByText(/goal created/i)).toBeVisible();
+    await page.getByRole('button', { name: /go to dashboard/i }).click();
     await expect(page).toHaveURL('/dashboard');
 
     // Create second goal: Dream
@@ -149,6 +157,10 @@ test.describe('Full User Journey: Landing → Create → Dashboard → Timeline'
     await page.getByRole('button', { name: 'Next', exact: true }).click();
     await page.getByRole('textbox', { name: /your motivation/i }).fill('Create lifelong memories with my partner');
     await page.getByRole('button', { name: 'Create', exact: true }).click();
+
+    // Recommendation screen — go to dashboard
+    await expect(page.getByText(/goal created/i)).toBeVisible();
+    await page.getByRole('button', { name: /go to dashboard/i }).click();
     await expect(page).toHaveURL('/dashboard');
 
     // Both goals visible on dashboard
@@ -197,7 +209,9 @@ test.describe('Full User Journey: Landing → Create → Dashboard → Timeline'
     }
     await page.getByRole('button', { name: 'Create', exact: true }).click();
 
-    // Redirected to dashboard
+    // Recommendation screen — go to dashboard
+    await expect(page.getByText(/goal created/i)).toBeVisible();
+    await page.getByRole('button', { name: /go to dashboard/i }).click();
     await expect(page).toHaveURL('/dashboard');
     await expect(page.getByRole('heading', { name: /emergency fund/i })).toBeVisible();
   });
