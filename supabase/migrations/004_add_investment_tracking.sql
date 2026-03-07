@@ -11,7 +11,7 @@ ALTER TABLE goals
 -- Create goal_check_ins table
 CREATE TABLE IF NOT EXISTS goal_check_ins (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  goal_id uuid NOT NULL REFERENCES goals(id) ON DELETE CASCADE,
+  goal_id text NOT NULL REFERENCES goals(id) ON DELETE CASCADE,
   user_id uuid NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   date date NOT NULL,
   current_amount numeric(15, 2) NOT NULL,
