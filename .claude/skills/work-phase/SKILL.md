@@ -106,7 +106,50 @@ For each completed issue:
 
 Use parallel API calls — all comments first, then all closes.
 
-### 11. Report summary
+### 11. Create a pull request
+
+```
+git push -u origin phase-{N}/{kebab-case-phase-name}
+```
+
+Create a PR to `master` using `gh pr create`. Include:
+- Title: `Phase {N}: {Phase Name} (#{issue1}, #{issue2}, ...)`
+- Body with:
+  - **Summary** — bullet list of what each issue delivered
+  - **New files** — list of all new files created
+  - **Modified files** — list of existing files changed
+  - **Test plan** — checklist covering build, E2E tests, and manual verification steps
+
+Example:
+```
+gh pr create --base master --title "Phase 2: Monetization Foundation (#58, #59, #60, #61, #62)" --body "$(cat <<'EOF'
+## Summary
+- **#58** — Recommendation engine with 10-product catalog across all buckets
+- **#59** — Post-goal creation recommendation screen with interest estimates
+- ...
+
+## New files
+- `lib/recommendations/types.ts` — ...
+- ...
+
+## Modified files
+- `app/create/page.tsx` — ...
+- ...
+
+## Test plan
+- [ ] `npm run build` passes with zero errors
+- [ ] `npx playwright test` — all E2E tests pass
+- [ ] Create a goal and verify recommendation screen appears
+- [ ] Verify dashboard widget shows recommendations
+- [ ] Verify `/disclosure` page renders correctly
+- [ ] Verify affiliate links include UTM parameters
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+EOF
+)"
+```
+
+### 12. Report summary
 
 Output a summary table:
 
