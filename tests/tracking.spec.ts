@@ -382,8 +382,8 @@ test.describe('Goal card – fulfillment indicator', () => {
     await page.goto('/dashboard');
 
     // Neither "On track" nor "Behind schedule" should appear
-    await expect(page.getByText(/on track/i)).not.toBeVisible();
-    await expect(page.getByText(/behind schedule/i)).not.toBeVisible();
+    await expect(page.getByText('On track', { exact: true })).not.toBeVisible();
+    await expect(page.getByText('Behind schedule', { exact: true })).not.toBeVisible();
   });
 
   test('shows on-track status when ahead of linear target', async ({ page }) => {
@@ -403,6 +403,6 @@ test.describe('Goal card – fulfillment indicator', () => {
     };
     await seedStorage([goalAhead])(page);
     await page.goto('/dashboard');
-    await expect(page.getByText(/on track/i)).toBeVisible();
+    await expect(page.getByText('On track', { exact: true })).toBeVisible();
   });
 });

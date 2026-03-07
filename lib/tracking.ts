@@ -37,3 +37,30 @@ export function computeFulfillment(
 
   return { latestAmount, expectedAmount, fulfillmentPct, isOnTrack };
 }
+
+/**
+ * Calculate monthly savings needed to reach the goal on time.
+ * Takes into account any existing check-in balance.
+ * Returns null if the goal is overdue or target is already reached.
+ */
+export function calculateMonthlySavings(
+  goal: Goal,
+  now = Date.now()
+): number | null {
+  const targetMs = goal.targetDate.getTime();
+  const remainingMs = targetMs - now;
+  if (remainingMs <= 0) return null;
+
+  const remainingMonths = remainingMs / (1000 * 60 * 60 * 24 * 30.44);
+  if (remainingMonths < 0.5) return null;
+
+  // Use latest check-in amount if available, otherwise 0
+  const currentAmount = goal.checkIns.length > 0
+    ? [...goal.checkIns].sort((a, b) => a.date.localeCompare(b.date))[goal.checkIns.length - 1].currentAmount
+    : 0;
+
+  const remaining = goal.amount - currentAmount;
+  if (remaining <= 0) return 0;
+
+  return remaining / remainingMonths;
+}

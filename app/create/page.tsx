@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { FormWizard, FormStep, StepTitleDescription, StepAmountCurrency, StepTargetDate, StepBucket, StepWhyItMatters, TemplateSelector, Button, Card, CardContent, Tooltip, RecommendationScreen } from '@/components';
 import { useGoals } from '@/context';
+import { useToast } from '@/components/ui/Toast';
 import { validateSMART } from '@/lib';
 import { getRecommendations } from '@/lib/recommendations/engine';
 import type { GoalFormInput, GoalTemplate, Currency, Goal } from '@/types';
@@ -20,7 +21,8 @@ export default function CreateGoalPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { addGoal } = useGoals();
-  
+  const { showToast } = useToast();
+
   // State for wizard mode and initial data
   const [mode, setMode] = useState<'selection' | 'wizard' | 'recommendation'>('selection');
   const [initialData, setInitialData] = useState<Partial<GoalFormInput>>({});
@@ -94,7 +96,7 @@ export default function CreateGoalPage() {
     // Final data validation before saving
     const validation = validateSMART(data);
     if (!validation.isComplete) {
-      console.error('Incomplete goal data', validation);
+      showToast(t('validationError'), 'error');
       return;
     }
 

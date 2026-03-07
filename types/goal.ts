@@ -13,6 +13,11 @@
 export type GoalVisibility = 'private' | 'shared';
 
 /**
+ * Status of a goal in its lifecycle
+ */
+export type GoalStatus = 'active' | 'completed';
+
+/**
  * Cadence for reviewing/tracking progress on a goal
  */
 export type TrackingCadence = 'weekly' | 'monthly' | 'quarterly' | 'annually';
@@ -133,6 +138,12 @@ export interface Goal {
 
   /** History of progress check-ins for this goal */
   checkIns: CheckIn[];
+
+  /** Goal lifecycle status: active (default) or completed */
+  status: GoalStatus;
+
+  /** When the goal was marked as completed */
+  completedAt?: Date;
 }
 
 /**
@@ -175,7 +186,7 @@ export interface GoalTemplate {
  * Input type for creating a new goal (excludes auto-generated fields)
  * checkIns is excluded from input as it starts empty
  */
-export type CreateGoalInput = Omit<Goal, 'id' | 'createdAt' | 'priority' | 'checkIns'>;
+export type CreateGoalInput = Omit<Goal, 'id' | 'createdAt' | 'priority' | 'checkIns' | 'status' | 'completedAt'>;
 
 /**
  * Input type for the goal creation form (dates as strings for form handling)

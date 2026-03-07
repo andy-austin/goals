@@ -221,6 +221,30 @@
       "deleteCheckInConfirm": "Delete this check-in?",
       "expectedByNow": "Expected by now"
     },
+    "logDeposit": "Log Deposit",
+    "monthlySavingsNeeded": "To stay on track: Save {amount}/month",
+    "markComplete": "Mark as Complete",
+    "reactivate": "Reactivate",
+    "completedToast": "{title} marked as complete!",
+    "restoredToast": "{title} restored to active",
+    "completedOn": "Completed on {date}",
+    "completedSection": {
+      "title": "Completed Goals",
+      "count": "{count, plural, =1 {# goal completed} other {# goals completed}}"
+    },
+    "calendarModal": {
+      "title": "Set Reminder",
+      "subtitle": "Add a recurring reminder for \"{title}\" to your calendar",
+      "frequencyLabel": "Remind me",
+      "frequency": {
+        "weekly": "Weekly",
+        "biweekly": "Bi-weekly",
+        "monthly": "Monthly"
+      },
+      "monthlySavingsLabel": "Monthly savings needed",
+      "download": "Download .ics",
+      "exportedToast": "Calendar reminder exported"
+    },
     "checkInModal": {
       "title": "Record check-in",
       "dateLabel": "Date",

@@ -253,7 +253,41 @@ Complete affiliate monetization infrastructure: recommendation engine, post-goal
 
 ---
 
+### Phase 3: Feature Completeness (#52, #53, #54, #55, #66)
+Complete feature set: savings calculator, goal completion/archiving, calendar export. #53 and #66 were already implemented.
+
+**New files created:**
+- `lib/calendar.ts` — ICS calendar file generation (`generateICS`, `downloadICS`) with recurring events (weekly/biweekly/monthly)
+- `components/Dashboard/CalendarExportModal.tsx` — Modal for setting reminder frequency and downloading .ics file
+- `supabase/migrations/005_add_goal_completion.sql` — Adds `status` and `completed_at` columns to goals table
+
+**Modified files:**
+- `types/goal.ts` — Added `GoalStatus` type (`'active' | 'completed'`), `status` and `completedAt` fields to `Goal`, excluded from `CreateGoalInput`
+- `lib/tracking.ts` — Added `calculateMonthlySavings(goal)` function for savings calculator
+- `lib/storage.ts` — Updated `SerializedGoal` and `deserializeGoal` for `status`/`completedAt` backward compatibility
+- `lib/supabase/goals.ts` — Added `status`/`completed_at` to `GoalRow`, `rowToGoal`, `goalToRow`
+- `lib/index.ts` — Added `calendar` barrel export
+- `context/GoalsContext.tsx` — Added `completeGoal` and `restoreGoal` callbacks; `addGoal` defaults `status: 'active'`
+- `components/Dashboard/GoalCard.tsx` — Added: Log Deposit button (direct CheckInModal), Calendar button, Mark Complete/Reactivate button, monthly savings display, current vs target amount, completed state styling
+- `components/Dashboard/index.ts` — Added `CalendarExportModal` export
+- `app/dashboard/page.tsx` — Split goals into active/completed; added collapsible "Completed Goals" section; BucketSections only show active goals
+- `messages/en.json` — Added i18n keys: `logDeposit`, `monthlySavingsNeeded`, `markComplete`, `reactivate`, `completedToast`, `restoredToast`, `completedOn`, `completedSection.*`, `calendarModal.*`
+- `messages/es.json` — Same keys in Spanish
+- `tests/tracking.spec.ts` — Fixed ambiguous locators (`/on track/i` → exact match) for new "To stay on track" savings text
+- `docs/roadmap.md` — Checked off all Phase 3 issues
+
+**Architecture:**
+- `GoalStatus` is `'active' | 'completed'`; defaults to `'active'` for backward compatibility
+- `completeGoal()` sets `status: 'completed'` and `completedAt: new Date()`; `restoreGoal()` reverts to `'active'`
+- Dashboard filters active goals into BucketSections; completed goals shown in separate collapsible section
+- `calculateMonthlySavings()` computes `(remainingAmount / remainingMonths)` using latest check-in balance
+- Calendar export generates RFC 5545 .ics files client-side with RRULE for recurring events
+- Log Deposit button opens CheckInModal directly from GoalCard (one-click vs two-click via TrackingModal)
+
+**Database setup required:** Run `supabase/migrations/005_add_goal_completion.sql` in Supabase SQL Editor after migration 004.
+
+---
+
 ## Next Steps
 - #68: Personal Data Privacy Consent (Legal Compliance) — should ship alongside auth
-- #52: Progress Tracking + Savings Calculator
 - #67: Currency Exchange Rate Display

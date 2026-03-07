@@ -1,5 +1,5 @@
 import { createClient } from './browser';
-import type { Goal, Bucket, Currency, GoalVisibility, TrackingCadence, InvestmentVehicle, CheckIn } from '@/types';
+import type { Goal, Bucket, Currency, GoalVisibility, GoalStatus, TrackingCadence, InvestmentVehicle, CheckIn } from '@/types';
 
 interface GoalRow {
   id: string;
@@ -19,6 +19,8 @@ interface GoalRow {
   investment_vehicle_institution: string | null;
   investment_vehicle_type: string | null;
   tracking_cadence: string | null;
+  status: string;
+  completed_at: string | null;
 }
 
 interface CheckInRow {
@@ -57,6 +59,8 @@ function rowToGoal(row: GoalRow, checkIns: CheckIn[] = []): Goal {
     investmentVehicle,
     trackingCadence: (row.tracking_cadence as TrackingCadence) ?? undefined,
     checkIns,
+    status: (row.status as GoalStatus) ?? 'active',
+    completedAt: row.completed_at ? new Date(row.completed_at) : undefined,
   };
 }
 
@@ -79,6 +83,8 @@ function goalToRow(goal: Goal, userId: string): Omit<GoalRow, 'user_id'> & { use
     investment_vehicle_institution: goal.investmentVehicle?.institution ?? null,
     investment_vehicle_type: goal.investmentVehicle?.type ?? null,
     tracking_cadence: goal.trackingCadence ?? null,
+    status: goal.status ?? 'active',
+    completed_at: goal.completedAt?.toISOString() ?? null,
   };
 }
 
