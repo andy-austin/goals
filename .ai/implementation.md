@@ -372,6 +372,31 @@ Low-priority enhancements: skeleton loaders, mobile step indicator, bucket persi
 
 ---
 
+### Phase 6: Accessibility & Mobile UX (#40, #42, #45, #44, #38, #46)
+Timeline accessibility, touch support, and mobile layout fixes.
+
+**Modified files:**
+- `components/Timeline/GanttChart.tsx` — (#40) `aria-describedby` linking bars to tooltip IDs; (#42) `onPointerEnter/Leave/Up` split by pointer type, `onFocus/onBlur` show/hide, `Escape` key dismiss; (#45) `resolveTooltipSide()` collision detection (above/below/right based on viewport position); (#44) responsive row height (40px mobile / 48px desktop via matchMedia), narrower left column (120px mobile), smaller bar height on mobile
+- `components/Timeline/TimelineGoalMarker.tsx` — (#40) `aria-describedby` linking marker button to tooltip ID; (#42) `onPointerEnter/Leave` split by pointer type, `onPointerUp` tap-to-toggle for touch, `Escape` key dismiss
+- `app/create/layout.tsx` — (#38) `min-h-screen` → `min-h-dvh`
+- `app/dashboard/layout.tsx` — (#38) `min-h-screen` → `min-h-dvh`
+- `app/timeline/layout.tsx` — (#38) `min-h-screen` → `min-h-dvh`
+- `app/spaces/layout.tsx` — (#38) `min-h-screen` → `min-h-dvh`
+- `app/page.tsx` — (#38) `min-h-screen` → `min-h-dvh`
+- `components/auth/AuthLayout.tsx` — (#38) `min-h-screen` → `min-h-dvh`
+- `components/FormWizard/FormWizard.tsx` — (#46) StepIndicator wrapped in sticky container on mobile (`sticky top-0 z-20` with backdrop blur), static on desktop
+- `components/FormWizard/StepIndicator.tsx` — Replaced hardcoded `bg-zinc-200 dark:bg-zinc-700` with `bg-border` design token
+- `docs/roadmap.md` — Added Phase 6 and Phase 7 sections; checked off all Phase 6 issues
+
+**Architecture:**
+- Gantt tooltip system uses pointer events API to distinguish mouse from touch: mouse gets hover behavior, touch gets tap-to-toggle
+- `resolveTooltipSide()` checks bar's `getBoundingClientRect()` against viewport edges to determine tooltip placement
+- `min-h-dvh` uses CSS `dvh` unit which accounts for mobile browser chrome (address bar, toolbar) unlike `vh`
+- Sticky step indicator uses `backdrop-blur-sm` for visual hierarchy on mobile; reverts to static on `sm:` breakpoint
+
+---
+
 ## Next Steps
 - #68: Personal Data Privacy Consent (Legal Compliance) — should ship alongside auth
-- All roadmap phases (1-5) are now complete
+- All roadmap phases (1-6) are now complete
+- Phase 7 covers technical debt: refactors, i18n cleanup, architecture improvements

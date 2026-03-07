@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef, useRef, useEffect, useMemo, useState, type HTMLAttributes } from 'react';
+import { forwardRef, useRef, useEffect, useMemo, useState, useCallback, type HTMLAttributes } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import type { Goal } from '@/types';
 import { BUCKET_CONFIG, formatCurrency, formatDate } from '@/types';
@@ -18,7 +18,8 @@ export interface GanttChartProps extends Omit<HTMLAttributes<HTMLDivElement>, 'c
 }
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
-const ROW_HEIGHT = 48;
+const ROW_HEIGHT_DESKTOP = 48;
+const ROW_HEIGHT_MOBILE = 40;
 const LEFT_PADDING = 60; // Padding to avoid cropping "Today" label
 
 /**
@@ -99,10 +100,44 @@ function generateDateLabels(
 export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
   ({ goals, config, todayPosition, onGoalSelect, className = '', ...props }, ref) => {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
-    const [hoveredGoalId, setHoveredGoalId] = useState<string | null>(null);
+    const [activeGoalId, setActiveGoalId] = useState<string | null>(null);
     const [tooltipPosition, setTooltipPosition] = useState<{ x: number; y: number } | null>(null);
+    const [tooltipSide, setTooltipSide] = useState<'above' | 'below' | 'right'>('above');
+    const [isMobile, setIsMobile] = useState(false);
     const tGantt = useTranslations('gantt');
     const locale = useLocale();
+    const ROW_HEIGHT = isMobile ? ROW_HEIGHT_MOBILE : ROW_HEIGHT_DESKTOP;
+
+    // Detect mobile viewport for compact row heights
+    useEffect(() => {
+      const mql = window.matchMedia('(max-width: 640px)');
+      setIsMobile(mql.matches);
+      const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+      mql.addEventListener('change', handler);
+      return () => mql.removeEventListener('change', handler);
+    }, []);
+
+    // Close tooltip on scroll or outside click (touch support)
+    useEffect(() => {
+      if (!activeGoalId) return;
+      const handleDismiss = () => { setActiveGoalId(null); setTooltipPosition(null); };
+      const container = scrollContainerRef.current;
+      container?.addEventListener('scroll', handleDismiss);
+      document.addEventListener('pointerdown', handleDismiss);
+      return () => {
+        container?.removeEventListener('scroll', handleDismiss);
+        document.removeEventListener('pointerdown', handleDismiss);
+      };
+    }, [activeGoalId]);
+
+    // Determine tooltip placement based on viewport collision
+    const resolveTooltipSide = useCallback((barRect: DOMRect, rowIndex: number): 'above' | 'below' | 'right' => {
+      // First row or near top of viewport → show right or below
+      if (rowIndex === 0 || barRect.top < 120) return 'right';
+      // Near bottom of viewport → show above
+      if (barRect.bottom > window.innerHeight - 100) return 'above';
+      return 'above';
+    }, []);
 
     // Sort goals by target date
     const sortedGoals = useMemo(() => {
@@ -158,7 +193,7 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
         <div className="rounded-lg border border-border bg-background overflow-x-clip overflow-y-visible">
           <div className="flex">
             {/* Fixed left column - Goal labels */}
-            <div className="w-[140px] sm:w-[180px] shrink-0 border-r border-border bg-background z-10">
+            <div className="w-[120px] sm:w-[180px] shrink-0 border-r border-border bg-background z-10">
               {/* Header */}
               <div className="h-10 px-2 sm:px-3 flex items-center border-b border-border bg-muted/30">
                 <span className="text-xs font-medium text-muted-foreground">{tGantt('goal')}</span>
@@ -173,7 +208,8 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
                 return (
                   <div
                     key={goal.id}
-                    className="h-12 px-2 sm:px-3 py-2 border-b border-border/50 hover:bg-muted/30 transition-colors"
+                    className="px-2 sm:px-3 py-1.5 sm:py-2 border-b border-border/50 hover:bg-muted/30 transition-colors"
+                    style={{ height: ROW_HEIGHT }}
                   >
                     <button
                       type="button"
@@ -244,8 +280,9 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
                   {/* Goal bars */}
                   {goalBars.map(({ goal, barStartX, barWidth }, index) => {
                     const bucketConfig = BUCKET_CONFIG[goal.bucket];
-                    const isHovered = hoveredGoalId === goal.id;
+                    const isActive = activeGoalId === goal.id;
                     const targetDate = new Date(goal.targetDate);
+                    const tooltipId = `gantt-tooltip-${goal.id}`;
 
                     return (
                       <div
@@ -261,49 +298,81 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
 
                         {/* Bar - vertically centered with flex */}
                         <div
-                          className="absolute h-6 rounded cursor-pointer transition-all"
+                          className="absolute h-5 sm:h-6 rounded cursor-pointer transition-all"
                           style={{
                             left: barStartX,
                             width: barWidth,
                             top: '50%',
-                            transform: `translateY(-50%) ${isHovered ? 'scaleY(1.15)' : 'scaleY(1)'}`,
+                            transform: `translateY(-50%) ${isActive ? 'scaleY(1.15)' : 'scaleY(1)'}`,
                             backgroundColor: bucketConfig.colorVar,
-                            opacity: isHovered ? 1 : 0.85,
+                            opacity: isActive ? 1 : 0.85,
                           }}
-                          onClick={() => onGoalSelect?.(goal)}
-                          onMouseEnter={(e) => {
-                            setHoveredGoalId(goal.id);
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onGoalSelect?.(goal);
+                          }}
+                          onPointerEnter={(e) => {
+                            // Ignore touch — handled by onPointerUp tap-to-toggle
+                            if (e.pointerType === 'touch') return;
+                            setActiveGoalId(goal.id);
                             const rect = e.currentTarget.getBoundingClientRect();
-                            setTooltipPosition({
-                              x: e.clientX - rect.left,
-                              y: e.clientY - rect.top
-                            });
+                            setTooltipSide(resolveTooltipSide(rect, index));
+                            setTooltipPosition({ x: e.clientX - rect.left, y: 0 });
                           }}
-                          onMouseMove={(e) => {
+                          onPointerMove={(e) => {
+                            if (e.pointerType === 'touch') return;
                             const rect = e.currentTarget.getBoundingClientRect();
-                            setTooltipPosition({
-                              x: e.clientX - rect.left,
-                              y: e.clientY - rect.top
-                            });
+                            setTooltipPosition({ x: e.clientX - rect.left, y: 0 });
                           }}
-                          onMouseLeave={() => {
-                            setHoveredGoalId(null);
+                          onPointerLeave={(e) => {
+                            if (e.pointerType === 'touch') return;
+                            setActiveGoalId(null);
                             setTooltipPosition(null);
+                          }}
+                          onPointerUp={(e) => {
+                            // Tap-to-toggle on touch devices
+                            if (e.pointerType !== 'touch') return;
+                            e.stopPropagation();
+                            if (isActive) {
+                              setActiveGoalId(null);
+                              setTooltipPosition(null);
+                            } else {
+                              const rect = e.currentTarget.getBoundingClientRect();
+                              setActiveGoalId(goal.id);
+                              setTooltipSide(resolveTooltipSide(rect, index));
+                              setTooltipPosition({ x: rect.width / 2, y: 0 });
+                            }
                           }}
                           role="button"
                           tabIndex={0}
+                          onFocus={(e) => {
+                            const rect = e.currentTarget.getBoundingClientRect();
+                            setActiveGoalId(goal.id);
+                            setTooltipSide(resolveTooltipSide(rect, index));
+                            setTooltipPosition({ x: rect.width / 2, y: 0 });
+                          }}
+                          onBlur={() => {
+                            setActiveGoalId(null);
+                            setTooltipPosition(null);
+                          }}
                           onKeyDown={(e) => {
                             if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault();
                               onGoalSelect?.(goal);
+                            } else if (e.key === 'Escape') {
+                              setActiveGoalId(null);
+                              setTooltipPosition(null);
                             }
                           }}
                           aria-label={`${goal.title}: ${formatCurrency(goal.amount, goal.currency, locale)}, target ${formatDate(targetDate, locale)}`}
+                          aria-describedby={isActive ? tooltipId : undefined}
                         >
-                          {/* Hover tooltip - follows cursor position */}
-                          {isHovered && tooltipPosition && (
-                            index === 0 ? (
-                              // First row: show tooltip to the right to avoid top cropping
+                          {/* Tooltip — position resolved by collision detection */}
+                          {isActive && tooltipPosition && (
+                            tooltipSide === 'right' ? (
                               <div
+                                id={tooltipId}
+                                role="tooltip"
                                 className="absolute z-50 whitespace-nowrap pointer-events-none"
                                 style={{
                                   left: tooltipPosition.x + 16,
@@ -317,14 +386,35 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
                                     {formatDate(targetDate, locale)}
                                   </div>
                                 </div>
-                                {/* Arrow pointing left */}
-                                <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1">
+                                <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1" aria-hidden="true">
                                   <div className="h-2 w-2 rotate-45 bg-card border-l border-b border-border" />
                                 </div>
                               </div>
-                            ) : (
-                              // Other rows: show tooltip above
+                            ) : tooltipSide === 'below' ? (
                               <div
+                                id={tooltipId}
+                                role="tooltip"
+                                className="absolute z-50 whitespace-nowrap pointer-events-none -translate-x-1/2"
+                                style={{
+                                  left: tooltipPosition.x,
+                                  top: '100%',
+                                  marginTop: '8px',
+                                }}
+                              >
+                                <div className="bg-card border border-border rounded-lg px-3 py-2 shadow-lg text-sm">
+                                  <div className="font-medium text-foreground">{goal.title}</div>
+                                  <div className="text-muted-foreground">
+                                    {formatDate(targetDate, locale)}
+                                  </div>
+                                </div>
+                                <div className="absolute left-1/2 -translate-x-1/2 -top-1" aria-hidden="true">
+                                  <div className="h-2 w-2 rotate-45 bg-card border-t border-l border-border" />
+                                </div>
+                              </div>
+                            ) : (
+                              <div
+                                id={tooltipId}
+                                role="tooltip"
                                 className="absolute z-50 whitespace-nowrap pointer-events-none -translate-x-1/2"
                                 style={{
                                   left: tooltipPosition.x,
@@ -338,8 +428,7 @@ export const GanttChart = forwardRef<HTMLDivElement, GanttChartProps>(
                                     {formatDate(targetDate, locale)}
                                   </div>
                                 </div>
-                                {/* Arrow pointing down */}
-                                <div className="absolute left-1/2 -translate-x-1/2 -bottom-1">
+                                <div className="absolute left-1/2 -translate-x-1/2 -bottom-1" aria-hidden="true">
                                   <div className="h-2 w-2 rotate-45 bg-card border-b border-r border-border" />
                                 </div>
                               </div>

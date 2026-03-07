@@ -101,6 +101,38 @@ Low-priority enhancements for future sprints.
 
 ---
 
+## Phase 6: Accessibility & Mobile UX
+
+Timeline accessibility, touch support, and mobile layout fixes.
+
+- [x] **#40** — [Improve accessibility of Timeline Tooltips](https://github.com/andy-austin/goals/issues/40) `a11y` — *Done (phase-6/accessibility-mobile-ux branch)*
+  - Added `aria-describedby` linking Gantt bars and timeline markers to tooltip content with unique IDs
+- [x] **#42** — [Optimize Gantt Chart Tooltip for touch and keyboard](https://github.com/andy-austin/goals/issues/42) `a11y` `mobile` — *Done (phase-6/accessibility-mobile-ux branch)*
+  - Tap-to-toggle tooltips on touch devices; focus/blur show/hide; Escape to dismiss; pointer events split by type
+- [x] **#45** — [Fix Gantt Chart tooltip overlap](https://github.com/andy-austin/goals/issues/45) `bug` — *Done (phase-6/accessibility-mobile-ux branch)*
+  - Viewport collision detection: tooltips position above, below, or right based on bar position relative to viewport edges
+- [x] **#44** — [Improve Timeline Marker visibility on mobile](https://github.com/andy-austin/goals/issues/44) `mobile` — *Done (phase-6/accessibility-mobile-ux branch)*
+  - Compact 40px row height on mobile (48px desktop); narrower left column (120px vs 180px); smaller bar height on mobile
+- [x] **#38** — [Fix mobile viewport height cut-off in Form Wizard](https://github.com/andy-austin/goals/issues/38) `bug` `mobile` — *Done (phase-6/accessibility-mobile-ux branch)*
+  - Replaced `min-h-screen` with `min-h-dvh` across all 6 layout files (dashboard, create, timeline, spaces, auth, landing)
+- [x] **#46** — [Implement sticky header for Form Wizard on mobile](https://github.com/andy-austin/goals/issues/46) `mobile` — *Done (phase-6/accessibility-mobile-ux branch)*
+  - Step indicator sticky on mobile with backdrop blur; static on desktop
+
+---
+
+## Phase 7: Code Quality & Refactors
+
+Technical debt cleanup and architecture improvements.
+
+- [ ] **#37** — [Centralize hardcoded validation constants](https://github.com/andy-austin/goals/issues/37) `refactor`
+- [ ] **#39** — [Remove hardcoded strings from BUCKET_CONFIG](https://github.com/andy-austin/goals/issues/39) `i18n` `refactor`
+- [ ] **#41** — [Extract goalsReducer from GoalsContext](https://github.com/andy-austin/goals/issues/41) `refactor`
+- [ ] **#43** — [Transition Goals state to Async Storage pattern](https://github.com/andy-austin/goals/issues/43) `refactor`
+- [ ] **#47** — [Standardize dynamic bucket styling to Tailwind utilities](https://github.com/andy-austin/goals/issues/47) `refactor`
+- [ ] **#48** — [Externalize AI Model Configuration](https://github.com/andy-austin/goals/issues/48) `maintenance`
+
+---
+
 ## Notes
 
 - **Phase 1** is complete on `phase-1/bug-fixes-core-ux` branch (all 5 issues done).
@@ -109,3 +141,5 @@ Low-priority enhancements for future sprints.
 - **Phase 3** is complete on `phase-3/feature-completeness` branch (all 5 issues done). #53 and #66 were previously implemented; #52, #54, #55 implemented in this branch.
 - **Phase 4** is complete on `phase-4/ux-polish` branch (all 8 issues done). #95 was already implemented; #91, #92, #93, #96, #97, #98 implemented in this branch.
 - **Phase 5** is complete on `phase-5/nice-to-have` branch (all 8 issues done).
+- **Phase 6** is complete on `phase-6/accessibility-mobile-ux` branch (all 6 issues done).
+- **Phase 7** covers technical debt — refactors, i18n cleanup, and architecture improvements.

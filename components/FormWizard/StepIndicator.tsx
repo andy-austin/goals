@@ -179,7 +179,7 @@ export function StepIndicator({ steps, className = '' }: StepIndicatorProps) {
       {/* Progress bar (mobile) */}
       <div className="mt-2 sm:hidden">
         <div
-          className="h-1 w-full rounded-full bg-zinc-200 dark:bg-zinc-700"
+          className="h-1 w-full rounded-full bg-border"
           role="progressbar"
           aria-valuenow={currentStep + 1}
           aria-valuemin={1}
